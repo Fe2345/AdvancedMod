@@ -1,0 +1,28 @@
+using Terraria;
+using Terraria.ModLoader;
+using Terraria.ID;
+
+namespace AdvancedMod.Items.Weapon
+{
+    public class Lantern_Of_Middle_Autemn : ModItem
+    {
+        public override void SetStaticDefaults()
+        {
+            DisplayName.SetDefault("中秋之灯");
+            Tooltip.SetDefault("bo~ki~");
+        }
+
+        public override void SetDefaults()
+        {
+            
+        }
+        public override void AddRecipes()
+        {
+            ModRecipe recipe = new ModRecipe(mod);
+            recipe.AddIngredient(ItemID.Wood, 1);
+            recipe.AddTile(TileID.Anvils);
+            recipe.SetResult(this, 1);
+            recipe.AddRecipe();
+        }
+    }
+}
