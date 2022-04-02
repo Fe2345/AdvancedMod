@@ -2,6 +2,7 @@
 using Terraria.ModLoader;
 using Terraria.ID;
 using Microsoft.Xna.Framework;
+using System;
 
 namespace AdvancedMod.Items.Weapon
 {
@@ -38,8 +39,14 @@ namespace AdvancedMod.Items.Weapon
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {
-            Vector2 speed = new Vector2(Main.mouseX - player.Center.X, Main.mouseY - player.Center.Y);
-            Projectile.NewProjectile(position,speed,item.shoot,damage,knockBack,player.whoAmI,speed.X,speed.Y);
+            for (int i = 0;i < 6; i++)
+            {
+                Vector2 speed = new Vector2(Main.mouseX - player.Center.X, Main.mouseY - player.Center.Y);
+                //Vector2 shootVel = (Math.Atan2(Main.mouseX - player.Center.X,  Main.mouseY - player.Center.Y) + (i * Math.PI / 6)).ToRotationVector2() * 10;
+                Vector2 shootVel = Vector2.Transform(speed, Matrix.CreateRotationX((float)(i *Math.PI / 6)));
+                Projectile.NewProjectile(position,Vector2.Normalize(shootVel)*10,item.shoot,damage,knockBack,player.whoAmI,speed.X,speed.Y);
+            }
+            
 
             return false;
         }
