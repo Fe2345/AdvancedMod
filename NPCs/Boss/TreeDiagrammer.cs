@@ -97,8 +97,8 @@ namespace AdvancedMod.NPCs.Boss
                     {
                         npc.velocity = (player.Center - npc.Center + new Vector2(100, 100)) / Vector2.Distance(player.Center, npc.Center) * 6;
                     }
-
-                    Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<TreeDiagrammer_Laser>(), 0, 0f, Main.myPlayer, 0, 3);
+                    Vector2 npcToPlr = player.Center - npc.Center;
+                    Projectile.NewProjectile(npc.Center, Vector2.Normalize(npcToPlr)*4, ModContent.ProjectileType<Projectiles.Boss.TreeDiagrammer.TreeDiagrammer_Laser>(), 0, 0f, Main.myPlayer, 0, 3);
                     break;
                 case TDStatus.Summon:
                     if (Time % 60 == 0)

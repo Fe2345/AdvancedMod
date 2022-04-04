@@ -3,6 +3,7 @@ using Terraria.ModLoader;
 using Terraria.ID;
 using Microsoft.Xna.Framework;
 using System;
+using AdvancedMod.Utils;
 
 namespace AdvancedMod.Items.Weapon
 {
@@ -41,9 +42,9 @@ namespace AdvancedMod.Items.Weapon
         {
             for (int i = 0;i < 6; i++)
             {
-                Vector2 speed = new Vector2(Main.mouseX - player.Center.X, Main.mouseY - player.Center.Y);
+                Vector2 speed = new Vector2(Main.screenPosition.X + Main.mouseX - player.Center.X, Main.screenPosition.X + Main.mouseY - player.Center.Y);
                 //Vector2 shootVel = (Math.Atan2(Main.mouseX - player.Center.X,  Main.mouseY - player.Center.Y) + (i * Math.PI / 6)).ToRotationVector2() * 10;
-                Vector2 shootVel = Vector2.Transform(speed, Matrix.CreateRotationX((float)(i *Math.PI / 6)));
+                Vector2 shootVel = Tool.TurnVector(speed, (float)(i * Math.PI / 3));
                 Projectile.NewProjectile(position,Vector2.Normalize(shootVel)*10,item.shoot,damage,knockBack,player.whoAmI,speed.X,speed.Y);
             }
             

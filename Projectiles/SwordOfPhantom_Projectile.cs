@@ -19,39 +19,42 @@ namespace AdvancedMod.Projectiles
             projectile.friendly = true;
             projectile.hostile = false;
             projectile.penetrate = 3;
-            projectile.timeLeft = 120;
+            projectile.timeLeft = 240;
             projectile.damage = 1000;
+            projectile.tileCollide = false;
         }
 
         int Time;
+        NPC npc;
+        float npcDistance;
         public override void AI()
         {
             Time++;
-            if (Time <= 30)
+            if (Time <= 60)
             {
                 projectile.velocity = projectile.oldVelocity;
             }
-            else if (Time > 30 && Time <= 120)
+            else if (Time > 60 && Time <= 240)
             {
-                foreach (var npc in Main.npc)
+                for (int i = 0;i < Main.npc.Length; i++)
                 {
-                    if (npc.active && !npc.friendly)
+                    if (npcDistance == 0)
                     {
-                        Vector2 ProjToNpc = npc.Center - projectile.Center;
-                        if (ProjToNpc.Length() == 0)
+                        continue;
+                    }
+                    else
+                    {
+                        if ((npc.Center - projectile.Center).Length() < npcDistance)
                         {
-                            continue;
-                        }
-                        else
-                        {
-                            projectile.velocity = (ProjToNpc / ProjToNpc.Length())*20;
+                            npc = Main.npc[i];
                         }
                     }
                 }
-            }
-            else
-            {
-                projectile.Kill();
+                if (npc.active && !npc.friendly)
+                {
+                    Vector2 ProjToNpc = npc.Center - projectile.Center;
+                     projectile.velocity = (ProjToNpc / ProjToNpc.Length())*20;
+                }
             }
         }
     }
