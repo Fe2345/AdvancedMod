@@ -38,6 +38,15 @@ namespace AdvancedMod.Items.Weapon
             item.shoot = ModContent.ProjectileType<Projectiles.SwordOfPhantom_Projectile>();
         }
 
+        public override void OnHitNPC(Player player, NPC target, int damage, float knockBack, bool crit)
+        {
+            Mod fargoSouls = ModLoader.GetMod("FargowiltasSouls");
+            if (fargoSouls == null)
+            {
+                target.AddBuff(ModContent.BuffType<Buffs.Debuff.TheWorld>(),5);
+            }
+        }
+
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {
             for (int i = 0;i < 6; i++)

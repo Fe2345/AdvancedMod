@@ -36,5 +36,10 @@ namespace AdvancedMod.Buffs.Debuff
 
             player.lifeRegen = 0;
         }
+
+        public override void Update(NPC npc, ref int buffIndex)
+        {
+            npc.GetGlobalNPC<NPCs.AdvancedGlobelNPC>().TheWorld = true;
+        }
     }
 }
