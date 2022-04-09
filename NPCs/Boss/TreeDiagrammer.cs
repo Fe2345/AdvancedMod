@@ -10,6 +10,10 @@ namespace AdvancedMod.NPCs.Boss
     [AutoloadBossHead]
     public class TreeDiagrammer : ModNPC
     {
+        public bool Chat1;
+        public bool enterPhase2;
+        public bool Chat3;
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("树状图设计者");
@@ -109,16 +113,19 @@ namespace AdvancedMod.NPCs.Boss
                     break;
             }
 
-            if (npc.life == npc.lifeMax * 0.75)
+            if (npc.life <= npc.lifeMax * 0.75 && !Chat1)
             {
                 Main.NewText("虽然你仅仅刮掉了我的几根电线，但已经超过很多其他的挑战者了。", color);
+                Chat1 = true;
             }
-            else if (npc.life == npc.lifeMax * 0.5)
+            else if (npc.life <= npc.lifeMax * 0.5 && !enterPhase2)
             {
                 Main.NewText("前面的都是闹着玩的。我要拿出我的真实实力了。", color);
+                enterPhase2 = true;
             }
-            else if (npc.life == npc.lifeMax * 0.25){
+            else if (npc.life <= npc.lifeMax * 0.25 && !Chat3){
                 Main.NewText("你竟然认为可以杀死我？！？", color);
+                Chat3 = true;
             }
         }
 

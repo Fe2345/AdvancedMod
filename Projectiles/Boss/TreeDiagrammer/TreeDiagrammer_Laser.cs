@@ -25,17 +25,12 @@ namespace AdvancedMod.Projectiles.Boss.TreeDiagrammer
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
+            target.AddBuff(ModContent.BuffType<Buffs.Debuff.ElectromagneticInduction>(),300);
             projectile.Kill();
         }
 
         public override void AI()
         {
-            Player player = Main.LocalPlayer;
-            Vector2 ProjToPlr = player.Center - projectile.Center;
-            if (Vector2.Distance(projectile.Center,player.Center) != 0)
-            {
-                projectile.velocity = Vector2.Normalize(ProjToPlr) * 4;
-            }
             
         }
     }

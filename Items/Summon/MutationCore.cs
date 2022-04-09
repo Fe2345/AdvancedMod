@@ -28,7 +28,7 @@ namespace AdvancedMod.Items.Summon
 
         public override bool CanUseItem(Player player)
         {
-            if (NPC.AnyNPCs(ModContent.NPCType<NPCs.Boss.TreeDiagrammer>()))
+            if (NPC.AnyNPCs(ModContent.NPCType<NPCs.Boss.TreeDiagrammer>()) | !Main.expertMode)
             {
                 Main.NewText("异变阻止了你改变规则");
                 return false;  
