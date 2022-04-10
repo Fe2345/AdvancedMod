@@ -3,6 +3,8 @@ using Terraria.ModLoader;
 using Terraria.ID;
 using AdvancedMod.Projectiles;
 using Microsoft.Xna.Framework;
+using AdvancedMod.Utils;
+using System;
 
 namespace AdvancedMod.NPCs.Boss
 {
@@ -42,18 +44,29 @@ namespace AdvancedMod.NPCs.Boss
         }
         private enum TDStatus
         {
+            Disappear,
             Search,
             Attack,
             Summon,
-            Disappear
+            Lighting
         }
 
-        TDStatus status;
-        int Time = 0;
-        Color color = new Color(255, 255, 255);
+        TDStatus status; //BOSS攻击状态
+        int Time = 0; //计时器
+        Color color = new Color(255, 255, 255); //状态讯息颜色
+        int i = 0; //旋转的闪电弹幕计数器
         public override void AI()
         {
             Player player = Main.player[npc.target];
+            if (!AdvancedWorld.MutationMode && Time >= 900)
+            {
+                Time = 0;
+            }
+            else if (AdvancedWorld.MutationMode && Time >= 1200)
+            {
+                Time = 0;
+            }
+
             if (!player.active || player.dead)
             {
                 status = TDStatus.Disappear;
@@ -72,9 +85,13 @@ namespace AdvancedMod.NPCs.Boss
                 else if (Time >=0 && Time < 600){
                     status = TDStatus.Attack;
                 }
-                else
+                else if (Time >= 600 && Time < 900)
                 {
                     status = TDStatus.Summon;
+                }
+                else if (AdvancedWorld.MutationMode && Time >= 900 && Time < 1200)
+                {
+                    status = TDStatus.Lighting;
                 }
             }
 
@@ -109,7 +126,17 @@ namespace AdvancedMod.NPCs.Boss
                     {
                         NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<SiliconWafer>());
                     }
-                    
+
+                    break;
+                case TDStatus.Lighting:
+                    Vector2 InitAngle = Tool.TurnVector((player.Center - npc.Center), (float)(-Math.PI / 6));
+                    while (Time % 5 == 0)
+                    {
+                        Vector2 speed = Tool.TurnVector(InitAngle, (float)(i * Math.PI / 30));
+                        Projectile.NewProjectile(npc.Center,speed,ModContent.ProjectileType<Projectiles.Boss.TreeDiagrammer.TreeDiagrammer_Lighting>(),npc.damage /3, 0f ,Main.myPlayer,0f ,npc.whoAmI);
+                        i++;
+                    }
+
                     break;
             }
 
