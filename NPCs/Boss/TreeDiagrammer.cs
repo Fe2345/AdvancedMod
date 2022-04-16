@@ -50,66 +50,79 @@ namespace AdvancedMod.NPCs.Boss
             Summon,
             Lighting
         }
-
-        TDStatus status; //BOSS攻击状态
-        int Time = 0; //计时器
+        /*
+        ai[0] 状态指示器（死亡，追击，攻击）
+            -2 NPC死亡
+            -1 玩家死亡
+            0 攻击
+            1 追击玩家
+        ai[1] 计时器
+        ai[2] 攻击方式指示器
+            0 停止攻击
+            1 一阶段攻击
+            2 一阶段召唤
+            3 异变模式旋转闪电
+        */
         Color color = new Color(255, 255, 255); //状态讯息颜色
         int i = 0; //旋转的闪电弹幕计数器
         public override void AI()
         {
             Player player = Main.player[npc.target];
-            if (!AdvancedWorld.MutationMode && Time >= 900)
+            if (!AdvancedWorld.MutationMode && npc.ai[1] >= 900)
             {
-                Time = 0;
+                npc.ai[1] = 0;
             }
-            else if (AdvancedWorld.MutationMode && Time >= 1200)
+            else if (AdvancedWorld.MutationMode && npc.ai[1] >= 1200)
             {
-                Time = 0;
+                npc.ai[1] = 0;
             }
 
             if (!player.active || player.dead)
             {
-                status = TDStatus.Disappear;
+                npc.ai[0] = -1;
             }
             if (Vector2.Distance(npc.Center,player.Center) >= 2500f)
             {
-                status = TDStatus.Search;
+                npc.ai[0] = 1;
             }
             else
             {
-                Time++;
-                if (Time >= 900)
+                npc.ai[1]++;
+                if (npc.ai[1] >= 900)
                 {
-                    Time = 0;
+                    npc.ai[1] = 0;
                 }
-                else if (Time >=0 && Time < 600){
-                    status = TDStatus.Attack;
+                else if (npc.ai[1] >= 0 && npc.ai[1] < 600){
+                    npc.ai[2] = 1;
                 }
-                else if (Time >= 600 && Time < 900)
+                else if (npc.ai[1] >= 600 && npc.ai[1] < 900)
                 {
-                    status = TDStatus.Summon;
+                    npc.ai[2] = 2;
                 }
-                else if (AdvancedWorld.MutationMode && Time >= 900 && Time < 1200)
+                else if (AdvancedWorld.MutationMode && npc.ai[1] >= 900 && npc.ai[1] < 1200)
                 {
-                    status = TDStatus.Lighting;
+                    npc.ai[2] = 3;
                 }
             }
 
-            switch (status)
+            switch ((int)npc.ai[0])
             {
-                case TDStatus.Disappear:
-                    npc.TargetClosest(false);
-                    npc.velocity.X = 0;
-                    npc.velocity.Y += 1;
-                    return;
-                case TDStatus.Search:
-                    if (Time % 120 == 0)
-                    {
-                        npc.velocity = (player.Center - npc.Center) / Vector2.Distance(player.Center,npc.Center) * 6;
-                    }
-                    
+                case -2:
                     break;
-                case TDStatus.Attack:
+                case -1:
+                    npc.velocity = new Vector2(0, 20);
+                    break;
+                case 0:
+                    npc.ai[2] = 0;
+                    break;
+                case 1:
+                    npc.position = player.position + new Vector2(10, 10);
+                    break;
+            }
+
+            switch ((int)npc.ai[2])
+            {
+                case 1:
                     if (Vector2.Distance(player.Center + new Vector2(-100, -100), npc.Center) < Vector2.Distance(player.Center + new Vector2(100, -100), npc.Center))
                     {
                         npc.velocity = (player.Center - npc.Center + new Vector2(-100,10)) / Vector2.Distance(player.Center, npc.Center) * 6;
@@ -119,18 +132,18 @@ namespace AdvancedMod.NPCs.Boss
                         npc.velocity = (player.Center - npc.Center + new Vector2(100, 100)) / Vector2.Distance(player.Center, npc.Center) * 6;
                     }
                     Vector2 npcToPlr = player.Center - npc.Center;
-                    Projectile.NewProjectile(npc.Center, Vector2.Normalize(npcToPlr)*4, ModContent.ProjectileType<Projectiles.Boss.TreeDiagrammer.TreeDiagrammer_Laser>(), 0, 0f, Main.myPlayer, 0, 3);
+                    Projectile.NewProjectile(npc.Center, Vector2.Normalize(npcToPlr)*40, ModContent.ProjectileType<Projectiles.Boss.TreeDiagrammer.TreeDiagrammer_Laser>(), 0, 0f, Main.myPlayer, 0, 3);
                     break;
-                case TDStatus.Summon:
-                    if (Time % 60 == 0)
+                case 2:
+                    if (npc.ai[1] % 60 == 0)
                     {
                         NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<SiliconWafer>());
                     }
 
                     break;
-                case TDStatus.Lighting:
+                case 3:
                     Vector2 InitAngle = Tool.TurnVector((player.Center - npc.Center), (float)(-Math.PI / 6));
-                    while (Time % 5 == 0)
+                    while (npc.ai[1] % 5 == 0)
                     {
                         Vector2 speed = Tool.TurnVector(InitAngle, (float)(i * Math.PI / 30));
                         Projectile.NewProjectile(npc.Center,speed,ModContent.ProjectileType<Projectiles.Boss.TreeDiagrammer.TreeDiagrammer_Lighting>(),npc.damage /3, 0f ,Main.myPlayer,0f ,npc.whoAmI);

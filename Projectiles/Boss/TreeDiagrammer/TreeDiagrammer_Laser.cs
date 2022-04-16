@@ -2,6 +2,7 @@
 using Terraria.ModLoader;
 using Terraria.ID;
 using Microsoft.Xna.Framework;
+using System;
 
 namespace AdvancedMod.Projectiles.Boss.TreeDiagrammer
 {
@@ -31,7 +32,7 @@ namespace AdvancedMod.Projectiles.Boss.TreeDiagrammer
 
         public override void AI()
         {
-            
+            projectile.rotation -= (float)(Math.PI / 2);
         }
     }
 }

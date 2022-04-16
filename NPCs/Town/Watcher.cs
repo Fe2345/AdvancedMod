@@ -2,7 +2,6 @@
 using Terraria.ModLoader;
 using Terraria.ID;
 using Terraria.Utilities;
-using AdvancedMod.Items.Weapon;
 using AdvancedMod.Items.Potion;
 using AdvancedMod.Items.Mateiral;
 using AdvancedMod.Items.Accessory;
@@ -162,7 +161,7 @@ namespace AdvancedMod.NPCs.Town
         public override void SetupShop(Chest shop, ref int nextSlot)
         {
             //设置商品
-            shop.item[nextSlot].SetDefaults(ModContent.ItemType<PhantomLight>());
+            shop.item[nextSlot].SetDefaults(ModContent.ItemType<Items.Weapon.Magic.PhantomLight>());
             //设置价格
             shop.item[nextSlot].value = 5000000;
             nextSlot++;
