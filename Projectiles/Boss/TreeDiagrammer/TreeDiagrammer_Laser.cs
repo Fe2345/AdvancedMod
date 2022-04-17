@@ -32,7 +32,7 @@ namespace AdvancedMod.Projectiles.Boss.TreeDiagrammer
 
         public override void AI()
         {
-            projectile.rotation -= (float)(Math.PI / 2);
+            projectile.rotation = (float)(Math.PI / 2 - Math.Atan2(projectile.velocity.Y, projectile.velocity.X));
         }
     }
 }

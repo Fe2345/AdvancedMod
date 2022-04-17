@@ -1,6 +1,8 @@
 using Terraria.ModLoader;
 using Terraria;
 using Terraria.ID;
+using System;
+using System.Collections.Generic;
 
 namespace AdvancedMod
 {
@@ -58,6 +60,30 @@ namespace AdvancedMod
             modRecipe.AddTile(TileID.HeavyWorkBench);
             modRecipe.SetResult(ItemID.AmmoBox);
             modRecipe.AddRecipe();
+        }
+
+        public override void PostSetupContent()
+        {
+            Mod BossChecklist = ModLoader.GetMod("BossCheckList");
+            if (BossChecklist != null)
+            {
+                BossChecklist.Call("AddBoss",
+                    "树状图设计者",
+                    9.5f,
+                    ModContent.NPCType<NPCs.Boss.TreeDiagrammer>(),
+                    this,
+                    "树状图设计者",
+                    (Func<bool>)(() => AdvancedWorld.downedTreeDiagrammer),
+                    ModContent.ItemType<Items.Summon.DiagrammerWreckage>(),
+                    ModContent.ItemType<Items.Weapon.Lantern_Of_Middle_Autemn>(),
+                    new List<int> {ItemID.GreaterHealingPotion,ModContent.ItemType<Items.Mateiral.SiliconBar>(),ItemID.SoulofLight,ItemID.IronBar,ItemID.Wire },
+                    "使用[i:{ModContent.ItemType<Items.Summon.DiagrammerWreckage>}]召唤",
+                    "树状图设计者 杀死了所有玩家！",
+                    "AdvancedMod/NPCs/Boss/TreeDiagrammer",
+                    "AdvancedMod/NPCs/Boss/TreeDiagrammer_Head_Boss",
+                    (Func<bool>)(() => AdvancedWorld.MutationMode)
+                    );
+            }
         }
     }
 }

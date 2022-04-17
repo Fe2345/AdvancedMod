@@ -268,7 +268,7 @@ namespace AdvancedMod.NPCs.Town
                 shop.item[nextSlot].SetDefaults(ItemID.TitanPotion);
                 shop.item[nextSlot].value = 500;
                 nextSlot++;
-                shop.item[nextSlot].SetDefaults(3259);
+                shop.item[nextSlot].SetDefaults(ItemID.WarmthPotion);
                 shop.item[nextSlot].value = 500;
                 nextSlot++;
                 shop.item[nextSlot].SetDefaults(ItemID.WaterWalkingPotion);
