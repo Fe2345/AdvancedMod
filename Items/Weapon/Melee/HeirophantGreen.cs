@@ -59,5 +59,14 @@ namespace AdvancedMod.Items.Weapon.Melee
 
             return true;
         }
+
+        public override void AddRecipes()
+        {
+            ModRecipe recipe = new ModRecipe(mod);
+            recipe.AddIngredient(ItemID.ChlorophyteBar, 12);
+            recipe.AddTile(ModContent.TileType<Tiles.AdvancedCraftTable>());
+            recipe.SetResult(this);
+            recipe.AddRecipe();
+        }
     }
 }

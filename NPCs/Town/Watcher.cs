@@ -7,6 +7,7 @@ using AdvancedMod.Items.Mateiral;
 using AdvancedMod.Items.Accessory;
 using AdvancedMod.Buffs.Not_DeBuff;
 using AdvancedMod.Projectiles;
+using System.Collections.Generic;
 
 namespace AdvancedMod.NPCs.Town
 {
@@ -106,36 +107,35 @@ namespace AdvancedMod.NPCs.Town
 
         public override string GetChat()
         {
-            WeightedRandom<string> chat = new WeightedRandom<string>();
+            List<string> chat = new List<string>()
             {
-                if (!Main.bloodMoon && !Main.eclipse)
-                {
-                    //无家可归时
-                    if (npc.homeless)
-                    {
-                        chat.Add("世间最荒唐的事情，无过于我可以洞察万物但连个家都没有");
-                    }
-                    else
-                    {
-                        chat.Add("魔眼之神已经陨落了……");
-                    }
-                }
-                //日食时
-                if (Main.eclipse)
-                {
-                    chat.Add("太阳的消失因一些机械而起，但那些机械不过是尘埃而已");
-                }
-                //血月时
-                if (Main.bloodMoon)
-                {
-                    chat.Add("让我想想,这红色的月亮让我想到了什么陈旧的往事？");
-                }
-                if (Main.raining)
-                {
-                    chat.Add("通过我的眼睛，我可以看到雨水的美好");
-                }
-                return chat;
+                "魔眼之神已经陨落了……",
+                "我怎么感觉月亮领主像是个擦玻璃的一样？",
+                "这个世界难道是有Bug的吗？",
+                "吾心吾行澄如明镜，所作所为皆为『正义』"
+            };
+
+            if (npc.homeless)
+            {
+                chat.Add("世间最荒唐的事情，无过于我可以洞察万物但连个家都没有");
             }
+
+            if (Main.eclipse)
+            {
+                chat.Add("太阳的消失因一些机械而起，但那些机械不过是尘埃而已");
+            }
+
+            if (Main.bloodMoon)
+            {
+                chat.Add("让我想想,这红色的月亮让我想到了什么陈旧的往事？");
+            }
+
+            if (Main.raining)
+            {
+                chat.Add("通过我的眼睛，我可以看到雨水的美好");
+            }
+
+            return Main.rand.Next(chat);
         }
 
         public override void SetChatButtons(ref string button, ref string button2)
@@ -184,7 +184,10 @@ namespace AdvancedMod.NPCs.Town
             shop.item[nextSlot].value = 1000000;
             nextSlot++;
             shop.item[nextSlot].SetDefaults(ModContent.ItemType<Items.Accessory.Symbols.SymbolOfAdvanced>());
-            shop.item[nextSlot].value = 1000000;
+            shop.item[nextSlot].value = 10000;
+            nextSlot++;
+            shop.item[nextSlot].SetDefaults(ModContent.ItemType<Items.Weapon.Melee.RoarOfFlame>());
+            shop.item[nextSlot].value = 50000;
         }
 
         public override void TownNPCAttackStrength(ref int damage, ref float knockback)

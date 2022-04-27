@@ -57,9 +57,20 @@ namespace AdvancedMod.Items.Weapon.Melee
                 Vector2 shootVel = Tool.TurnVector(speed, (float)(i * Math.PI / 3));
                 Projectile.NewProjectile(position,Vector2.Normalize(shootVel)*10,item.shoot,damage,knockBack,player.whoAmI,speed.X,speed.Y);
             }
-            
-
             return false;
+        }
+
+        public override void AddRecipes()
+        {
+            ModRecipe recipe = new ModRecipe(mod);
+            recipe.AddIngredient(ItemID.BeeKeeper, 1);
+            recipe.AddIngredient(ItemID.BreakerBlade,1);
+            recipe.AddIngredient(ItemID.Seedler, 1);
+            recipe.AddIngredient(ItemID.Meowmere, 1);
+            recipe.AddIngredient(ModContent.ItemType<Items.Weapon.Melee.RoarOfFlame>(), 1);
+            recipe.AddTile(ModContent.TileType<Tiles.AdvancedCraftTable>());
+            recipe.SetResult(this, 1);
+            recipe.AddRecipe();
         }
     }
 }

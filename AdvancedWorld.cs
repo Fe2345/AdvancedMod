@@ -15,6 +15,7 @@ namespace AdvancedMod
         public static bool downedGodOfEye;
         public static bool downedThrougher;
         public static bool downedGodOfTime;
+        public static bool downedTheWorld;
         public static bool downedMutationBosses;
 
         public override TagCompound Save()
@@ -27,6 +28,7 @@ namespace AdvancedMod
             if (downedGodOfEye) data.Add("GodOfEye");
             if (downedThrougher) data.Add("Througher");
             if (downedGodOfTime) data.Add("GodOfTime");
+            if (downedTheWorld) data.Add("TheWorld");
             if (downedMutationBosses) data.Add("MutationBosses");
 
             return new TagCompound
@@ -45,6 +47,7 @@ namespace AdvancedMod
             downedGodOfEye = data.Contains("GodOfEye");
             downedThrougher = data.Contains("Througher");
             downedGodOfTime = data.Contains("GodOfTime");
+            downedTheWorld = data.Contains("TheWorld");
             downedMutationBosses = data.Contains("MutationBosses");
         }
     }

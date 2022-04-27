@@ -33,6 +33,12 @@ namespace AdvancedMod.Items.Summon
                 Main.NewText("异变阻止了你改变规则");
                 return false;  
             }
+            
+            if (!Main.expertMode)
+            {
+                return false;
+            }
+
             return true;
         }
 

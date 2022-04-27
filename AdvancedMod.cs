@@ -64,11 +64,10 @@ namespace AdvancedMod
 
         public override void PostSetupContent()
         {
-            Mod BossChecklist = ModLoader.GetMod("BossCheckList");
+            Mod BossChecklist = ModLoader.GetMod("BossChecklist");
             if (BossChecklist != null)
             {
                 BossChecklist.Call("AddBoss",
-                    "Ê÷×´Í¼Éè¼ÆÕß",
                     9.5f,
                     ModContent.NPCType<NPCs.Boss.TreeDiagrammer>(),
                     this,
@@ -84,6 +83,49 @@ namespace AdvancedMod
                     (Func<bool>)(() => AdvancedWorld.MutationMode)
                     );
             }
+        }
+
+        public override object Call(params object[] args)
+        {
+            if (args[0].Equals("MutationMode"))
+            {
+                return AdvancedWorld.MutationMode;
+            }
+            else if (args[0].Equals("downedPolarMessager"))
+            {
+                return AdvancedWorld.downedPolarMessager;
+            }
+            else if (args[0].Equals("downedTreeDiagrammer"))
+            {
+                return AdvancedWorld.downedTreeDiagrammer;
+            }
+            else if (args[0].Equals("downedTriangle"))
+            {
+                return AdvancedWorld.downedTriangle;
+            }
+            else if (args[0].Equals("downedGodOfEye"))
+            {
+                return AdvancedWorld.downedGodOfEye;
+            }
+            else if (args[0].Equals("downedThrougher"))
+            {
+                return AdvancedWorld.downedThrougher;
+            }
+            else if (args[0].Equals("downedGodOfTime"))
+            {
+                return AdvancedWorld.downedGodOfTime;
+            }
+            else if (args[0].Equals("downedTheWorld"))
+            {
+                return AdvancedWorld.downedTheWorld;
+            }
+            else if (args[0].Equals("downedMutationBosses"))
+            {
+                return AdvancedWorld.downedMutationBosses;
+            }
+
+
+            return false;
         }
     }
 }

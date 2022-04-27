@@ -1,6 +1,9 @@
-ADVANCED MOD v0.2.2
+ADVANCED MOD v0.2.3
 
 近期更新：
+
+v0.2.3 第一部分：
+修复了若干小Bug
 
 v0.2.1 第一部分：
 现在树状图设计者拥有新的AI
