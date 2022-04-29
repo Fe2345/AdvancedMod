@@ -1,6 +1,7 @@
 ﻿using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
+using Terraria.Localization;
 using AdvancedMod.Projectiles;
 using Microsoft.Xna.Framework;
 using AdvancedMod.Utils;
@@ -19,6 +20,8 @@ namespace AdvancedMod.NPCs.Boss
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("树状图设计者");
+            DisplayName.AddTranslation(GameCulture.Chinese, "树状图设计者");
+            DisplayName.AddTranslation(GameCulture.English, "Tree Diagrammer");
             Main.npcFrameCount[npc.type] = 1;
         }
 
@@ -41,14 +44,6 @@ namespace AdvancedMod.NPCs.Boss
             aiType = -1;
             npc.boss = true;
             bossBag = ModContent.ItemType<Items.Misc.TreeDiagrammerBag>();
-        }
-        private enum TDStatus
-        {
-            Disappear,
-            Search,
-            Attack,
-            Summon,
-            Lighting
         }
         /*
         ai[0] 状态指示器（死亡，追击，攻击）

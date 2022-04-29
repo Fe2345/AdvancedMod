@@ -6,15 +6,24 @@ namespace AdvancedMod
 {
     public class AdvancedPlayer : ModPlayer
     {
-        public int Energy;
-        public int UsedSiliconHeartCount;
+        public static int Energy;
+        public static int UsedSiliconHeartCount;
+        public static bool RecievedInitBag;
+
+        public override void Initialize()
+        {
+            Energy = 2048;
+            UsedSiliconHeartCount = 0;
+            RecievedInitBag = false;
+        }
 
         public override TagCompound Save()
         {
             return new TagCompound
             {
                 {"Energy",Energy },
-                {"UsedSiliconHeartCount",UsedSiliconHeartCount }
+                {"UsedSiliconHeartCount",UsedSiliconHeartCount },
+                {"RecievedInitBag",RecievedInitBag }
             };
         }
 
@@ -22,6 +31,7 @@ namespace AdvancedMod
         {
             Energy = tag.GetInt("Energy");
             UsedSiliconHeartCount = tag.GetInt("UsedSiliconHeartCount");
+            RecievedInitBag = tag.GetBool("RecievedInitBag");
         }
     }
 }

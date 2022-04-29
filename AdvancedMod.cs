@@ -64,25 +64,27 @@ namespace AdvancedMod
 
         public override void PostSetupContent()
         {
-            Mod BossChecklist = ModLoader.GetMod("BossChecklist");
-            if (BossChecklist != null)
+            /*
+            Mod Checklist = ModLoader.GetMod("BossChecklist");
+            if (Checklist != null)
             {
-                BossChecklist.Call("AddBoss",
+                 Checklist.Call("AddBoss",
                     9.5f,
                     ModContent.NPCType<NPCs.Boss.TreeDiagrammer>(),
                     this,
-                    "树状图设计者",
+                    "$" + GetNPC("Tree Diagrammer").DisplayName.Key,
                     (Func<bool>)(() => AdvancedWorld.downedTreeDiagrammer),
                     ModContent.ItemType<Items.Summon.DiagrammerWreckage>(),
                     ModContent.ItemType<Items.Weapon.Lantern_Of_Middle_Autemn>(),
                     new List<int> {ItemID.GreaterHealingPotion,ModContent.ItemType<Items.Mateiral.SiliconBar>(),ItemID.SoulofLight,ItemID.IronBar,ItemID.Wire },
-                    "使用[i:{ModContent.ItemType<Items.Summon.DiagrammerWreckage>}]召唤",
-                    "树状图设计者 杀死了所有玩家！",
+                    $"Use[i:{ModContent.ItemType<Items.Summon.DiagrammerWreckage>()}] to summon.",
+                    "Tree Diagrammer  Killed All Players!",
                     "AdvancedMod/NPCs/Boss/TreeDiagrammer",
                     "AdvancedMod/NPCs/Boss/TreeDiagrammer_Head_Boss",
                     (Func<bool>)(() => AdvancedWorld.MutationMode)
                     );
             }
+            */
         }
 
         public override object Call(params object[] args)

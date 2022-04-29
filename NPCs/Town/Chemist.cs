@@ -55,14 +55,14 @@ namespace AdvancedMod.NPCs.Town
             animationType = NPCID.Guide;
             //如果你的NPC属于除投掷类NPC以外的其他攻击类型，请带上，值可以填对应NPC的ID
 
-            if (NPC.downedMechBoss1)
+            if (NPC.downedMechBossAny)
             {
-                npc.lifeMax = 1000;
+                npc.lifeMax = Main.expertMode ? 1000 : 300;
             }
 
             if (NPC.downedMoonlord)
             {
-                npc.lifeMax = 1500;
+                npc.lifeMax = Main.expertMode ? 1500 : 450;
             }
         }
 
@@ -342,13 +342,14 @@ namespace AdvancedMod.NPCs.Town
             //设置商品
             
         }
-
+        /*
         //设置该NPC的近战/抛射物伤害和击退（取决于NPC攻击类型）
         public override void TownNPCAttackStrength(ref int damage, ref float knockback)
         {
             damage = 55;
             knockback = 3f;
         }
+        */
         //NPC攻击一次后的间隔
         public override void TownNPCAttackCooldown(ref int cooldown, ref int randExtraCooldown)
         {

@@ -53,6 +53,7 @@ namespace AdvancedMod.Items.Summon
             else
             {
                 AdvancedWorld.MutationMode = false;
+                AdvancedPlayer.RecievedInitBag = false;
                 Main.NewText("异变模式已关闭！！！",color);
             }
 

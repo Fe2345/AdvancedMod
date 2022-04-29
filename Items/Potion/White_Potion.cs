@@ -34,7 +34,6 @@ namespace AdvancedMod.Items.Potion
             // 加buff的方法1：设置物品的buffType为buff的ID
             // 这里我设置了中毒debuff（2333
             item.buffType = ModContent.BuffType<Reward_Of_The_God_Of_Eye>();
-            item.buffType = BuffID.Honey;
 
             // 用于在物品描述上显示buff持续时间
             item.buffTime = 60000;
