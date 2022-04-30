@@ -23,7 +23,7 @@ namespace AdvancedMod.Items.Summon
             item.useTime = 45;
             item.useStyle = ItemUseStyleID.HoldingUp;
             item.consumable = false;
-            item.value = Item.buyPrice(1);
+            item.value = Item.sellPrice(silver: 1);
         }
 
         public override bool CanUseItem(Player player)

@@ -19,7 +19,7 @@ namespace AdvancedMod.Projectiles
             projectile.friendly = true;
             projectile.hostile = false;
             projectile.penetrate = 3;
-            projectile.timeLeft = 240;
+            projectile.timeLeft = 600;
             projectile.damage = 1000;
             projectile.tileCollide = false;
         }
@@ -34,7 +34,7 @@ namespace AdvancedMod.Projectiles
             {
                 projectile.velocity = projectile.oldVelocity;
             }
-            else if (Time > 60 && Time <= 240)
+            else if (Time > 60 && Time <= 600)
             {
                 for (int i = 0;i < Main.npc.Length; i++)
                 {

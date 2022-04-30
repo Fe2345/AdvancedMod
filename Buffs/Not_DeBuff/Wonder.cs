@@ -1,6 +1,7 @@
 ﻿using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
+using Microsoft.Xna.Framework;
 
 namespace AdvancedMod.Buffs.Not_DeBuff
 {
@@ -19,7 +20,8 @@ namespace AdvancedMod.Buffs.Not_DeBuff
 
         public override void Update(Player player, ref int buffIndex)
         {
-            switch(Main.rand.Next(50))
+            Color color = new Color(0, 0, 0);
+            switch(Main.rand.Next(3000))
             {
                 case 1:
                     for (int i = 0;i < Main.npc.Length; i++)
@@ -32,17 +34,20 @@ namespace AdvancedMod.Buffs.Not_DeBuff
                         if (!Main.npc[i].friendly && Main.npc[i].boss)
                         {
                             Main.npc[i].life = 1;
-                        }
+                        } 
                     }
+                    Main.NewText("正在发生奇迹！", color);
                     break;
                 case 2:
                     player.statLife = player.statLifeMax2;
+                    Main.NewText("正在发生奇迹！", color);
                     break;
                 case 3:
                     for (int i = 0; i < Main.projectile.Length; i++)
                     {
                         Main.projectile[i].Kill();
                     }
+                    Main.NewText("正在发生奇迹！", color);
                     break;
             }
         }

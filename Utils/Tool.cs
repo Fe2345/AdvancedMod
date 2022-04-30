@@ -37,5 +37,13 @@ namespace AdvancedMod.Utils
 
             return TurnedVector;
         }
+
+        public static void AddItem(ref Chest shop, ref int nextSlot, bool Check, int type, int value)
+        {
+            if (!Check) return;
+            shop.item[nextSlot].SetDefaults(type);
+            shop.item[nextSlot].value = value;
+            nextSlot++;
+        }
     }
 }

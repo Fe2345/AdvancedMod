@@ -3,6 +3,7 @@ using Terraria.ModLoader;
 using Terraria.ID;
 using Terraria.Localization;
 using System.Collections.Generic;
+using AdvancedMod.Utils;
 
 namespace AdvancedMod.NPCs.Town
 {
@@ -12,6 +13,7 @@ namespace AdvancedMod.NPCs.Town
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("异变");
+            DisplayName.AddTranslation(GameCulture.Chinese, "异变");
             DisplayName.AddTranslation(GameCulture.English, "Mutation");
             Main.npcFrameCount[npc.type] = Main.npcFrameCount[NPCID.Angler];
             //NPC总共帧图数，一般为16+下面两种帧的帧数
@@ -142,14 +144,67 @@ namespace AdvancedMod.NPCs.Town
                     AdvancedPlayer.RecievedInitBag = true;
                     Item.NewItem(Main.LocalPlayer.Center, ModContent.ItemType<Items.Summon.MutationCore>(), 1);
                     Item.NewItem(Main.LocalPlayer.Center, ModContent.ItemType<Items.Summon.ComplexBossSummons_PreHardmode>(), 1);
+                    Item.NewItem(Main.LocalPlayer.Center, ItemID.PlatinumBroadsword, 1);
+                    Item.NewItem(Main.LocalPlayer.Center, ItemID.IronBow, 1);
+                    Item.NewItem(Main.LocalPlayer.Center, ItemID.RubyStaff, 1);
+                    Item.NewItem(Main.LocalPlayer.Center, ItemID.SlimeStaff, 1);
+                    Item.NewItem(Main.LocalPlayer.Center, ItemID.LifeCrystal, 3);
+                    Item.NewItem(Main.LocalPlayer.Center, ItemID.ManaCrystal, 3);
                 }
             }
         }
 
         public override void SetupShop(Chest shop, ref int nextSlot)
         {
-            shop.item[nextSlot].SetDefaults(ModContent.ItemType<Items.Potion.WonderPotion>());
-            shop.item[nextSlot].value = 500;
+            Tool.AddItem(ref shop, ref nextSlot, true, ModContent.ItemType<Items.Summon.MutationCore>(), 100);
+            Tool.AddItem(ref shop, ref nextSlot, true, ModContent.ItemType<Items.Summon.ComplexBossSummons_PreHardmode>(), 100);
+            Tool.AddItem(ref shop, ref nextSlot, Main.hardMode, ModContent.ItemType<Items.Summon.ComplexBossSummons_Hardmode>(), 100);
+            Tool.AddItem(ref shop, ref nextSlot, NPC.downedBoss2, ItemID.FeralClaws, 10000);
+            Tool.AddItem(ref shop, ref nextSlot, Main.hardMode, ItemID.TitanGlove, 10000);
+            Tool.AddItem(ref shop, ref nextSlot, !Main.dayTime, ModContent.ItemType<Items.Potion.WonderPotion>(), 50000);
+        }
+
+        public override void TownNPCAttackStrength(ref int damage, ref float knockback)
+        {
+            damage = 36;
+            knockback = 3f;
+
+            if (Main.hardMode)
+            {
+                damage = 80;
+                knockback = 6f;
+            }
+            if (NPC.downedPlantBoss)
+            {
+                damage = 120;
+                knockback = 8f;
+            }
+            if (NPC.downedMoonlord)
+            {
+                damage = 200;
+                knockback = 15f;
+            }
+            if (AdvancedWorld.downedMutationBosses)
+            {
+                damage = 1000;
+                knockback = 30f;
+            }
+        }
+
+        //NPC攻击一次后的间隔
+        public override void TownNPCAttackCooldown(ref int cooldown, ref int randExtraCooldown)
+        {
+            cooldown = 3;
+            randExtraCooldown = 2;
+            //间隔的算法：实际间隔会大于或等于cooldown的值且总是小于cooldown+randExtraCooldown的总和（TR总整这些莫名其妙的玩意）
+        }
+
+        public override void TownNPCAttackProj(ref int projType, ref int attackDelay)
+        {
+            projType = ProjectileID.FrostDaggerfish;
+            //使用黄玉法杖的弹幕
+            attackDelay = 180;
+            //NPC在出招后多长时间才会发射弹幕
         }
     }
 }
