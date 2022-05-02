@@ -8,6 +8,8 @@ namespace AdvancedMod
 {
     public class AdvancedMod : Mod
     {
+        internal static AdvancedMod Instance;
+
         public override void AddRecipes()
         {
             ModRecipe modRecipe = new ModRecipe(this);
@@ -128,6 +130,11 @@ namespace AdvancedMod
 
 
             return false;
+        }
+
+        public override void Load()
+        {
+            Instance = this;
         }
     }
 }

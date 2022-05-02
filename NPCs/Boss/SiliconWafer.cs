@@ -1,6 +1,7 @@
 ﻿using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
+using Microsoft.Xna.Framework;
 
 namespace AdvancedMod.NPCs.Boss
 {
@@ -20,8 +21,21 @@ namespace AdvancedMod.NPCs.Boss
             Main.npcFrameCount[npc.type] = 1;
             npc.noGravity = true;
             npc.noTileCollide = true;
-            aiType = 5;
+            aiType = -1;
             npc.boss = false;
+        }
+
+        public override void AI()
+        {
+            Player player = Main.player[npc.target];
+            Vector2 distance = player.Center - npc.Center;
+
+            npc.velocity = 6 *distance/distance.Length();
+        }
+
+        public override void NPCLoot()
+        {
+            if (!AdvancedWorld.MutationMode) Item.NewItem(npc.Center, ItemID.Heart, 1);
         }
     }
 }

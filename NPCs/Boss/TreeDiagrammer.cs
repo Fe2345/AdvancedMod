@@ -83,11 +83,7 @@ namespace AdvancedMod.NPCs.Boss
             else
             {
                 npc.ai[1]++;
-                if (npc.ai[1] >= 900)
-                {
-                    npc.ai[1] = 0;
-                }
-                else if (npc.ai[1] >= 0 && npc.ai[1] < 600){
+                if (npc.ai[1] >= 0 && npc.ai[1] < 600){
                     npc.ai[2] = 1;
                 }
                 else if (npc.ai[1] >= 600 && npc.ai[1] < 900)
