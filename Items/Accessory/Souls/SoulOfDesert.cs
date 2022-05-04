@@ -2,14 +2,14 @@
 using Terraria.ModLoader;
 using Terraria.ID;
 
-namespace AdvancedMod.Items.Accessory.Symbols
+namespace AdvancedMod.Items.Accessory.Souls
 {
-    public class SymbolOfJungle : ModItem
+    public class SoulOfDesert : ModItem
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("丛林之符");
-            Tooltip.SetDefault("+3防御力\n+3%伤害\n+3%移速\n+3%暴击率\n在丛林中增益为上述三倍");
+            DisplayName.SetDefault("沙漠之魂");
+            Tooltip.SetDefault("+3防御力\n+3%伤害\n+3%移速\n+3%暴击率\n在沙漠中增益为上述三倍");
         }
 
         public override void SetDefaults()
@@ -23,8 +23,8 @@ namespace AdvancedMod.Items.Accessory.Symbols
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            if (!player.ZoneJungle) 
-            { 
+            if (!player.ZoneDesert)
+            {
                 player.magicDamage += 0.03f;
                 player.rangedDamage += 0.03f;
                 player.meleeDamage += 0.03f;
@@ -52,9 +52,9 @@ namespace AdvancedMod.Items.Accessory.Symbols
         public override void AddRecipes()
         {
             ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemID.Wood, 44);
-            recipe.AddIngredient(ItemID.Gel, 10);
-            recipe.AddIngredient(ItemID.Bunny, 3);
+            recipe.AddIngredient(ItemID.Cactus, 44);
+            recipe.AddIngredient(ItemID.SandBlock, 10);
+            recipe.AddIngredient(ItemID.AntlionMandible, 3);
             recipe.AddTile(TileID.Anvils);
             recipe.SetResult(this, 1);
             recipe.AddRecipe();

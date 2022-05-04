@@ -2,13 +2,13 @@
 using Terraria.ModLoader;
 using Terraria.ID;
 
-namespace AdvancedMod.Items.Accessory.Symbols
+namespace AdvancedMod.Items.Accessory.Souls
 {
-    public class SymbolOfBalence : ModItem
+    public class SoulOfOverworld : ModItem
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("人间之符");
+            DisplayName.SetDefault("人间之魂");
             Tooltip.SetDefault("+15防御力\n+15%伤害\n+15%移速\n+15%暴击率\n+80最大生命值\n在地表增益为以上所述三倍");
         }
 
@@ -54,11 +54,11 @@ namespace AdvancedMod.Items.Accessory.Symbols
         public override void AddRecipes()
         {
             ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ModContent.ItemType<SymbolOfForest>(),1);
-            recipe.AddIngredient(ModContent.ItemType<SymbolOfDesert>(),1);
-            recipe.AddIngredient(ModContent.ItemType<SymbolOfIceland>(),1);
-            recipe.AddIngredient(ModContent.ItemType<SymbolOfJungle>(), 1);
-            recipe.AddIngredient(ModContent.ItemType<SymbolOfSea>(), 1);
+            recipe.AddIngredient(ModContent.ItemType<SoulOfForest>(),1);
+            recipe.AddIngredient(ModContent.ItemType<SoulOfDesert>(),1);
+            recipe.AddIngredient(ModContent.ItemType<SoulOfIceland>(),1);
+            recipe.AddIngredient(ModContent.ItemType<SoulOfJungle>(), 1);
+            recipe.AddIngredient(ModContent.ItemType<SoulOfOcean>(), 1);
             recipe.AddTile(TileID.Anvils);
             recipe.SetResult(this, 1);
             recipe.AddRecipe();

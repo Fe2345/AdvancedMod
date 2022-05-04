@@ -183,7 +183,7 @@ namespace AdvancedMod.NPCs.Town
             shop.item[nextSlot].SetDefaults(ModContent.ItemType<TimePieces>());
             shop.item[nextSlot].value = 1000000;
             nextSlot++;
-            shop.item[nextSlot].SetDefaults(ModContent.ItemType<Items.Accessory.Symbols.SymbolOfAdvanced>());
+            shop.item[nextSlot].SetDefaults(ModContent.ItemType<Items.Accessory.Symbols.SymbolOfNature>());
             shop.item[nextSlot].value = 10000;
             nextSlot++;
             shop.item[nextSlot].SetDefaults(ModContent.ItemType<Items.Weapon.Melee.RoarOfFlame>());

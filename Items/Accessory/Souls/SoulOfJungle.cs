@@ -2,14 +2,14 @@
 using Terraria.ModLoader;
 using Terraria.ID;
 
-namespace AdvancedMod.Items.Accessory.Symbols
+namespace AdvancedMod.Items.Accessory.Souls
 {
-    public class SymbolOfIceland : ModItem
+    public class SoulOfJungle : ModItem
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("雪原之符");
-            Tooltip.SetDefault("+3防御力\n+3%伤害\n+3%移速\n+3%暴击率\n在雪原中增益为上述三倍");
+            DisplayName.SetDefault("丛林之魂");
+            Tooltip.SetDefault("+3防御力\n+3%伤害\n+3%移速\n+3%暴击率\n在丛林中增益为上述三倍");
         }
 
         public override void SetDefaults()
@@ -23,8 +23,8 @@ namespace AdvancedMod.Items.Accessory.Symbols
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            if (!player.ZoneSnow)
-            {
+            if (!player.ZoneJungle) 
+            { 
                 player.magicDamage += 0.03f;
                 player.rangedDamage += 0.03f;
                 player.meleeDamage += 0.03f;
@@ -52,9 +52,9 @@ namespace AdvancedMod.Items.Accessory.Symbols
         public override void AddRecipes()
         {
             ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemID.BorealWood, 44);
-            recipe.AddIngredient(ItemID.IceBlock, 10);
-            recipe.AddIngredient(ItemID.Shiverthorn, 3);
+            recipe.AddIngredient(ItemID.RichMahogany, 44);
+            recipe.AddIngredient(ItemID.Vine, 10);
+            recipe.AddIngredient(ItemID.Frog, 3);
             recipe.AddTile(TileID.Anvils);
             recipe.SetResult(this, 1);
             recipe.AddRecipe();

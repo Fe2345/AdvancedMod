@@ -161,6 +161,7 @@ namespace AdvancedMod.NPCs.Town
             Tool.AddItem(ref shop, ref nextSlot, Main.hardMode, ModContent.ItemType<Items.Summon.ComplexBossSummons_Hardmode>(), 100);
             Tool.AddItem(ref shop, ref nextSlot, NPC.downedBoss2, ItemID.FeralClaws, 10000);
             Tool.AddItem(ref shop, ref nextSlot, Main.hardMode, ItemID.TitanGlove, 10000);
+            Tool.AddItem(ref shop, ref nextSlot, Main.hardMode, ItemID.MagmaStone, 10000);
             Tool.AddItem(ref shop, ref nextSlot, !Main.dayTime, ModContent.ItemType<Items.Potion.WonderPotion>(), 50000);
         }
 
@@ -201,10 +202,15 @@ namespace AdvancedMod.NPCs.Town
 
         public override void TownNPCAttackProj(ref int projType, ref int attackDelay)
         {
-            projType = ProjectileID.FrostDaggerfish;
-            //使用黄玉法杖的弹幕
+            projType = ModContent.ProjectileType<Projectiles.RabbitBomb_Projectile>();
+            //使用兔兔炸弹的弹幕
             attackDelay = 180;
             //NPC在出招后多长时间才会发射弹幕
+        }
+
+        public override void NPCLoot()
+        {
+            Item.NewItem(npc.Center, ModContent.ItemType<Items.Weapon.Thrown.RabbitBomb>(), 1);
         }
     }
 }

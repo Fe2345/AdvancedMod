@@ -4,11 +4,11 @@ using Terraria.ID;
 
 namespace AdvancedMod.Items.Accessory.Symbols
 {
-    public class SymbolOfAdvanced : ModItem
+    public class SymbolOfNature : ModItem
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("先进之符");
+            DisplayName.SetDefault("自然之象");
             Tooltip.SetDefault("+100防御力\n+100%伤害\n+60%移速\n+100%暴击率\n+500最大生命值\n减免25%伤害");
         }
 
@@ -59,15 +59,14 @@ namespace AdvancedMod.Items.Accessory.Symbols
                 item.defense = 100;
                 player.statLifeMax2 += 500;
                 player.lifeRegen += 40;
-                player.endurance = 2.0f;
-                player.buffImmune[BuffID.PotionSickness] = true;
+                player.endurance = 0.25f;
             }
         }
 
         public override void AddRecipes()
         {
             ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ModContent.ItemType<SymbolOfAdvanced>(), 1);
+            recipe.AddIngredient(ModContent.ItemType<Accessory.Souls.SoulOfOverworld>(), 1);
             recipe.AddTile(TileID.Anvils);
             recipe.SetResult(this, 1);
             recipe.AddRecipe();

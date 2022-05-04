@@ -2,14 +2,14 @@
 using Terraria.ModLoader;
 using Terraria.ID;
 
-namespace AdvancedMod.Items.Accessory.Symbols
+namespace AdvancedMod.Items.Accessory.Souls
 {
-    public class SymbolOfSea : ModItem
+    public class SoulOfForest : ModItem
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("海洋之符");
-            Tooltip.SetDefault("+3防御力\n+3%伤害\n+3%移速\n+3%暴击率\n在海洋中增益为上述三倍");
+            DisplayName.SetDefault("森林之魂");
+            Tooltip.SetDefault("+3防御力\n+3%伤害\n+3%移速\n+3%暴击率\n在森林中增益为上述三倍");
         }
 
         public override void SetDefaults()
@@ -23,7 +23,7 @@ namespace AdvancedMod.Items.Accessory.Symbols
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            if (!player.ZoneBeach)
+            if ((!player.ZoneOverworldHeight) || player.ZoneJungle || player.ZoneDesert || player.ZoneCrimson || player.ZoneCorrupt || player.ZoneSnow || player.ZoneDungeon || player.ZoneHoly)
             {
                 player.magicDamage += 0.03f;
                 player.rangedDamage += 0.03f;
@@ -52,9 +52,9 @@ namespace AdvancedMod.Items.Accessory.Symbols
         public override void AddRecipes()
         {
             ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemID.PalmWood, 44);
-            recipe.AddIngredient(ItemID.SandBlock, 10);
-            recipe.AddIngredient(ItemID.Seashell, 3);
+            recipe.AddIngredient(ItemID.Wood, 44);
+            recipe.AddIngredient(ItemID.Gel, 10);
+            recipe.AddIngredient(ItemID.Bunny, 3);
             recipe.AddTile(TileID.Anvils);
             recipe.SetResult(this, 1);
             recipe.AddRecipe();
