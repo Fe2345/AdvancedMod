@@ -67,6 +67,11 @@ namespace AdvancedMod.NPCs.Town
             {
                 npc.lifeMax = Main.expertMode ? 15000 : 4500;
             }
+
+            if (AdvancedWorld.downedMutationBosses)
+            {
+                npc.lifeMax = 4500000;
+            }
         }
 
         public override string TownNPCName()
@@ -150,6 +155,7 @@ namespace AdvancedMod.NPCs.Town
                     Item.NewItem(Main.LocalPlayer.Center, ItemID.SlimeStaff, 1);
                     Item.NewItem(Main.LocalPlayer.Center, ItemID.LifeCrystal, 3);
                     Item.NewItem(Main.LocalPlayer.Center, ItemID.ManaCrystal, 3);
+                    return;
                 }
             }
         }

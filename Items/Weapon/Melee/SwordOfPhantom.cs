@@ -18,7 +18,7 @@ namespace AdvancedMod.Items.Weapon.Melee
         public override void SetDefaults()
         {
             item.useStyle = ItemUseStyleID.SwingThrow;  //枪支或法杖
-            item.damage = 1600;   //伤害
+            item.damage = 3000;   //伤害
             item.useAnimation = 10; //使用动画时长
             item.useTime = 5;   //攻速
             item.knockBack = 10;  //击退

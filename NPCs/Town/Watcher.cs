@@ -154,7 +154,14 @@ namespace AdvancedMod.NPCs.Town
             }
             else if (!firstButton)
             {
-                Main.LocalPlayer.AddBuff(ModContent.BuffType<Reward_Of_The_God_Of_Eye>(),54000);
+                if (Utils.Tool.CheckBossAlive())
+                {
+                    Main.LocalPlayer.AddBuff(ModContent.BuffType<Buffs.Not_DeBuff.Fate>(), 54000);
+                }
+                else
+                {
+                    Main.LocalPlayer.AddBuff(ModContent.BuffType<Reward_Of_The_God_Of_Eye>(),54000);
+                }
             }
         }
 

@@ -1,6 +1,9 @@
 ﻿using Terraria;
+using Terraria.DataStructures;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
+using Microsoft.Xna.Framework;
+using Terraria.GameInput;
 
 namespace AdvancedMod
 {
@@ -11,6 +14,10 @@ namespace AdvancedMod
         public static bool RecievedInitBag;
 
         public static bool SymbolOfTown;
+
+        public static bool Fate;
+
+        public static Vector2 DeathPosition;
 
         public override void Initialize()
         {
@@ -52,6 +59,30 @@ namespace AdvancedMod
                 }
                 
                 damage = 0;
+            }
+        }
+
+        public override bool PreKill(double damage, int hitDirection, bool pvp, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource)
+        {
+            if (player.HasBuff(ModContent.BuffType<Buffs.Not_DeBuff.Fate>()))
+            {
+                player.statLife = player.statLifeMax2;
+                return false;
+            }
+
+            return true;
+        }
+
+        public override void Kill(double damage, int hitDirection, bool pvp, PlayerDeathReason damageSource)
+        {
+            DeathPosition = player.position;
+        }
+
+        public override void ProcessTriggers(TriggersSet triggersSet)
+        {
+            if (AdvancedMod.TransportDeathPosition.JustPressed)
+            {
+                player.position = DeathPosition;
             }
         }
     }

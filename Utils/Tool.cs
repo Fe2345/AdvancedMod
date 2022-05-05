@@ -45,5 +45,18 @@ namespace AdvancedMod.Utils
             shop.item[nextSlot].value = value;
             nextSlot++;
         }
+
+        public static bool CheckBossAlive()
+        {
+            for (int i = 0;i < Main.npc.Length; i++)
+            {
+                if (Main.npc[i].boss)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
     }
 }

@@ -3,12 +3,15 @@ using Terraria;
 using Terraria.ID;
 using System;
 using System.Collections.Generic;
+using Microsoft.Xna.Framework;
 
 namespace AdvancedMod
 {
     public class AdvancedMod : Mod
     {
         internal static AdvancedMod Instance;
+
+        internal static ModHotKey TransportDeathPosition;
 
         public override void AddRecipes()
         {
@@ -135,6 +138,8 @@ namespace AdvancedMod
         public override void Load()
         {
             Instance = this;
+
+            TransportDeathPosition = RegisterHotKey("Transport to Latest Death Position", "O");
         }
     }
 }
