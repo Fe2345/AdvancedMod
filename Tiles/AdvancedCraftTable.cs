@@ -2,12 +2,13 @@
 using Terraria.ID;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
+using Terraria.DataStructures;
 
 namespace AdvancedMod.Tiles
 {
 	public class AdvancedCraftTable : ModTile
 	{
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			Main.tileSolid[Type] = false;//是否是实体物块
 			Main.tileSolidTop[Type] = false;//是否是上半部分可踩踏
@@ -30,16 +31,16 @@ namespace AdvancedMod.Tiles
 			name.SetDefault("先进锻造台");
 			AddMapEntry(new Color(100, 200, 200), name);
 
-			minPick = 100;
-			mineResist = 4f;
+			MinPick = 100;
+			MineResist = 4f;
 
-			soundType = SoundID.Tink;
+			SoundType = SoundID.Tink;
 
 			//TileID.Sets.Ore[Type] = true;//设置为矿石
 			//Main.tileSpelunker[Type] = true; // 被洞穴探险药水高亮表示
 			//Main.tileValue[Type] = 410; // 在金属探测仪中的优先级
 
-			drop = ModContent.ItemType<Items.Tiles_Item.AdvancedCraftTable_Item>();
+			
 		}
 
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
@@ -47,6 +48,11 @@ namespace AdvancedMod.Tiles
 			r = 0.5f;
 			g = 0.5f;
 			b = 0.5f;
+		}
+
+		public override void KillMultiTile(int i, int j, int frameX, int frameY)
+		{
+			Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 32, 16, ModContent.ItemType<Items.Tiles_Item.AdvancedCraftTable_Item>());
 		}
 	}
 }

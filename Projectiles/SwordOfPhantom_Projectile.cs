@@ -14,14 +14,14 @@ namespace AdvancedMod.Projectiles
 
         public override void SetDefaults()
         {
-            projectile.width = 22;
-            projectile.height = 22;
-            projectile.friendly = true;
-            projectile.hostile = false;
-            projectile.penetrate = 3;
-            projectile.timeLeft = 600;
-            projectile.damage = 1000;
-            projectile.tileCollide = false;
+            Projectile.width = 22;
+            Projectile.height = 22;
+            Projectile.friendly = true;
+            Projectile.hostile = false;
+            Projectile.penetrate = 3;
+            Projectile.timeLeft = 600;
+            Projectile.damage = 1000;
+            Projectile.tileCollide = false;
         }
 
         int Time;
@@ -32,7 +32,7 @@ namespace AdvancedMod.Projectiles
             Time++;
             if (Time <= 60)
             {
-                projectile.velocity = projectile.oldVelocity;
+                Projectile.velocity = Projectile.oldVelocity;
             }
             else if (Time > 60 && Time <= 600)
             {
@@ -44,7 +44,7 @@ namespace AdvancedMod.Projectiles
                     }
                     else
                     {
-                        if ((npc.Center - projectile.Center).Length() < npcDistance)
+                        if ((npc.Center - Projectile.Center).Length() < npcDistance)
                         {
                             npc = Main.npc[i];
                         }
@@ -52,8 +52,8 @@ namespace AdvancedMod.Projectiles
                 }
                 if (npc.active && !npc.friendly)
                 {
-                    Vector2 ProjToNpc = npc.Center - projectile.Center;
-                     projectile.velocity = (ProjToNpc / ProjToNpc.Length())*20;
+                    Vector2 ProjToNpc = npc.Center - Projectile.Center;
+                     Projectile.velocity = (ProjToNpc / ProjToNpc.Length())*20;
                 }
             }
         }

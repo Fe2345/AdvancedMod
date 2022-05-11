@@ -10,32 +10,37 @@ namespace AdvancedMod.NPCs.Boss
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("异变");
-            Main.npcFrameCount[npc.type] = 1;
+            Main.npcFrameCount[NPC.type] = 1;
         }
 
         public override void SetDefaults()
         {
-            npc.width = 150;
-            npc.height = 150;
-            npc.damage = 80;
-            npc.lifeMax = Main.expertMode? 1000000 : 2000000;
-            npc.defense = 30;
-            npc.knockBackResist = 0f;
-            npc.HitSound = SoundID.NPCHit1;
-            npc.DeathSound = SoundID.NPCDeath6;
-            music = MusicID.Boss2;
-            npc.buffImmune[BuffID.Poisoned] = true;
-            npc.buffImmune[BuffID.Confused] = true;
-            npc.buffImmune[ModContent.BuffType<Buffs.Debuff.TheWorld>()] = true;
-            Main.npcFrameCount[npc.type] = 1;
-            npc.noGravity = true;
-            npc.noTileCollide = true;
-            aiType = -1;
-            npc.boss = true;
+            NPC.width = 150;
+            NPC.height = 150;
+            NPC.damage = 80;
+            NPC.lifeMax = Main.expertMode? 1000000 : 2000000;
+            NPC.defense = 30;
+            NPC.knockBackResist = 0f;
+            NPC.HitSound = SoundID.NPCHit1;
+            NPC.DeathSound = SoundID.NPCDeath6;
+            Music = MusicID.Boss2;
+            NPC.buffImmune[BuffID.Poisoned] = true;
+            NPC.buffImmune[BuffID.Confused] = true;
+            NPC.buffImmune[ModContent.BuffType<Buffs.Debuff.TheWorld>()] = true;
+            Main.npcFrameCount[NPC.type] = 1;
+            NPC.noGravity = true;
+            NPC.noTileCollide = true;
+            AIType = -1;
+            NPC.boss = true;
 
             if (AdvancedWorld.MutationMode)
             {
-                npc.lifeMax = 3000000;
+                NPC.lifeMax = 3000000;
+            }
+
+            if (AdvancedWorld.MutationMode && Main.masterMode)
+            {
+                NPC.lifeMax = 4500000;
             }
         }
         
@@ -58,9 +63,9 @@ namespace AdvancedMod.NPCs.Boss
         int Time;
         public override void AI()
         {
-            Player player = Main.player[npc.target];
+            Player player = Main.player[NPC.target];
 
-            if (Vector2.Distance(npc.Center, player.Center) > 200)
+            if (Vector2.Distance(NPC.Center, player.Center) > 200)
             {
                 status = MBStatus.Search;
             }

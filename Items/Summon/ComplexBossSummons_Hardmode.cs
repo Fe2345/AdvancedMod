@@ -14,15 +14,15 @@ namespace AdvancedMod.Items.Summon
 
         public override void SetDefaults()
         {
-            item.width = 24;
-            item.height = 18;
-            item.rare = ItemRarityID.Purple;
-            item.maxStack = 999;
-            item.useAnimation = 45;
-            item.useTime = 45;
-            item.useStyle = ItemUseStyleID.HoldingUp;
-            item.consumable = false;
-            item.value = Item.sellPrice(silver: 1);
+            Item.width = 24;
+            Item.height = 18;
+            Item.rare = ItemRarityID.Purple;
+            Item.maxStack = 999;
+            Item.useAnimation = 45;
+            Item.useTime = 45;
+            Item.useStyle = ItemUseStyleID.HoldUp;
+            Item.consumable = false;
+            Item.value = Item.sellPrice(silver: 1);
         }
 
         public override bool CanUseItem(Player player)
@@ -43,7 +43,7 @@ namespace AdvancedMod.Items.Summon
             {
                 return true;
             }
-            else if ((!Main.dayTime) && (player.ZoneHoly))
+            else if ((!Main.dayTime) && (player.ZoneHallow))
             {
                 return true;
             }
@@ -61,7 +61,7 @@ namespace AdvancedMod.Items.Summon
             }
         }
 
-        public override bool UseItem(Player player)
+        public override bool? UseItem(Player player)
         {
             if (player.ZoneJungle)
             {
@@ -75,7 +75,7 @@ namespace AdvancedMod.Items.Summon
             {
                 NPC.SpawnOnPlayer(player.whoAmI, NPCID.TheDestroyer);
             }
-            else if ((!Main.dayTime) && (player.ZoneHoly))
+            else if ((!Main.dayTime) && (player.ZoneHallow))
             {
                 NPC.SpawnOnPlayer(player.whoAmI, 127);
             }
@@ -92,12 +92,8 @@ namespace AdvancedMod.Items.Summon
             return true;
         }
 
-        public override void AddRecipes()
-        {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddTile(TileID.DemonAltar);
-            recipe.SetResult(this, 1);
-            recipe.AddRecipe();
-        }
+        public override void AddRecipes() => CreateRecipe()
+            .AddTile(TileID.DemonAltar)
+            .Register();
     }
 }

@@ -15,15 +15,15 @@ namespace AdvancedMod.Items.Summon
 
         public override void SetDefaults()
         {
-            item.width = 24;
-            item.height = 18;
-            item.rare = ItemRarityID.Purple;
-            item.maxStack = 999;
-            item.useAnimation = 45;
-            item.useTime = 45;
-            item.useStyle = ItemUseStyleID.HoldingUp;
-            item.consumable = false;
-            item.value = Item.buyPrice(1);
+            Item.width = 24;
+            Item.height = 18;
+            Item.rare = ItemRarityID.Purple;
+            Item.maxStack = 999;
+            Item.useAnimation = 45;
+            Item.useTime = 45;
+            Item.useStyle = ItemUseStyleID.HoldUp;
+            Item.consumable = false;
+            Item.value = Item.buyPrice(1);
         }
 
         public override bool CanUseItem(Player player)
@@ -35,7 +35,7 @@ namespace AdvancedMod.Items.Summon
             return true;
         }
 
-        public override bool UseItem(Player player)
+        public override bool? UseItem(Player player)
         {
             Color color = new Color(175, 75, 255);
             Main.NewText("树状图设计者已苏醒!",color);
@@ -44,14 +44,10 @@ namespace AdvancedMod.Items.Summon
             return true;
         }
 
-        public override void AddRecipes()
-        {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemID.SoulofLight, 6);
-            recipe.AddIngredient(ItemID.IronBar, 5);
-            recipe.AddIngredient(ItemID.Wire, 10);
-            recipe.SetResult(this, 1);
-            recipe.AddRecipe();
-        }
+        public override void AddRecipes() => CreateRecipe()
+            .AddIngredient(ItemID.SoulofLight, 6)
+            .AddIngredient(ItemID.IronBar, 5)
+            .AddIngredient(ItemID.Wire, 10)
+            .Register();
     }
 }

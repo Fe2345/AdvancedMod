@@ -2,6 +2,7 @@
 using Terraria.ModLoader;
 using Terraria.ID;
 using Microsoft.Xna.Framework;
+using Terraria.DataStructures;
 
 namespace AdvancedMod.Items.Weapon.Melee
 {
@@ -15,24 +16,24 @@ namespace AdvancedMod.Items.Weapon.Melee
 
         public override void SetDefaults()
         {
-            item.useStyle = ItemUseStyleID.SwingThrow;  //枪支或法杖
-            item.damage = 600;   //伤害
-            item.useAnimation = 20; //使用动画时长
-            item.useTime = 20;   //攻速
-            item.knockBack = 9;  //击退
-            item.width = 30;     //大小
-            item.height = 30;    //大小
-            item.scale = 1.25f;  //碰撞箱
-            item.rare = ItemRarityID.Red;       //稀有度
-            item.value = Item.sellPrice(gold: 44);
-            item.crit = 30;       //暴击率
-            item.autoReuse = true;   //自动挥舞
-            item.useTurn = true;      //使用中可转身
-            item.melee = true;        //魔法武器
-            item.shootSpeed = 10f;    //射速
-            item.channel = true;      //有特殊行为
+            Item.useStyle = ItemUseStyleID.Swing;  //枪支或法杖
+            Item.damage = 600;   //伤害
+            Item.useAnimation = 20; //使用动画时长
+            Item.useTime = 20;   //攻速
+            Item.knockBack = 9;  //击退
+            Item.width = 30;     //大小
+            Item.height = 30;    //大小
+            Item.scale = 1.25f;  //碰撞箱
+            Item.rare = ItemRarityID.Red;       //稀有度
+            Item.value = Item.sellPrice(gold: 44);
+            Item.crit = 30;       //暴击率
+            Item.autoReuse = true;   //自动挥舞
+            Item.useTurn = true;      //使用中可转身
+            Item.DamageType = DamageClass.Melee;        //近战武器
+            Item.shootSpeed = 10f;    //射速
+            Item.channel = true;      //有特殊行为
 
-            item.shoot = ModContent.ProjectileType<Projectiles.RoarOfFlame_Projectile>();
+            Item.shoot = ModContent.ProjectileType<Projectiles.RoarOfFlame_Projectile>();
         }
 
         public override Vector2? HoldoutOrigin()
@@ -45,7 +46,8 @@ namespace AdvancedMod.Items.Weapon.Melee
             target.AddBuff(BuffID.Bleeding, 10);
         }
 
-        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
+        //public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
+        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
             /*
 			 ref 引用传递 传递实参
@@ -77,10 +79,10 @@ namespace AdvancedMod.Items.Weapon.Melee
                     heading.Y = 20f;
                 }
                 heading.Normalize();
-                heading *= new Vector2(speedX, speedY).Length();
-                speedX = heading.X;
-                speedY = heading.Y + Main.rand.Next(-40, 41) * 0.02f;//随机下落速度
-                Projectile.NewProjectile(position.X, position.Y, speedX, speedY, type, damage * 2, knockBack, player.whoAmI, 0f, ceilingLimit);
+                heading *= velocity.Length();
+                velocity.X = heading.X;
+                velocity.Y = heading.Y + Main.rand.Next(-40, 41) * 0.02f;//随机下落速度
+                Projectile.NewProjectile(source,position.X, position.Y, velocity.X, velocity.Y, type, damage * 2, knockback, player.whoAmI, 0f, ceilingLimit);
             }
             return false;
         }

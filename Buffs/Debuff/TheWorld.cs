@@ -6,7 +6,7 @@ namespace AdvancedMod.Buffs.Debuff
 {
     public class TheWorld : ModBuff
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("世界");
             Description.SetDefault("四蛋都怕我！");
@@ -14,8 +14,6 @@ namespace AdvancedMod.Buffs.Debuff
             Main.debuff[Type] = true;
             Main.pvpBuff[Type] = false;
             Main.buffNoSave[Type] = true;
-            longerExpertDebuff = false;
-            canBeCleared = false;
         }
 
         public override void Update(Player player, ref int buffIndex)

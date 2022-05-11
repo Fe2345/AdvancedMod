@@ -14,9 +14,9 @@ namespace AdvancedMod.Items.Mateiral
 
         public override void SetDefaults()
         {
-            item.value = Item.sellPrice(platinum:44);
-            item.rare = ItemRarityID.Red;
-            item.maxStack = 999;
+            Item.value = Item.sellPrice(platinum:44);
+            Item.rare = ItemRarityID.Red;
+            Item.maxStack = 999;
         }
 
         public override void AddRecipes()

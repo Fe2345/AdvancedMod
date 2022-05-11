@@ -2,6 +2,7 @@
 using Terraria.ModLoader;
 using Terraria.ID;
 using Microsoft.Xna.Framework;
+using Terraria.GameContent.Bestiary;
 
 namespace AdvancedMod.NPCs.Boss
 {
@@ -10,32 +11,49 @@ namespace AdvancedMod.NPCs.Boss
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("硅晶片");
-            Main.npcFrameCount[npc.type] = 1;
+            Main.npcFrameCount[NPC.type] = 1;
+
+            NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new NPCID.Sets.NPCBestiaryDrawModifiers(0)
+            {
+                Velocity = -1f,
+                Direction = -1
+            };
         }
 
         public override void SetDefaults()
         {
-            npc.lifeMax = 400;
-            npc.defense = 20;
-            npc.damage = 30;
-            Main.npcFrameCount[npc.type] = 1;
-            npc.noGravity = true;
-            npc.noTileCollide = true;
-            aiType = -1;
-            npc.boss = false;
+            NPC.lifeMax = 400;
+            NPC.defense = 20;
+            NPC.damage = 30;
+            Main.npcFrameCount[NPC.type] = 1;
+            NPC.noGravity = true;
+            NPC.noTileCollide = true;
+            AIType = -1;
+            NPC.boss = false;
+        }
+
+        public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
+        {
+            bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[]
+            {
+                BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Surface,
+                new FlavorTextBestiaryInfoElement("Mods.AdvancedMod.Bestiary.SiliconWafer")
+            }) ;
         }
 
         public override void AI()
         {
-            Player player = Main.player[npc.target];
-            Vector2 distance = player.Center - npc.Center;
+            Player player = Main.player[NPC.target];
+            Vector2 distance = player.Center - NPC.Center;
 
-            npc.velocity = 6 *distance/distance.Length();
+            NPC.velocity = 6 *distance/distance.Length();
         }
 
-        public override void NPCLoot()
+        public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
-            if (!AdvancedWorld.MutationMode) Item.NewItem(npc.Center, ItemID.Heart, 1);
+            base.ModifyNPCLoot(npcLoot);
+
+            if (!AdvancedWorld.MutationMode && !Main.masterMode) Item.NewItem(NPC.GetSource_Loot(), NPC.Center, ItemID.Heart, 1);
         }
     }
 }

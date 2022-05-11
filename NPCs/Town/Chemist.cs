@@ -2,6 +2,9 @@
 using Terraria.ModLoader;
 using Terraria.ID;
 using Terraria.Utilities;
+using System.Collections.Generic;
+using Terraria.GameContent.Personalities;
+using Terraria.GameContent.Bestiary;
 
 namespace AdvancedMod.NPCs.Town
 {
@@ -12,64 +15,82 @@ namespace AdvancedMod.NPCs.Town
         {
             DisplayName.SetDefault("化学家");
             //该NPC的游戏内显示名
-            Main.npcFrameCount[npc.type] = Main.npcFrameCount[NPCID.Guide];
+            Main.npcFrameCount[NPC.type] = Main.npcFrameCount[NPCID.Guide];
             //NPC总共帧图数，一般为16+下面两种帧的帧数
-            NPCID.Sets.ExtraFramesCount[npc.type] = NPCID.Sets.ExtraFramesCount[NPCID.Guide];
+            NPCID.Sets.ExtraFramesCount[NPC.type] = NPCID.Sets.ExtraFramesCount[NPCID.Guide];
             //额外活动帧，一般为5
-            NPCID.Sets.AttackFrameCount[npc.type] = NPCID.Sets.AttackFrameCount[NPCID.Guide];
+            NPCID.Sets.AttackFrameCount[NPC.type] = NPCID.Sets.AttackFrameCount[NPCID.Guide];
             //攻击帧，这个帧数取决于你的NPC攻击类型，射手填5，战士和投掷填4，法师填2，当然，也可以多填，就是不知效果如何（这里直接引用商人的）
-            NPCID.Sets.DangerDetectRange[npc.type] = 1000;
+            NPCID.Sets.DangerDetectRange[NPC.type] = 1000;
             //巡敌范围，以像素为单位，这个似乎是半径
-            NPCID.Sets.AttackType[npc.type] = NPCID.Sets.AttackType[NPCID.Guide];
+            NPCID.Sets.AttackType[NPC.type] = NPCID.Sets.AttackType[NPCID.Guide];
             //攻击类型，一般为0，想要模仿其他NPC就填他们的ID
-            NPCID.Sets.AttackTime[npc.type] = 20;
+            NPCID.Sets.AttackTime[NPC.type] = 20;
             //单次攻击持续时间，越短，则该NPC攻击越快（可以用来模拟长时间施法的NPC）
-            NPCID.Sets.AttackAverageChance[npc.type] = 2;
+            NPCID.Sets.AttackAverageChance[NPC.type] = 2;
             //NPC遇敌的攻击优先度，该数值越大则NPC遇到敌怪时越会优先选择逃跑，反之则该NPC越好斗。
             //最小一般为1，你可以试试0或负数LOL~
+
+            NPC.Happiness.SetNPCAffection(NPCID.Nurse, AffectionLevel.Love);
+            NPC.Happiness.SetNPCAffection(NPCID.WitchDoctor, AffectionLevel.Like);
+            NPC.Happiness.SetNPCAffection(NPCID.Merchant, AffectionLevel.Dislike);
+            NPC.Happiness.SetNPCAffection(NPCID.TaxCollector, AffectionLevel.Hate);
+
+            NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new NPCID.Sets.NPCBestiaryDrawModifiers(0)
+            {
+                Velocity = -1f,
+                Direction = -1
+            };
         }
 
         public override void SetDefaults()
         {
-            npc.townNPC = true;
-            npc.friendly = true;
+            NPC.townNPC = true;
+            NPC.friendly = true;
             //如果你想写敌对NPC也行
-            npc.width = 22;
+            NPC.width = 22;
             //碰撞箱宽
-            npc.height = 32;
+            NPC.height = 32;
             //碰撞箱高            
-            npc.aiStyle = 7;
+            NPC.aiStyle = 7;
             //必带项，如果你能自己写出城镇NPC的AI可以不带
-            npc.damage = 10;
+            NPC.damage = 10;
             //碰撞伤害，由于城镇NPC没有碰撞伤害所以可以忽略
-            npc.defense = 150;
+            NPC.defense = 150;
             //防御力
-            npc.lifeMax = Main.expertMode ? 500 : 150;
+            NPC.lifeMax = Main.expertMode ? 500 : 150;
             //生命值
-            npc.HitSound = SoundID.NPCHit1;
+            NPC.HitSound = SoundID.NPCHit1;
             //受伤音效
-            npc.DeathSound = SoundID.NPCDeath1;
+            NPC.DeathSound = SoundID.NPCDeath1;
             //死亡音效
-            npc.knockBackResist = 0.3f;
+            NPC.knockBackResist = 0.3f;
             //抗击退性，数字越大抗性越低
-            animationType = NPCID.Guide;
-            //如果你的NPC属于除投掷类NPC以外的其他攻击类型，请带上，值可以填对应NPC的ID
 
             if (NPC.downedMechBossAny)
             {
-                npc.lifeMax = Main.expertMode ? 1000 : 300;
+                NPC.lifeMax = Main.expertMode ? 1000 : 300;
             }
 
             if (NPC.downedMoonlord)
             {
-                npc.lifeMax = Main.expertMode ? 1500 : 450;
+                NPC.lifeMax = Main.expertMode ? 1500 : 450;
             }
         }
 
-        public override string TownNPCName()
+        public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
+        {
+            bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[]
+            {
+                BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Surface,
+                new FlavorTextBestiaryInfoElement("Mods.AdvancedMod.Bestiary.Chemist")
+            });
+        }
+
+        public override List<string> SetNPCNameList()
         {
             string[] names = { "Lavoisier", "CH3COOH", "Oxygen","CH3COOCH2CH3","Side" };
-            return Main.rand.Next(names);
+            return new List<string>(names);
         }
 
         public override void FindFrame(int frameHeight)
@@ -94,7 +115,7 @@ namespace AdvancedMod.NPCs.Town
                 if (!Main.bloodMoon && !Main.eclipse)
                 {
                     //无家可归时
-                    if (npc.homeless)
+                    if (NPC.homeless)
                     {
                         chat.Add("我已经设计好了一个绝妙的实验，但是我的实验室离我太远了。");
                     }

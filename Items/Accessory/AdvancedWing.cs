@@ -15,18 +15,18 @@ namespace AdvancedMod.Items.Accessory
 
         public override void SetDefaults()
         {
-            item.accessory = true;
-            item.width = 42;
-            item.height = 42;
-            item.rare = ItemRarityID.Expert;
-            item.value = Item.sellPrice(platinum: 11);
+            Item.accessory = true;
+            Item.width = 42;
+            Item.height = 42;
+            Item.rare = ItemRarityID.Expert;
+            Item.value = Item.sellPrice(platinum: 11);
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             player.wingTimeMax = 180;
             player.wingTime = player.wingTimeMax;
-            item.expert = true;
+            Item.expert = true;
         }
 
         public override void VerticalWingSpeeds(Player player, ref float ascentWhenFalling, ref float ascentWhenRising, ref float maxCanAscendMultiplier, ref float maxAscentMultiplier, ref float constantAscend)
@@ -42,14 +42,10 @@ namespace AdvancedMod.Items.Accessory
             acceleration = 40;
         }
 
-        public override void AddRecipes()
-        {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ModContent.ItemType<Items.Mateiral.AdvancedBar>(), 5);
-            recipe.AddIngredient(ModContent.ItemType<Items.Mateiral.TimePieces>(), 1);
-            recipe.AddTile(ModContent.TileType<Tiles.AdvancedCraftTable>());
-            recipe.SetResult(this, 1);
-            recipe.AddRecipe();
-        }
+        public override void AddRecipes() => CreateRecipe()
+            .AddIngredient(ModContent.ItemType<Items.Mateiral.InsightBar>(), 5)
+            .AddIngredient(ModContent.ItemType<Items.Mateiral.TimePieces>(), 1)
+            .AddTile(ModContent.TileType<Tiles.AdvancedCraftTable>())
+            .Register();
     }
 }

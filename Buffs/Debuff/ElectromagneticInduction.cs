@@ -6,7 +6,7 @@ namespace AdvancedMod.Buffs.Debuff
 {
     public class ElectromagneticInduction : ModBuff
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("电磁感应");
             Description.SetDefault("你对电磁波过敏");
@@ -14,8 +14,6 @@ namespace AdvancedMod.Buffs.Debuff
             Main.debuff[Type] = true;
             Main.pvpBuff[Type] = false;
             Main.buffNoSave[Type] = true;
-            longerExpertDebuff = false;
-            canBeCleared = false;
         }
 
         public override void Update(Player player, ref int buffIndex)
@@ -26,7 +24,9 @@ namespace AdvancedMod.Buffs.Debuff
 
         public override void Update(NPC npc, ref int buffIndex)
         {
-            npc.GetGlobalNPC<NPCs.AdvancedGlobelNPC>().TheWorld = true;
+            npc.defense -= 20;
+            npc.lifeRegen = 0;
+            npc.life -= 5;
         }
     }
 }

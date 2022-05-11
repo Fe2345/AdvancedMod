@@ -7,14 +7,13 @@ namespace AdvancedMod.Buffs.Not_DeBuff
 {
     public class Wonder : ModBuff
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("奇迹");
             Description.SetDefault("将会有奇迹发生");
 
             Main.buffNoSave[Type] = false;
             Main.debuff[Type] = false;
-            this.canBeCleared = true;
             Main.lightPet[Type] = false;
         }
 

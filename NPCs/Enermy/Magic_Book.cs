@@ -1,7 +1,8 @@
 ﻿using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
-using AdvancedMod.Items.Mateiral;
+using Terraria.GameContent.ItemDropRules;
+using Terraria.GameContent.Bestiary;
 
 namespace AdvancedMod.NPCs.Enermy
 {
@@ -10,42 +11,57 @@ namespace AdvancedMod.NPCs.Enermy
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("魔道书");
-            Main.npcFrameCount[npc.type] = 1;
+            Main.npcFrameCount[NPC.type] = 1;
+
+            NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new NPCID.Sets.NPCBestiaryDrawModifiers(0)
+            {
+                Velocity = -1f,
+                Direction = -1
+            };
         }
 
         public override void SetDefaults()
         {
-            npc.width = 30;
-            npc.height = 30;
-            npc.damage = 40;
-            npc.lifeMax = 300;
-            npc.defense = 55;
-            npc.knockBackResist = 0.5f;
-            npc.HitSound = SoundID.NPCHit1;
-            npc.DeathSound = SoundID.NPCDeath9;
-            npc.value = Item.buyPrice(gold: 4);
-            npc.noGravity = true;
-            npc.noTileCollide = true;
-            npc.buffImmune[BuffID.Bleeding] = true;
-            npc.buffImmune[BuffID.Burning] = true;
-            npc.aiStyle = 22;
+            NPC.width = 30;
+            NPC.height = 30;
+            NPC.damage = 40;
+            NPC.lifeMax = 300;
+            NPC.defense = 55;
+            NPC.knockBackResist = 0.5f;
+            NPC.HitSound = SoundID.NPCHit1;
+            NPC.DeathSound = SoundID.NPCDeath9;
+            NPC.value = Item.buyPrice(gold: 4);
+            NPC.noGravity = true;
+            NPC.noTileCollide = true;
+            NPC.buffImmune[BuffID.Bleeding] = true;
+            NPC.buffImmune[BuffID.Burning] = true;
+            NPC.aiStyle = 22;
+        }
+
+        public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
+        {
+            bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[]
+            {
+                BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Surface,
+                new FlavorTextBestiaryInfoElement("Mods.AdvancedMod.Bestiary.MagicBook")
+            });
         }
 
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
-            if (spawnInfo.player.manaSick)
+            if (spawnInfo.Player.manaSick)
             {
                 return 0.1f;
             }
             return 0;
         }
 
-        public override void NPCLoot()
+        //public override void NPCLoot()
+        public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
-            if (Main.rand.Next(1000000) == 0)
-            {
-                Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<Disable_Bar>());
-            }
+            base.ModifyNPCLoot(npcLoot);
+
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Mateiral.Disable_Bar>(), 1));
         }
     }
 }

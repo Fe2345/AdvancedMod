@@ -14,30 +14,26 @@ namespace AdvancedMod.Items.Weapon.Ranged
 
         public override void SetDefaults()
         {
-            item.useStyle = ItemUseStyleID.HoldingOut;
-            item.autoReuse = true;
-            item.useTurn = true;
-            item.ranged = true;
-            item.noMelee = true;
+            Item.useStyle = ItemUseStyleID.Shoot;
+            Item.autoReuse = true;
+            Item.useTurn = true;
+            Item.DamageType = DamageClass.Ranged;
+            Item.noMelee = true;
 
-            item.damage = 20;
-            item.crit = 24;
-            item.rare = ItemRarityID.Orange;
-            item.value = Item.sellPrice(gold: 44);
-            item.shoot = ProjectileID.Bullet;
-            item.shootSpeed = 10f;
+            Item.damage = 20;
+            Item.crit = 24;
+            Item.rare = ItemRarityID.Orange;
+            Item.value = Item.sellPrice(gold: 44);
+            Item.shoot = ProjectileID.Bullet;
+            Item.shootSpeed = 10f;
         }
 
-        public override void AddRecipes()
-        {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemID.Minishark);
-            recipe.AddIngredient(ItemID.Boomstick);
-            recipe.AddIngredient(ItemID.Shotgun);
-            recipe.AddIngredient(ItemID.FlintlockPistol);
-            recipe.AddTile(TileID.Anvils);
-            recipe.SetResult(this, 1);
-            recipe.AddRecipe();
-        }
+        public override void AddRecipes() => CreateRecipe()
+            .AddIngredient(ItemID.Minishark)
+            .AddIngredient(ItemID.Boomstick)
+            .AddIngredient(ItemID.Shotgun)
+            .AddIngredient(ItemID.FlintlockPistol)
+            .AddTile(TileID.Anvils)
+            .Register();
     }
 }

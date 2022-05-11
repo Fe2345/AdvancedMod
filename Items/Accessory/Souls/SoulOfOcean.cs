@@ -14,50 +14,46 @@ namespace AdvancedMod.Items.Accessory.Souls
 
         public override void SetDefaults()
         {
-            item.width = 42;
-            item.height = 42;
-            item.accessory = true;
-            item.rare = ItemRarityID.Green;
-            item.value = Item.sellPrice(gold: 1);
+            Item.width = 42;
+            Item.height = 42;
+            Item.accessory = true;
+            Item.rare = ItemRarityID.Green;
+            Item.value = Item.sellPrice(gold: 1);
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             if (!player.ZoneBeach)
             {
-                player.magicDamage += 0.03f;
-                player.rangedDamage += 0.03f;
-                player.meleeDamage += 0.03f;
-                player.minionDamage += 0.03f;
-                player.magicCrit += 3;
-                player.meleeCrit += 3;
-                player.rangedCrit += 3;
+                player.GetDamage(DamageClass.Melee) += 0.03f;
+                player.GetDamage(DamageClass.Ranged) += 0.03f;
+                player.GetDamage(DamageClass.Magic) += 0.03f;
+                player.GetDamage(DamageClass.Summon) += 0.03f;
+                player.GetCritChance(DamageClass.Melee) += 3;
+                player.GetCritChance(DamageClass.Ranged) += 3;
+                player.GetCritChance(DamageClass.Magic) += 3;
                 player.moveSpeed = 1.03f;
-                item.defense = 3;
+                Item.defense = 3;
             }
             else
             {
-                player.magicDamage += 0.1f;
-                player.rangedDamage += 0.1f;
-                player.meleeDamage += 0.1f;
-                player.minionDamage += 0.1f;
-                player.magicCrit += 10;
-                player.meleeCrit += 10;
-                player.rangedCrit += 10;
+                player.GetDamage(DamageClass.Melee) += 0.1f;
+                player.GetDamage(DamageClass.Ranged) += 0.1f;
+                player.GetDamage(DamageClass.Magic) += 0.1f;
+                player.GetDamage(DamageClass.Summon) += 0.1f;
+                player.GetCritChance(DamageClass.Melee) += 10;
+                player.GetCritChance(DamageClass.Ranged) += 10;
+                player.GetCritChance(DamageClass.Magic) += 10;
                 player.moveSpeed = 1.1f;
-                item.defense = 10;
+                Item.defense = 10;
             }
         }
 
-        public override void AddRecipes()
-        {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemID.PalmWood, 44);
-            recipe.AddIngredient(ItemID.SandBlock, 10);
-            recipe.AddIngredient(ItemID.Seashell, 3);
-            recipe.AddTile(TileID.Anvils);
-            recipe.SetResult(this, 1);
-            recipe.AddRecipe();
-        }
+        public override void AddRecipes() => CreateRecipe()
+            .AddIngredient(ItemID.PalmWood, 44)
+            .AddIngredient(ItemID.SandBlock, 10)
+            .AddIngredient(ItemID.Seashell, 3)
+            .AddTile(TileID.Anvils)
+            .Register();
     }
 }

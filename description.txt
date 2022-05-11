@@ -2,6 +2,9 @@ ADVANCED MOD v0.2.3
 
 近期更新：
 
+v0.2.5:
+移植至tModLoader 1.4
+
 v0.2.3 第一部分：
 修复了若干小Bug
 

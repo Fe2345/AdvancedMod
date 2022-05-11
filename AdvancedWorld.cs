@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace AdvancedMod
 {
-    public class AdvancedWorld : ModWorld
+    public class AdvancedWorld : ModSystem
     {
         public static bool MutationMode;
         public static bool downedPolarMessager;
@@ -18,7 +18,7 @@ namespace AdvancedMod
         public static bool downedTheWorld;
         public static bool downedMutationBosses;
 
-        public override TagCompound Save()
+        public override void  SaveWorldData(TagCompound tag)
         {
             List<string> data = new List<string>();
             if (MutationMode) data.Add("MutationMode");
@@ -31,13 +31,10 @@ namespace AdvancedMod
             if (downedTheWorld) data.Add("TheWorld");
             if (downedMutationBosses) data.Add("MutationBosses");
 
-            return new TagCompound
-            {
-                {"data" ,data}
-            };
+            tag.Add("data", data);
         }
 
-        public override void Load(TagCompound tag)
+        public override void LoadWorldData(TagCompound tag)
         {
             IList<string> data = tag.GetList<string>("data");
             MutationMode = data.Contains("MutationMode");

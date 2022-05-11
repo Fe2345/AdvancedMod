@@ -14,11 +14,11 @@ namespace AdvancedMod.Items.Accessory.Symbols
 
         public override void SetDefaults()
         {
-            item.width = 42;
-            item.height = 42;
-            item.accessory = true;
-            item.rare = ItemRarityID.Green;
-            item.value = Item.sellPrice(gold: 1);
+            Item.width = 42;
+            Item.height = 42;
+            Item.accessory = true;
+            Item.rare = ItemRarityID.Green;
+            Item.value = Item.sellPrice(gold: 1);
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)
@@ -26,16 +26,12 @@ namespace AdvancedMod.Items.Accessory.Symbols
             AdvancedPlayer.SymbolOfTown = true;
         }
 
-        public override void AddRecipes()
-        {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemID.RedHat);
-            recipe.AddIngredient(ItemID.DyeTradersScimitar);
-            recipe.AddIngredient(ItemID.StylistKilLaKillScissorsIWish);
-            recipe.AddIngredient(ModContent.ItemType<Items.Weapon.Thrown.RabbitBomb>());
-            recipe.AddTile(TileID.Anvils);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
-        }
+        public override void AddRecipes() => CreateRecipe()
+            .AddIngredient(ItemID.RedHat)
+            .AddIngredient(ItemID.DyeTradersScimitar)
+            .AddIngredient(ItemID.StylistKilLaKillScissorsIWish)
+            .AddIngredient(ModContent.ItemType<Items.Weapon.Ranged.RabbitBomb>())
+            .AddTile(TileID.Anvils)
+            .Register();
     }
 }

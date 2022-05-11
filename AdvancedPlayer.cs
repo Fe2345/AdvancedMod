@@ -15,8 +15,6 @@ namespace AdvancedMod
 
         public static bool SymbolOfTown;
 
-        public static bool Fate;
-
         public static Vector2 DeathPosition;
 
         public override void Initialize()
@@ -26,17 +24,14 @@ namespace AdvancedMod
             RecievedInitBag = false;
         }
 
-        public override TagCompound Save()
+        public override void SaveData(TagCompound tag)
         {
-            return new TagCompound
-            {
-                {"Energy",Energy },
-                {"UsedSiliconHeartCount",UsedSiliconHeartCount },
-                {"RecievedInitBag",RecievedInitBag }
-            };
+            tag.Add("Energy", Energy);
+            tag.Add("UsedSiliconHeartCount", UsedSiliconHeartCount);
+            tag.Add("RecievedInitBag", RecievedInitBag);
         }
 
-        public override void Load(TagCompound tag)
+        public override void LoadData(TagCompound tag)
         {
             Energy = tag.GetInt("Energy");
             UsedSiliconHeartCount = tag.GetInt("UsedSiliconHeartCount");
@@ -64,9 +59,9 @@ namespace AdvancedMod
 
         public override bool PreKill(double damage, int hitDirection, bool pvp, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource)
         {
-            if (player.HasBuff(ModContent.BuffType<Buffs.Not_DeBuff.Fate>()))
+            if (Player.HasBuff(ModContent.BuffType<Buffs.Not_DeBuff.Fate>()))
             {
-                player.statLife = player.statLifeMax2;
+                Player.statLife = Player.statLifeMax2;
                 return false;
             }
 
@@ -75,15 +70,25 @@ namespace AdvancedMod
 
         public override void Kill(double damage, int hitDirection, bool pvp, PlayerDeathReason damageSource)
         {
-            DeathPosition = player.position;
+            DeathPosition = Player.position;
         }
 
         public override void ProcessTriggers(TriggersSet triggersSet)
         {
             if (AdvancedMod.TransportDeathPosition.JustPressed)
             {
-                player.position = DeathPosition;
+                if (DeathPosition != Vector2.Zero) Player.position = DeathPosition;
             }
+        }
+
+        public override void OnEnterWorld(Player player)
+        {
+            /*
+            if (AdvancedConfig.enableEnergySystem)
+            {
+                AdvancedMod.GUI.IsVisible = true;
+            }
+            */
         }
     }
 }

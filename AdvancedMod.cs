@@ -4,6 +4,7 @@ using Terraria.ID;
 using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
+using Terraria.UI;
 
 namespace AdvancedMod
 {
@@ -11,65 +12,64 @@ namespace AdvancedMod
     {
         internal static AdvancedMod Instance;
 
-        internal static ModHotKey TransportDeathPosition;
+        internal UI.EnergySystem energySystemUI;
+        internal UserInterface GUI;
+
+        internal static ModKeybind TransportDeathPosition;
 
         public override void AddRecipes()
         {
-            ModRecipe modRecipe = new ModRecipe(this);
-            modRecipe.AddIngredient(ItemID.Cloud, 50);
-            modRecipe.SetResult(ItemID.LuckyHorseshoe, 1);
-            modRecipe.AddTile(TileID.HeavyWorkBench);
-            modRecipe.AddRecipe();
+            CreateRecipe(ItemID.LuckyHorseshoe,1)
+                .AddIngredient(ItemID.Cloud, 50)
+                .AddTile(TileID.HeavyWorkBench)
+                .Register();
 
-            modRecipe = new ModRecipe(this);
-            modRecipe.AddIngredient(ItemID.IceBlock, 10);
-            modRecipe.AddIngredient(ItemID.IronBar, 5);
-            modRecipe.AddTile(TileID.Anvils);
-            modRecipe.SetResult(ItemID.IceSkates,1);
-            modRecipe.AddRecipe();
+            CreateRecipe(ItemID.IceSkates, 1)
+                .AddIngredient(ItemID.IceBlock, 50)
+                .AddIngredient(ItemID.IronBar, 10)
+                .AddTile(TileID.HeavyWorkBench)
+                .Register();
 
-            modRecipe = new ModRecipe(this);
-            modRecipe.AddIngredient(ItemID.Cloud, 15);
-            modRecipe.AddIngredient(ItemID.Bottle, 1);
-            modRecipe.AddTile(TileID.HeavyWorkBench);
-            modRecipe.SetResult(ItemID.CloudinaBottle,1);
-            modRecipe.AddRecipe();
+            CreateRecipe(ItemID.CloudinaBottle, 1)
+                .AddIngredient(ItemID.Cloud, 15)
+                .AddIngredient(ItemID.Bottle, 1)
+                .AddTile(TileID.HeavyWorkBench)
+                .Register();
 
-            modRecipe = new ModRecipe(this);
-            modRecipe.AddIngredient(ItemID.PinkGel, 10);
-            modRecipe.AddTile(TileID.HeavyWorkBench);
-            modRecipe.SetResult(ItemID.WhoopieCushion,1);
-            modRecipe.AddRecipe();
+            CreateRecipe(ItemID.WhoopieCushion)
+                .AddIngredient(ItemID.PinkGel, 44)
+                .AddTile(TileID.HeavyWorkBench)
+                .Register();
 
-            modRecipe = new ModRecipe(this);
-            modRecipe.AddIngredient(ItemID.Cloud, 20);
-            modRecipe.AddTile(TileID.HeavyWorkBench);
-            modRecipe.SetResult(ItemID.ShinyRedBalloon);
-            modRecipe.AddRecipe();
+            CreateRecipe(ItemID.ShinyRedBalloon)
+                .AddIngredient(ItemID.Cloud, 20)
+                .AddTile(TileID.HeavyWorkBench)
+                .Register();
 
-            modRecipe = new ModRecipe(this);
-            modRecipe.AddIngredient(ItemID.FishronBossBag, 1);
-            modRecipe.AddTile(TileID.HeavyWorkBench);
-            modRecipe.SetResult(ItemID.FishFinder);
-            modRecipe.AddRecipe();
+            CreateRecipe(ItemID.FishFinder)
+                .AddIngredient(ItemID.FishronBossBag)
+                .AddTile(TileID.HeavyWorkBench)
+                .Register();
 
-            modRecipe = new ModRecipe(this);
-            modRecipe.AddIngredient(ItemID.Wire, 20);
-            modRecipe.AddIngredient(ItemID.TinkerersWorkshop);
-            modRecipe.AddTile(TileID.HeavyWorkBench);
-            modRecipe.SetResult(ItemID.GoblinTech);
-            modRecipe.AddRecipe();
+            CreateRecipe(ItemID.GoblinTech)
+                .AddIngredient(ItemID.TinkerersWorkshop)
+                .AddTile(TileID.HeavyWorkBench)
+                .Register();
 
-            modRecipe = new ModRecipe(this);
-            modRecipe.AddIngredient(ItemID.MusketBall, 9999);
-            modRecipe.AddTile(TileID.HeavyWorkBench);
-            modRecipe.SetResult(ItemID.AmmoBox);
-            modRecipe.AddRecipe();
+            CreateRecipe(ItemID.AmmoBox)
+                .AddIngredient(ItemID.MusketBall, 3996)
+                .AddTile(TileID.HeavyWorkBench)
+                .Register();
+
+            CreateRecipe(ItemID.AnkhShield)
+                .AddIngredient(ItemID.SpectreBar, 5)
+                .AddTile(TileID.HeavyWorkBench)
+                .Register();
         }
 
         public override void PostSetupContent()
         {
-            
+            /*
             Mod Checklist = ModLoader.GetMod("BossChecklist");
             if (Checklist != null)
             {
@@ -89,6 +89,7 @@ namespace AdvancedMod
                     (Func<bool>)(() => AdvancedPlayer.RecievedInitBag)
                     );
             }
+            */
             
         }
 
@@ -139,7 +140,59 @@ namespace AdvancedMod
         {
             Instance = this;
 
-            TransportDeathPosition = RegisterHotKey("Transport to Latest Death Position", "O");
+            TransportDeathPosition = KeybindLoader.RegisterKeybind(this,"Transport to Latest Death Position", "O");
+
+            /*
+            energySystemUI = new UI.EnergySystem();
+            energySystemUI.Activate();
+            GUI.SetState(energySystemUI);
+            */
+            
         }
+
+        /*
+        public override void UpdateUI(GameTime gameTime)
+        {
+            
+            if (GUI.IsVisible)
+            {
+                GUI?.Update(gameTime);
+                
+            }
+            base.UpdateUI(gameTime);
+            
+        }
+        */
+
+        /*
+        public override void ModifyInterfaceLayers(List<GameInterfaceLayer> layers)
+        {
+            
+            //寻找一个名字为Vanilla: Mouse Text的绘制层，也就是绘制鼠标字体的那一层，并且返回那一层的索引
+            int MouseTextIndex = layers.FindIndex(layer => layer.Name.Equals("Vanilla: Mouse Text"));
+            //寻找到索引时
+            if (MouseTextIndex != -1)
+            {
+                //往绘制层集合插入一个成员，第一个参数是插入的地方的索引，第二个参数是绘制层
+                layers.Insert(MouseTextIndex, new LegacyGameInterfaceLayer(
+                   //这里是绘制层的名字
+                   "Test : ExampleUI",
+                   //这里是匿名方法
+                   delegate
+                   {
+               //当Visible开启时（当UI开启时）
+               if (GUI.IsVisible)
+                   //绘制UI（运行exampleUI的Draw方法）
+                   energySystemUI.Draw(Main.spriteBatch);
+                       return true;
+                   },
+                   //这里是绘制层的类型
+                   InterfaceScaleType.UI)
+               );
+            }
+            base.ModifyInterfaceLayers(layers);
+            
+        }
+        */
     }
 }

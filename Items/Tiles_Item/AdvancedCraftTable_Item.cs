@@ -15,28 +15,24 @@ namespace AdvancedMod.Items.Tiles_Item
 
 		public override void SetDefaults()
 		{
-			item.width = 40;
-			item.height = 27;
-			item.maxStack = 999;
-			item.value = 100;
-			item.rare = ItemRarityID.Blue;
-			item.useStyle = ItemUseStyleID.SwingThrow;
-			item.useTime = 10;
-			item.useAnimation = 20;
+			Item.width = 40;
+			Item.height = 27;
+			Item.maxStack = 999;
+			Item.value = 100;
+			Item.rare = ItemRarityID.Blue;
+			Item.useStyle = ItemUseStyleID.Swing;
+			Item.useTime = 10;
+			Item.useAnimation = 20;
 
 			//add
-			item.consumable = true;//消耗品
-			item.createTile = ModContent.TileType<Tiles.AdvancedCraftTable>();//放置贴图
+			Item.consumable = true;//消耗品
+			Item.createTile = ModContent.TileType<Tiles.AdvancedCraftTable>();//放置贴图
 
-			item.UseSound = SoundID.Item10;
+			Item.UseSound = SoundID.Item10;
 		}
 
-		public override void AddRecipes()
-		{
-			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<Items.Mateiral.SiliconBar>(), 5);
-			recipe.SetResult(this, 1);
-			recipe.AddRecipe();
-		}
+		public override void AddRecipes() => CreateRecipe()
+			.AddIngredient(ModContent.ItemType<Items.Mateiral.SiliconBar>(), 5)
+			.Register();
 	}
 }

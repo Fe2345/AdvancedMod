@@ -15,21 +15,21 @@ namespace AdvancedMod.Projectiles
 
         public override void SetDefaults()
         {
-            projectile.width = 6;
-            projectile.height = 600;
-            projectile.friendly = true;
-            projectile.hostile = false;
-            projectile.penetrate = 3;
-            projectile.timeLeft = 120;
+            Projectile.width = 6;
+            Projectile.height = 600;
+            Projectile.friendly = true;
+            Projectile.hostile = false;
+            Projectile.penetrate = 3;
+            Projectile.timeLeft = 120;
         }
         public override void AI()
         {
             
             // 如果玩家仍然在控制弹幕
-            if (Main.player[projectile.owner].channel)
+            if (Main.player[Projectile.owner].channel)
             {
                 // 获取弹幕持有者
-                Player player = Main.player[projectile.owner];
+                Player player = Main.player[Projectile.owner];
                 // 从玩家到达鼠标位置的单位向量
                 Vector2 unit = Vector2.Normalize(Main.MouseWorld - player.Center);
                 // 随机角度
@@ -42,15 +42,15 @@ namespace AdvancedMod.Projectiles
                 player.itemTime = 2;
                 player.itemAnimation = 2;
                 // 从弹幕到达鼠标位置的单位向量
-                Vector2 unit2 = Vector2.Normalize(Main.MouseWorld - projectile.Center);
+                Vector2 unit2 = Vector2.Normalize(Main.MouseWorld - Projectile.Center);
                 // 让弹幕缓慢朝鼠标方向移动
-                //projectile.velocity = unit2 * 5;
+                //Projectile.velocity = unit2 * 5;
             }
             else
             {
                 // 如果玩家放弃吟唱就慢慢消失
-                if (projectile.timeLeft > 30)
-                    projectile.timeLeft = 30;
+                if (Projectile.timeLeft > 30)
+                    Projectile.timeLeft = 30;
                 // 返回函数这样就不会执行下面的攻击代码
                 return;
             }

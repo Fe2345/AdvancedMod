@@ -13,14 +13,14 @@ namespace AdvancedMod.Projectiles
 
         public override void SetDefaults()
         {
-            projectile.width = 22;
-            projectile.height = 22;
-            projectile.friendly = true;
-            projectile.hostile = false;
-            projectile.penetrate = 3;
-            projectile.timeLeft = 240;
-            projectile.damage = 60;
-            projectile.tileCollide = true;
+            Projectile.width = 22;
+            Projectile.height = 22;
+            Projectile.friendly = true;
+            Projectile.hostile = false;
+            Projectile.penetrate = 3;
+            Projectile.timeLeft = 240;
+            Projectile.damage = 60;
+            Projectile.tileCollide = true;
         }
     }
 }

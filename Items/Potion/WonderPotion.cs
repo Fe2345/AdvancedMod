@@ -10,26 +10,26 @@ namespace AdvancedMod.Items.Potion
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("奇迹药水");
-            DisplayName.AddTranslation(GameCulture.English, "Wonder Potion");
+            //DisplayName.AddTranslation(GameCulture.English, "Wonder Potion");
             Tooltip.SetDefault("将会有奇迹发生");
-            Tooltip.AddTranslation(GameCulture.English,"There will be Wonder happens.");
+            //Tooltip.AddTranslation(GameCulture.English,"There will be Wonder happens.");
         }
 
         public override void SetDefaults()
         {
-            item.width = 14;
-            item.height = 24;
-            item.useAnimation = 17;
-            item.useTime = 17;
-            item.maxStack = 30;
-            item.rare = ItemRarityID.Pink;
-            item.value = Item.sellPrice(0, 0, 50, 0);
-            item.useStyle = ItemUseStyleID.EatingUsing;
-            item.UseSound = SoundID.Item3;
-            item.consumable = true;
-            item.useTurn = true;
-            item.buffType = ModContent.BuffType<Buffs.Not_DeBuff.Wonder>();
-            item.buffTime = 60000;
+            Item.width = 14;
+            Item.height = 24;
+            Item.useAnimation = 17;
+            Item.useTime = 17;
+            Item.maxStack = 30;
+            Item.rare = ItemRarityID.Pink;
+            Item.value = Item.sellPrice(0, 0, 50, 0);
+            Item.useStyle = ItemUseStyleID.DrinkLiquid;
+            Item.UseSound = SoundID.Item3;
+            Item.consumable = true;
+            Item.useTurn = true;
+            Item.buffType = ModContent.BuffType<Buffs.Not_DeBuff.Wonder>();
+            Item.buffTime = 60000;
         }
     }
 }

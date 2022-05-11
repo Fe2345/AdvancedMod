@@ -14,19 +14,19 @@ namespace AdvancedMod.Projectiles
 
         public override void SetDefaults()
         {
-            projectile.width = 10;
-            projectile.height = 10;
-            projectile.friendly = true;
-            projectile.hostile = false;
-            projectile.penetrate = 3;
-            projectile.timeLeft = 600;
-            //projectile.aiStyle = 0;
-            projectile.tileCollide = true;
+            Projectile.width = 10;
+            Projectile.height = 10;
+            Projectile.friendly = true;
+            Projectile.hostile = false;
+            Projectile.penetrate = 3;
+            Projectile.timeLeft = 600;
+            //Projectile.aiStyle = 0;
+            Projectile.tileCollide = true;
         }
 
         public override void AI()
         {
-            projectile.rotation = (float)(Math.PI / 2 - Math.Atan2(projectile.velocity.Y, projectile.velocity.X));
+            Projectile.rotation = (float)(Math.PI / 2 - Math.Atan2(Projectile.velocity.Y, Projectile.velocity.X));
         }
     }
 }

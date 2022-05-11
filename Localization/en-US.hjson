@@ -1,0 +1,16 @@
+﻿Mods:{
+	AdvancedMod:{
+		Bestiary:{
+			Mutation:The hospitable resident seems to be on good terms with many of his neighbors. It is said that he came to this town to defeat his brother
+			Madman:The madman was a gifted explorer. He was hit by a piece of high ground, so he was like this, running to the crowd
+			Chemist:Unlike the others, he came to this town only to find a laboratory of his own. He seems to have a kindred spirit with the nurse
+			Watcher:The incarnation of the God of insight. Since his defeat, he has settled down here.
+
+			TreeDiagrammer:The work of a fine craftsman. It may be the world's first truly mechanical life, but the world doesn't seem to have set it up yet
+
+			SiliconWafer:Originally a probe on the Destroyer's body, it was invaded by a virus during an engagement, and has since become the guardian of Tree Diagrammer, ready to die for its master
+
+			MagicBook:The book is willing to help those who learn from it. But when someone overuses magic, it strikes back in anger
+		}
+	}
+}

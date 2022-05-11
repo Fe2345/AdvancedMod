@@ -1,9 +1,11 @@
 ﻿using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
-using Terraria.Localization;
 using System.Collections.Generic;
 using AdvancedMod.Utils;
+using Terraria.GameContent.Personalities;
+using Terraria.GameContent.Bestiary;
+using Terraria.GameContent.ItemDropRules;
 
 namespace AdvancedMod.NPCs.Town
 {
@@ -13,71 +15,91 @@ namespace AdvancedMod.NPCs.Town
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("异变");
-            DisplayName.AddTranslation(GameCulture.Chinese, "异变");
-            DisplayName.AddTranslation(GameCulture.English, "Mutation");
-            Main.npcFrameCount[npc.type] = Main.npcFrameCount[NPCID.Angler];
+            Main.npcFrameCount[NPC.type] = Main.npcFrameCount[NPCID.Angler];
             //NPC总共帧图数，一般为16+下面两种帧的帧数
-            NPCID.Sets.ExtraFramesCount[npc.type] = NPCID.Sets.ExtraFramesCount[NPCID.Angler];
+            NPCID.Sets.ExtraFramesCount[NPC.type] = NPCID.Sets.ExtraFramesCount[NPCID.Angler];
             //额外活动帧，一般为5
-            NPCID.Sets.AttackFrameCount[npc.type] = NPCID.Sets.AttackFrameCount[NPCID.Angler];
+            NPCID.Sets.AttackFrameCount[NPC.type] = NPCID.Sets.AttackFrameCount[NPCID.Angler];
             //攻击帧，这个帧数取决于你的NPC攻击类型，射手填5，战士和投掷填4，法师填2，当然，也可以多填，就是不知效果如何（这里直接引用商人的）
-            NPCID.Sets.DangerDetectRange[npc.type] = 1000;
+            NPCID.Sets.DangerDetectRange[NPC.type] = 1000;
             //巡敌范围，以像素为单位，这个似乎是半径
-            NPCID.Sets.AttackType[npc.type] = NPCID.Sets.AttackType[NPCID.Angler];
+            NPCID.Sets.AttackType[NPC.type] = NPCID.Sets.AttackType[NPCID.Angler];
             //攻击类型，一般为0，想要模仿其他NPC就填他们的ID
-            NPCID.Sets.AttackTime[npc.type] = 20;
+            NPCID.Sets.AttackTime[NPC.type] = 20;
             //单次攻击持续时间，越短，则该NPC攻击越快（可以用来模拟长时间施法的NPC）
-            NPCID.Sets.AttackAverageChance[npc.type] = 3;
+            NPCID.Sets.AttackAverageChance[NPC.type] = 3;
             //NPC遇敌的攻击优先度，该数值越大则NPC遇到敌怪时越会优先选择逃跑，反之则该NPC越好斗。
             //最小一般为1，你可以试试0或负数LOL~
+
+            NPC.Happiness.SetNPCAffection(NPCID.Dryad, AffectionLevel.Love);
+            NPC.Happiness.SetNPCAffection<Chemist>(AffectionLevel.Like);
+            NPC.Happiness.SetNPCAffection(NPCID.Angler, AffectionLevel.Like);
+            NPC.Happiness.SetNPCAffection(NPCID.DyeTrader, AffectionLevel.Dislike);
+            NPC.Happiness.SetNPCAffection(NPCID.TaxCollector, AffectionLevel.Hate);
+
+            NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new NPCID.Sets.NPCBestiaryDrawModifiers(0)
+            {
+                Velocity = -1f,
+                Direction = -1
+            };
         }
 
         public override void SetDefaults()
         {
-            npc.townNPC = true;
-            npc.friendly = true;
+            NPC.townNPC = true;
+            NPC.friendly = true;
             //如果你想写敌对NPC也行
-            npc.width = 22;
+            NPC.width = 22;
             //碰撞箱宽
-            npc.height = 32;
+            NPC.height = 32;
             //碰撞箱高            
-            npc.aiStyle = 7;
+            NPC.aiStyle = 7;
             //必带项，如果你能自己写出城镇NPC的AI可以不带
-            npc.damage = 10;
+            NPC.damage = 10;
             //碰撞伤害，由于城镇NPC没有碰撞伤害所以可以忽略
-            npc.defense = 150;
+            NPC.defense = 150;
             //防御力
-            npc.lifeMax = Main.expertMode ? 5000 : 1500;
+            NPC.lifeMax = Main.expertMode ? 5000 : 1500;
+            if (Main.masterMode) NPC.lifeMax = 10000;
             //生命值
-            npc.HitSound = SoundID.NPCHit1;
+            NPC.HitSound = SoundID.NPCHit1;
             //受伤音效
-            npc.DeathSound = SoundID.NPCDeath1;
+            NPC.DeathSound = SoundID.NPCDeath1;
             //死亡音效
-            npc.knockBackResist = 0.1f;
+            NPC.knockBackResist = 0.1f;
             //抗击退性，数字越大抗性越低
-            animationType = NPCID.Angler;
-            //如果你的NPC属于除投掷类NPC以外的其他攻击类型，请带上，值可以填对应NPC的ID
 
             if (NPC.downedMechBossAny)
             {
-                npc.lifeMax = Main.expertMode ? 10000 : 3000;
+                NPC.lifeMax = Main.expertMode ? 10000 : 3000;
+                if (Main.masterMode) NPC.lifeMax = 20000;
             }
 
             if (NPC.downedMoonlord)
             {
-                npc.lifeMax = Main.expertMode ? 15000 : 4500;
+                NPC.lifeMax = Main.expertMode ? 15000 : 4500;
+                if (Main.masterMode) NPC.lifeMax = 30000;
             }
 
             if (AdvancedWorld.downedMutationBosses)
             {
-                npc.lifeMax = 4500000;
+                NPC.lifeMax = Main.masterMode ? 4500000 : 3000000;
             }
         }
 
-        public override string TownNPCName()
+        public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
+        {
+            bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[]
+            {
+                BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Surface,
+                new FlavorTextBestiaryInfoElement("Mods.AdvancedMod.Bestiary.Mutation")
+            }) ;
+        }
+
+        public override List<string> SetNPCNameList()
         {
             string[] names = { "Devi", "KingSlime", "Trump", "Clound", "SwordOfWar" };
-            return Main.rand.Next(names);
+            return new List<string>(names);
         }
 
         public override void FindFrame(int frameHeight)
@@ -147,14 +169,14 @@ namespace AdvancedMod.NPCs.Town
                 if (!AdvancedPlayer.RecievedInitBag)
                 {
                     AdvancedPlayer.RecievedInitBag = true;
-                    Item.NewItem(Main.LocalPlayer.Center, ModContent.ItemType<Items.Summon.MutationCore>(), 1);
-                    Item.NewItem(Main.LocalPlayer.Center, ModContent.ItemType<Items.Summon.ComplexBossSummons_PreHardmode>(), 1);
-                    Item.NewItem(Main.LocalPlayer.Center, ItemID.PlatinumBroadsword, 1);
-                    Item.NewItem(Main.LocalPlayer.Center, ItemID.IronBow, 1);
-                    Item.NewItem(Main.LocalPlayer.Center, ItemID.RubyStaff, 1);
-                    Item.NewItem(Main.LocalPlayer.Center, ItemID.SlimeStaff, 1);
-                    Item.NewItem(Main.LocalPlayer.Center, ItemID.LifeCrystal, 3);
-                    Item.NewItem(Main.LocalPlayer.Center, ItemID.ManaCrystal, 3);
+                    Item.NewItem(NPC.GetSource_GiftOrReward(),Main.LocalPlayer.Center, ModContent.ItemType<Items.Summon.MutationCore>(), 1);
+                    Item.NewItem(NPC.GetSource_GiftOrReward(),Main.LocalPlayer.Center, ModContent.ItemType<Items.Summon.ComplexBossSummons_PreHardmode>(), 1);
+                    Item.NewItem(NPC.GetSource_GiftOrReward(),Main.LocalPlayer.Center, ItemID.PlatinumBroadsword, 1);
+                    Item.NewItem(NPC.GetSource_GiftOrReward(),Main.LocalPlayer.Center, ItemID.IronBow, 1);
+                    Item.NewItem(NPC.GetSource_GiftOrReward(),Main.LocalPlayer.Center, ItemID.RubyStaff, 1);
+                    Item.NewItem(NPC.GetSource_GiftOrReward(),Main.LocalPlayer.Center, ItemID.SlimeStaff, 1);
+                    Item.NewItem(NPC.GetSource_GiftOrReward(),Main.LocalPlayer.Center, ItemID.LifeCrystal, 3);
+                    Item.NewItem(NPC.GetSource_GiftOrReward(),Main.LocalPlayer.Center, ItemID.ManaCrystal, 3);
                     return;
                 }
             }
@@ -213,10 +235,13 @@ namespace AdvancedMod.NPCs.Town
             attackDelay = 180;
             //NPC在出招后多长时间才会发射弹幕
         }
-
-        public override void NPCLoot()
+        
+        public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
-            Item.NewItem(npc.Center, ModContent.ItemType<Items.Weapon.Thrown.RabbitBomb>(), 1);
+            base.ModifyNPCLoot(npcLoot);
+
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Weapon.Ranged.RabbitBomb>(), 1));
         }
+        
     }
 }

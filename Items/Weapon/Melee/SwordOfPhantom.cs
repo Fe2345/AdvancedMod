@@ -4,6 +4,7 @@ using Terraria.ID;
 using Microsoft.Xna.Framework;
 using System;
 using AdvancedMod.Utils;
+using Terraria.DataStructures;
 
 namespace AdvancedMod.Items.Weapon.Melee
 {
@@ -17,25 +18,25 @@ namespace AdvancedMod.Items.Weapon.Melee
 
         public override void SetDefaults()
         {
-            item.useStyle = ItemUseStyleID.SwingThrow;  //枪支或法杖
-            item.damage = 3000;   //伤害
-            item.useAnimation = 10; //使用动画时长
-            item.useTime = 5;   //攻速
-            item.knockBack = 10;  //击退
-            item.width = 30;     //大小
-            item.height = 30;    //大小
-            item.scale = 1.25f;  //碰撞箱
-            item.rare = ItemRarityID.Red;       //稀有度
-            item.value = Item.sellPrice(silver: 44);
-            item.crit = 50;       //暴击率
-            item.autoReuse = true;   //自动挥舞
-            item.useTurn = true;      //使用中可转身
-            item.melee = true;        //近战武器
-            item.shootSpeed = 10f;    //射速
-            item.channel = true;      //有特殊行为
+            Item.useStyle = ItemUseStyleID.Swing;  //枪支或法杖
+            Item.damage = 3000;   //伤害
+            Item.useAnimation = 10; //使用动画时长
+            Item.useTime = 5;   //攻速
+            Item.knockBack = 10;  //击退
+            Item.width = 30;     //大小
+            Item.height = 30;    //大小
+            Item.scale = 1.25f;  //碰撞箱
+            Item.rare = ItemRarityID.Red;       //稀有度
+            Item.value = Item.sellPrice(silver: 44);
+            Item.crit = 50;       //暴击率
+            Item.autoReuse = true;   //自动挥舞
+            Item.useTurn = true;      //使用中可转身
+            Item.DamageType = DamageClass.Melee;        //近战武器
+            Item.shootSpeed = 10f;    //射速
+            Item.channel = true;      //有特殊行为
 
 
-            item.shoot = ModContent.ProjectileType<Projectiles.SwordOfPhantom_Projectile>();
+            Item.shoot = ModContent.ProjectileType<Projectiles.SwordOfPhantom_Projectile>();
         }
 
         public override void OnHitNPC(Player player, NPC target, int damage, float knockBack, bool crit)
@@ -47,30 +48,26 @@ namespace AdvancedMod.Items.Weapon.Melee
             }
         }
 
-        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
+        //public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
+        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
             for (int i = 0;i < 6; i++)
             {
                 //Vector2 speed = new Vector2(Main.screenPosition.X + Main.mouseX - player.Center.X, Main.screenPosition.X + Main.mouseY - player.Center.Y);
                 //Vector2 shootVel = (Math.Atan2(Main.mouseX - player.Center.X,  Main.mouseY - player.Center.Y) + (i * Math.PI / 6)).ToRotationVector2() * 10;
-                Vector2 speed = new Vector2(speedX, speedY);
-                Vector2 shootVel = Tool.TurnVector(speed, (float)(i * 2* Math.PI / 3));
-                Projectile.NewProjectile(position,Vector2.Normalize(shootVel)*20,item.shoot,damage,knockBack,player.whoAmI,speed.X,speed.Y);
+                Vector2 shootVel = Tool.TurnVector(velocity, (float)(i * 2* Math.PI / 3));
+                Projectile.NewProjectile(source,position,Vector2.Normalize(shootVel)*20,Item.shoot,damage,knockback,player.whoAmI,velocity.X,velocity.Y);
             }
             return false;
         }
 
-        public override void AddRecipes()
-        {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemID.BeeKeeper, 1);
-            recipe.AddIngredient(ItemID.BreakerBlade,1);
-            recipe.AddIngredient(ItemID.Seedler, 1);
-            recipe.AddIngredient(ItemID.Meowmere, 1);
-            recipe.AddIngredient(ModContent.ItemType<Items.Weapon.Melee.RoarOfFlame>(), 1);
-            recipe.AddTile(ModContent.TileType<Tiles.AdvancedCraftTable>());
-            recipe.SetResult(this, 1);
-            recipe.AddRecipe();
-        }
+        public override void AddRecipes() => CreateRecipe()
+            .AddIngredient(ItemID.BeeKeeper)
+            .AddIngredient(ItemID.BreakerBlade)
+            .AddIngredient(ItemID.Seedler)
+            .AddIngredient(ItemID.Meowmere)
+            .AddIngredient(ModContent.ItemType<Items.Weapon.Melee.RoarOfFlame>())
+            .AddTile(ModContent.TileType<Tiles.AdvancedCraftTable>())
+            .Register();
     }
 }

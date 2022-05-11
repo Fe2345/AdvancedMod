@@ -6,6 +6,9 @@ using AdvancedMod.Projectiles;
 using Microsoft.Xna.Framework;
 using AdvancedMod.Utils;
 using System;
+using System.Collections.Generic;
+using Terraria.GameContent.Bestiary;
+using Terraria.GameContent.ItemDropRules;
 
 namespace AdvancedMod.NPCs.Boss
 {
@@ -20,30 +23,44 @@ namespace AdvancedMod.NPCs.Boss
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("树状图设计者");
-            DisplayName.AddTranslation(GameCulture.Chinese, "树状图设计者");
-            DisplayName.AddTranslation(GameCulture.English, "Tree Diagrammer");
-            Main.npcFrameCount[npc.type] = 1;
+            //DisplayName.AddTranslation(GameCulture.Chinese, "树状图设计者");
+            //DisplayName.AddTranslation(GameCulture.English, "Tree Diagrammer");
+            Main.npcFrameCount[NPC.type] = 1;
+
+            NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new NPCID.Sets.NPCBestiaryDrawModifiers(0)
+            {
+                Velocity = -1f,
+                Direction = -1
+            };
         }
 
         public override void SetDefaults()
         {
-            npc.width = 150;
-            npc.height = 150;
-            npc.damage = 80;
-            npc.lifeMax = Main.expertMode ? 60000 : 30000;
-            npc.defense = 30;
-            npc.knockBackResist = 0f;
-            npc.HitSound = SoundID.NPCHit1;
-            npc.DeathSound = SoundID.NPCDeath6;
-            music = MusicID.Boss2;
-            npc.buffImmune[BuffID.Poisoned] = true;
-            npc.buffImmune[BuffID.Confused] = true;
-            Main.npcFrameCount[npc.type] = 1;
-            npc.noGravity = true;
-            npc.noTileCollide = true;
-            aiType = -1;
-            npc.boss = true;
-            bossBag = ModContent.ItemType<Items.Misc.TreeDiagrammerBag>();
+            NPC.width = 150;
+            NPC.height = 150;
+            NPC.damage = 80;
+            NPC.lifeMax = Main.expertMode ? 60000 : 30000;
+            NPC.defense = 30;
+            NPC.knockBackResist = 0f;
+            NPC.HitSound = SoundID.NPCHit1;
+            NPC.DeathSound = SoundID.NPCDeath6;
+            Music = MusicID.Boss2;
+            NPC.buffImmune[BuffID.Poisoned] = true;
+            NPC.buffImmune[BuffID.Confused] = true;
+            Main.npcFrameCount[NPC.type] = 1;
+            NPC.noGravity = true;
+            NPC.noTileCollide = true;
+            AIType = -1;
+            NPC.boss = true;
+        }
+
+        public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
+        {
+            bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[]
+            {
+                BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Surface,
+                new FlavorTextBestiaryInfoElement("Mods.AdvancedMod.Bestiary.TreeDiagrammer")
+            });
         }
         /*
         ai[0] 状态指示器（死亡，追击，攻击）
@@ -62,14 +79,15 @@ namespace AdvancedMod.NPCs.Boss
         int i = 0; //旋转的闪电弹幕计数器
         public override void AI()
         {
+            /*
             Player player = Main.player[npc.target];
             if (!AdvancedWorld.MutationMode && npc.ai[1] >= 900)
             {
-                npc.ai[1] = 0;
+                NPC.ai[1] = 0;
             }
             else if (AdvancedWorld.MutationMode && npc.ai[1] >= 1200)
             {
-                npc.ai[1] = 0;
+                NPC.ai[1] = 0;
             }
 
             if (!player.active || player.dead)
@@ -158,6 +176,7 @@ namespace AdvancedMod.NPCs.Boss
                 Main.NewText("你竟然认为可以杀死我？！？", color);
                 Chat3 = true;
             }
+            */
         }
 
         public override void BossLoot(ref string name, ref int potionType)
@@ -165,6 +184,17 @@ namespace AdvancedMod.NPCs.Boss
             potionType = ItemID.GreaterHealingPotion;
         }
 
+        public override void ModifyNPCLoot(NPCLoot npcLoot)
+        {
+            base.ModifyNPCLoot(npcLoot);
+
+            npcLoot.Add(ItemDropRule.BossBag(ModContent.ItemType<Items.Misc.TreeDiagrammerBag>()));
+            npcLoot.Add(ItemDropRule.ByCondition(new Conditions.NotExpert(), ModContent.ItemType<Items.Mateiral.SiliconBar>(), 1, 12, 18));
+            npcLoot.Add(ItemDropRule.ByCondition(new Conditions.NotExpert(), ItemID.SoulofLight, 1, 6, 9));
+            npcLoot.Add(ItemDropRule.ByCondition(new Conditions.NotExpert(), ItemID.IronBar, 1, 5, 9));
+            npcLoot.Add(ItemDropRule.ByCondition(new Conditions.NotExpert(), ItemID.Wire, 1, 10, 15));
+        }
+        /*
         public override void NPCLoot()
         {
             if (Main.expertMode)
@@ -181,5 +211,6 @@ namespace AdvancedMod.NPCs.Boss
 
             AdvancedWorld.downedTreeDiagrammer = true;
         }
+        */
     }
 }

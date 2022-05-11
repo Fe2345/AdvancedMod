@@ -16,19 +16,19 @@ namespace AdvancedMod.Items.Misc
 
         public override void SetDefaults()
         {
-            item.maxStack = 999;
-            item.consumable = true;
-            item.width = 16;
-            item.height = 16;
-            item.rare = ItemRarityID.Expert;
+            Item.maxStack = 999;
+            Item.consumable = true;
+            Item.width = 16;
+            Item.height = 16;
+            Item.rare = ItemRarityID.Expert;
         }
 
         public override void OpenBossBag(Player player)
         {
-            player.QuickSpawnItem(ModContent.ItemType<Items.Mateiral.SiliconBar>(),Main.rand.Next(12)+24);
-            player.QuickSpawnItem(ItemID.IronBar, Main.rand.Next(5) + 5);
-            player.QuickSpawnItem(ItemID.SoulofLight, Main.rand.Next(6) + 6);
-            player.QuickSpawnItem(ItemID.Wire, Main.rand.Next(10) + 10);
+            player.QuickSpawnItem(player.GetSource_OpenItem(ModContent.ItemType<Items.Mateiral.SiliconBar>()),ModContent.ItemType<Items.Mateiral.SiliconBar>(),Main.rand.Next(12)+24);
+            player.QuickSpawnItem(player.GetSource_OpenItem(ItemID.IronBar),ItemID.IronBar, Main.rand.Next(5) + 5);
+            player.QuickSpawnItem(player.GetSource_OpenItem(ItemID.SoulofLight),ItemID.SoulofLight, Main.rand.Next(6) + 6);
+            player.QuickSpawnItem(player.GetSource_OpenItem(ItemID.Wire),ItemID.Wire, Main.rand.Next(10) + 10);
         }
     }
 }

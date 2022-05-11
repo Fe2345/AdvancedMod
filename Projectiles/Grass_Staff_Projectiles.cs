@@ -17,22 +17,22 @@ namespace AdvancedMod.Projectiles
 
         public override void SetDefaults()
         {
-            projectile.width = 22;
-            projectile.height = 22;
-            projectile.friendly = true;
-            projectile.hostile = false;
-            projectile.penetrate = 3;
-            projectile.timeLeft = 600;
-            //projectile.aiStyle = 0;
+            Projectile.width = 22;
+            Projectile.height = 22;
+            Projectile.friendly = true;
+            Projectile.hostile = false;
+            Projectile.penetrate = 3;
+            Projectile.timeLeft = 600;
+            //Projectile.aiStyle = 0;
         }
 
         public override void AI()
         {
-            Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height
+            Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height
     , MyDustId.GreyStone, 0f, 0f, 100, default(Color), 3f);
             dust.noGravity = true;
             dust.velocity *= 0;
-            dust.position = projectile.position;
+            dust.position = Projectile.position;
         }
     }
 }
