@@ -36,9 +36,17 @@ namespace AdvancedMod.NPCs.Town
             //最小一般为1，你可以试试0或负数LOL~
 
             NPC.Happiness.SetNPCAffection<Chemist>(AffectionLevel.Love);
+            NPC.Happiness.SetNPCAffection(NPCID.Princess, AffectionLevel.Love);
             NPC.Happiness.SetNPCAffection(NPCID.Cyborg, AffectionLevel.Like);
             NPC.Happiness.SetNPCAffection(NPCID.TaxCollector, AffectionLevel.Dislike);
             NPC.Happiness.SetNPCAffection<Madman>(AffectionLevel.Hate);
+
+            NPC.Happiness.SetBiomeAffection<ForestBiome>(AffectionLevel.Love);
+            NPC.Happiness.SetBiomeAffection<JungleBiome>(AffectionLevel.Like);
+            NPC.Happiness.SetBiomeAffection<SnowBiome>(AffectionLevel.Dislike);
+            NPC.Happiness.SetBiomeAffection<CrimsonBiome>(AffectionLevel.Hate);
+            NPC.Happiness.SetBiomeAffection<CorruptionBiome>(AffectionLevel.Hate);
+            NPC.Happiness.SetBiomeAffection<DungeonBiome>(AffectionLevel.Hate);
 
             NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new NPCID.Sets.NPCBestiaryDrawModifiers(0)
             {
@@ -70,6 +78,7 @@ namespace AdvancedMod.NPCs.Town
             //死亡音效
             NPC.knockBackResist = 0.3f;
             //抗击退性，数字越大抗性越低
+            AnimationType = NPCID.Cyborg;
         }
 
         public override List<string> SetNPCNameList()

@@ -12,5 +12,62 @@
 			
 			MagicBook:魔道书愿意帮助汲取它的知识之人。但是当有人过度使用魔法，它就会愤怒地反击
 		}
+
+		TownNPCMood:{
+			Mutation:{
+				Content:我很好
+				NoHome:自从那场血战之后，我就连家都没有了
+				LoveSpace:我喜欢这里
+				FarFromHome:我的邻居们拜托我给他们带些东西，但是我找不到回家的路了……
+				DislikeCrowded:这里人很多，但是其中又有几个是我真心的朋友呢？
+				LikeBiome:丛林的水真是太合适了，我真是High到不行啊！
+				LoveBiome:神圣之地的力量可以洗去这片土地上的邪恶，这也正是我的愿望
+				DislikeBiome:雪原太冷了……
+				HateBiome:酸萝卜别吃！
+				LoveNPC:"{NPCName}和我虽然目标不同，但都为各自的目标而努力"
+				LoveNPC_Princesss:"{NPCName}懂得团结所有居民，这种能力实在令我佩服"
+				LikeNPC:"{NPCName}大公无私地将药水的配方分享给大家，我想我们有很多共同点"
+				DislikeNPC:"我尝试给{NPCName}一些奇异植物，但是他却不肯给我我想要的染料！"
+				HateNPC:"{NPCName}根本不关心城镇和这个世界！他只关心钱！"
+			}
+
+			Madman:{
+				Content:SXIBWSPC';,CVCYFIUOBCPNWB
+			}
+
+			Chemist:{
+				Content:反应正好处于平衡状态
+				NoHome:我想到了一个绝妙的实验方案，但是我没有一个实验室
+				LoveSpace:这里很安静
+				FarFromHome:我想到了一个绝妙的实验方案，但是我离我的实验室太远了
+				DislikeCrowded:你能让那些人走开吗？叮叮当当的，我的烧杯都要开始摇晃了
+				LoveBiome:丛林的水永远是最贴近自然的。实在是妙极了
+				LikeBiome:我们都是从森林开始的。这很好
+				DislikeBiome:我不喜欢神圣之地！那个史莱姆皇后是啥玩意？
+				HateBiome:我的药水都发臭了……
+				LoveNPC:"{NPCName}总是耐心的治疗别人！我从她那里学到了很多"
+				LoveNPC_Princesss:"令我意外的是，{NPCName}似乎对化学也饶有兴趣。她甚至知道如何合成河豚毒素！"
+				LikeNPC:"{NPCName}的巫术并非没有科学道理。我利用他的技术，成功改进了我的药水配方。"
+				DislikeNPC:"{NPCName}太功利了。"
+				HateNPC:"{NPCName}只知道向我收税！"
+			}
+
+			Watcher:{
+				Content:我没有什么可说的
+				NoHome:我能够洞察万物，却连个家都没有
+				LoveSpace:这里人很少。这让我可以不受干扰地观察万物
+				FarFromHome:让我看看……为啥我现在离家这么远？
+				DislikeCrowded:吵死了！这些声音影响了我对事物的观察！
+				LoveBiome:森林是这个世界为数不多的纯净之地了……
+				LikeBiome:丛林有很多生物……我喜欢这里。
+				DislikeBiome:雪原只有茫茫的白色……太无趣了……
+				HateBiome:这些怪物根本不值得观察！！！
+				LoveNPC:"{NPCName}懂得运用自己的眼睛来更新自己的知识。我们之间很相像。"
+				LoveNPC_Princesss:"{NPCName}很有智慧！她总会向我询问一些事情"
+				LikeNPC:"没想到{NPCName}那么喜欢火箭！我想帮帮他。"
+				DislikeNPC:"我很奇怪，{NPCName}为啥只看得到钱呢？"
+				HateNPC:"{NPCName}是怎么回事？我能感觉到他身上有智慧的气息，但是为啥他整天只是转来转去呢？"
+			}
+		}
 	}
 }

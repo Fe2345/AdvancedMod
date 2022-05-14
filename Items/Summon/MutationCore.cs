@@ -28,9 +28,9 @@ namespace AdvancedMod.Items.Summon
 
         public override bool CanUseItem(Player player)
         {
-            if (NPC.AnyNPCs(ModContent.NPCType<NPCs.Boss.TreeDiagrammer>()) | !Main.expertMode)
+            if (Utils.Tool.CheckBossAlive())
             {
-                Main.NewText("异变阻止了你改变规则");
+                Main.NewText("你现在不能改变规则，周围有Boss在游荡");
                 return false;  
             }
             
@@ -48,13 +48,13 @@ namespace AdvancedMod.Items.Summon
             if (!AdvancedWorld.MutationMode)
             {
                 AdvancedWorld.MutationMode = true;
-                Main.NewText("异变模式已开启！！！",color);
+                Main.NewText(Main.masterMode ? "虚空模式已开启！！！" : "异变模式已开启！！！",color);
             }
             else
             {
                 AdvancedWorld.MutationMode = false;
                 AdvancedPlayer.RecievedInitBag = false;
-                Main.NewText("异变模式已关闭！！！",color);
+                Main.NewText(Main.masterMode ? "虚空模式已关闭！！！" : "异变模式已关闭！！！",color);
             }
 
             return true;

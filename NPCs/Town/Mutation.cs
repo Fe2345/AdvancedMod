@@ -32,10 +32,18 @@ namespace AdvancedMod.NPCs.Town
             //最小一般为1，你可以试试0或负数LOL~
 
             NPC.Happiness.SetNPCAffection(NPCID.Dryad, AffectionLevel.Love);
+            NPC.Happiness.SetNPCAffection(NPCID.Princess, AffectionLevel.Love);
             NPC.Happiness.SetNPCAffection<Chemist>(AffectionLevel.Like);
             NPC.Happiness.SetNPCAffection(NPCID.Angler, AffectionLevel.Like);
             NPC.Happiness.SetNPCAffection(NPCID.DyeTrader, AffectionLevel.Dislike);
             NPC.Happiness.SetNPCAffection(NPCID.TaxCollector, AffectionLevel.Hate);
+
+            NPC.Happiness.SetBiomeAffection<JungleBiome>(AffectionLevel.Love);
+            NPC.Happiness.SetBiomeAffection<HallowBiome>(AffectionLevel.Like);
+            NPC.Happiness.SetBiomeAffection<SnowBiome>(AffectionLevel.Dislike);
+            NPC.Happiness.SetBiomeAffection<CrimsonBiome>(AffectionLevel.Hate);
+            NPC.Happiness.SetBiomeAffection<CorruptionBiome>(AffectionLevel.Hate);
+            NPC.Happiness.SetBiomeAffection<DungeonBiome>(AffectionLevel.Hate);
 
             NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new NPCID.Sets.NPCBestiaryDrawModifiers(0)
             {
@@ -68,6 +76,8 @@ namespace AdvancedMod.NPCs.Town
             //死亡音效
             NPC.knockBackResist = 0.1f;
             //抗击退性，数字越大抗性越低
+
+            AnimationType = NPCID.Angler;
 
             if (NPC.downedMechBossAny)
             {

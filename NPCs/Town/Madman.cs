@@ -67,6 +67,7 @@ namespace AdvancedMod.NPCs.Town
             //死亡音效
             NPC.knockBackResist = 0.3f;
             //抗击退性，数字越大抗性越低
+            AnimationType = NPCID.Wizard;
 
             if (Main.masterMode)
             {

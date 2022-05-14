@@ -32,6 +32,7 @@ namespace AdvancedMod.NPCs.Boss
                 Velocity = -1f,
                 Direction = -1
             };
+            NPCID.Sets.BossBestiaryPriority.Add(NPC.type);
         }
 
         public override void SetDefaults()
@@ -74,109 +75,65 @@ namespace AdvancedMod.NPCs.Boss
             1 一阶段攻击
             2 一阶段召唤
             3 异变模式旋转闪电
+        ai[3] 阶段指示器
+            -1 狂暴
+            0 无
+            1 第一阶段
+            2 第二阶段
         */
         Color color = new Color(255, 255, 255); //状态讯息颜色
         int i = 0; //旋转的闪电弹幕计数器
         public override void AI()
         {
-            /*
-            Player player = Main.player[npc.target];
-            if (!AdvancedWorld.MutationMode && npc.ai[1] >= 900)
+            Player player = Main.player[NPC.target];
+
+            if (!Main.dayTime)
             {
-                NPC.ai[1] = 0;
+                NPC.ai[3] = -1;
             }
-            else if (AdvancedWorld.MutationMode && npc.ai[1] >= 1200)
+            else if (NPC.life < 0.5 * NPC.lifeMax)
             {
-                NPC.ai[1] = 0;
+                NPC.ai[3] = 2;
+            }
+            else if (NPC.ai[3] == 0)
+            {
+                NPC.ai[3] = 1;
             }
 
-            if (!player.active || player.dead)
+            if (!player.active | player.dead)
             {
-                npc.ai[0] = -1;
+                NPC.ai[0] = -1;
             }
-            if (Vector2.Distance(npc.Center,player.Center) >= 2500f)
+            else if (NPC.Distance(player.Center) >= 200)
             {
-                npc.ai[0] = 1;
+                NPC.ai[0] = 1;
             }
             else
             {
-                npc.ai[1]++;
-                if (npc.ai[1] >= 0 && npc.ai[1] < 600){
-                    npc.ai[2] = 1;
-                }
-                else if (npc.ai[1] >= 600 && npc.ai[1] < 900)
+                NPC.ai[0] = 0;
+            }
+
+            if (NPC.ai[3] == -1) //angry
+            {
+                NPC.defense *= 2;
+                NPC.damage *= 2;
+            }
+            else if (NPC.ai[3] == 1)
+            {
+                if (NPC.ai[0] == -1)
                 {
-                    npc.ai[2] = 2;
+                    NPC.velocity.X = 0;
+                    NPC.velocity.Y += 5;
                 }
-                else if (AdvancedWorld.MutationMode && npc.ai[1] >= 900 && npc.ai[1] < 1200)
+                else if (NPC.ai[0] == 1)
                 {
-                    npc.ai[2] = 3;
+                    NPC.velocity = Vector2.Normalize(player.Center - NPC.Center) * 30;
                 }
             }
-
-            switch ((int)npc.ai[0])
+            else if (NPC.ai[3] == 2)
             {
-                case -2:
-                    break;
-                case -1:
-                    npc.velocity = new Vector2(0, 20);
-                    break;
-                case 0:
-                    npc.ai[2] = 0;
-                    break;
-                case 1:
-                    npc.position = player.position + new Vector2(10, 10);
-                    break;
-            }
 
-            switch ((int)npc.ai[2])
-            {
-                case 1:
-                    if (Vector2.Distance(player.Center + new Vector2(-100, -100), npc.Center) < Vector2.Distance(player.Center + new Vector2(100, -100), npc.Center))
-                    {
-                        npc.velocity = (player.Center - npc.Center + new Vector2(-100,10)) / Vector2.Distance(player.Center, npc.Center) * 6;
-                    }
-                    else
-                    {
-                        npc.velocity = (player.Center - npc.Center + new Vector2(100, 100)) / Vector2.Distance(player.Center, npc.Center) * 6;
-                    }
-                    Vector2 npcToPlr = player.Center - npc.Center;
-                    Projectile.NewProjectile(npc.Center, Vector2.Normalize(npcToPlr)*40, ModContent.ProjectileType<Projectiles.Boss.TreeDiagrammer.TreeDiagrammer_Laser>(), 0, 0f, Main.myPlayer, 0, 3);
-                    break;
-                case 2:
-                    if (npc.ai[1] % 60 == 0)
-                    {
-                        NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<SiliconWafer>());
-                    }
-
-                    break;
-                case 3:
-                    Vector2 InitAngle = Tool.TurnVector((player.Center - npc.Center), (float)(-Math.PI / 6));
-                    while (npc.ai[1] % 5 == 0)
-                    {
-                        Vector2 speed = Tool.TurnVector(InitAngle, (float)(i * Math.PI / 30));
-                        Projectile.NewProjectile(npc.Center,speed,ModContent.ProjectileType<Projectiles.Boss.TreeDiagrammer.TreeDiagrammer_Lighting>(),npc.damage /3, 0f ,Main.myPlayer,0f ,npc.whoAmI);
-                        i++;
-                    }
-
-                    break;
             }
-
-            if (npc.life <= npc.lifeMax * 0.75 && !Chat1)
-            {
-                Main.NewText("虽然你仅仅刮掉了我的几根电线，但已经超过很多其他的挑战者了。", color);
-                Chat1 = true;
-            }
-            else if (npc.life <= npc.lifeMax * 0.5 && !enterPhase2)
-            {
-                Main.NewText("前面的都是闹着玩的。我要拿出我的真实实力了。", color);
-                enterPhase2 = true;
-            }
-            else if (npc.life <= npc.lifeMax * 0.25 && !Chat3){
-                Main.NewText("你竟然认为可以杀死我？！？", color);
-                Chat3 = true;
-            }
-            */
         }
 
         public override void BossLoot(ref string name, ref int potionType)

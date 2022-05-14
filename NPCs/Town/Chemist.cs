@@ -32,9 +32,17 @@ namespace AdvancedMod.NPCs.Town
             //最小一般为1，你可以试试0或负数LOL~
 
             NPC.Happiness.SetNPCAffection(NPCID.Nurse, AffectionLevel.Love);
+            NPC.Happiness.SetNPCAffection(NPCID.Princess, AffectionLevel.Love);
             NPC.Happiness.SetNPCAffection(NPCID.WitchDoctor, AffectionLevel.Like);
             NPC.Happiness.SetNPCAffection(NPCID.Merchant, AffectionLevel.Dislike);
             NPC.Happiness.SetNPCAffection(NPCID.TaxCollector, AffectionLevel.Hate);
+
+            NPC.Happiness.SetBiomeAffection<JungleBiome>(AffectionLevel.Love);
+            NPC.Happiness.SetBiomeAffection<ForestBiome>(AffectionLevel.Like);
+            NPC.Happiness.SetBiomeAffection<HallowBiome>(AffectionLevel.Dislike);
+            NPC.Happiness.SetBiomeAffection<CrimsonBiome>(AffectionLevel.Hate);
+            NPC.Happiness.SetBiomeAffection<CorruptionBiome>(AffectionLevel.Hate);
+            NPC.Happiness.SetBiomeAffection<DungeonBiome>(AffectionLevel.Hate);
 
             NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new NPCID.Sets.NPCBestiaryDrawModifiers(0)
             {
@@ -66,6 +74,7 @@ namespace AdvancedMod.NPCs.Town
             //死亡音效
             NPC.knockBackResist = 0.3f;
             //抗击退性，数字越大抗性越低
+            AnimationType = NPCID.Guide;
 
             if (NPC.downedMechBossAny)
             {
@@ -334,6 +343,9 @@ namespace AdvancedMod.NPCs.Town
                 shop.item[nextSlot].value = 500;
                 nextSlot++;
                 shop.item[nextSlot].SetDefaults(ItemID.Honeyfin);
+                shop.item[nextSlot].value = 500;
+                nextSlot++;
+                shop.item[nextSlot].SetDefaults(ItemID.RedPotion);
                 shop.item[nextSlot].value = 500;
                 nextSlot++;
             }
