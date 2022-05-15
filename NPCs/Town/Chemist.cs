@@ -172,9 +172,9 @@ namespace AdvancedMod.NPCs.Town
             }
             else if (!firstButton)
             {
-                for (int i = 0;i < debuffs.Length; i++)
+                foreach (int debuff in Utils.Tool.debuffs)
                 {
-                    Main.LocalPlayer.DelBuff(debuffs[i]);
+                    if (Main.LocalPlayer.HasBuff(debuff)) Main.LocalPlayer.ClearBuff(debuff);
                 }
             }
         }

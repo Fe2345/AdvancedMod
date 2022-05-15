@@ -8,6 +8,8 @@ namespace AdvancedMod.Projectiles.Boss.TreeDiagrammer
 {
     public class TreeDiagrammer_Laser : ModProjectile
     {
+        public override string Texture => "Terraria/Projectile_466";
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("树状图设计者激光");
@@ -21,18 +23,13 @@ namespace AdvancedMod.Projectiles.Boss.TreeDiagrammer
             Projectile.hostile = true;
             Projectile.penetrate = 3;
             Projectile.timeLeft = 600;
-            //Projectile.aiStyle = 0;
+            Projectile.aiStyle = 1;
         }
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
             target.AddBuff(ModContent.BuffType<Buffs.Debuff.ElectromagneticInduction>(),300);
             Projectile.Kill();
-        }
-
-        public override void AI()
-        {
-            Projectile.rotation = (float)(Math.PI / 2 - Math.Atan2(Projectile.velocity.Y, Projectile.velocity.X));
         }
     }
 }

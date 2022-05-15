@@ -81,12 +81,12 @@ namespace AdvancedMod.NPCs.Boss
             1 第一阶段
             2 第二阶段
         */
-        Color color = new Color(255, 255, 255); //状态讯息颜色
-        int i = 0; //旋转的闪电弹幕计数器
         public override void AI()
         {
+            ++NPC.ai[1];
             Player player = Main.player[NPC.target];
 
+            //处理BOSS阶段
             if (!Main.dayTime)
             {
                 NPC.ai[3] = -1;
@@ -99,6 +99,11 @@ namespace AdvancedMod.NPCs.Boss
             {
                 NPC.ai[3] = 1;
             }
+
+            //处理计时
+            if (NPC.ai[1] > 1800 && !AdvancedWorld.MutationMode) NPC.ai[1] = 0;
+            if (NPC.ai[1] > 3000 && AdvancedWorld.MutationMode && !Main.masterMode) NPC.ai[1] = 0;
+            if (NPC.ai[1] > 3600 && AdvancedWorld.MutationMode && Main.masterMode) NPC.ai[1] = 0;
 
             if (!player.active | player.dead)
             {
@@ -117,6 +122,16 @@ namespace AdvancedMod.NPCs.Boss
             {
                 NPC.defense *= 2;
                 NPC.damage *= 2;
+
+                if (NPC.ai[1] % 60 == 0)
+                {
+                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, ProjectileID.CultistBossLightningOrb,
+                                            0, 0);
+                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center,
+                                         Vector2.Normalize(player.Center - NPC.Center) * 2,
+                                         ModContent.ProjectileType<Projectiles.Boss.TreeDiagrammer.TreeDiagrammer_Lighting>(),
+                                         NPC.damage, 0);
+                }
             }
             else if (NPC.ai[3] == 1)
             {
@@ -128,6 +143,16 @@ namespace AdvancedMod.NPCs.Boss
                 else if (NPC.ai[0] == 1)
                 {
                     NPC.velocity = Vector2.Normalize(player.Center - NPC.Center) * 30;
+                }
+                else if (NPC.ai[0] == 0)
+                {
+                    if (NPC.ai[1] < 1200)
+                    {
+                        if (NPC.ai[1] % 90 == 0) Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center,
+                            Vector2.Normalize(player.Center - NPC.Center) * 5,
+                            ModContent.ProjectileType<Projectiles.Boss.TreeDiagrammer.TreeDiagrammer_Laser>(),
+                            NPC.damage, 0);
+                    }
                 }
             }
             else if (NPC.ai[3] == 2)

@@ -4,12 +4,28 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Terraria;
+using Terraria.ModLoader;
+using Terraria.ID;
 using Microsoft.Xna.Framework;
 
 namespace AdvancedMod.Utils
 {
     public class Tool
     {
+        public static List<int> debuffs = new List<int>{BuffID.Poisoned,BuffID.Bleeding,BuffID.OnFire,70,BuffID.Darkness,
+                                          BuffID.Blackout,BuffID.Silenced,BuffID.Cursed,BuffID.Confused,
+                                          BuffID.Slow,197,BuffID.Weak,BuffID.BrokenArmor,BuffID.WitheredArmor,
+                                          BuffID.Horrified,BuffID.TheTongue,BuffID.CursedInferno,BuffID.Ichor,
+                                          BuffID.Frostburn,BuffID.Chilled,BuffID.Frozen,BuffID.Webbed,BuffID.Stoned,
+                                          164,BuffID.Obstructed,BuffID.Electrified,148,BuffID.MoonLeech,BuffID.ManaSickness,
+                                          BuffID.PotionSickness,BuffID.ChaosState,BuffID.Suffocation,BuffID.Burning,
+                                          BuffID.Tipsy,BuffID.Lovestruck,BuffID.Stinky,BuffID.WaterCandle,194,
+                                          199,332,BuffID.Hunger,BuffID.Starving,BuffID.Midas,BuffID.Oiled,BuffID.Wet,
+                                          BuffID.Slimed,320,BuffID.ShadowFlame,BuffID.BetsysCurse,169,BuffID.Daybreak,
+                                          183,186,ModContent.BuffType<Buffs.Debuff.ElectromagneticInduction>(),
+                                          ModContent.BuffType<Buffs.Debuff.TheWorld>()
+        };
+
         public static int[] DifferentArray(int n, int max)
         {
             int[] l = { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};

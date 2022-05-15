@@ -11,6 +11,8 @@ namespace AdvancedMod.Projectiles.Boss.TreeDiagrammer
             DisplayName.SetDefault("树状图设计者闪电");
         }
 
+        public override string Texture => "Terraria/Projectile_466";
+
         public override void SetDefaults()
         {
             Projectile.width = 28;
@@ -19,18 +21,12 @@ namespace AdvancedMod.Projectiles.Boss.TreeDiagrammer
             Projectile.hostile = true;
             Projectile.penetrate = 3;
             Projectile.timeLeft = 600;
-            //Projectile.aiStyle = 0;
+            Projectile.aiStyle = 88;
         }
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
             target.AddBuff(ModContent.BuffType<Buffs.Debuff.ElectromagneticInduction>(), 300);
-            Projectile.Kill();
-        }
-
-        public override void AI()
-        {
-
         }
     }
 }
