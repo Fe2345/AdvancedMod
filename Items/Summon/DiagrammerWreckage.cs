@@ -28,7 +28,7 @@ namespace AdvancedMod.Items.Summon
 
         public override bool CanUseItem(Player player)
         {
-            if (NPC.AnyNPCs(ModContent.NPCType<NPCs.Boss.TreeDiagrammer>()))//若BOSS存在，无法使用
+            if (Utils.Tool.CheckBossAlive() || !Main.hardMode)//若BOSS存在，无法使用
             {
                 return false;
             }

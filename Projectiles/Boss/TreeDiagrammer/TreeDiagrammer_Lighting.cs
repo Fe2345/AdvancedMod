@@ -11,7 +11,7 @@ namespace AdvancedMod.Projectiles.Boss.TreeDiagrammer
             DisplayName.SetDefault("树状图设计者闪电");
         }
 
-        public override string Texture => "Terraria/Projectile_466";
+        public override string Texture => "Terraria/Images/Projectile_466";
 
         public override void SetDefaults()
         {

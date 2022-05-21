@@ -74,5 +74,19 @@ namespace AdvancedMod.Utils
 
             return false;
         }
+
+        public static NPC GetClosestNPC(Vector2 position)
+        {
+            int NPCIndex = 0;
+            for (int i = 0; i < Main.npc.Length; i++)
+            {
+                if (Vector2.Distance(position,Main.npc[i].Center) < Vector2.Distance(position, Main.npc[NPCIndex].Center) && !Main.npc[i].friendly)
+                {
+                    NPCIndex = i;
+                }
+            }
+
+            return Main.npc[NPCIndex];
+        }
     }
 }

@@ -86,6 +86,8 @@ namespace AdvancedMod.NPCs.Boss
             ++NPC.ai[1];
             Player player = Main.player[NPC.target];
 
+            Vector2 NpcToplrTop = player.Center + new Vector2(0, -30) - NPC.Center;
+
             //处理BOSS阶段
             if (!Main.dayTime)
             {
@@ -109,7 +111,7 @@ namespace AdvancedMod.NPCs.Boss
             {
                 NPC.ai[0] = -1;
             }
-            else if (NPC.Distance(player.Center) >= 200)
+            else if (NPC.Distance(player.Center) >= 2000)
             {
                 NPC.ai[0] = 1;
             }
@@ -123,6 +125,8 @@ namespace AdvancedMod.NPCs.Boss
                 NPC.defense *= 2;
                 NPC.damage *= 2;
 
+                
+                NPC.velocity = Vector2.Normalize(NpcToplrTop) * 10;
                 if (NPC.ai[1] % 60 == 0)
                 {
                     Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, ProjectileID.CultistBossLightningOrb,
@@ -142,16 +146,66 @@ namespace AdvancedMod.NPCs.Boss
                 }
                 else if (NPC.ai[0] == 1)
                 {
-                    NPC.velocity = Vector2.Normalize(player.Center - NPC.Center) * 30;
+                    NPC.velocity = Vector2.Normalize(player.Center - NPC.Center) * 10;
                 }
                 else if (NPC.ai[0] == 0)
                 {
+                    if (NPC.Center.Y >= player.Center.Y)
+                    {
+                        NPC.velocity = Vector2.Normalize(NpcToplrTop) * 5;
+                    }
+                    else
+                    {
+                        NPC.velocity = new Vector2(Main.rand.NextFloat(10), 0);
+                    }
+
                     if (NPC.ai[1] < 1200)
                     {
                         if (NPC.ai[1] % 90 == 0) Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center,
                             Vector2.Normalize(player.Center - NPC.Center) * 5,
                             ModContent.ProjectileType<Projectiles.Boss.TreeDiagrammer.TreeDiagrammer_Laser>(),
                             NPC.damage, 0);
+                    }
+                    else if (NPC.ai[1] >= 1200 && NPC.ai[1] < 1800)
+                    {
+                        if (NPC.ai[1] % 60 == 0) NPC.NewNPC(NPC.GetSource_FromThis(), (int)NPC.Center.X, (int)NPC.Center.Y,
+                                                            ModContent.NPCType<SiliconWafer>()
+                            );
+                    }
+                    else if (AdvancedWorld.MutationMode && NPC.ai[1] >=1800 && NPC.ai[1] < 3000)
+                    {
+                        if (NPC.ai[1] % 120 == 0)
+                        {
+                            Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, ProjectileID.CultistBossLightningOrb,
+                                            0, 0);
+                            Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center,
+                                                 Vector2.Normalize(player.Center - NPC.Center) * 2,
+                                                 ModContent.ProjectileType<Projectiles.Boss.TreeDiagrammer.TreeDiagrammer_Lighting>(),
+                                                 NPC.damage, 0);
+                        }
+                    }
+                    else if (AdvancedWorld.MutationMode && Main.masterMode && NPC.ai[1] >= 3000 && NPC.ai[1] < 3600)
+                    {
+                        //缺少判定线AI  虚空模式没有
+                        if (NPC.ai[1] % 200 == 0)
+                        {
+                            Vector2 pos = player.Center;
+                            for (int i = 0; i < 8; i++)
+                            {
+                                Projectile.NewProjectile(NPC.GetSource_FromThis(), 
+                                    new Vector2(player.Center.X - 210 + 60*i,player.Center.Y - 140 + 40*i),
+                                    new Vector2(1,0) * 4,ProjectileID.EyeLaser, NPC.damage, 0);
+                                Projectile.NewProjectile(NPC.GetSource_FromThis(),
+                                    new Vector2(player.Center.X - 210 + 60 * i, player.Center.Y - 140 + 40 * i),
+                                    new Vector2(0, 1) * 4, ProjectileID.EyeLaser, NPC.damage, 0);
+                                Projectile.NewProjectile(NPC.GetSource_FromThis(),
+                                    new Vector2(player.Center.X + 210 - 60 * i, player.Center.Y + 140 - 40 * i),
+                                    new Vector2(-1, 0) * 4, ProjectileID.EyeLaser, NPC.damage, 0);
+                                Projectile.NewProjectile(NPC.GetSource_FromThis(),
+                                    new Vector2(player.Center.X + 210 - 60 * i, player.Center.Y + 140 - 40 * i),
+                                    new Vector2(0, -1) * 4, ProjectileID.EyeLaser, NPC.damage, 0);
+                            }
+                        }
                     }
                 }
             }
