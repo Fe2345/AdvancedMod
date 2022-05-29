@@ -67,7 +67,7 @@ namespace AdvancedMod.Items.Weapon.Melee
             .AddIngredient(ItemID.Seedler)
             .AddIngredient(ItemID.Meowmere)
             .AddIngredient(ModContent.ItemType<Items.Weapon.Melee.RoarOfFlame>())
-            .AddTile(ModContent.TileType<Tiles.AdvancedCraftTable>())
+            .AddTile(ModContent.TileType<Tiles.ElectromagneticWorkStation>())
             .Register();
     }
 }

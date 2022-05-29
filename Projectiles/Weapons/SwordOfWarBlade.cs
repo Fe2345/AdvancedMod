@@ -28,7 +28,7 @@ namespace AdvancedMod.Projectiles.Weapons
         {
             Projectile.rotation += 0.05f;
           
-            if (target == null) target = Utils.Tool.GetClosestNPC(Projectile.Center);
+            if (target == null) target = Utils.Tool.GetClosestNPC(Projectile.Center,false);
 
             if (target.life == 0)
             {

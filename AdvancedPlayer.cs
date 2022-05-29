@@ -4,6 +4,7 @@ using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using Microsoft.Xna.Framework;
 using Terraria.GameInput;
+using Terraria.ID;
 
 namespace AdvancedMod
 {
@@ -14,6 +15,7 @@ namespace AdvancedMod
         public static bool RecievedInitBag;
 
         public static bool SymbolOfTown;
+        public static bool SiliconArmorEquip;
 
         public static Vector2 DeathPosition;
 
@@ -42,7 +44,7 @@ namespace AdvancedMod
         {
             if (SymbolOfTown)
             {
-                if (Main.rand.Next(5) == 1)
+                if (Main.rand.NextBool(5))
                 {
                     for (int i = 0;i < Main.npc.Length; i++)
                     {
@@ -54,6 +56,15 @@ namespace AdvancedMod
                 }
                 
                 damage = 0;
+            }
+
+            if (SiliconArmorEquip)
+            {
+                Vector2 vel = Utils.Tool.GetClosestNPC(Player.Center,false).Center - Player.Center;
+                Projectile.NewProjectile(Player.GetSource_OnHurt(Utils.Tool.GetClosestNPC(Player.Center, false)),
+                                        Player.Center,Vector2.Normalize(vel)*2,ModContent.ProjectileType<Projectiles.Weapons.TreeDiagrammerLightingFriendly>(),
+                                        80,0
+                    );
             }
         }
 

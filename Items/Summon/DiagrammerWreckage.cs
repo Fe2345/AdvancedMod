@@ -37,8 +37,8 @@ namespace AdvancedMod.Items.Summon
 
         public override bool? UseItem(Player player)
         {
-            Color color = new Color(175, 75, 255);
-            Main.NewText("树状图设计者已苏醒!",color);
+            //Color color = new Color(175, 75, 255);
+            //Main.NewText("树状图设计者已苏醒!",color);
             NPC.SpawnOnPlayer(player.whoAmI, ModContent.NPCType<NPCs.Boss.TreeDiagrammer>());
 
             return true;

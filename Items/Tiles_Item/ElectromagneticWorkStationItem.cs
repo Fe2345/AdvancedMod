@@ -5,12 +5,12 @@ using AdvancedMod.Tiles;
 
 namespace AdvancedMod.Items.Tiles_Item
 {
-	public class  AdvancedCraftTable_Item : ModItem
+	public class  ElectromagneticWorkStationItem : ModItem
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("先进锻造台");
-			Tooltip.SetDefault("用于合成各种困难模式物品");
+			DisplayName.SetDefault("电磁操作台");
+			Tooltip.SetDefault("视作大多数困难模式前制作站、困难模式的砧、困难模式的熔炉\n允许你制作各种Advanced Mod中的困难模式物品");
 		}
 
 		public override void SetDefaults()
@@ -26,7 +26,7 @@ namespace AdvancedMod.Items.Tiles_Item
 
 			//add
 			Item.consumable = true;//消耗品
-			Item.createTile = ModContent.TileType<Tiles.AdvancedCraftTable>();//放置贴图
+			Item.createTile = ModContent.TileType<Tiles.ElectromagneticWorkStation>();//放置贴图
 
 			Item.UseSound = SoundID.Item10;
 		}

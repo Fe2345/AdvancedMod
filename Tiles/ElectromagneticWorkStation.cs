@@ -3,10 +3,11 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using Terraria.DataStructures;
+using Terraria.ObjectData;
 
 namespace AdvancedMod.Tiles
 {
-	public class AdvancedCraftTable : ModTile
+	public class ElectromagneticWorkStation : ModTile
 	{
 		public override void SetStaticDefaults()
 		{
@@ -28,8 +29,24 @@ namespace AdvancedMod.Tiles
 			Main.tileLighted[Type] = false;//自主发光
 
 			ModTranslation name = CreateMapEntryName();
-			name.SetDefault("先进锻造台");
+			name.SetDefault("电磁操作台");
 			AddMapEntry(new Color(100, 200, 200), name);
+
+			TileObjectData.newTile.CopyFrom(TileObjectData.Style3x3);
+			TileObjectData.newTile.Width = 4;
+			TileObjectData.newTile.CoordinateHeights = new[] { 8, 8, 8 };
+			TileObjectData.addTile(Type);
+
+			AdjTiles = new int[] { TileID.WorkBenches,TileID.HeavyWorkBench,TileID.Furnaces,TileID.Hellforge,
+									TileID.Anvils,TileID.Bottles,TileID.AlchemyTable,TileID.Sawmill,TileID.Loom,
+									TileID.Tables,TileID.Chairs,TileID.CookingPots,TileID.TinkerersWorkbench,
+									TileID.ImbuingStation,TileID.DyeVat,TileID.DemonAltar,TileID.LihzahrdAltar,
+									TileID.MythrilAnvil,TileID.AdamantiteForge,TileID.Bookcases
+			};
+
+			TileID.Sets.CountsAsWaterSource[Type] = true;
+			TileID.Sets.CountsAsHoneySource[Type] = true;
+			TileID.Sets.CountsAsLavaSource[Type] = true;
 
 			MinPick = 100;
 			MineResist = 4f;
@@ -52,7 +69,7 @@ namespace AdvancedMod.Tiles
 
 		public override void KillMultiTile(int i, int j, int frameX, int frameY)
 		{
-			Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 32, 16, ModContent.ItemType<Items.Tiles_Item.AdvancedCraftTable_Item>());
+			Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 32, 16, ModContent.ItemType<Items.Tiles_Item.ElectromagneticWorkStationItem>());
 		}
 	}
 }

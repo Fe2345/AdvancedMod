@@ -45,7 +45,7 @@ namespace AdvancedMod.Items.Accessory
         public override void AddRecipes() => CreateRecipe()
             .AddIngredient(ModContent.ItemType<Items.Mateiral.InsightBar>(), 5)
             .AddIngredient(ModContent.ItemType<Items.Mateiral.TimePieces>(), 1)
-            .AddTile(ModContent.TileType<Tiles.AdvancedCraftTable>())
+            .AddTile(ModContent.TileType<Tiles.ElectromagneticWorkStation>())
             .Register();
     }
 }

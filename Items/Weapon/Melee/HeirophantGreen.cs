@@ -62,7 +62,7 @@ namespace AdvancedMod.Items.Weapon.Melee
         }
         public override void AddRecipes() => CreateRecipe()
             .AddIngredient(ItemID.ChlorophyteBar, 12)
-            .AddTile(ModContent.TileType<Tiles.AdvancedCraftTable>())
+            .AddTile(ModContent.TileType<Tiles.ElectromagneticWorkStation>())
             .Register();
     }
 }

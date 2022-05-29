@@ -75,14 +75,27 @@ namespace AdvancedMod.Utils
             return false;
         }
 
-        public static NPC GetClosestNPC(Vector2 position)
+        public static NPC GetClosestNPC(Vector2 position,bool boss)
         {
             int NPCIndex = 0;
-            for (int i = 0; i < Main.npc.Length; i++)
+            if (!boss)
             {
-                if (Vector2.Distance(position,Main.npc[i].Center) < Vector2.Distance(position, Main.npc[NPCIndex].Center) && !Main.npc[i].friendly)
+                for (int i = 0; i < Main.npc.Length; i++)
                 {
-                    NPCIndex = i;
+                    if (Vector2.Distance(position,Main.npc[i].Center) < Vector2.Distance(position, Main.npc[NPCIndex].Center) && !Main.npc[i].friendly)
+                    {
+                        NPCIndex = i;
+                    }
+                }
+            }
+            else
+            {
+                for (int i = 0; i < Main.npc.Length; i++)
+                {
+                    if (Vector2.Distance(position, Main.npc[i].Center) < Vector2.Distance(position, Main.npc[NPCIndex].Center) && !Main.npc[i].friendly && Main.npc[i].boss)
+                    {
+                        NPCIndex = i;
+                    }
                 }
             }
 

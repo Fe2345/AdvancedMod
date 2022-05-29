@@ -8,7 +8,7 @@ namespace AdvancedMod.Projectiles.Boss.TreeDiagrammer
 {
     public class TreeDiagrammer_Laser : ModProjectile
     {
-        public override string Texture => "Terraria/Images/Projectile_466";
+        public override string Texture => "Terraria/Images/Projectile_100";
 
         public override void SetStaticDefaults()
         {
