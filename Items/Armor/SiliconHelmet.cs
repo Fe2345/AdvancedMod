@@ -10,7 +10,7 @@ namespace AdvancedMod.Items.Armor
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("精硅头盔");
-            Tooltip.SetDefault("20防御力\n增加20%伤害\n减少20%弹药消耗\n增加100点最大魔力\n减少20%魔力消耗\n增加4个仆从召唤位");
+            Tooltip.SetDefault("增加20%伤害\n减少20%弹药消耗\n增加100点最大魔力\n减少20%魔力消耗\n增加4个仆从召唤位");
         }
 
         public override void SetDefaults()

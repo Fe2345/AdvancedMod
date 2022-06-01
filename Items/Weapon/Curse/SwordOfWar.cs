@@ -26,7 +26,6 @@ namespace AdvancedMod.Items.Weapon.Curse
             Item.scale = 1.25f;  //碰撞箱
             Item.rare = ItemRarityID.Master;      //稀有度
             Item.value = Item.sellPrice(gold: 44);
-            Item.crit = 30;       //暴击率
             Item.autoReuse = true;   //自动挥舞
             Item.useTurn = true;      //使用中可转身
             Item.DamageType = ModContent.GetInstance<DamageClasses.CurseDamage>();     //诅咒武器

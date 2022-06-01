@@ -51,8 +51,6 @@ namespace AdvancedMod.Tiles
 			MinPick = 100;
 			MineResist = 4f;
 
-			SoundType = SoundID.Tink;
-
 			//TileID.Sets.Ore[Type] = true;//设置为矿石
 			//Main.tileSpelunker[Type] = true; // 被洞穴探险药水高亮表示
 			//Main.tileValue[Type] = 410; // 在金属探测仪中的优先级

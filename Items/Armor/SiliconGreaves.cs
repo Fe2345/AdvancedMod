@@ -10,7 +10,7 @@ namespace AdvancedMod.Items.Armor
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("精硅护胫");
-            Tooltip.SetDefault("12防御力\n增加10%伤害减免");
+            Tooltip.SetDefault("增加10%伤害减免");
         }
 
         public override void SetDefaults()

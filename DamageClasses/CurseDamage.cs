@@ -61,7 +61,11 @@ namespace AdvancedMod.DamageClasses
 
         public override bool ShowStatTooltipLine(Player player, string lineName)
         {
-            return false;
+            if (lineName.Equals("CritChance"))
+            {
+                return false;
+            }
+            return true;
         }
     }
 }

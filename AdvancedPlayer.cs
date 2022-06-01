@@ -13,24 +13,20 @@ namespace AdvancedMod
         public static int Energy;
         public static int UsedSiliconHeartCount;
         public static bool RecievedInitBag;
+        public static float Electricity;
 
         public static bool SymbolOfTown;
+        public static bool SiliconCapacotance;
         public static bool SiliconArmorEquip;
 
         public static Vector2 DeathPosition;
-
-        public override void Initialize()
-        {
-            Energy = 2048;
-            UsedSiliconHeartCount = 0;
-            RecievedInitBag = false;
-        }
 
         public override void SaveData(TagCompound tag)
         {
             tag.Add("Energy", Energy);
             tag.Add("UsedSiliconHeartCount", UsedSiliconHeartCount);
             tag.Add("RecievedInitBag", RecievedInitBag);
+            tag.Add("Electricity", Electricity);
         }
 
         public override void LoadData(TagCompound tag)
@@ -38,6 +34,7 @@ namespace AdvancedMod
             Energy = tag.GetInt("Energy");
             UsedSiliconHeartCount = tag.GetInt("UsedSiliconHeartCount");
             RecievedInitBag = tag.GetBool("RecievedInitBag");
+            Electricity = tag.GetFloat("Electricity");
         }
 
         public override void Hurt(bool pvp, bool quiet, double damage, int hitDirection, bool crit)
@@ -65,6 +62,11 @@ namespace AdvancedMod
                                         Player.Center,Vector2.Normalize(vel)*2,ModContent.ProjectileType<Projectiles.Weapons.TreeDiagrammerLightingFriendly>(),
                                         80,0
                     );
+            }
+
+            if (SiliconCapacotance)
+            {
+                Electricity *= 0.5f;
             }
         }
 
@@ -100,6 +102,22 @@ namespace AdvancedMod
                 AdvancedMod.GUI.IsVisible = true;
             }
             */
+        }
+
+        public override void PostUpdate()
+        {
+            if (SiliconCapacotance)
+            {
+                if (Electricity < 100)
+                {
+                    Electricity += 0.05f;
+                }
+                else
+                {
+                    Electricity = 100;
+                }
+                Player.GetDamage(DamageClass.Generic) += (float)(0.5 * Electricity / 100);
+            }
         }
     }
 }

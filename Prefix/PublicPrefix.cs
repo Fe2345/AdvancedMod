@@ -29,7 +29,7 @@ namespace AdvancedMod.Prefix
         {
             List<int> AdvancedItems = new List<int>
             {
-                ItemID.Zenith,5005
+                ItemID.Zenith,ItemID.EmpressBlade
             };
 
             Mod fargo = ModLoader.GetMod("FargowiltasSouls");
@@ -37,6 +37,7 @@ namespace AdvancedMod.Prefix
             {
                 if ((bool)fargo.Call("EMode"))
                 {
+                    //Moonlord Weapons
                     AdvancedItems.Add(ItemID.Terrarian);
                     AdvancedItems.Add(ItemID.Meowmere);
                     AdvancedItems.Add(ItemID.StarWrath);
@@ -46,6 +47,12 @@ namespace AdvancedMod.Prefix
                     AdvancedItems.Add(ItemID.RainbowCrystalStaff);
                     AdvancedItems.Add(ItemID.MoonlordTurretStaff);
                     AdvancedItems.Add(ItemID.Celeb2);
+                    //Empress Of Night Weapons
+                    AdvancedItems.Add(ItemID.PiercingStarlight);
+                    AdvancedItems.Add(ItemID.RainbowWhip);
+                    AdvancedItems.Add(ItemID.FairyQueenMagicItem);
+                    AdvancedItems.Add(ItemID.FairyQueenRangedItem);
+                    AdvancedItems.Add(ItemID.SparkleGuitar);
                 }
             }
 
@@ -58,7 +65,7 @@ namespace AdvancedMod.Prefix
 
         public override float RollChance(Item item)
         {
-            return 15f;
+            return 30f;
         }
 
         public override void ModifyValue(ref float valueMult)

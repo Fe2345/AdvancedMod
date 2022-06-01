@@ -10,7 +10,7 @@ namespace AdvancedMod.Items.Armor
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("精硅板甲");
-            Tooltip.SetDefault("32防御力\n提高15%移动速度");
+            Tooltip.SetDefault("提高15%移动速度");
         }
 
         public override void SetDefaults()
