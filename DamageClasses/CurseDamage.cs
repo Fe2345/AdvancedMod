@@ -7,7 +7,7 @@ namespace AdvancedMod.DamageClasses
     {
         public override void SetStaticDefaults()
         {
-            ClassName.SetDefault("◊Á÷‰…À∫¶");
+            ClassName.SetDefault($"Mods.AdvancedMod.DamageClasses.CurseDamage");
         }
 
         public override StatInheritanceData GetModifierInheritance(DamageClass damageClass)

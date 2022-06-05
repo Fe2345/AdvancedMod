@@ -69,5 +69,32 @@
 				HateNPC:"{NPCName}是怎么回事？我能感觉到他身上有智慧的气息，但是为啥他整天只是转来转去呢？"
 			}
 		}
+
+		NPCs:{
+			Mutation:异变
+			Madman:疯子
+			Chemist:化学家
+			Watcher:观察者
+
+			TreeDiagrammer:树状图设计者
+
+			SiliconWafer:硅晶片
+
+			MagicBook:魔道书
+		}
+
+		BossChecklist:{
+			Summon:{
+				TreeDiagrammer:"在白天使用设计者残骸召唤.\n警告：尝试在晚上召唤将导致很严重的后果！"
+			}
+
+			DespawnMessage:{
+				TreeDiagrammer:树状图设计者隐没在雷暴中……
+			}
+		}
+
+		DamageClasses:{
+			CurseDamage:诅咒伤害
+		}
 	}
 }

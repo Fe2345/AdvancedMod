@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Terraria.UI;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace AdvancedMod
 {
@@ -65,31 +66,40 @@ namespace AdvancedMod
                 .AddIngredient(ItemID.SpectreBar, 5)
                 .AddTile(TileID.HeavyWorkBench)
                 .Register();
+
+            CreateRecipe(ItemID.DestroyerEmblem)
+                .AddIngredient(ModContent.ItemType<Items.Accessory.BossDrop.CurserEmblem>())
+                .AddIngredient(ItemID.SoulofSight)
+                .AddIngredient(ItemID.SoulofMight)
+                .AddIngredient(ItemID.SoulofFright)
+                .AddTile(TileID.MythrilAnvil)
+                .Register();
         }
 
         public override void PostSetupContent()
         {
-            /*
+            
             Mod Checklist = ModLoader.GetMod("BossChecklist");
             if (Checklist != null)
             {
                  Checklist.Call("AddBoss",
-                    9.5f,
-                    ModContent.NPCType<NPCs.Boss.TreeDiagrammer>(),
                     this,
-                    "Tree Diagrammer",
+                    $"Mods.AdvancedMod.NPCs.TreeDiagrammer",
+                    ModContent.NPCType<NPCs.Boss.TreeDiagrammer>(),
+                    9.5f,
                     (Func<bool>)(() => AdvancedWorld.downedTreeDiagrammer),
+                    (Func<bool>)(() => true),
+                    ModContent.ItemType<Items.Accessory.BossDrop.SiliconCapacitance>(),
                     ModContent.ItemType<Items.Summon.DiagrammerWreckage>(),
-                    ModContent.ItemType<Items.Weapon.Lantern_Of_Middle_Autemn>(),
-                    new List<int> {ItemID.GreaterHealingPotion,ModContent.ItemType<Items.Mateiral.SiliconBar>(),ItemID.SoulofLight,ItemID.IronBar,ItemID.Wire },
-                    $"Use{ModContent.ItemType<Items.Summon.DiagrammerWreckage>()} to summon.",
-                    "Tree Diagrammer  Killed All Players!",
-                    "AdvancedMod/NPCs/Boss/TreeDiagrammer",
-                    "AdvancedMod/NPCs/Boss/TreeDiagrammer_Head_Boss",
-                    (Func<bool>)(() => AdvancedPlayer.RecievedInitBag)
+                    $"Mods.AdvancedMod.BossChecklist.Summon.TreeDiagrammer",
+                    $"Mods.AdvancedMod.BossChecklist.DespawnMessage.TreeDiagrammer",
+                    (SpriteBatch sb, Rectangle rect, Color color) => {
+                        Texture2D texture = ModContent.Request<Texture2D>("AdvancedMod/NPCs/Boss/TreeDiagrammer").Value;
+                        Vector2 centered = new Vector2(rect.X + (rect.Width / 2) - (texture.Width / 2), rect.Y + (rect.Height / 2) - (texture.Height / 2));
+                        sb.Draw(texture, centered, color);
+                    }
                     );
             }
-            */
             
         }
 

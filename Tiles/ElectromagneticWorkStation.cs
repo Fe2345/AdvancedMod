@@ -34,7 +34,7 @@ namespace AdvancedMod.Tiles
 
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style3x3);
 			TileObjectData.newTile.Width = 4;
-			TileObjectData.newTile.CoordinateHeights = new[] { 8, 8, 8 };
+			TileObjectData.newTile.CoordinateHeights = new[] { 16, 16, 16 };
 			TileObjectData.addTile(Type);
 
 			AdjTiles = new int[] { TileID.WorkBenches,TileID.HeavyWorkBench,TileID.Furnaces,TileID.Hellforge,

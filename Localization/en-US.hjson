@@ -12,5 +12,32 @@
 
 			MagicBook:The book is willing to help those who learn from it. But when someone overuses magic, it strikes back in anger
 		}
+
+		NPCs:{
+			Mutation:Mutation
+			Madman:Madman
+			Chemist:Chemist
+			Watcher:Watcher
+
+			TreeDiagrammer:TreeDiagrammer
+
+			SiliconWafer:SiliconWafer
+
+			MagicBook:MagicBook
+		}
+
+		BossChecklist:{
+			Summon:{
+				TreeDiagrammer:"Use Diagrammer Wreckage to Summon.\nWARNING:Try to summon at Night will cause SERIOUS PROBLEMS"
+			}
+
+			DespawnMessage:{
+				TreeDiagrammer:Tree Diagrammer vanish in the sounderstorm.
+			}
+		}
+
+		DamageClasses:{
+			CurseDamage:Curse Damage
+		}
 	}
 }

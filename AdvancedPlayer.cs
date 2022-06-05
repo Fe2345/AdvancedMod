@@ -104,7 +104,7 @@ namespace AdvancedMod
             */
         }
 
-        public override void PostUpdate()
+        public override void PreUpdate()
         {
             if (SiliconCapacotance)
             {

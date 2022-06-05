@@ -5,15 +5,15 @@ using System;
 using Microsoft.Xna.Framework;
 using Terraria.Audio;
 
-namespace AdvancedMod.Projectiles.Boss.TreeDiagrammer
+namespace AdvancedMod.Projectiles.Weapons
 {
-    public class TreeDiagrammerDeathray : ModProjectile
+    public class TreeDiagrammerDeathrayFriendly : ModProjectile
     {
         int maxTime = 60;
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("树状图设计者死亡光");
+            DisplayName.SetDefault("激光器死亡光");
         }
 
         public override void OnHitPlayer(Player target, int damage, bool crit)
@@ -27,8 +27,8 @@ namespace AdvancedMod.Projectiles.Boss.TreeDiagrammer
         {
             Projectile.width = 28;
             Projectile.height = 20;
-            Projectile.friendly = false;
-            Projectile.hostile = true;
+            Projectile.friendly = true;
+            Projectile.hostile = false;
             Projectile.penetrate = 3;
             Projectile.timeLeft = 600;
             Projectile.aiStyle = -1;

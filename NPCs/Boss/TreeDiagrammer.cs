@@ -22,7 +22,7 @@ namespace AdvancedMod.NPCs.Boss
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("树状图设计者");
+            DisplayName.SetDefault($"Mods.AdvancedMod.NPCs.TreeDiagrammer");
             //DisplayName.AddTranslation(GameCulture.Chinese, "树状图设计者");
             //DisplayName.AddTranslation(GameCulture.English, "Tree Diagrammer");
             Main.npcFrameCount[NPC.type] = 1;
@@ -37,11 +37,11 @@ namespace AdvancedMod.NPCs.Boss
 
         public override void SetDefaults()
         {
-            NPC.width = 150;
-            NPC.height = 150;
+            NPC.width = 108;
+            NPC.height = 108;
             NPC.damage = 50;
             NPC.lifeMax = Main.expertMode ? 60000 : 30000;
-            NPC.defense = 30;
+            NPC.defense = 20;
             NPC.knockBackResist = 0f;
             NPC.HitSound = SoundID.NPCHit1;
             NPC.DeathSound = SoundID.NPCDeath6;
@@ -69,8 +69,18 @@ namespace AdvancedMod.NPCs.Boss
             AIType = -1;
             NPC.boss = true;
 
-            if (AdvancedWorld.MutationMode) NPC.lifeMax = 80000;
-            if (AdvancedWorld.MutationMode && Main.masterMode) NPC.lifeMax = 100000;
+            if (AdvancedWorld.MutationMode) 
+            { 
+                NPC.lifeMax = 80000;
+                NPC.damage = 65;
+                NPC.defense = 30;
+            } 
+            if (AdvancedWorld.MutationMode && Main.masterMode)
+            {
+                NPC.lifeMax = 100000;
+                NPC.damage = 80;
+                NPC.defense = 40;
+            }
         }
 
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
@@ -388,6 +398,7 @@ namespace AdvancedMod.NPCs.Boss
             npcLoot.Add(ItemDropRule.ByCondition(new Conditions.NotExpert(), ItemID.SoulofLight, 1, 6, 9));
             npcLoot.Add(ItemDropRule.ByCondition(new Conditions.NotExpert(), ItemID.IronBar, 1, 5, 9));
             npcLoot.Add(ItemDropRule.ByCondition(new Conditions.NotExpert(), ItemID.Wire, 1, 10, 15));
+            npcLoot.Add(ItemDropRule.ByCondition(new Conditions.NotExpert(), ModContent.ItemType<Items.Weapon.Melee.Surge>(),5,1,1));
             npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ModContent.ItemType<Items.Accessory.BossDrop.SiliconCapacitance>()));
         }
         /*

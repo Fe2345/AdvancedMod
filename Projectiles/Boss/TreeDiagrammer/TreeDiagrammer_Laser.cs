@@ -22,7 +22,7 @@ namespace AdvancedMod.Projectiles.Boss.TreeDiagrammer
             Projectile.friendly = false;
             Projectile.hostile = true;
             Projectile.penetrate = 3;
-            Projectile.timeLeft = 600;
+            Projectile.timeLeft = 200;
             Projectile.aiStyle = 1;
         }
 

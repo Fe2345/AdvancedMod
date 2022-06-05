@@ -29,6 +29,13 @@ namespace AdvancedMod.Items.Misc
             player.QuickSpawnItem(player.GetSource_OpenItem(ItemID.IronBar),ItemID.IronBar, Main.rand.Next(5) + 5);
             player.QuickSpawnItem(player.GetSource_OpenItem(ItemID.SoulofLight),ItemID.SoulofLight, Main.rand.Next(6) + 6);
             player.QuickSpawnItem(player.GetSource_OpenItem(ItemID.Wire),ItemID.Wire, Main.rand.Next(10) + 10);
+            switch (Main.rand.Next(5))
+            {
+                case 0:
+                    player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType<Items.Weapon.Melee.Surge>());
+                    break;
+            }
+            
         }
     }
 }
