@@ -7,7 +7,7 @@ namespace AdvancedMod.DamageClasses
     {
         public override void SetStaticDefaults()
         {
-            ClassName.SetDefault($"Mods.AdvancedMod.DamageClasses.CurseDamage");
+            ClassName.SetDefault("诅咒伤害");
         }
 
         public override StatInheritanceData GetModifierInheritance(DamageClass damageClass)

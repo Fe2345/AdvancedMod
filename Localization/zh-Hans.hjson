@@ -92,9 +92,5 @@
 				TreeDiagrammer:树状图设计者隐没在雷暴中……
 			}
 		}
-
-		DamageClasses:{
-			CurseDamage:诅咒伤害
-		}
 	}
 }

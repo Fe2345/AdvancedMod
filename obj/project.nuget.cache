@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "UVdIMpsHgFtoFbAk5qT7zP/7zEN0d66Ob/DWqAdBaGUcF3kqZGGf62u0mBAp/E+FWvx9LHFsoVO2+miHKvHiNQ==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Lenovo\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\AdvancedMod\\AdvancedMod.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Lenovo\\.nuget\\packages\\tmodloader.codeassist\\0.1.5\\tmodloader.codeassist.0.1.5.nupkg.sha512"
+  ],
+  "logs": []
+}

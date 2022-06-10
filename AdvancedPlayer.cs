@@ -5,6 +5,7 @@ using Terraria.ModLoader.IO;
 using Microsoft.Xna.Framework;
 using Terraria.GameInput;
 using Terraria.ID;
+using AdvancedMod.Utils;
 
 namespace AdvancedMod
 {
@@ -18,6 +19,7 @@ namespace AdvancedMod
         public static bool SymbolOfTown;
         public static bool SiliconCapacotance;
         public static bool SiliconArmorEquip;
+        public static bool ClestialCloak;
 
         public static Vector2 DeathPosition;
 
@@ -106,6 +108,10 @@ namespace AdvancedMod
 
         public override void PreUpdate()
         {
+            SiliconCapacotance = Tool.AccessoryEquiped(ModContent.ItemType<Items.Accessory.BossDrop.SiliconCapacitance>(), Player);
+            ClestialCloak = Tool.AccessoryEquiped(ModContent.ItemType<Items.Accessory.Curser.CelestialCloak>(), Player);
+
+
             if (SiliconCapacotance)
             {
                 if (Electricity < 100)

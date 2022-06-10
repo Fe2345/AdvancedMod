@@ -9,7 +9,7 @@ namespace AdvancedMod.Items.Accessory.BossDrop
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("硅晶电容");
-            Tooltip.SetDefault($"电容会随时间推移积累电量\n你的攻击力会随电量而变化\n每次受击会损失一半电量\n当前电量:{AdvancedPlayer.Electricity + "%"}\n异变模式");
+            Tooltip.SetDefault($"电容会随时间推移积累电量\n你的攻击力会随电量而变化\n每次受击会损失一半电量\n异变模式");
         }
 
         public override void SetDefaults()
@@ -26,10 +26,6 @@ namespace AdvancedMod.Items.Accessory.BossDrop
             if (hideVisual)
             {
                 AdvancedPlayer.SiliconCapacotance = false;
-            }
-            else
-            {
-                AdvancedPlayer.SiliconCapacotance = true;
             }
         }
     }

@@ -101,5 +101,15 @@ namespace AdvancedMod.Utils
 
             return Main.npc[NPCIndex];
         }
+
+        public static bool AccessoryEquiped(int type,Player player)
+        {
+            foreach (var Item in player.armor)
+            {
+                if (type == Item.type) return true;
+            }
+
+            return false;
+        }
     }
 }

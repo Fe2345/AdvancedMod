@@ -57,7 +57,7 @@ namespace AdvancedMod.Items.Weapon.Curse
         {
             if (player.altFunctionUse == 2)
             {
-
+                Projectile.NewProjectile(source, position, velocity, type, damage, knockback);
             }
             else
             {

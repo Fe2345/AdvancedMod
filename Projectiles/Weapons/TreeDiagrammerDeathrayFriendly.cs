@@ -3,7 +3,9 @@ using Terraria.ModLoader;
 using Terraria.ID;
 using System;
 using Microsoft.Xna.Framework;
-using Terraria.Audio;
+using Terraria.GameContent.Shaders;
+using Terraria.Graphics.Effects;
+using AdvancedMod.Utils;
 
 namespace AdvancedMod.Projectiles.Weapons
 {
@@ -18,7 +20,7 @@ namespace AdvancedMod.Projectiles.Weapons
 
         public override void OnHitPlayer(Player target, int damage, bool crit)
         {
-            target.AddBuff(BuffID.Electrified, 10);
+            target.AddBuff(BuffID.Electrified, AdvancedPlayer.ClestialCloak ? 20 : 10);
         }
 
         public override string Texture => "Terraria/Images/Projectile_455";
@@ -34,133 +36,167 @@ namespace AdvancedMod.Projectiles.Weapons
             Projectile.aiStyle = -1;
         }
 
-        Vector2 TipOffset => 18f * Projectile.scale * Projectile.velocity;
+		public float GetPrismHue(float indexing)
+		{
+			string name;
+			if (Main.player[Projectile.owner].active && (name = Main.player[Projectile.owner].name) != null)
+			{
+				switch (name)
+				{
+					case "Tsuki":
+					case "Yoraiz0r":
+						return 0.85f;
+					case "Ghostar":
+						return 0.33f;
+					case "Devalaous":
+						return 0.66f + (float)Math.Cos(Main.time / 180.0 * 6.2831854820251465) * 0.1f;
+					case "Leinfors":
+						return 0.77f;
+					case "Aeroblop":
+						return 0.25f + (float)Math.Cos(Main.time / 180.0 * 6.2831854820251465) * 0.1f;
+					case "Doylee":
+						return 0f;
+					case "Darkhalis":
+					case "Arkhalis":
+						return 0.75f + (float)Math.Cos(Main.time / 180.0 * 6.2831854820251465) * 0.07f;
+					case "Nike Leon":
+						return 0.075f + (float)Math.Cos(Main.time / 180.0 * 6.2831854820251465) * 0.07f;
+					case "Suweeka":
+						return 0.5f + (float)Math.Cos(Main.time / 180.0 * 6.2831854820251465) * 0.18f;
+					case "W1K":
+						return 0.75f + (float)Math.Cos(Main.time / 120.0 * 6.2831854820251465) * 0.05f;
+					case "Grox The Great":
+						return 0.31f + (float)Math.Cos(Main.time / 120.0 * 6.2831854820251465) * 0.03f;
+					case "Random":
+						return Main.rand.NextFloat();
+					case "bluemagic123":
+					case "blushiemagic":
+						return 0.55f + (float)Math.Cos(Main.time / 120.0 * 6.2831854820251465) * 0.1f;
+				}
+			}
+			return (float)(int)indexing / 6f;
+		}
 
-        public override void AI()
+		public override void AI()
         {
-            base.AI();
-            Projectile.frameCounter += 60;
+			Vector2? vector134 = null;
 
-            Player player = Main.player[Projectile.owner];
+			if (Main.projectile[(int)Projectile.ai[1]].active && Main.projectile[(int)Projectile.ai[1]].type == 460)
+			{
+				Vector2 value26 = Vector2.Normalize(Main.projectile[(int)Projectile.ai[1]].velocity);
+				Projectile.position = Main.projectile[(int)Projectile.ai[1]].Center + value26 * 16f - new Vector2(Projectile.width, Projectile.height) / 2f + new Vector2(0f, 0f - Main.projectile[(int)Projectile.ai[1]].gfxOffY);
+				Projectile.velocity = Vector2.Normalize(Main.projectile[(int)Projectile.ai[1]].velocity);
+				Projectile.velocity = Vector2.Normalize(Main.projectile[(int)Projectile.ai[1]].velocity);
+			}
+			if (Projectile.velocity.HasNaNs() || Projectile.velocity == Vector2.Zero)
+			{
+				Projectile.velocity = -Vector2.UnitY;
+			}
+			Projectile.ai[0] += 1f;
+			if (Projectile.ai[0] >= 300f)
+			{
+				Projectile.Kill();
+				return;
+			}
+			Projectile.scale = (float)Math.Sin(Projectile.ai[0] * (float)Math.PI / 300f) * 10f;
+			if (Projectile.scale > 1f)
+			{
+				Projectile.scale = 1f;
+			}
 
-            Projectile.velocity = Projectile.velocity.SafeNormalize(-Vector2.UnitY);
+			float num1089 = Projectile.velocity.ToRotation();
+			Projectile.rotation = num1089 - (float)Math.PI / 2f;
+			Projectile.velocity = num1089.ToRotationVector2();
+			float num1090 = 0f;
+			float num1093 = 0f;
+			Vector2 samplingPoint = Projectile.Center;
+			if (vector134.HasValue)
+			{
+				samplingPoint = vector134.Value;
+			}
 
-            float num801 = 10f;
-            Projectile.scale = (float)Math.Cos(Projectile.localAI[0] * MathHelper.PiOver2 / maxTime) * num801;
-            if (Projectile.scale > num801)
-                Projectile.scale = num801;
-
-            if (player.active && !player.dead && !player.ghost)
-            {
-                Projectile.Center = player.Center + 50f * Projectile.velocity + TipOffset + Main.rand.NextVector2Circular(5, 5);
-            }
-            else
-            {
-                Projectile.Kill();
-                return;
-            }
-
-            if (Projectile.localAI[0] == 0f)
-            {
-                if (!Main.dedServ)
-                {
-                    SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Sounds/Railgun"), Projectile.Center);
-                    SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Sounds/Thunder"), player.Center + Projectile.velocity * Math.Min(Main.screenWidth / 2, 900f));
-                }
-
-                Vector2 dustPos = player.Center + Projectile.velocity * 50f;
-
-                for (int i = 0; i < 40; i++)
-                {
-                    int dust = Dust.NewDust(dustPos - new Vector2(16, 16), 32, 32, DustID.Smoke, 0f, 0f, 100, default(Color), 4f);
-                    Main.dust[dust].velocity -= Projectile.velocity * 2;
-                    Main.dust[dust].velocity *= 3f;
-                    Main.dust[dust].velocity += player.velocity / 2;
-                }
-
-                for (int i = 0; i < 50; i++)
-                {
-                    int dust = Dust.NewDust(dustPos - new Vector2(16, 16), 32, 32, DustID.Torch, 0f, 0f, 100, default(Color), 4f);
-                    Main.dust[dust].scale *= Main.rand.NextFloat(1, 2.5f);
-                    Main.dust[dust].noGravity = true;
-                    Main.dust[dust].velocity -= Projectile.velocity * 2;
-                    Main.dust[dust].velocity = Main.dust[dust].velocity.RotatedByRandom(MathHelper.ToRadians(40)) * 6f;
-                    Main.dust[dust].velocity *= Main.rand.NextFloat(1f, 3f);
-                    Main.dust[dust].velocity += player.velocity / 2;
-                    dust = Dust.NewDust(dustPos - new Vector2(16, 16), 32, 32, DustID.Torch, 0f, 0f, 100, default(Color), 4f);
-                    Main.dust[dust].velocity -= Projectile.velocity * 2;
-                    Main.dust[dust].velocity *= 5f;
-                    Main.dust[dust].velocity *= Main.rand.NextFloat(1f, 2f);
-                    Main.dust[dust].velocity += player.velocity / 2;
-                }
-
-                float scaleFactor9 = 2;
-                for (int j = 0; j < 20; j++)
-                {
-                    int gore = Gore.NewGore(Projectile.GetSource_FromThis(), dustPos, -Projectile.velocity, Main.rand.Next(61, 64), scaleFactor9);
-                    Main.gore[gore].velocity -= Projectile.velocity;
-                    Main.gore[gore].velocity.Y += 2f;
-                    Main.gore[gore].velocity *= 4f;
-                    Main.gore[gore].velocity += player.velocity / 2;
-                }
-            }
-
-            if (++Projectile.localAI[0] >= maxTime)
-            {
-                Projectile.Kill();
-                return;
-            }
-            //Projectile.scale = num801;
-            //float num804 = Projectile.velocity.ToRotation();
-            //num804 += Projectile.ai[0];
-            //Projectile.rotation = num804 - 1.57079637f;
-            //float num804 = Main.npc[(int)Projectile.ai[1]].ai[3] - 1.57079637f;
-            //if (Projectile.ai[0] != 0f) num804 -= (float)Math.PI;
-            //Projectile.rotation = num804;
-            //num804 += 1.57079637f;
-            //Projectile.velocity = num804.ToRotationVector2();
-            float amount = 0.5f;
-            Projectile.localAI[1] = MathHelper.Lerp(Projectile.localAI[1], 3000f, amount);
-            /*Vector2 vector79 = Projectile.Center + Projectile.velocity * (Projectile.localAI[1] - 14f);
-            for (int num809 = 0; num809 < 2; num809 = num3 + 1)
-            {
-                float num810 = Projectile.velocity.ToRotation() + ((Main.rand.Next(2) == 1) ? -1f : 1f) * 1.57079637f;
-                float num811 = (float)Main.rand.NextDouble() * 2f + 2f;
-                Vector2 vector80 = new Vector2((float)Math.Cos((double)num810) * num811, (float)Math.Sin((double)num810) * num811);
-                int num812 = Dust.NewDust(vector79, 0, 0, 244, vector80.X, vector80.Y, 0, default(Color), 1f);
-                Main.dust[num812].noGravity = true;
-                Main.dust[num812].scale = 1.7f;
-                num3 = num809;
-            }
-            if (Main.rand.NextBool(5))
-            {
-                Vector2 value29 = Projectile.velocity.RotatedBy(1.5707963705062866, default(Vector2)) * ((float)Main.rand.NextDouble() - 0.5f) * (float)Projectile.width;
-                int num813 = Dust.NewDust(vector79 + value29 - Vector2.One * 4f, 8, 8, 244, 0f, 0f, 100, default(Color), 1.5f);
-                Dust dust = Main.dust[num813];
-                dust.velocity *= 0.5f;
-                Main.dust[num813].velocity.Y = -Math.Abs(Main.dust[num813].velocity.Y);
-            }*/
-            //DelegateMethods.v3_1 = new Vector3(0.3f, 0.65f, 0.7f);
-            //Utils.PlotTileLine(Projectile.Center, Projectile.Center + Projectile.velocity * Projectile.localAI[1], (float)Projectile.width * Projectile.scale, new Utils.PerLinePoint(DelegateMethods.CastLight));
-
-            Projectile.position -= Projectile.velocity;
-            Projectile.rotation = Projectile.velocity.ToRotation() - 1.57079637f;
-
-            const int increment = 75;
-            for (int i = 0; i < 3000; i += increment)
-            {
-                float offset = i + Main.rand.NextFloat(-increment, increment);
-                if (offset < 0)
-                    offset = 0;
-                if (offset > 3000)
-                    offset = 3000;
-                float spawnRange = Projectile.scale * 32f;
-                int d = Dust.NewDust(Projectile.position + Projectile.velocity * offset + Projectile.velocity.RotatedBy(MathHelper.PiOver2) * Main.rand.NextFloat(-spawnRange, spawnRange),
-                    Projectile.width, Projectile.height, DustID.GemTopaz, 0f, 0f, 0, new Color(255, 255, 255, 150), Main.rand.NextFloat(2f, 4f));
-                Main.dust[d].noGravity = true;
-                Main.dust[d].velocity += Projectile.velocity * 2f;
-                Main.dust[d].velocity *= Main.rand.NextFloat(12f, 24f) / 10f * Projectile.scale;
-            }
-        }
-    }
+			float[] array3 = new float[(int)num1090];
+			Collision.LaserScan(samplingPoint, Projectile.velocity, num1093 * Projectile.scale, 2400f, array3);
+			float num1095 = 0f;
+			for (int num1096 = 0; num1096 < array3.Length; num1096++)
+			{
+				num1095 += array3[num1096];
+			}
+			num1095 /= num1090;
+			float amount = 0.5f;
+			Projectile.localAI[1] = MathHelper.Lerp(Projectile.localAI[1], num1095, amount);
+			if (!(Math.Abs(Projectile.localAI[1] - num1095) < 100f) || !(Projectile.scale > 0.15f))
+			{
+				return;
+			}
+			float prismHue = GetPrismHue(Projectile.ai[0]);
+			Color color = Main.hslToRgb(prismHue, 1f, 0.5f);
+			color.A = 0;
+			Vector2 vector144 = Projectile.Center + Projectile.velocity * (Projectile.localAI[1] - 14.5f * Projectile.scale);
+			float x = Main.rgbToHsl(new Color(Main.DiscoR, Main.DiscoG, Main.DiscoB)).X;
+			for (int num1119 = 0; num1119 < 2; num1119++)
+			{
+				float num1120 = Projectile.velocity.ToRotation() + ((Main.rand.NextBool(2)) ? (-1f) : 1f) * ((float)Math.PI / 2f);
+				float num1121 = (float)Main.rand.NextDouble() * 0.8f + 1f;
+				Vector2 vector145 = new Vector2((float)Math.Cos(num1120) * num1121, (float)Math.Sin(num1120) * num1121);
+				int num1122 = Dust.NewDust(vector144, 0, 0, DustID.RainbowMk2, vector145.X, vector145.Y);
+				Main.dust[num1122].color = color;
+				Main.dust[num1122].scale = 1.2f;
+				if (Projectile.scale > 1f)
+				{
+					Dust dust43 = Main.dust[num1122];
+					dust43.velocity *= Projectile.scale;
+					dust43 = Main.dust[num1122];
+					dust43.scale *= Projectile.scale;
+				}
+				Main.dust[num1122].noGravity = true;
+				if (Projectile.scale != 1.4f)
+				{
+					Dust dust42 = Dust.CloneDust(num1122);
+					dust42.color = Color.White;
+					Dust dust43 = dust42;
+					dust43.scale /= 2f;
+				}
+				float hue = (x + Main.rand.NextFloat() * 0.4f) % 1f;
+				Main.dust[num1122].color = Color.Lerp(color, Main.hslToRgb(hue, 1f, 0.75f), Projectile.scale / 1.4f);
+			}
+			if (Main.rand.NextBool(5))
+			{
+				Vector2 value35 = Projectile.velocity.RotatedBy(1.5707963705062866) * ((float)Main.rand.NextDouble() - 0.5f) * Projectile.width;
+				int num1123 = Dust.NewDust(vector144 + value35 - Vector2.One * 4f, 8, 8, DustID.Smoke, 0f, 0f, 100, default(Color), 1.5f);
+				Dust dust43 = Main.dust[num1123];
+				dust43.velocity *= 0.5f;
+				Main.dust[num1123].velocity.Y = 0f - Math.Abs(Main.dust[num1123].velocity.Y);
+			}
+			DelegateMethods.v3_1 = color.ToVector3() * 0.3f;
+			float value36 = 0.1f * (float)Math.Sin(Main.GlobalTimeWrappedHourly * 20f);
+			Vector2 size = new Vector2(Projectile.velocity.Length() * Projectile.localAI[1], (float)Projectile.width * Projectile.scale);
+			float num1124 = Projectile.velocity.ToRotation();
+			if (Main.netMode != NetmodeID.Server)
+			{
+				((WaterShaderData)Filters.Scene["WaterDistortion"].GetShader()).QueueRipple(Projectile.position + new Vector2(size.X * 0.5f, 0f).RotatedBy(num1124), new Color(0.5f, 0.1f * (float)Math.Sign(value36) + 0.5f, 0f, 1f) * Math.Abs(value36), size, RippleShape.Square, num1124);
+			}
+			Terraria.Utils.PlotTileLine(Projectile.Center, Projectile.Center + Projectile.velocity * Projectile.localAI[1], (float)Projectile.width * Projectile.scale, DelegateMethods.CastLight);
+			Vector2 vector140 = Projectile.Center + Projectile.velocity * (Projectile.localAI[1] - 8f);
+			for (int num1108 = 0; num1108 < 2; num1108++)
+			{
+				float num1109 = Projectile.velocity.ToRotation() + ((Main.rand.NextBool(2)) ? (-1f) : 1f) * ((float)Math.PI / 2f);
+				float num1110 = (float)Main.rand.NextDouble() * 0.8f + 1f;
+				Vector2 vector141 = new Vector2((float)Math.Cos(num1109) * num1110, (float)Math.Sin(num1109) * num1110);
+				int num1111 = Dust.NewDust(vector140, 0, 0, DustID.Electric, vector141.X, vector141.Y);
+				Main.dust[num1111].noGravity = true;
+				Main.dust[num1111].scale = 1.2f;
+			}
+			if (Main.rand.NextBool(5))
+			{
+				Vector2 value32 = Projectile.velocity.RotatedBy(1.5707963705062866) * ((float)Main.rand.NextDouble() - 0.5f) * Projectile.width;
+				int num1112 = Dust.NewDust(vector140 + value32 - Vector2.One * 4f, 8, 8, DustID.Smoke, 0f, 0f, 100, default(Color), 1.5f);
+				Dust dust43 = Main.dust[num1112];
+				dust43.velocity *= 0.5f;
+				Main.dust[num1112].velocity.Y = 0f - Math.Abs(Main.dust[num1112].velocity.Y);
+			}
+			DelegateMethods.v3_1 = new Vector3(0.4f, 0.85f, 0.9f);
+			Terraria.Utils.PlotTileLine(Projectile.Center, Projectile.Center + Projectile.velocity * Projectile.localAI[1], (float)Projectile.width * Projectile.scale, DelegateMethods.CastLight);
+		}
+	}
 }

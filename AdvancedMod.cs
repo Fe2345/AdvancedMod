@@ -67,12 +67,42 @@ namespace AdvancedMod
                 .AddTile(TileID.HeavyWorkBench)
                 .Register();
 
-            CreateRecipe(ItemID.DestroyerEmblem)
+            CreateRecipe(ItemID.AvengerEmblem)
                 .AddIngredient(ModContent.ItemType<Items.Accessory.BossDrop.CurserEmblem>())
                 .AddIngredient(ItemID.SoulofSight)
                 .AddIngredient(ItemID.SoulofMight)
                 .AddIngredient(ItemID.SoulofFright)
                 .AddTile(TileID.MythrilAnvil)
+                .Register();
+
+            CreateRecipe(ItemID.CrimtaneBar)
+                .AddIngredient(ItemID.DemoniteBar)
+                .AddTile(TileID.Anvils)
+                .Register();
+
+            CreateRecipe(ItemID.DemoniteBar)
+                .AddIngredient(ItemID.CrimtaneBar)
+                .AddTile(TileID.Anvils)
+                .Register();
+
+            CreateRecipe(ItemID.CrimtaneOre)
+                .AddIngredient(ItemID.DemoniteOre)
+                .AddTile(TileID.Anvils)
+                .Register();
+
+            CreateRecipe(ItemID.DemoniteOre)
+                .AddIngredient(ItemID.CrimtaneOre)
+                .AddTile(TileID.Anvils)
+                .Register();
+
+            CreateRecipe(ItemID.TissueSample)
+                .AddIngredient(ItemID.ShadowScale)
+                .AddTile(TileID.Anvils)
+                .Register();
+
+            CreateRecipe(ItemID.ShadowScale)
+                .AddIngredient(ItemID.TissueSample)
+                .AddTile(TileID.Anvils)
                 .Register();
         }
 

@@ -22,7 +22,7 @@ namespace AdvancedMod.NPCs.Boss
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault($"Mods.AdvancedMod.NPCs.TreeDiagrammer");
+            DisplayName.SetDefault("树状图设计者");
             //DisplayName.AddTranslation(GameCulture.Chinese, "树状图设计者");
             //DisplayName.AddTranslation(GameCulture.English, "Tree Diagrammer");
             Main.npcFrameCount[NPC.type] = 1;
@@ -40,7 +40,7 @@ namespace AdvancedMod.NPCs.Boss
             NPC.width = 108;
             NPC.height = 108;
             NPC.damage = 50;
-            NPC.lifeMax = Main.expertMode ? 60000 : 30000;
+            NPC.lifeMax = 30000;
             NPC.defense = 20;
             NPC.knockBackResist = 0f;
             NPC.HitSound = SoundID.NPCHit1;
@@ -70,16 +70,17 @@ namespace AdvancedMod.NPCs.Boss
             NPC.boss = true;
 
             if (AdvancedWorld.MutationMode) 
-            { 
-                NPC.lifeMax = 80000;
-                NPC.damage = 65;
-                NPC.defense = 30;
-            } 
-            if (AdvancedWorld.MutationMode && Main.masterMode)
             {
-                NPC.lifeMax = 100000;
-                NPC.damage = 80;
-                NPC.defense = 40;
+                NPC.lifeMax = (int)(NPC.lifeMax * 1.5);
+                NPC.damage = (int)(NPC.damage * 1.2);
+                NPC.defense = (int)(NPC.defense * 1.5);
+            } 
+
+            if (Main.getGoodWorld) //for the worthy
+            {
+                NPC.lifeMax = (int)(NPC.lifeMax * 1.5);
+                NPC.damage = (int)(NPC.damage * 1.2);
+                NPC.defense = (int)(NPC.defense * 1.5);
             }
         }
 
@@ -346,7 +347,7 @@ namespace AdvancedMod.NPCs.Boss
                                 NPC.damage * 10, 0
                             );
                     }
-                    else if ((NPC.ai[1] >= 780 && NPC.ai[1] < 1080 && AdvancedWorld.MutationMode) || (NPC.ai[1] >= 1560 && NPC.ai[1] < 1860 && AdvancedWorld.MutationMode && !Main.masterMode) || (NPC.ai[1] >= 1740 && NPC.ai[1] < 2040 && AdvancedWorld.MutationMode && Main.masterMode)){
+                    else if ((NPC.ai[1] >= 780 && NPC.ai[1] < 1080 && !AdvancedWorld.MutationMode) || (NPC.ai[1] >= 1560 && NPC.ai[1] < 1860 && AdvancedWorld.MutationMode && !Main.masterMode) || (NPC.ai[1] >= 1740 && NPC.ai[1] < 2040 && AdvancedWorld.MutationMode && Main.masterMode)){
                         if (NPC.ai[1] % 60 == 0)
                         {
                             Projectile.NewProjectile(NPC.GetSource_FromThis(),new Vector2((float)(player.Center.X+Math.Cos(Math.PI/3))*40,(float)(player.Center.Y+Math.Sin(Math.PI/3)*40)),
@@ -392,6 +393,8 @@ namespace AdvancedMod.NPCs.Boss
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
             base.ModifyNPCLoot(npcLoot);
+
+            AdvancedWorld.downedTreeDiagrammer = true;
 
             npcLoot.Add(ItemDropRule.BossBag(ModContent.ItemType<Items.Misc.TreeDiagrammerBag>()));
             npcLoot.Add(ItemDropRule.ByCondition(new Conditions.NotExpert(), ModContent.ItemType<Items.Mateiral.SiliconBar>(), 1, 12, 18));
