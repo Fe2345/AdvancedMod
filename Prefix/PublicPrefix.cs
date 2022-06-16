@@ -32,8 +32,7 @@ namespace AdvancedMod.Prefix
                 ItemID.Zenith,ItemID.EmpressBlade
             };
 
-            Mod fargo = ModLoader.GetMod("FargowiltasSouls");
-            if (fargo != null)
+            if (ModLoader.TryGetMod("FargowiltasSouls",out Mod fargo))
             {
                 if ((bool)fargo.Call("EMode"))
                 {

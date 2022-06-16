@@ -140,7 +140,7 @@ namespace AdvancedMod.NPCs.Town
 
         public override void SetupShop(Chest shop, ref int nextSlot)
         {
-            int[] ItemList = Tool.DifferentArray(10, 3929);
+            int[] ItemList = Tool.DifferentArray(10, 5124);
             for (int i = 0; i < 10; i++)
             {
                 shop.item[nextSlot].SetDefaults(ItemList[i]);

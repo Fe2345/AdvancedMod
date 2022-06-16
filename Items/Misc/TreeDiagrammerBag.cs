@@ -34,6 +34,9 @@ namespace AdvancedMod.Items.Misc
                 case 0:
                     player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType<Items.Weapon.Melee.Surge>());
                     break;
+                case 1:
+                    player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType<Items.Weapon.Curse.Laser>());
+                    break;
             }
             
         }

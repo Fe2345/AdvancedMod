@@ -39,7 +39,7 @@ namespace AdvancedMod.NPCs.Boss
         {
             NPC.width = 108;
             NPC.height = 108;
-            NPC.damage = 50;
+            NPC.damage = 20;
             NPC.lifeMax = 30000;
             NPC.defense = 20;
             NPC.knockBackResist = 0f;
@@ -398,11 +398,12 @@ namespace AdvancedMod.NPCs.Boss
 
             npcLoot.Add(ItemDropRule.BossBag(ModContent.ItemType<Items.Misc.TreeDiagrammerBag>()));
             npcLoot.Add(ItemDropRule.ByCondition(new Conditions.NotExpert(), ModContent.ItemType<Items.Mateiral.SiliconBar>(), 1, 12, 18));
-            npcLoot.Add(ItemDropRule.ByCondition(new Conditions.NotExpert(), ItemID.SoulofLight, 1, 6, 9));
-            npcLoot.Add(ItemDropRule.ByCondition(new Conditions.NotExpert(), ItemID.IronBar, 1, 5, 9));
-            npcLoot.Add(ItemDropRule.ByCondition(new Conditions.NotExpert(), ItemID.Wire, 1, 10, 15));
-            npcLoot.Add(ItemDropRule.ByCondition(new Conditions.NotExpert(), ModContent.ItemType<Items.Weapon.Melee.Surge>(),5,1,1));
-            npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ModContent.ItemType<Items.Accessory.BossDrop.SiliconCapacitance>()));
+            npcLoot.Add(ItemDropRule.ByCondition(new Conditions.NotExpert(), ModContent.ItemType<Items.Weapon.Curse.Laser>(),1,1,1,1));
+            npcLoot.Add(ItemDropRule.ByCondition(new Conditions.NotExpert(), ModContent.ItemType<Items.Weapon.Melee.Surge>(),1,1,1));
+
+            LeadingConditionRule rule = new LeadingConditionRule(new ItemDropRules.MutationModeDropRule());
+            rule.OnSuccess(Utils.Tool.BossBagDropCustom(ModContent.ItemType<Items.Accessory.BossDrop.SiliconCapacitance>()));
+            npcLoot.Add(rule);
         }
         /*
         public override void NPCLoot()

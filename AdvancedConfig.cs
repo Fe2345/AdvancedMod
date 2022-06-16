@@ -11,11 +11,11 @@ namespace AdvancedMod
         [Label("Disable Nurse Heal During Boss Alive")]
         [Tooltip("Only enable in Expert or Master(TML1.4) Mode World.If you find it`s too difficult,please disable this option")]
         [DefaultValue(false)]
-        public static bool disableNurseHeal;
+        public bool disableNurseHeal;
 
-        [Label("Enable Energy System")]
-        [Tooltip("Energy System Can Increase your damage,life regen,etc. But also decrease it during Energy Value is low.")]
-        [DefaultValue(true)]
-        public static bool enableEnergySystem;
+        [Label("Enable No-Hit Mode")]
+        [Tooltip("Any Damage will kill you!!!")]
+        [DefaultValue(false)]
+        public bool enableEnergySystem;
     }
 }

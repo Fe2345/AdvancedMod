@@ -13,7 +13,18 @@ namespace AdvancedMod
     {
         public static int Energy;
         public static int UsedSiliconHeartCount;
+
         public static bool RecievedInitBag;
+        public static bool RecievedBoss1Bag;
+        public static bool RecievedBoss2Bag;
+        public static bool RecievedBoss3Bag;
+        public static bool RecievedFleshWallBag;
+        public static bool RecievedMechBossBag;
+        public static bool RecievedPlanteraBag;
+        public static bool RecievedMoonlordBag;
+        public static bool RecievedGodOfEyeBag;
+        public static bool RecievedGodOfTimeBag;
+
         public static float Electricity;
 
         public static bool SymbolOfTown;
@@ -28,7 +39,15 @@ namespace AdvancedMod
             tag.Add("Energy", Energy);
             tag.Add("UsedSiliconHeartCount", UsedSiliconHeartCount);
             tag.Add("RecievedInitBag", RecievedInitBag);
-            tag.Add("Electricity", Electricity);
+            tag.Add("RecievedBoss1Bag", RecievedBoss1Bag);
+            tag.Add("RecievedBoss2Bag", RecievedBoss2Bag);
+            tag.Add("RecievedBoss3Bag", RecievedBoss3Bag);
+            tag.Add("RecievedFleshWallBag",RecievedFleshWallBag);
+            tag.Add("RecievedMechBossBag",RecievedMechBossBag);
+            tag.Add("RecievedPlanteraBag", RecievedPlanteraBag);
+            tag.Add("RecievedMoonlordBag", RecievedMoonlordBag);
+            tag.Add("RecievedGodOfEyeBag", RecievedGodOfEyeBag);
+            tag.Add("RecievedGodOfTimeBag", RecievedGodOfTimeBag);
         }
 
         public override void LoadData(TagCompound tag)
@@ -36,11 +55,20 @@ namespace AdvancedMod
             Energy = tag.GetInt("Energy");
             UsedSiliconHeartCount = tag.GetInt("UsedSiliconHeartCount");
             RecievedInitBag = tag.GetBool("RecievedInitBag");
-            Electricity = tag.GetFloat("Electricity");
+            RecievedBoss1Bag = tag.GetBool("RecievedBoss1Bag");
+            RecievedBoss2Bag = tag.GetBool("RecievedBoss2Bag");
+            RecievedBoss3Bag = tag.GetBool("RecievedBoss3Bag");
+            RecievedFleshWallBag = tag.GetBool("RecievedFleshWallBag");
+            RecievedMechBossBag = tag.GetBool("RecievedMechBossBag");
+            RecievedPlanteraBag = tag.GetBool("RecievedPlanteraBag");
+            RecievedMoonlordBag = tag.GetBool("RecievedMoonlordBag");
+            RecievedGodOfEyeBag = tag.GetBool("RecievedGodOfEyeBag");
+            RecievedGodOfTimeBag = tag.GetBool("RecievedGodOfTimeBag");
         }
 
         public override void Hurt(bool pvp, bool quiet, double damage, int hitDirection, bool crit)
         {
+
             if (SymbolOfTown)
             {
                 if (Main.rand.NextBool(5))
@@ -124,6 +152,8 @@ namespace AdvancedMod
                 }
                 Player.GetDamage(DamageClass.Generic) += (float)(0.5 * Electricity / 100);
             }
+
+            if (AdvancedWorld.MutationMode && Main.masterMode && Utils.Tool.CheckBossAlive()) Player.AddBuff(ModContent.BuffType<Buffs.Debuff.VoidPressure>(), 60);
         }
     }
 }

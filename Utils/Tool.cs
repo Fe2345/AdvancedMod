@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Terraria.GameContent.ItemDropRules;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
@@ -22,8 +20,8 @@ namespace AdvancedMod.Utils
                                           BuffID.Tipsy,BuffID.Lovestruck,BuffID.Stinky,BuffID.WaterCandle,194,
                                           199,332,BuffID.Hunger,BuffID.Starving,BuffID.Midas,BuffID.Oiled,BuffID.Wet,
                                           BuffID.Slimed,320,BuffID.ShadowFlame,BuffID.BetsysCurse,169,BuffID.Daybreak,
-                                          183,186,ModContent.BuffType<Buffs.Debuff.ElectromagneticInduction>(),
-                                          ModContent.BuffType<Buffs.Debuff.TheWorld>()
+                                          183,186,BuffID.Dazed,ModContent.BuffType<Buffs.Debuff.ElectromagneticInduction>(),
+                                          ModContent.BuffType<Buffs.Debuff.TheWorld>(),ModContent.BuffType<Buffs.Debuff.VoidPressure>()
         };
 
         public static int[] DifferentArray(int n, int max)
@@ -110,6 +108,19 @@ namespace AdvancedMod.Utils
             }
 
             return false;
+        }
+
+        public static IItemDropRule BossBagDropCustom(int itemType, int amount = 1)
+        {
+            return new DropLocalPerClientAndResetsNPCMoneyTo0(itemType, 1, amount, amount, null);
+        }
+
+        public static void NewModItem(Vector2 spawnPos,string ModName,string ItemName,int amount = 1)
+        {
+            if (ModContent.TryFind(ModName,ItemName,out ModItem item))
+            {
+                Item.NewItem(null, spawnPos, item.Type, amount);
+            }
         }
     }
 }

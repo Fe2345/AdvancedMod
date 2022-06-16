@@ -57,13 +57,13 @@ namespace AdvancedMod.Items.Weapon.Curse
         {
             if (player.altFunctionUse == 2)
             {
-                Projectile.NewProjectile(source, position, velocity, type, damage, knockback);
+                Projectile.NewProjectile(source, position, velocity, type, Item.damage, knockback);
             }
             else
             {
                 for (int i = -2; i < 3; i++)
                 {
-                    Projectile.NewProjectile(source, position, Utils.Tool.TurnVector(velocity,(float)Math.PI/12 * i), type, damage, knockback);
+                    Projectile.NewProjectile(source, position, Utils.Tool.TurnVector(velocity,(float)Math.PI/12 * i), type, Item.damage, knockback);
                 }
             }
 

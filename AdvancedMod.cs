@@ -104,6 +104,36 @@ namespace AdvancedMod
                 .AddIngredient(ItemID.TissueSample)
                 .AddTile(TileID.Anvils)
                 .Register();
+
+            CreateRecipe(ItemID.Apple)
+                .AddIngredient(ItemID.Wood, 10)
+                .AddTile(TileID.WorkBenches)
+                .Register();
+
+            CreateRecipe(ItemID.Apricot)
+                .AddIngredient(ItemID.Wood, 10)
+                .AddTile(TileID.WorkBenches)
+                .Register();
+
+            CreateRecipe(ItemID.Banana)
+                .AddIngredient(ItemID.PalmWood, 10)
+                .AddTile(TileID.WorkBenches)
+                .Register();
+
+            CreateRecipe(ItemID.BlackCurrant)
+                .AddIngredient(ItemID.Ebonwood, 10)
+                .AddTile(TileID.WorkBenches)
+                .Register();
+
+            CreateRecipe(ItemID.BloodOrange)
+                .AddIngredient(ItemID.Shadewood, 10)
+                .AddTile(TileID.WorkBenches)
+                .Register();
+
+            CreateRecipe(ItemID.Cherry)
+                .AddIngredient(ItemID.BorealWood, 10)
+                .AddTile(TileID.WorkBenches)
+                .Register();
         }
 
         public override void PostSetupContent()

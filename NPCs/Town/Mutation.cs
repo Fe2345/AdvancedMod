@@ -164,7 +164,7 @@ namespace AdvancedMod.NPCs.Town
         {
             //翻译“商店文本”
             button = "商店";
-            button2 = "帮助";
+            button2 = "升级";
         }
 
         public override void OnChatButtonClicked(bool firstButton, ref bool shop)
@@ -187,7 +187,63 @@ namespace AdvancedMod.NPCs.Town
                     Item.NewItem(NPC.GetSource_GiftOrReward(),Main.LocalPlayer.Center, ItemID.SlimeStaff, 1);
                     Item.NewItem(NPC.GetSource_GiftOrReward(),Main.LocalPlayer.Center, ItemID.LifeCrystal, 3);
                     Item.NewItem(NPC.GetSource_GiftOrReward(),Main.LocalPlayer.Center, ItemID.ManaCrystal, 3);
+                    Utils.Tool.NewModItem(Main.LocalPlayer.Center, "MagicStorage", "StorageHeart");
+                    Utils.Tool.NewModItem(Main.LocalPlayer.Center, "MagicStorage", "CraftingAccess");
+                    Utils.Tool.NewModItem(Main.LocalPlayer.Center, "MagicStorage", "StorageUnit", 16);
                     return;
+                }
+                else if (!AdvancedPlayer.RecievedBoss1Bag && NPC.downedBoss1) //Eye Of Cthulhu
+                {
+                    AdvancedPlayer.RecievedBoss1Bag = true;
+                    Item.NewItem(NPC.GetSource_GiftOrReward(), Main.LocalPlayer.Center, ItemID.Amethyst, 10);
+                    Item.NewItem(NPC.GetSource_GiftOrReward(), Main.LocalPlayer.Center, ItemID.Topaz, 10);
+                    Item.NewItem(NPC.GetSource_GiftOrReward(), Main.LocalPlayer.Center, ItemID.GoblinBattleStandard);
+                    Utils.Tool.NewModItem(Main.LocalPlayer.Center, "MagicStorage", "UpgradeCrimtane", 4);
+                    Utils.Tool.NewModItem(Main.LocalPlayer.Center, "MagicStorage", "UpgradeDemonite", 4);
+                }
+                else if (!AdvancedPlayer.RecievedBoss2Bag && NPC.downedBoss2)
+                {
+                    AdvancedPlayer.RecievedBoss2Bag = true;
+                    Item.NewItem(NPC.GetSource_GiftOrReward(), Main.LocalPlayer.Center, ItemID.Sapphire, 10);
+                    Item.NewItem(NPC.GetSource_GiftOrReward(), Main.LocalPlayer.Center, ItemID.Emerald, 10);
+                    Utils.Tool.NewModItem(Main.LocalPlayer.Center, "MagicStorage", "UpgradeCrimtane", 4);
+                    Utils.Tool.NewModItem(Main.LocalPlayer.Center, "MagicStorage", "UpgradeDemonite", 4);
+                }
+                else if (!AdvancedPlayer.RecievedBoss3Bag && NPC.downedBoss3)
+                {
+                    AdvancedPlayer.RecievedBoss3Bag = true;
+                    Item.NewItem(NPC.GetSource_GiftOrReward(), Main.LocalPlayer.Center, ItemID.Ruby, 10);
+                    Item.NewItem(NPC.GetSource_GiftOrReward(), Main.LocalPlayer.Center, ItemID.Diamond, 10);
+                    Item.NewItem(NPC.GetSource_GiftOrReward(), Main.LocalPlayer.Center, ItemID.Amber, 10);
+                    Utils.Tool.NewModItem(Main.LocalPlayer.Center, "MagicStorage", "UpgradeHellstone",16);
+                }
+                else if (!AdvancedPlayer.RecievedFleshWallBag && Main.hardMode)
+                {
+                    AdvancedPlayer.RecievedFleshWallBag = true;
+                    Item.NewItem(NPC.GetSource_GiftOrReward(), Main.LocalPlayer.Center, ModContent.ItemType<Items.Summon.ComplexBossSummons_Hardmode>(), 1);
+                    Item.NewItem(NPC.GetSource_GiftOrReward(), Main.LocalPlayer.Center, ItemID.PirateMap);
+                }
+                else if (!AdvancedPlayer.RecievedMechBossBag && NPC.downedMechBoss1 && NPC.downedMechBoss2 && NPC.downedMechBoss3)
+                {
+                    AdvancedPlayer.RecievedMechBossBag = true;
+                    Utils.Tool.NewModItem(Main.LocalPlayer.Center, "MagicStorage", "UpgradeHallowed", 16);
+                }
+                else if (!AdvancedPlayer.RecievedPlanteraBag && NPC.downedPlantBoss)
+                {
+                    AdvancedPlayer.RecievedPlanteraBag = true;
+                    Item.NewItem(NPC.GetSource_GiftOrReward(), Main.LocalPlayer.Center, ItemID.PumpkinMoonMedallion);
+                    Item.NewItem(NPC.GetSource_GiftOrReward(), Main.LocalPlayer.Center, ItemID.NaughtyPresent);
+                    Utils.Tool.NewModItem(Main.LocalPlayer.Center, "MagicStorage", "UpgradeBlueChlorophyte", 16);
+                }
+                else if (!AdvancedPlayer.RecievedMoonlordBag && NPC.downedMoonlord)
+                {
+                    AdvancedPlayer.RecievedMoonlordBag = true;
+                    Utils.Tool.NewModItem(Main.LocalPlayer.Center, "MagicStorage", "UpgradeLuminite", 16);
+                }
+                else if (!AdvancedPlayer.RecievedGodOfEyeBag && AdvancedWorld.downedGodOfEye)
+                {
+                    AdvancedPlayer.RecievedGodOfEyeBag = true;
+                    Utils.Tool.NewModItem(Main.LocalPlayer.Center, "MagicStorage", "UpgradeTerra", 16);
                 }
             }
         }
