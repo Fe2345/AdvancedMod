@@ -13,9 +13,9 @@ namespace AdvancedMod
         [DefaultValue(false)]
         public bool disableNurseHeal;
 
-        [Label("Enable No-Hit Mode")]
-        [Tooltip("Any Damage will kill you!!!")]
+        [Label("启用无伤模式")]
+        [Tooltip("启用后，任何形式的伤害都将秒杀你。仅供无伤人使用。")]
         [DefaultValue(false)]
-        public bool enableEnergySystem;
+        public bool NoHitMode;
     }
 }

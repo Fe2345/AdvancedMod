@@ -45,6 +45,12 @@ namespace AdvancedMod.NPCs.Town
             NPC.Happiness.SetBiomeAffection<CorruptionBiome>(AffectionLevel.Hate);
             NPC.Happiness.SetBiomeAffection<DungeonBiome>(AffectionLevel.Hate);
 
+            NPC.buffImmune[ModContent.BuffType<Buffs.Debuff.TheWorld>()] = true;
+            if (ModLoader.TryGetMod("FargowiltasSouls",out Mod fargo))
+            {
+                NPC.buffImmune[Tool.GetModBuff("FargowiltasSouls", "TimeFrozen")] = true;
+            }
+
             NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new NPCID.Sets.NPCBestiaryDrawModifiers(0)
             {
                 Velocity = -1f,
@@ -168,7 +174,9 @@ namespace AdvancedMod.NPCs.Town
         }
 
         public override void OnChatButtonClicked(bool firstButton, ref bool shop)
-        { 
+        {
+            AdvancedPlayer player = Main.player[Main.myPlayer].GetModPlayer<AdvancedPlayer>();
+
             //如果按下第一个按钮，则开启商店
             if (firstButton)
             {
@@ -176,9 +184,9 @@ namespace AdvancedMod.NPCs.Town
             }
             else if (!firstButton)
             {
-                if (!AdvancedPlayer.RecievedInitBag)
+                if (!player.RecievedInitBag)
                 {
-                    AdvancedPlayer.RecievedInitBag = true;
+                    player.RecievedInitBag = true;
                     Item.NewItem(NPC.GetSource_GiftOrReward(),Main.LocalPlayer.Center, ModContent.ItemType<Items.Summon.MutationCore>(), 1);
                     Item.NewItem(NPC.GetSource_GiftOrReward(),Main.LocalPlayer.Center, ModContent.ItemType<Items.Summon.ComplexBossSummons_PreHardmode>(), 1);
                     Item.NewItem(NPC.GetSource_GiftOrReward(),Main.LocalPlayer.Center, ItemID.PlatinumBroadsword, 1);
@@ -190,60 +198,84 @@ namespace AdvancedMod.NPCs.Town
                     Utils.Tool.NewModItem(Main.LocalPlayer.Center, "MagicStorage", "StorageHeart");
                     Utils.Tool.NewModItem(Main.LocalPlayer.Center, "MagicStorage", "CraftingAccess");
                     Utils.Tool.NewModItem(Main.LocalPlayer.Center, "MagicStorage", "StorageUnit", 16);
+                    Main.npcChatText = "我目前只能给你这些了……或许你可以去击败一只强大的怪物？";
                     return;
                 }
-                else if (!AdvancedPlayer.RecievedBoss1Bag && NPC.downedBoss1) //Eye Of Cthulhu
+                else if (!player.RecievedBoss1Bag && NPC.downedBoss1) //Eye Of Cthulhu
                 {
-                    AdvancedPlayer.RecievedBoss1Bag = true;
+                    player.RecievedBoss1Bag = true;
                     Item.NewItem(NPC.GetSource_GiftOrReward(), Main.LocalPlayer.Center, ItemID.Amethyst, 10);
                     Item.NewItem(NPC.GetSource_GiftOrReward(), Main.LocalPlayer.Center, ItemID.Topaz, 10);
                     Item.NewItem(NPC.GetSource_GiftOrReward(), Main.LocalPlayer.Center, ItemID.GoblinBattleStandard);
                     Utils.Tool.NewModItem(Main.LocalPlayer.Center, "MagicStorage", "UpgradeCrimtane", 4);
                     Utils.Tool.NewModItem(Main.LocalPlayer.Center, "MagicStorage", "UpgradeDemonite", 4);
+                    Main.npcChatText = "干的漂亮！如果你想要变得更强，你可以尝试踏上那片邪恶的土地！那里危机四伏，但是这并非是个坏主意！";
+                    return;
                 }
-                else if (!AdvancedPlayer.RecievedBoss2Bag && NPC.downedBoss2)
+                else if (!player.RecievedBoss2Bag && NPC.downedBoss2)
                 {
-                    AdvancedPlayer.RecievedBoss2Bag = true;
+                    player.RecievedBoss2Bag = true;
                     Item.NewItem(NPC.GetSource_GiftOrReward(), Main.LocalPlayer.Center, ItemID.Sapphire, 10);
                     Item.NewItem(NPC.GetSource_GiftOrReward(), Main.LocalPlayer.Center, ItemID.Emerald, 10);
                     Utils.Tool.NewModItem(Main.LocalPlayer.Center, "MagicStorage", "UpgradeCrimtane", 4);
                     Utils.Tool.NewModItem(Main.LocalPlayer.Center, "MagicStorage", "UpgradeDemonite", 4);
+                    Main.npcChatText = "你已经变得更强了，你不妨去一去丛林和地狱，或者尝试解开地牢门口的老人的诅咒。";
+                    return;
                 }
-                else if (!AdvancedPlayer.RecievedBoss3Bag && NPC.downedBoss3)
+                else if (!player.RecievedBoss3Bag && NPC.downedBoss3)
                 {
-                    AdvancedPlayer.RecievedBoss3Bag = true;
+                    player.RecievedBoss3Bag = true;
                     Item.NewItem(NPC.GetSource_GiftOrReward(), Main.LocalPlayer.Center, ItemID.Ruby, 10);
                     Item.NewItem(NPC.GetSource_GiftOrReward(), Main.LocalPlayer.Center, ItemID.Diamond, 10);
                     Item.NewItem(NPC.GetSource_GiftOrReward(), Main.LocalPlayer.Center, ItemID.Amber, 10);
                     Utils.Tool.NewModItem(Main.LocalPlayer.Center, "MagicStorage", "UpgradeHellstone",16);
+                    Main.npcChatText = "那个邪恶的空骨架死了。现在你可以前往地狱迎接最后的挑战了。";
+                    return;
                 }
-                else if (!AdvancedPlayer.RecievedFleshWallBag && Main.hardMode)
+                else if (!player.RecievedFleshWallBag && Main.hardMode)
                 {
-                    AdvancedPlayer.RecievedFleshWallBag = true;
+                    player.RecievedFleshWallBag = true;
                     Item.NewItem(NPC.GetSource_GiftOrReward(), Main.LocalPlayer.Center, ModContent.ItemType<Items.Summon.ComplexBossSummons_Hardmode>(), 1);
                     Item.NewItem(NPC.GetSource_GiftOrReward(), Main.LocalPlayer.Center, ItemID.PirateMap);
+                    Main.npcChatText = "你完成了向导给你的试炼……抱歉，现在又有新的威胁出现了，你不妨试试。";
+                    return;
+
                 }
-                else if (!AdvancedPlayer.RecievedMechBossBag && NPC.downedMechBoss1 && NPC.downedMechBoss2 && NPC.downedMechBoss3)
+                else if (!player.RecievedMechBossBag && NPC.downedMechBoss1 && NPC.downedMechBoss2 && NPC.downedMechBoss3)
                 {
-                    AdvancedPlayer.RecievedMechBossBag = true;
+                    player.RecievedMechBossBag = true;
                     Utils.Tool.NewModItem(Main.LocalPlayer.Center, "MagicStorage", "UpgradeHallowed", 16);
+                    Main.npcChatText = "不知道你有没有注意到？丛林地下长出了一些花苞，千万不要轻易挖开它！当然，除非你想成为大南方植物终结者";
+                    return;
                 }
-                else if (!AdvancedPlayer.RecievedPlanteraBag && NPC.downedPlantBoss)
+                else if (!player.RecievedPlanteraBag && NPC.downedPlantBoss)
                 {
-                    AdvancedPlayer.RecievedPlanteraBag = true;
+                    player.RecievedPlanteraBag = true;
                     Item.NewItem(NPC.GetSource_GiftOrReward(), Main.LocalPlayer.Center, ItemID.PumpkinMoonMedallion);
                     Item.NewItem(NPC.GetSource_GiftOrReward(), Main.LocalPlayer.Center, ItemID.NaughtyPresent);
                     Utils.Tool.NewModItem(Main.LocalPlayer.Center, "MagicStorage", "UpgradeBlueChlorophyte", 16);
+                    Main.npcChatText = "你杀死了一只花……你不妨去丛林深处的神庙看看，然后去地牢绕两圈。";
+                    return;
+
                 }
-                else if (!AdvancedPlayer.RecievedMoonlordBag && NPC.downedMoonlord)
+                else if (!player.RecievedMoonlordBag && NPC.downedMoonlord)
                 {
-                    AdvancedPlayer.RecievedMoonlordBag = true;
+                    player.RecievedMoonlordBag = true;
                     Utils.Tool.NewModItem(Main.LocalPlayer.Center, "MagicStorage", "UpgradeLuminite", 16);
+                    Main.npcChatText = "嘘！我希望这些话不要被树妖听到！将有一些不速之客前来进攻！我说的可不是火星人！";
+                    return;
                 }
-                else if (!AdvancedPlayer.RecievedGodOfEyeBag && AdvancedWorld.downedGodOfEye)
+                else if (!player.RecievedGodOfEyeBag && AdvancedWorld.downedGodOfEye)
                 {
-                    AdvancedPlayer.RecievedGodOfEyeBag = true;
+                    player.RecievedGodOfEyeBag = true;
                     Utils.Tool.NewModItem(Main.LocalPlayer.Center, "MagicStorage", "UpgradeTerra", 16);
+                    Main.npcChatText = "我感觉时间正在波动……看来'他'要来了。准备迎战吧……";
+                    return;
+                }
+                else
+                {
+                    Main.npcChatText = "现在我没有什么可以给你的……";
+                    return;
                 }
             }
         }
@@ -257,6 +289,71 @@ namespace AdvancedMod.NPCs.Town
             Tool.AddItem(ref shop, ref nextSlot, Main.hardMode, ItemID.TitanGlove, 10000);
             Tool.AddItem(ref shop, ref nextSlot, Main.hardMode, ItemID.MagmaStone, 10000);
             Tool.AddItem(ref shop, ref nextSlot, !Main.dayTime, ModContent.ItemType<Items.Potion.WonderPotion>(), 50000);
+            Tool.AddItem(ref shop, ref nextSlot, Tool.HaveItem(Main.LocalPlayer, ItemID.CopperBar), ItemID.CopperBar, 2000);
+            Tool.AddItem(ref shop, ref nextSlot, Tool.HaveItem(Main.LocalPlayer, ItemID.TinBar), ItemID.TinBar, 2000);
+            Tool.AddItem(ref shop, ref nextSlot, Tool.HaveItem(Main.LocalPlayer, ItemID.IronBar), ItemID.IronBar, 2000);
+            Tool.AddItem(ref shop, ref nextSlot, Tool.HaveItem(Main.LocalPlayer, ItemID.LeadBar), ItemID.LeadBar, 2000);
+            Tool.AddItem(ref shop, ref nextSlot, Tool.HaveItem(Main.LocalPlayer, ItemID.SilverBar), ItemID.SilverBar, 2000);
+            Tool.AddItem(ref shop, ref nextSlot, Tool.HaveItem(Main.LocalPlayer, ItemID.TungstenBar), ItemID.TungstenBar, 2000);
+            Tool.AddItem(ref shop, ref nextSlot, Tool.HaveItem(Main.LocalPlayer, ItemID.GoldBar), ItemID.GoldBar, 2000);
+            Tool.AddItem(ref shop, ref nextSlot, Tool.HaveItem(Main.LocalPlayer, ItemID.PlatinumBar), ItemID.PlatinumBar, 2000);
+            Tool.AddItem(ref shop, ref nextSlot, Tool.HaveItem(Main.LocalPlayer, ItemID.MeteoriteBar), ItemID.MeteoriteBar, 2000);
+            Tool.AddItem(ref shop, ref nextSlot, Tool.HaveItem(Main.LocalPlayer, ItemID.DemoniteBar), ItemID.DemoniteBar, 2000);
+            Tool.AddItem(ref shop, ref nextSlot, Tool.HaveItem(Main.LocalPlayer, ItemID.CrimtaneBar), ItemID.CrimtaneBar, 2000);
+            Tool.AddItem(ref shop, ref nextSlot, Tool.HaveItem(Main.LocalPlayer, ItemID.HellstoneBar), ItemID.HellstoneBar, 2000);
+            Tool.AddItem(ref shop, ref nextSlot, Tool.HaveItem(Main.LocalPlayer, ItemID.CobaltBar), ItemID.CobaltBar, 2000);
+            Tool.AddItem(ref shop, ref nextSlot, Tool.HaveItem(Main.LocalPlayer, ItemID.PalladiumBar), ItemID.PalladiumBar, 2000);
+            Tool.AddItem(ref shop, ref nextSlot, Tool.HaveItem(Main.LocalPlayer, ItemID.MythrilBar), ItemID.MythrilBar, 2000);
+            Tool.AddItem(ref shop, ref nextSlot, Tool.HaveItem(Main.LocalPlayer, ItemID.OrichalcumBar), ItemID.OrichalcumBar, 2000);
+            Tool.AddItem(ref shop, ref nextSlot, Tool.HaveItem(Main.LocalPlayer, ItemID.AdamantiteBar), ItemID.AdamantiteBar, 2000);
+            Tool.AddItem(ref shop, ref nextSlot, Tool.HaveItem(Main.LocalPlayer, ItemID.TitaniumBar), ItemID.TitaniumBar, 2000);
+            Tool.AddItem(ref shop, ref nextSlot, Tool.HaveItem(Main.LocalPlayer, ModContent.ItemType<Items.Mateiral.SiliconBar>()), ModContent.ItemType<Items.Mateiral.SiliconBar>(), 2000);
+            Tool.AddItem(ref shop, ref nextSlot, Tool.HaveItem(Main.LocalPlayer, ItemID.HallowedBar), ItemID.HallowedBar, 2000);
+            Tool.AddItem(ref shop, ref nextSlot, Tool.HaveItem(Main.LocalPlayer, ItemID.ChlorophyteBar), ItemID.ChlorophyteBar, 2000);
+            Tool.AddItem(ref shop, ref nextSlot, Tool.HaveItem(Main.LocalPlayer, ItemID.SpectreBar), ItemID.SpectreBar, 2000);
+            Tool.AddItem(ref shop, ref nextSlot, Tool.HaveItem(Main.LocalPlayer, ItemID.ShroomiteBar), ItemID.ShroomiteBar, 2000);
+            Tool.AddItem(ref shop, ref nextSlot, Tool.HaveItem(Main.LocalPlayer, ItemID.LunarBar), ItemID.LunarBar, 2000);
+            Tool.AddItem(ref shop, ref nextSlot, Tool.HaveItem(Main.LocalPlayer, ItemID.KingSlimeBossBag), ItemID.KingSlimeBossBag, 2000);
+            Tool.AddItem(ref shop, ref nextSlot, Tool.HaveItem(Main.LocalPlayer, ItemID.EyeOfCthulhuBossBag), ItemID.EyeOfCthulhuBossBag, 2000);
+            Tool.AddItem(ref shop, ref nextSlot, Tool.HaveItem(Main.LocalPlayer, ItemID.EaterOfWorldsBossBag), ItemID.EaterOfWorldsBossBag, 2000);
+            Tool.AddItem(ref shop, ref nextSlot, Tool.HaveItem(Main.LocalPlayer, ItemID.BrainOfCthulhuBossBag), ItemID.BrainOfCthulhuBossBag, 2000);
+            Tool.AddItem(ref shop, ref nextSlot, Tool.HaveItem(Main.LocalPlayer, ItemID.QueenBeeBossBag), ItemID.QueenBeeBossBag, 2000);
+            Tool.AddItem(ref shop, ref nextSlot, Tool.HaveItem(Main.LocalPlayer, ItemID.SkeletronBossBag), ItemID.SkeletronBossBag, 2000);
+            Tool.AddItem(ref shop, ref nextSlot, Tool.HaveItem(Main.LocalPlayer, ItemID.DeerclopsBossBag), ItemID.DeerclopsBossBag, 2000);
+            Tool.AddItem(ref shop, ref nextSlot, Tool.HaveItem(Main.LocalPlayer, ItemID.WallOfFleshBossBag), ItemID.WallOfFleshBossBag, 2000);
+            Tool.AddItem(ref shop, ref nextSlot, Tool.HaveItem(Main.LocalPlayer, ItemID.QueenSlimeBossBag), ItemID.QueenSlimeBossBag, 2000);
+            Tool.AddItem(ref shop, ref nextSlot, Tool.HaveItem(Main.LocalPlayer, ItemID.TwinsBossBag), ItemID.TwinsBossBag, 2000);
+            Tool.AddItem(ref shop, ref nextSlot, Tool.HaveItem(Main.LocalPlayer, ItemID.DestroyerBossBag), ItemID.DestroyerBossBag, 2000);
+            Tool.AddItem(ref shop, ref nextSlot, Tool.HaveItem(Main.LocalPlayer, ItemID.SkeletronPrimeBossBag), ItemID.SkeletronPrimeBossBag, 2000);
+            Tool.AddItem(ref shop, ref nextSlot, Tool.HaveItem(Main.LocalPlayer, ItemID.PlanteraBossBag), ItemID.PlanteraBossBag, 2000);
+            Tool.AddItem(ref shop, ref nextSlot, Tool.HaveItem(Main.LocalPlayer, ItemID.FairyQueenBossBag), ItemID.FairyQueenBossBag, 2000);
+            Tool.AddItem(ref shop, ref nextSlot, Tool.HaveItem(Main.LocalPlayer, ItemID.GolemBossBag), ItemID.GolemBossBag, 2000);
+            Tool.AddItem(ref shop, ref nextSlot, Tool.HaveItem(Main.LocalPlayer, ItemID.FishronBossBag), ItemID.FishronBossBag, 2000);
+            Tool.AddItem(ref shop, ref nextSlot, Tool.HaveItem(Main.LocalPlayer, ItemID.CultistBossBag), ItemID.CultistBossBag, 2000);
+            Tool.AddItem(ref shop, ref nextSlot, Tool.HaveItem(Main.LocalPlayer, ItemID.MoonLordBossBag), ItemID.MoonLordBossBag, 2000);
+            Tool.AddItem(ref shop, ref nextSlot, Tool.HaveItem(Main.LocalPlayer, ItemID.BossBagBetsy), ItemID.BossBagBetsy, 2000);
+            Tool.AddItem(ref shop, ref nextSlot, Tool.HaveItem(Main.LocalPlayer, ModContent.ItemType<Items.Misc.TreeDiagrammerBag>()), ModContent.ItemType<Items.Misc.TreeDiagrammerBag>(), 2000);
+            if (ModLoader.TryGetMod("FargowiltasSouls",out Mod fargo))
+            {
+                Tool.AddItem(ref shop, ref nextSlot, Tool.HaveItem(Main.LocalPlayer, Tool.GetModItem("FargowiltasSouls","DeviBag")), Tool.GetModItem("FargowiltasSouls","DeviBag"), 2000);
+                Tool.AddItem(ref shop, ref nextSlot, Tool.HaveItem(Main.LocalPlayer, Tool.GetModItem("FargowiltasSouls", "CosmosBag")), Tool.GetModItem("FargowiltasSouls", "CosmosBag"), 2000);
+                Tool.AddItem(ref shop, ref nextSlot, Tool.HaveItem(Main.LocalPlayer, Tool.GetModItem("FargowiltasSouls", "AbomBag")), Tool.GetModItem("FargowiltasSouls", "AbomBag"), 2000);
+                Tool.AddItem(ref shop, ref nextSlot, Tool.HaveItem(Main.LocalPlayer, Tool.GetModItem("FargowiltasSouls", "MutantBag")), Tool.GetModItem("FargowiltasSouls", "MutantBag"), 2000);
+                Tool.AddItem(ref shop, ref nextSlot, Tool.HaveItem(Main.LocalPlayer, Tool.GetModItem("FargowiltasSouls", "TrojanSquirrelBag")), Tool.GetModItem("FargowiltasSouls", "TrojanSquirrelBag"), 2000);
+            }
+
+            if (ModLoader.TryGetMod("CalamityMod",out Mod calamity))
+            {
+                Tool.AddItem(ref shop, ref nextSlot, Tool.HaveItem(Main.player[Main.myPlayer], Tool.GetModItem("CalamityMod", "AerialiteBar")), Tool.GetModItem("CalamityMod", "AerialiteBar"), 2000);
+                Tool.AddItem(ref shop, ref nextSlot, Tool.HaveItem(Main.player[Main.myPlayer], Tool.GetModItem("CalamityMod", "CrynoicBar")), Tool.GetModItem("CalamityMod", "CryonicBar"), 2000);
+                Tool.AddItem(ref shop, ref nextSlot, Tool.HaveItem(Main.player[Main.myPlayer], Tool.GetModItem("CalamityMod", "PerennialBar")), Tool.GetModItem("CalamityMod", "PerennialBar"), 2000);
+                Tool.AddItem(ref shop, ref nextSlot, Tool.HaveItem(Main.player[Main.myPlayer], Tool.GetModItem("CalamityMod", "ScoriaBar")), Tool.GetModItem("CalamityMod", "ScoriaBar"), 2000);
+                Tool.AddItem(ref shop, ref nextSlot, Tool.HaveItem(Main.player[Main.myPlayer], Tool.GetModItem("CalamityMod", "AstralBar")), Tool.GetModItem("CalamityMod", "AstralBar"), 2000);
+                Tool.AddItem(ref shop, ref nextSlot, Tool.HaveItem(Main.player[Main.myPlayer], Tool.GetModItem("CalamityMod", "UelibloomBar")), Tool.GetModItem("CalamityMod", "UelibloomBar"), 2000);
+                Tool.AddItem(ref shop, ref nextSlot, Tool.HaveItem(Main.player[Main.myPlayer], Tool.GetModItem("CalamityMod", "CosmiliteBar")), Tool.GetModItem("CalamityMod", "CosmiliteBar"), 2000);
+                Tool.AddItem(ref shop, ref nextSlot, Tool.HaveItem(Main.player[Main.myPlayer], Tool.GetModItem("CalamityMod", "AerialiteBar")), Tool.GetModItem("CalamityMod", "AerialiteBar"), 2000);
+                Tool.AddItem(ref shop, ref nextSlot, Tool.HaveItem(Main.player[Main.myPlayer], Tool.GetModItem("CalamityMod", "ShadowspecBar")), Tool.GetModItem("CalamityMod", "ShadowspecBar"), 2000);
+            }
         }
 
         public override void TownNPCAttackStrength(ref int damage, ref float knockback)

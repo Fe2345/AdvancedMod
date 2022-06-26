@@ -62,11 +62,11 @@ namespace AdvancedMod.Utils
 
         public static bool CheckBossAlive()
         {
-            for (int i = 0;i < Main.npc.Length; i++)
+            foreach (var npc in Main.npc)
             {
-                if (Main.npc[i].boss)
+                foreach (var boss in AdvancedMod.Bosses)
                 {
-                    return true;
+                    if (npc.type == boss) return true;
                 }
             }
 
@@ -121,6 +121,45 @@ namespace AdvancedMod.Utils
             {
                 Item.NewItem(null, spawnPos, item.Type, amount);
             }
+        }
+
+        public static int GetModItem(string modName,string itemName)
+        {
+            if (ModContent.TryFind(modName,itemName,out ModItem item))
+            {
+                return item.Type;
+            }
+
+            return 0;
+        }
+
+        public static int GetModNPC(string modName,string npcName)
+        {
+            if (ModContent.TryFind(modName,npcName,out ModNPC npc))
+            {
+                return npc.Type;
+            }
+
+            return 0;
+        }
+
+        public static int GetModBuff(string modName,string buffName)
+        {
+            if (ModContent.TryFind(modName,buffName,out ModBuff buff))
+            {
+                return buff.Type;
+            }
+            return 0;
+        }
+
+        public static bool HaveItem(Player player,int type)
+        {
+            foreach(Item item in player.inventory)
+            {
+                if (item.type == type) return true;
+            }
+
+            return false;
         }
     }
 }

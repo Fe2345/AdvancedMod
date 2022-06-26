@@ -17,6 +17,20 @@ namespace AdvancedMod
         internal UserInterface GUI;
 
         internal static ModKeybind TransportDeathPosition;
+        internal static ModKeybind QuickHeal;
+        internal static ModKeybind TimeStop;
+
+        public static List<int> Bosses = new List<int>
+        {
+            NPCID.KingSlime,NPCID.EyeofCthulhu,NPCID.EaterofWorldsHead,NPCID.BrainofCthulhu,NPCID.QueenBee,NPCID.WallofFlesh,
+            NPCID.SkeletronHead,NPCID.Deerclops,
+            NPCID.QueenSlimeBoss,NPCID.Retinazer,NPCID.Spazmatism,NPCID.TheDestroyer,NPCID.SkeletronPrime,NPCID.Plantera,
+            NPCID.HallowBoss,NPCID.Golem,NPCID.DukeFishron,NPCID.CultistBoss,NPCID.MoonLordCore,NPCID.PirateShip,
+            NPCID.Pumpking,NPCID.MourningWood,NPCID.Everscream,NPCID.SantaNK1,NPCID.IceQueen,NPCID.MartianSaucer,
+            NPCID.DD2DarkMageT1,NPCID.DD2DarkMageT3,NPCID.DD2OgreT2,NPCID.DD2OgreT3,NPCID.DD2Betsy,
+            NPCID.LunarTowerSolar,NPCID.LunarTowerVortex,NPCID.LunarTowerNebula,NPCID.LunarTowerStardust,NPCID.DungeonGuardian,
+            ModContent.NPCType<NPCs.Boss.TreeDiagrammer>()
+        };
 
         public override void AddRecipes()
         {
@@ -134,6 +148,76 @@ namespace AdvancedMod
                 .AddIngredient(ItemID.BorealWood, 10)
                 .AddTile(TileID.WorkBenches)
                 .Register();
+
+            CreateRecipe(ItemID.TinBar)
+                .AddIngredient(ItemID.CopperBar)
+                .AddTile(TileID.WorkBenches)
+                .Register();
+
+            CreateRecipe(ItemID.CopperBar)
+                .AddIngredient(ItemID.TinBar)
+                .AddTile(TileID.WorkBenches)
+                .Register();
+
+            CreateRecipe(ItemID.LeadBar)
+                .AddIngredient(ItemID.IronBar)
+                .AddTile(TileID.WorkBenches)
+                .Register();
+
+            CreateRecipe(ItemID.IronBar)
+                .AddIngredient(ItemID.LeadBar)
+                .AddTile(TileID.WorkBenches)
+                .Register();
+
+            CreateRecipe(ItemID.TungstenBar)
+                .AddIngredient(ItemID.SilverBar)
+                .AddTile(TileID.WorkBenches)
+                .Register();
+
+            CreateRecipe(ItemID.SilverBar)
+                .AddIngredient(ItemID.TungstenBar)
+                .AddTile(TileID.WorkBenches)
+                .Register();
+
+            CreateRecipe(ItemID.PlatinumBar)
+                .AddIngredient(ItemID.GoldBar)
+                .AddTile(TileID.WorkBenches)
+                .Register();
+
+            CreateRecipe(ItemID.GoldBar)
+                .AddIngredient(ItemID.PlatinumBar)
+                .AddTile(TileID.WorkBenches)
+                .Register();
+
+            CreateRecipe(ItemID.PalladiumBar)
+                .AddIngredient(ItemID.CobaltBar)
+                .AddTile(TileID.WorkBenches)
+                .Register();
+
+            CreateRecipe(ItemID.CobaltBar)
+                .AddIngredient(ItemID.PalladiumBar)
+                .AddTile(TileID.WorkBenches)
+                .Register();
+
+            CreateRecipe(ItemID.OrichalcumBar)
+                .AddIngredient(ItemID.MythrilBar)
+                .AddTile(TileID.WorkBenches)
+                .Register();
+
+            CreateRecipe(ItemID.MythrilBar)
+                .AddIngredient(ItemID.OrichalcumBar)
+                .AddTile(TileID.WorkBenches)
+                .Register();
+
+            CreateRecipe(ItemID.AdamantiteBar)
+                .AddIngredient(ItemID.TitaniumBar)
+                .AddTile(TileID.WorkBenches)
+                .Register();
+
+            CreateRecipe(ItemID.TitaniumBar)
+                .AddIngredient(ItemID.AdamantiteBar)
+                .AddTile(TileID.WorkBenches)
+                .Register();
         }
 
         public override void PostSetupContent()
@@ -149,7 +233,7 @@ namespace AdvancedMod
                     9.5f,
                     (Func<bool>)(() => AdvancedWorld.downedTreeDiagrammer),
                     (Func<bool>)(() => true),
-                    ModContent.ItemType<Items.Accessory.BossDrop.SiliconCapacitance>(),
+                    new List<int>{ ModContent.ItemType<Items.Tiles_Item.Relics.TreeDiagrammerRelicItem>(),ModContent.ItemType<Items.Accessory.BossDrop.SiliconCapacitance>()},
                     ModContent.ItemType<Items.Summon.DiagrammerWreckage>(),
                     $"Mods.AdvancedMod.BossChecklist.Summon.TreeDiagrammer",
                     $"Mods.AdvancedMod.BossChecklist.DespawnMessage.TreeDiagrammer",
@@ -211,6 +295,16 @@ namespace AdvancedMod
             Instance = this;
 
             TransportDeathPosition = KeybindLoader.RegisterKeybind(this,"Transport to Latest Death Position", "O");
+            QuickHeal = KeybindLoader.RegisterKeybind(this, "Terrarian Soul Quick Heal", "L");
+
+            string Fargo = "FargowiltasSouls";
+            if (ModLoader.TryGetMod(Fargo,out Mod fargo))
+            {
+                Bosses.Add(Utils.Tool.GetModNPC(Fargo, "DeviBoss"));
+                Bosses.Add(Utils.Tool.GetModNPC(Fargo, "AbomBoss"));
+                Bosses.Add(Utils.Tool.GetModNPC(Fargo, "MutantBoss"));
+                Bosses.Add(Utils.Tool.GetModNPC(Fargo, "CosmosChampion"));
+            }
 
             /*
             energySystemUI = new UI.EnergySystem();

@@ -400,6 +400,7 @@ namespace AdvancedMod.NPCs.Boss
             npcLoot.Add(ItemDropRule.ByCondition(new Conditions.NotExpert(), ModContent.ItemType<Items.Mateiral.SiliconBar>(), 1, 12, 18));
             npcLoot.Add(ItemDropRule.ByCondition(new Conditions.NotExpert(), ModContent.ItemType<Items.Weapon.Curse.Laser>(),1,1,1,1));
             npcLoot.Add(ItemDropRule.ByCondition(new Conditions.NotExpert(), ModContent.ItemType<Items.Weapon.Melee.Surge>(),1,1,1));
+            npcLoot.Add(ItemDropRule.ByCondition(new Conditions.IsMasterMode(), ModContent.ItemType<Items.Tiles_Item.Relics.TreeDiagrammerRelicItem>(), 1, 1, 1, 1));
 
             LeadingConditionRule rule = new LeadingConditionRule(new ItemDropRules.MutationModeDropRule());
             rule.OnSuccess(Utils.Tool.BossBagDropCustom(ModContent.ItemType<Items.Accessory.BossDrop.SiliconCapacitance>()));

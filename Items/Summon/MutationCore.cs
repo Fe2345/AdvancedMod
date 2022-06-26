@@ -30,7 +30,7 @@ namespace AdvancedMod.Items.Summon
         {
             if (Utils.Tool.CheckBossAlive())
             {
-                Main.NewText("你现在不能改变规则，周围有Boss在游荡");
+                Main.NewText($"你现在不能改变规则，周围有{Utils.Tool.GetClosestNPC(player.Center,true).FullName}在游荡");
                 return false;  
             }
             
@@ -53,7 +53,6 @@ namespace AdvancedMod.Items.Summon
             else
             {
                 AdvancedWorld.MutationMode = false;
-                AdvancedPlayer.RecievedInitBag = false;
                 Main.NewText(Main.masterMode ? "虚空模式已关闭！！！" : "异变模式已关闭！！！",color);
             }
 
