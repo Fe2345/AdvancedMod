@@ -34,8 +34,12 @@ namespace AdvancedMod.NPCs.Town
             NPCID.Sets.AttackAverageChance[NPC.type] = 3;
             //NPC遇敌的攻击优先度，该数值越大则NPC遇到敌怪时越会优先选择逃跑，反之则该NPC越好斗。
             //最小一般为1，你可以试试0或负数LOL~
-
-            NPC.Happiness.SetNPCAffection<Chemist>(AffectionLevel.Love);
+            /*
+            if (ModLoader.TryGetMod("AdvancedModDLC",out Mod dlc))
+            {
+                NPC.Happiness.SetNPCAffection(ModContent.Find<ModNPC>("AdvancedModDLC", "Chemist").Type, AffectionLevel.Love);
+            }
+            */
             NPC.Happiness.SetNPCAffection(NPCID.Princess, AffectionLevel.Love);
             NPC.Happiness.SetNPCAffection(NPCID.Cyborg, AffectionLevel.Like);
             NPC.Happiness.SetNPCAffection(NPCID.TaxCollector, AffectionLevel.Dislike);
@@ -79,6 +83,11 @@ namespace AdvancedMod.NPCs.Town
             NPC.knockBackResist = 0.3f;
             //抗击退性，数字越大抗性越低
             AnimationType = NPCID.Cyborg;
+
+            if (ModContent.GetInstance<AdvancedConfig>().CanCatchNPC)
+            {
+                Main.npcCatchable[NPC.type] = true;
+            }
         }
 
         public override List<string> SetNPCNameList()
@@ -103,12 +112,7 @@ namespace AdvancedMod.NPCs.Town
 
         public override bool CanTownNPCSpawn(int numTownNPCs, int money)
         {
-            //该入住条件为：已拥有三个或以上的城镇NPC，玩家拥有钱数大于等于一银，且击败克苏鲁之眼
-            if (NPC.downedMoonlord)
-            {
-                return true;
-            }
-            return false;
+            return NPC.downedMoonlord && ModContent.GetInstance<AdvancedConfig>().WatcherSpawn;
         }
 
         public override string GetChat()

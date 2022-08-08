@@ -182,7 +182,7 @@ namespace AdvancedMod.NPCs.Boss
                     NPC.damage *= 2;
 
                 
-                    NPC.velocity = Vector2.Normalize(NpcToplrTop) * 10;
+                    NPC.velocity = (NPC.velocity + Vector2.Normalize(NpcToplrTop) * 10)/2;
                     if (NPC.ai[1] % 60 == 0)
                     {
                         Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, ProjectileID.CultistBossLightningOrb,
@@ -214,7 +214,7 @@ namespace AdvancedMod.NPCs.Boss
                     }
                     else
                     {
-                        NPC.velocity = new Vector2(-10+Main.rand.NextFloat(20), 0);
+                        NPC.velocity = new Vector2(-10+Main.rand.NextFloat(200), 0);
                     }
 
                     if (NPC.ai[1] < 1200)

@@ -34,54 +34,54 @@ namespace AdvancedMod
 
         public override void AddRecipes()
         {
-            CreateRecipe(ItemID.LuckyHorseshoe,1)
+            Recipe.Create(ItemID.LuckyHorseshoe,1)
                 .AddIngredient(ItemID.Cloud, 50)
                 .AddTile(TileID.HeavyWorkBench)
                 .Register();
 
-            CreateRecipe(ItemID.IceSkates, 1)
+            Recipe.Create(ItemID.IceSkates, 1)
                 .AddIngredient(ItemID.IceBlock, 50)
                 .AddIngredient(ItemID.IronBar, 10)
                 .AddTile(TileID.HeavyWorkBench)
                 .Register();
 
-            CreateRecipe(ItemID.CloudinaBottle, 1)
+            Recipe.Create(ItemID.CloudinaBottle, 1)
                 .AddIngredient(ItemID.Cloud, 15)
                 .AddIngredient(ItemID.Bottle, 1)
                 .AddTile(TileID.HeavyWorkBench)
                 .Register();
 
-            CreateRecipe(ItemID.WhoopieCushion)
+            Recipe.Create(ItemID.WhoopieCushion)
                 .AddIngredient(ItemID.PinkGel, 44)
                 .AddTile(TileID.HeavyWorkBench)
                 .Register();
 
-            CreateRecipe(ItemID.ShinyRedBalloon)
+            Recipe.Create(ItemID.ShinyRedBalloon)
                 .AddIngredient(ItemID.Cloud, 20)
                 .AddTile(TileID.HeavyWorkBench)
                 .Register();
 
-            CreateRecipe(ItemID.FishFinder)
+            Recipe.Create(ItemID.FishFinder)
                 .AddIngredient(ItemID.FishronBossBag)
                 .AddTile(TileID.HeavyWorkBench)
                 .Register();
 
-            CreateRecipe(ItemID.GoblinTech)
+            Recipe.Create(ItemID.GoblinTech)
                 .AddIngredient(ItemID.TinkerersWorkshop)
                 .AddTile(TileID.HeavyWorkBench)
                 .Register();
 
-            CreateRecipe(ItemID.AmmoBox)
+            Recipe.Create(ItemID.AmmoBox)
                 .AddIngredient(ItemID.MusketBall, 3996)
                 .AddTile(TileID.HeavyWorkBench)
                 .Register();
 
-            CreateRecipe(ItemID.AnkhShield)
+            Recipe.Create(ItemID.AnkhShield)
                 .AddIngredient(ItemID.SpectreBar, 5)
                 .AddTile(TileID.HeavyWorkBench)
                 .Register();
 
-            CreateRecipe(ItemID.AvengerEmblem)
+            Recipe.Create(ItemID.AvengerEmblem)
                 .AddIngredient(ModContent.ItemType<Items.Accessory.BossDrop.CurserEmblem>())
                 .AddIngredient(ItemID.SoulofSight)
                 .AddIngredient(ItemID.SoulofMight)
@@ -89,132 +89,132 @@ namespace AdvancedMod
                 .AddTile(TileID.MythrilAnvil)
                 .Register();
 
-            CreateRecipe(ItemID.CrimtaneBar)
+            Recipe.Create(ItemID.CrimtaneBar)
                 .AddIngredient(ItemID.DemoniteBar)
                 .AddTile(TileID.Anvils)
                 .Register();
 
-            CreateRecipe(ItemID.DemoniteBar)
+            Recipe.Create(ItemID.DemoniteBar)
                 .AddIngredient(ItemID.CrimtaneBar)
                 .AddTile(TileID.Anvils)
                 .Register();
 
-            CreateRecipe(ItemID.CrimtaneOre)
+            Recipe.Create(ItemID.CrimtaneOre)
                 .AddIngredient(ItemID.DemoniteOre)
                 .AddTile(TileID.Anvils)
                 .Register();
 
-            CreateRecipe(ItemID.DemoniteOre)
+            Recipe.Create(ItemID.DemoniteOre)
                 .AddIngredient(ItemID.CrimtaneOre)
                 .AddTile(TileID.Anvils)
                 .Register();
 
-            CreateRecipe(ItemID.TissueSample)
+            Recipe.Create(ItemID.TissueSample)
                 .AddIngredient(ItemID.ShadowScale)
                 .AddTile(TileID.Anvils)
                 .Register();
 
-            CreateRecipe(ItemID.ShadowScale)
+            Recipe.Create(ItemID.ShadowScale)
                 .AddIngredient(ItemID.TissueSample)
                 .AddTile(TileID.Anvils)
                 .Register();
 
-            CreateRecipe(ItemID.Apple)
+            Recipe.Create(ItemID.Apple)
                 .AddIngredient(ItemID.Wood, 10)
                 .AddTile(TileID.WorkBenches)
                 .Register();
 
-            CreateRecipe(ItemID.Apricot)
+            Recipe.Create(ItemID.Apricot)
                 .AddIngredient(ItemID.Wood, 10)
                 .AddTile(TileID.WorkBenches)
                 .Register();
 
-            CreateRecipe(ItemID.Banana)
+            Recipe.Create(ItemID.Banana)
                 .AddIngredient(ItemID.PalmWood, 10)
                 .AddTile(TileID.WorkBenches)
                 .Register();
 
-            CreateRecipe(ItemID.BlackCurrant)
+            Recipe.Create(ItemID.BlackCurrant)
                 .AddIngredient(ItemID.Ebonwood, 10)
                 .AddTile(TileID.WorkBenches)
                 .Register();
 
-            CreateRecipe(ItemID.BloodOrange)
+            Recipe.Create(ItemID.BloodOrange)
                 .AddIngredient(ItemID.Shadewood, 10)
                 .AddTile(TileID.WorkBenches)
                 .Register();
 
-            CreateRecipe(ItemID.Cherry)
+            Recipe.Create(ItemID.Cherry)
                 .AddIngredient(ItemID.BorealWood, 10)
                 .AddTile(TileID.WorkBenches)
                 .Register();
 
-            CreateRecipe(ItemID.TinBar)
+            Recipe.Create(ItemID.TinBar)
                 .AddIngredient(ItemID.CopperBar)
                 .AddTile(TileID.WorkBenches)
                 .Register();
 
-            CreateRecipe(ItemID.CopperBar)
+            Recipe.Create(ItemID.CopperBar)
                 .AddIngredient(ItemID.TinBar)
                 .AddTile(TileID.WorkBenches)
                 .Register();
 
-            CreateRecipe(ItemID.LeadBar)
+            Recipe.Create(ItemID.LeadBar)
                 .AddIngredient(ItemID.IronBar)
                 .AddTile(TileID.WorkBenches)
                 .Register();
 
-            CreateRecipe(ItemID.IronBar)
+            Recipe.Create(ItemID.IronBar)
                 .AddIngredient(ItemID.LeadBar)
                 .AddTile(TileID.WorkBenches)
                 .Register();
 
-            CreateRecipe(ItemID.TungstenBar)
+            Recipe.Create(ItemID.TungstenBar)
                 .AddIngredient(ItemID.SilverBar)
                 .AddTile(TileID.WorkBenches)
                 .Register();
 
-            CreateRecipe(ItemID.SilverBar)
+            Recipe.Create(ItemID.SilverBar)
                 .AddIngredient(ItemID.TungstenBar)
                 .AddTile(TileID.WorkBenches)
                 .Register();
 
-            CreateRecipe(ItemID.PlatinumBar)
+            Recipe.Create(ItemID.PlatinumBar)
                 .AddIngredient(ItemID.GoldBar)
                 .AddTile(TileID.WorkBenches)
                 .Register();
 
-            CreateRecipe(ItemID.GoldBar)
+            Recipe.Create(ItemID.GoldBar)
                 .AddIngredient(ItemID.PlatinumBar)
                 .AddTile(TileID.WorkBenches)
                 .Register();
 
-            CreateRecipe(ItemID.PalladiumBar)
+            Recipe.Create(ItemID.PalladiumBar)
                 .AddIngredient(ItemID.CobaltBar)
                 .AddTile(TileID.WorkBenches)
                 .Register();
 
-            CreateRecipe(ItemID.CobaltBar)
+            Recipe.Create(ItemID.CobaltBar)
                 .AddIngredient(ItemID.PalladiumBar)
                 .AddTile(TileID.WorkBenches)
                 .Register();
 
-            CreateRecipe(ItemID.OrichalcumBar)
+            Recipe.Create(ItemID.OrichalcumBar)
                 .AddIngredient(ItemID.MythrilBar)
                 .AddTile(TileID.WorkBenches)
                 .Register();
 
-            CreateRecipe(ItemID.MythrilBar)
+            Recipe.Create(ItemID.MythrilBar)
                 .AddIngredient(ItemID.OrichalcumBar)
                 .AddTile(TileID.WorkBenches)
                 .Register();
 
-            CreateRecipe(ItemID.AdamantiteBar)
+            Recipe.Create(ItemID.AdamantiteBar)
                 .AddIngredient(ItemID.TitaniumBar)
                 .AddTile(TileID.WorkBenches)
                 .Register();
 
-            CreateRecipe(ItemID.TitaniumBar)
+            Recipe.Create(ItemID.TitaniumBar)
                 .AddIngredient(ItemID.AdamantiteBar)
                 .AddTile(TileID.WorkBenches)
                 .Register();

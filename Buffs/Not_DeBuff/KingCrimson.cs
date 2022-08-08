@@ -18,7 +18,6 @@ namespace AdvancedMod.Buffs.Not_DeBuff
 
         public override void Update(Player player, ref int buffIndex)
         {
-            player.statLife = player.statLifeMax2;
         }
 
         public override void Update(NPC npc, ref int buffIndex)

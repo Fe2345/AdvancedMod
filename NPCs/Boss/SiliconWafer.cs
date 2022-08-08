@@ -34,6 +34,9 @@ namespace AdvancedMod.NPCs.Boss
 
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
+            bestiaryEntry.UIInfoProvider = new CommonEnemyUICollectionInfoProvider(
+                ContentSamples.NpcBestiaryCreditIdsByNpcNetIds[ModContent.NPCType<NPCs.Boss.TreeDiagrammer>()],
+                quickUnlock: true);
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[]
             {
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Surface,

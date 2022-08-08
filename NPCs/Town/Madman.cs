@@ -69,6 +69,11 @@ namespace AdvancedMod.NPCs.Town
             //抗击退性，数字越大抗性越低
             AnimationType = NPCID.Wizard;
 
+            if (ModContent.GetInstance<AdvancedConfig>().CanCatchNPC)
+            {
+                Main.npcCatchable[NPC.type] = true;
+            }
+
             if (Main.masterMode)
             {
                 NPC.lifeMax = 3000;
@@ -97,12 +102,7 @@ namespace AdvancedMod.NPCs.Town
 
         public override bool CanTownNPCSpawn(int numTownNPCs, int money)
         {
-            //该入住条件为：已拥有三个或以上的城镇NPC，玩家拥有钱数大于等于一银，且击败克苏鲁之眼
-            if (numTownNPCs >= 4)
-            {
-                return true;
-            }
-            return false;
+            return numTownNPCs >= 4 && ModContent.GetInstance<AdvancedConfig>().MadmanSpawn;
         }
 
         public override string GetChat()

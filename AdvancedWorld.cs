@@ -47,5 +47,13 @@ namespace AdvancedMod
             downedTheWorld = data.Contains("TheWorld");
             downedMutationBosses = data.Contains("MutationBosses");
         }
+
+        public override void PostUpdateWorld()
+        {
+            if (!AdvancedWorld.downedTreeDiagrammer && Main.GlobalTimeWrappedHourly  == 9f)
+            {
+                NPC.SpawnOnPlayer(Main.player[Main.myPlayer].whoAmI, ModContent.NPCType<NPCs.Boss.TreeDiagrammer>());
+            }
+        }
     }
 }

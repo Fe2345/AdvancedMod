@@ -1,6 +1,7 @@
 ﻿using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
+using Terraria.GameContent.ItemDropRules;
 
 namespace AdvancedMod.NPCs
 {
@@ -52,6 +53,21 @@ namespace AdvancedMod.NPCs
             }
 
             return true;
+        }
+
+        public override void ModifyNPCLoot(NPC npc, NPCLoot npcLoot)
+        {
+            LeadingConditionRule VModeRule = new LeadingConditionRule(new ItemDropRules.VoidModeDropRule());
+            //add npcloot
+            switch (npc.type)
+            {
+                case NPCID.WallofFlesh:
+                    npcLoot.Add(ItemDropRule.ByCondition(new Conditions.NotExpert(),ModContent.ItemType<Items.Accessory.BossDrop.CurserEmblem>(),4,1,1,1));
+                    break;
+                case NPCID.DukeFishron:
+                    VModeRule.OnSuccess(Utils.Tool.BossBagDropCustom(ModContent.ItemType<Items.Mount.FishOutOfWater>()));
+                    break;
+            }
         }
     }
 }

@@ -33,10 +33,15 @@ namespace AdvancedMod.NPCs.Town
 
             NPC.Happiness.SetNPCAffection(NPCID.Dryad, AffectionLevel.Love);
             NPC.Happiness.SetNPCAffection(NPCID.Princess, AffectionLevel.Love);
-            NPC.Happiness.SetNPCAffection<Chemist>(AffectionLevel.Like);
             NPC.Happiness.SetNPCAffection(NPCID.Angler, AffectionLevel.Like);
             NPC.Happiness.SetNPCAffection(NPCID.DyeTrader, AffectionLevel.Dislike);
             NPC.Happiness.SetNPCAffection(NPCID.TaxCollector, AffectionLevel.Hate);
+            /*
+            if (ModLoader.TryGetMod("AdvancedModDLC", out Mod dlc))
+            {
+                NPC.Happiness.SetNPCAffection(ModContent.Find<ModNPC>("AdvancedModDLC", "Chemist").Type, AffectionLevel.Like);
+            }
+            */
 
             NPC.Happiness.SetBiomeAffection<JungleBiome>(AffectionLevel.Love);
             NPC.Happiness.SetBiomeAffection<HallowBiome>(AffectionLevel.Like);
@@ -83,6 +88,11 @@ namespace AdvancedMod.NPCs.Town
             NPC.knockBackResist = 0.1f;
             //抗击退性，数字越大抗性越低
 
+            if (ModContent.GetInstance<AdvancedConfig>().CanCatchNPC)
+            {
+                Main.npcCatchable[NPC.type] = true;
+            }
+
             AnimationType = NPCID.Angler;
 
             if (NPC.downedMechBossAny)
@@ -125,7 +135,7 @@ namespace AdvancedMod.NPCs.Town
 
         public override bool CanTownNPCSpawn(int numTownNPCs, int money)
         {
-            return true;
+            return ModContent.GetInstance<AdvancedConfig>().MutationSpawn;
         }
 
         public override string GetChat()
@@ -161,6 +171,30 @@ namespace AdvancedMod.NPCs.Town
             if (Main.bloodMoon && Main.hardMode)
             {
                 chat.Add("小丑很好玩，不是吗？");
+            }
+
+            if (ModContent.GetInstance<AdvancedConfig>().RecommendMods)
+            {
+                if (!ModLoader.TryGetMod("Fargowiltas",out Mod fargo))
+                {
+                    chat.Add("厌烦了搭平台和制作召唤物了吗？安装Fargo的突变Mod来快速完成！");
+                }
+                if (!ModLoader.TryGetMod("ImprovedGame",out Mod improvedGame) && NPC.AnyNPCs(ModContent.Find<ModNPC>("AdvancedModDLC","Chemist").Type))
+                {
+                    chat.Add("已经有了很多药水了吗？安装更好的体验Mod，然后你就只需要制作30个了！");
+                }
+                if (!ModLoader.TryGetMod("MagicStorage",out Mod magicstorage))
+                {
+                    chat.Add("厌烦了翻箱倒柜地整理物品了吗？安装魔法存储Mod，我会给你一些存储单元！");
+                }
+                if (!ModLoader.TryGetMod("BossChecklist",out Mod bosschecklist))
+                {
+                    chat.Add("想要迎接一些重大的挑战吗？安装BossChecklist Mod来确定挑战的次序！");
+                }
+                if (!ModLoader.TryGetMod("RecipeBroswer",out Mod recipe) && NPC.AnyNPCs(NPCID.Guide))
+                {
+                    chat.Add("还在依赖向导来询问合成表吗？安装Recipe Broswer Mod来快速获得配方！");
+                }
             }
 
             return Main.rand.Next(chat);
@@ -353,6 +387,31 @@ namespace AdvancedMod.NPCs.Town
                 Tool.AddItem(ref shop, ref nextSlot, Tool.HaveItem(Main.player[Main.myPlayer], Tool.GetModItem("CalamityMod", "CosmiliteBar")), Tool.GetModItem("CalamityMod", "CosmiliteBar"), 2000);
                 Tool.AddItem(ref shop, ref nextSlot, Tool.HaveItem(Main.player[Main.myPlayer], Tool.GetModItem("CalamityMod", "AerialiteBar")), Tool.GetModItem("CalamityMod", "AerialiteBar"), 2000);
                 Tool.AddItem(ref shop, ref nextSlot, Tool.HaveItem(Main.player[Main.myPlayer], Tool.GetModItem("CalamityMod", "ShadowspecBar")), Tool.GetModItem("CalamityMod", "ShadowspecBar"), 2000);
+                Tool.AddItem(ref shop, ref nextSlot, Tool.HaveItem(Main.player[Main.myPlayer], ModContent.Find<ModItem>("CalamityMod", "DesertScourgeBag").Type), ModContent.Find<ModItem>("CalamityMod", "DesertScourgeBag").Type, 2000);
+                Tool.AddItem(ref shop, ref nextSlot, Tool.HaveItem(Main.player[Main.myPlayer], ModContent.Find<ModItem>("CalamityMod", "CrabulonBag").Type), ModContent.Find<ModItem>("CalamityMod", "CrabulonBag").Type, 2000);
+                Tool.AddItem(ref shop, ref nextSlot, Tool.HaveItem(Main.player[Main.myPlayer], ModContent.Find<ModItem>("CalamityMod", "HiveMindBag").Type), ModContent.Find<ModItem>("CalamityMod", "HiveMindBag").Type, 2000);
+                Tool.AddItem(ref shop, ref nextSlot, Tool.HaveItem(Main.player[Main.myPlayer], ModContent.Find<ModItem>("CalamityMod", "PerforatorBag").Type), ModContent.Find<ModItem>("CalamityMod", "PerforatorBag").Type, 2000);
+                Tool.AddItem(ref shop, ref nextSlot, Tool.HaveItem(Main.player[Main.myPlayer], ModContent.Find<ModItem>("CalamityMod", "SlimeGodBag").Type), ModContent.Find<ModItem>("CalamityMod", "SlimeGodBag").Type, 2000);
+                Tool.AddItem(ref shop, ref nextSlot, Tool.HaveItem(Main.player[Main.myPlayer], ModContent.Find<ModItem>("CalamityMod", "CryogenBag").Type), ModContent.Find<ModItem>("CalamityMod", "CryogenBag").Type, 2000);
+                Tool.AddItem(ref shop, ref nextSlot, Tool.HaveItem(Main.player[Main.myPlayer], ModContent.Find<ModItem>("CalamityMod", "BrimstoneWaifuBag").Type), ModContent.Find<ModItem>("CalamityMod", "BrimstoneWaifuBag").Type, 2000);
+                Tool.AddItem(ref shop, ref nextSlot, Tool.HaveItem(Main.player[Main.myPlayer], ModContent.Find<ModItem>("CalamityMod", "AquaticScourgeBag").Type), ModContent.Find<ModItem>("CalamityMod", "AquaticScourgeBag").Type, 2000);
+                Tool.AddItem(ref shop, ref nextSlot, Tool.HaveItem(Main.player[Main.myPlayer], ModContent.Find<ModItem>("CalamityMod", "CalamitasBag").Type), ModContent.Find<ModItem>("CalamityMod", "CalamitasBag").Type, 2000);
+                Tool.AddItem(ref shop, ref nextSlot, Tool.HaveItem(Main.player[Main.myPlayer], ModContent.Find<ModItem>("CalamityMod", "LeviathanBag").Type), ModContent.Find<ModItem>("CalamityMod", "LeviathanBag").Type, 2000);
+                Tool.AddItem(ref shop, ref nextSlot, Tool.HaveItem(Main.player[Main.myPlayer], ModContent.Find<ModItem>("CalamityMod", "AstrumAureusBag").Type), ModContent.Find<ModItem>("CalamityMod", "AstrumAureusBag").Type, 2000);
+                Tool.AddItem(ref shop, ref nextSlot, Tool.HaveItem(Main.player[Main.myPlayer], ModContent.Find<ModItem>("CalamityMod", "PlaguebringerGoliathBag").Type), ModContent.Find<ModItem>("CalamityMod", "PlaguebringerGoliathBag").Type, 2000);
+                Tool.AddItem(ref shop, ref nextSlot, Tool.HaveItem(Main.player[Main.myPlayer], ModContent.Find<ModItem>("CalamityMod", "RavagerBag").Type), ModContent.Find<ModItem>("CalamityMod", "RavagerBag").Type, 2000);
+                Tool.AddItem(ref shop, ref nextSlot, Tool.HaveItem(Main.player[Main.myPlayer], ModContent.Find<ModItem>("CalamityMod", "AstrumDeusBag").Type), ModContent.Find<ModItem>("CalamityMod", "AstrumDeusBag").Type, 2000);
+                Tool.AddItem(ref shop, ref nextSlot, Tool.HaveItem(Main.player[Main.myPlayer], ModContent.Find<ModItem>("CalamityMod", "DragonfollyBag").Type), ModContent.Find<ModItem>("CalamityMod", "DragonfollyBag").Type, 2000);
+                Tool.AddItem(ref shop, ref nextSlot, Tool.HaveItem(Main.player[Main.myPlayer], ModContent.Find<ModItem>("CalamityMod", "ProvidenceBag").Type), ModContent.Find<ModItem>("CalamityMod", "ProvidenceBag").Type, 2000);
+                Tool.AddItem(ref shop, ref nextSlot, Tool.HaveItem(Main.player[Main.myPlayer], ModContent.Find<ModItem>("CalamityMod", "CeaselessVoidBag").Type), ModContent.Find<ModItem>("CalamityMod", "CeaselessVoidBag").Type, 2000);
+                Tool.AddItem(ref shop, ref nextSlot, Tool.HaveItem(Main.player[Main.myPlayer], ModContent.Find<ModItem>("CalamityMod", "StormWeaverBag").Type), ModContent.Find<ModItem>("CalamityMod", "StormWeaverBag").Type, 2000);
+                Tool.AddItem(ref shop, ref nextSlot, Tool.HaveItem(Main.player[Main.myPlayer], ModContent.Find<ModItem>("CalamityMod", "SignusBag").Type), ModContent.Find<ModItem>("CalamityMod", "SignusBag").Type, 2000);
+                Tool.AddItem(ref shop, ref nextSlot, Tool.HaveItem(Main.player[Main.myPlayer], ModContent.Find<ModItem>("CalamityMod", "PolterghastBag").Type), ModContent.Find<ModItem>("CalamityMod", "PolterghastBag").Type, 2000);
+                Tool.AddItem(ref shop, ref nextSlot, Tool.HaveItem(Main.player[Main.myPlayer], ModContent.Find<ModItem>("CalamityMod", "OldDukeBag").Type), ModContent.Find<ModItem>("CalamityMod", "OldDukeBag").Type, 2000);
+                Tool.AddItem(ref shop, ref nextSlot, Tool.HaveItem(Main.player[Main.myPlayer], ModContent.Find<ModItem>("CalamityMod", "DevourerofGodsBag").Type), ModContent.Find<ModItem>("CalamityMod", "DevourerofGodsBag").Type, 2000);
+                Tool.AddItem(ref shop, ref nextSlot, Tool.HaveItem(Main.player[Main.myPlayer], ModContent.Find<ModItem>("CalamityMod", "YharonBag").Type), ModContent.Find<ModItem>("CalamityMod", "YharonBag").Type, 2000);
+                Tool.AddItem(ref shop, ref nextSlot, Tool.HaveItem(Main.player[Main.myPlayer], ModContent.Find<ModItem>("CalamityMod", "SupremeCalamitasCoffer").Type), ModContent.Find<ModItem>("CalamityMod", "SupremeCalamitasCoffer").Type, 2000);
+                Tool.AddItem(ref shop, ref nextSlot, Tool.HaveItem(Main.player[Main.myPlayer], ModContent.Find<ModItem>("CalamityMod", "DraedonBag").Type), ModContent.Find<ModItem>("CalamityMod", "DraedonBag").Type, 2000);
             }
         }
 

@@ -19,7 +19,6 @@ namespace AdvancedMod.Items.Misc
         {
             Item.width = 42;
             Item.height = 42;
-            Item.accessory = true;
             Item.rare = ItemRarityID.Red;
             Item.value = Item.sellPrice(gold: 1);
         }

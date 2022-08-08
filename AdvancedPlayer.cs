@@ -137,10 +137,21 @@ namespace AdvancedMod
             {
                 for (int i = 0; i < 10; i++)
                 {
-                    Player.HealEffect(Main.rand.Next(20) + 30);
+                    int heal = Main.rand.Next(20) + 30;
+                    Player.HealEffect(heal);
+                    Player.statLife += heal;
                 }
             }
-
+            /*
+            if (Tool.AccessoryEquiped(ModContent.Find<ModItem>("AdvancedModDLC", "DeadSoul").Type,Player))
+            {
+                Projectile.NewProjectile(Player.GetSource_Accessory(ModContent.Find<ModItem>("AdvancedModDLC", "DeadSoul").Entity),
+                                                                    Player.Center, Vector2.Zero,
+                                                                    ModContent.Find<ModProjectile>("CalamityMod", "DemonshadeRedDevil").Type,
+                                                                    114514, 1, Player.whoAmI, 0, 0
+                    );
+            }
+            */
             if (Tool.AccessoryEquiped(ModContent.ItemType<Items.Accessory.BossDrop.TheWorldAccessory>(),Player) && AdvancedMod.TimeStop.JustPressed)
             {
                 TimeStopLeft = 300;
