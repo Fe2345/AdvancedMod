@@ -6,6 +6,8 @@ namespace AdvancedMod.Items.Accessory.Souls
 {
     public class SummonerSoul : ModItem
     {
+        public override string Texture => "AdvancedMod/Assets/Textures/Items/SummonerSoul";
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("召唤师之魂");

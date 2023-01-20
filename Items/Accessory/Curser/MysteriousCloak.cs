@@ -6,10 +6,10 @@ namespace AdvancedMod.Items.Accessory.Curser
 {
     public class MysteriousCloak : ModItem
     {
+        public override string Texture => "AdvancedMod/Assets/Textures/Items/MysteriousCloak";
+
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("神秘斗篷");
-            Tooltip.SetDefault("+20%诅咒伤害\n减少25%弹药消耗\n减少20%魔力消耗\n增加20%魔力回复");
         }
 
         public override void SetDefaults()

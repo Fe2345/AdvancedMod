@@ -15,6 +15,7 @@ namespace AdvancedMod
         public static int Energy;
         public static int UsedSiliconHeartCount;
 
+        public int UsedStardropCount;
         public bool RecievedInitBag;
         public bool RecievedBoss1Bag;
         public bool RecievedBoss2Bag;
@@ -28,6 +29,7 @@ namespace AdvancedMod
 
         public static float Electricity;
 
+        //accessories
         public static bool SymbolOfTown;
         public static bool SiliconCapacotance;
         public static bool SiliconArmorEquip;
@@ -38,10 +40,14 @@ namespace AdvancedMod
         public static int TimeStopLeft;
         public static int TimeStopCD;
 
+        //summons
+        public bool MiniDiagrammer;
+
         public override void SaveData(TagCompound tag)
         {
             tag.Add("Energy", Energy);
             tag.Add("UsedSiliconHeartCount", UsedSiliconHeartCount);
+            tag.Add("UsedStardropCount", UsedStardropCount);
 
             List<string> Bags = new List<string>();
             if (RecievedInitBag) Bags.Add("RecievedInitBag");
@@ -62,6 +68,7 @@ namespace AdvancedMod
         {
             Energy = tag.GetInt("Energy");
             UsedSiliconHeartCount = tag.GetInt("UsedSiliconHeartCount");
+            UsedStardropCount = tag.GetInt("UsedStardropCount");
             IList<string> Bags = tag.GetList<string>("Bags");
             RecievedInitBag = Bags.Contains("RecievedInitBag");
             RecievedBoss1Bag = Bags.Contains("RecievedBoss1Bag");
@@ -75,6 +82,7 @@ namespace AdvancedMod
             RecievedGodOfTimeBag = Bags.Contains("RecievedGodOfTimeBag");
         }
 
+        [System.Obsolete]
         public override void Hurt(bool pvp, bool quiet, double damage, int hitDirection, bool crit)
         {
             if (ModContent.GetInstance<AdvancedConfig>().NoHitMode) Player.dead = true;
@@ -212,6 +220,11 @@ namespace AdvancedMod
                 return false;
             }
             return true;
+        }
+
+        public override void ResetEffects()
+        {
+            MiniDiagrammer = false;
         }
     }
 }

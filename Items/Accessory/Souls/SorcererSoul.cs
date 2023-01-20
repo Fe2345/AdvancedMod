@@ -6,10 +6,10 @@ namespace AdvancedMod.Items.Accessory.Souls
 {
     public class SorcererSoul : ModItem
     {
+        public override string Texture => "AdvancedMod/Assets/Textures/Items/SorcererSoul";
+
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("巫士之魂");
-            Tooltip.SetDefault("增加66%魔法伤害\n减少75%魔力消耗\n增加50%魔力回复\n附带魔力花和天界手铐效果");
         }
 
         public override void SetDefaults()

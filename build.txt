@@ -1,4 +1,4 @@
-displayName = Advanced Mod
+displayName = Advanced(先进) Mod
 version = 0.2.9
 author = SwordOfWar/Latic7
 homepage = https://Fe2345.github.io

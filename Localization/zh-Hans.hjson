@@ -75,5 +75,60 @@
 				TreeDiagrammer:树状图设计者隐没在雷暴中……
 			}
 		}
+
+		SpecialText:{
+			NoHitReward:"[c/3F48CC:无伤奖励：]"
+		}
+
+		ItemName:{
+			MutationCore:"异变核心"
+
+			CurserEmblem:"诅咒师徽章"
+			SiliconCapacitance:"硅晶电容"
+			TheWorldAccessory:"世界"
+			CelestialCloak:"天界斗篷"
+			ManaCloak:"魔力斗篷"
+			MysteriousCloak:"神秘斗篷"
+			PowerQuiver:"强力箭袋"
+			CurserSoul:"诅咒师之魂"
+			RangerSoul:"游侠之魂"
+			SorcererSoul:"巫士之魂"
+			SoulOfDesert:"沙漠之魂"
+			SoulOfForest:"森林之魂"
+			SoulOfIceland:"雪原之魂"
+			SoulOfJungle:"丛林之魂"
+			SoulOfOcean:"海洋之魂"
+			SoulOfOverworld:"人间之魂"
+			SummonerSoul:"召唤师之魂"
+			TerrarianSoul:"泰拉人之魂"
+			WarriorSoul:"战士之魂"
+		}
+
+		ItemTooltip:{
+			MutationCore_NMode:"[c/af4bff:这个东西在这个世界没有什么用……或许你应该提高一下难度？]"
+			MutationCore_MMode:"[c/3f48cc:\"异变的特别邀请信\"]\n[c/af4bff:开启/关闭异变模式]\n[c/ec1c24:改变所有Boss的AI\n所有Boss的血量提高50%、攻击力和防御提高20%\n所有非Boss敌怪血量、攻击力、防御提高20%]\n[c/fff200:一些饰品效果下降]\n[c/00a8f3:异变、奇变、幻变BOSS将可以被挑战\nBoss和NPC会给你带来全新的物品\n无伤击败某些Boss会掉落特殊武器]"
+			MutationCore_VMode:"[c/3f48cc:\"当你在凝视虚空时，虚空也在凝视着你\"]\n[c/141212:开启/关闭虚空模式]\n[c/ec1c24:继承异变模式所有更改\n进一步改变所有Boss的AI\n所有Boss的血量提高50%、攻击力和防御提高20%\n所有非Boss敌怪血量、攻击力、防御提高20%]\n[c/fff200:一些饰品效果下降\n在Boss存在时，你的生命回复会降低50%]\n[c/00a8f3:异变、奇变、幻变BOSS将可以被挑战\nBoss和NPC会给你带来全新的物品\n无伤击败某些Boss会掉落特殊武器]"
+
+			CurserEmblem:"诅咒伤害增加15%"
+			SiliconCapacitance:"电容会随时间推移积累电量\n你的攻击力会随电量而变化\n每次受击会损失一半电量\n[c/af4bff:异变模式]"
+			TheWorldAccessory:"\"时间被停止了\"\n免疫世界减益\n摁下绑定热键暂停时间\n时间暂停期间只有你和你的弹幕可以自由移动\n[c/af4bff:异变模式]"
+			CelestialCloak:"+33%诅咒与远程伤害\n减少25%弹药消耗\n减少25%魔力消耗\n增加25%魔力回复\n诅咒武器造成的减益时长增加一倍"
+			ManaCloak:"+10%诅咒与魔法伤害\n减少20%魔力消耗"
+			MysteriousCloak:"+20%诅咒伤害\n减少25%弹药消耗\n减少20%魔力消耗\n增加20%魔力回复"
+			PowerQuiver:"+10%诅咒与远程伤害\n减少20%弹药消耗"
+			CurserSoul:"增加66%诅咒伤害\n减少25%弹药消耗和50%魔力消耗\n增加50%魔力回复\n附带魔力花、弹药箱、天界斗篷效果"
+			RangerSoul:"增加66%远程伤害\n减少25%弹药消耗\n附带狙击镜和弹药箱效果"
+			SorcererSoul:"增加66%魔法伤害\n减少75%魔力消耗\n增加50%魔力回复\n附带魔力花和天界手铐效果"
+			SoulOfDesert:"+3防御力\n+3%伤害\n+3%移速\n+3%暴击率\n在沙漠中增益为上述三倍"
+			SoulOfForest:"+3防御力\n+3%伤害\n+3%移速\n+3%暴击率\n在森林中增益为上述三倍"
+			SoulOfIceland:"+3防御力\n+3%伤害\n+3%移速\n+3%暴击率\n在雪原中增益为上述三倍"
+			SoulOfJungle:"+3防御力\n+3%伤害\n+3%移速\n+3%暴击率\n在丛林中增益为上述三倍"
+			SoulOfOcean:"+3防御力\n+3%伤害\n+3%移速\n+3%暴击率\n在海洋中增益为上述三倍"
+			SoulOfOverworld:"+15防御力\n+15%伤害\n+15%移速\n+15%暴击率\n+80最大生命值\n在地表增益为以上所述三倍"
+			SummonerSoul:"增加66%召唤伤害\n增加50%鞭子速度和长度\n+12召唤位"
+			TerrarianSoul:"\"你好，泰拉瑞亚的热心人！\"\n拥有小动物保护指南的效果\n摁下快速治疗键可快速治疗并回复大量血量\n你的攻击会撒下刺球\n受击会引发共鸣权杖爆炸伤害敌人\n重铸价格降低50%"
+			WarriorSoul:"增加66%近战伤害\n增加25%挥舞速度\n为所有近战武器启用自动挥舞\n附带烈火手套和悠悠球袋的效果"
+
+		}
 	}
-}
+}  

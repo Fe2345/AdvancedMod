@@ -6,10 +6,10 @@ namespace AdvancedMod.Items.Accessory.Souls
 {
     public class SoulOfForest : ModItem
     {
+        public override string Texture => "AdvancedMod/Assets/Textures/Items/SoulOfForest";
+
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("森林之魂");
-            Tooltip.SetDefault("+3防御力\n+3%伤害\n+3%移速\n+3%暴击率\n在森林中增益为上述三倍");
         }
 
         public override void SetDefaults()

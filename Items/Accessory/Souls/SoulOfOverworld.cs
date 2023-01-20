@@ -6,10 +6,10 @@ namespace AdvancedMod.Items.Accessory.Souls
 {
     public class SoulOfOverworld : ModItem
     {
+        public override string Texture => "AdvancedMod/Assets/Textures/Items/SoulOfOverworld";
+
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("人间之魂");
-            Tooltip.SetDefault("+15防御力\n+15%伤害\n+15%移速\n+15%暴击率\n+80最大生命值\n在地表增益为以上所述三倍");
         }
 
         public override void SetDefaults()

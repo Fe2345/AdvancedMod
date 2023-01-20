@@ -2,6 +2,7 @@
 using Terraria.ModLoader;
 using Terraria.ID;
 using Microsoft.Xna.Framework;
+using Terraria.Localization;
 
 namespace AdvancedMod.Items.Summon
 {
@@ -9,8 +10,21 @@ namespace AdvancedMod.Items.Summon
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("异变核心");
-            Tooltip.SetDefault("开启/关闭异变模式\n改变所有BOSS的AI\n所有Advanced饰品效果下降\n世界BOSS 和 异变、奇变、幻变BOSS将可以被挑战");
+            if (!Main.expertMode)
+            {
+                Tooltip.SetDefault(Language.GetTextValue("Mods.AdvancedMod.ItemTooltip.MutationCore_NMode"));
+            }
+            else
+            {
+                if (Main.masterMode)
+                {
+                    Tooltip.SetDefault(Language.GetTextValue("Mods.AdvancedMod.ItemTooltip.MutationCore_VMode"));
+                }
+                else
+                {
+                    Tooltip.SetDefault(Language.GetTextValue("Mods.AdvancedMod.ItemTooltip.MutationCore_MMode"));
+                }
+            }
         }
 
         public override void SetDefaults()

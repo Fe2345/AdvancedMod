@@ -6,6 +6,8 @@ namespace AdvancedMod.Items.Accessory.Souls
 {
     public class TerrarianSoul : ModItem
     {
+        public override string Texture => "AdvancedMod/Assets/Textures/Items/TerrarianSoul";
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("泰拉人之魂");

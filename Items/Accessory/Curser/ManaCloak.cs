@@ -6,10 +6,10 @@ namespace AdvancedMod.Items.Accessory.Curser
 {
     public class ManaCloak : ModItem
     {
+        public override string Texture => "AdvancedMod/Assets/Textures/Items/ManaCloak";
+
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("魔力斗篷");
-            Tooltip.SetDefault("+10%诅咒与魔法伤害\n减少20%魔力消耗");
         }
 
         public override void SetDefaults()

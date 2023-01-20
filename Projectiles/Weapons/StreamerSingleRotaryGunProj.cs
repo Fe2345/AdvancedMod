@@ -1,17 +1,16 @@
 ﻿using Terraria;
 using Terraria.ModLoader;
+using Terraria.ID;
 using System;
 
 namespace AdvancedMod.Projectiles.Weapons
 {
-    public class TreeDiagrammerLaserFriendly : ModProjectile
+    public class StreamerSingleRotaryGunProj : ModProjectile
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("树状图设计者激光");
+            DisplayName.SetDefault("无尽流光");
         }
-
-        public override string Texture => "Terraria/Images/Projectile_100";
 
         public override void SetDefaults()
         {
@@ -19,18 +18,21 @@ namespace AdvancedMod.Projectiles.Weapons
             Projectile.height = 50;
             Projectile.friendly = true;
             Projectile.hostile = false;
-            Projectile.DamageType = DamageClass.Summon;
-            Projectile.timeLeft = 200;
+            Projectile.DamageType = DamageClass.Magic;
+            Projectile.timeLeft = 150;
+            Projectile.penetrate = 200;
         }
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-            target.AddBuff(ModContent.BuffType<Buffs.Debuff.ElectromagneticInduction>(), 10);
+            target.AddBuff(BuffID.OnFire, 10);
+            target.HitEffect(target.whoAmI, target.defense);
+            target.life -= target.defense;
         }
 
         public override void AI()
         {
-            Projectile.rotation = (float)(Math.Atan2(Projectile.velocity.Y, Projectile.velocity.X) + Math.PI / 2);
+            Projectile.rotation = (float)(Math.Atan2(Projectile.velocity.Y, Projectile.velocity.X));
         }
     }
 }

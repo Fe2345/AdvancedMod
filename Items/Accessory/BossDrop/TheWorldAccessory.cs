@@ -6,10 +6,12 @@ namespace AdvancedMod.Items.Accessory.BossDrop
 {
     public class TheWorldAccessory : ModItem
     {
+        public override string Texture => "AdvancedMod/Assets/Textures/Items/TheWorldAccessory";
+
+
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("世界");
-            Tooltip.SetDefault($"\"时间被停止了\"\n免疫世界减益\n摁下绑定热键暂停时间\n时间暂停期间只有你和你的弹幕可以自由移动");
+            
         }
 
         public override void SetDefaults()

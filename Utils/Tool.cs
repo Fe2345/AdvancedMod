@@ -100,6 +100,20 @@ namespace AdvancedMod.Utils
             return Main.npc[NPCIndex];
         }
 
+        public static NPC FindClosestEnermy(Vector2 position)
+        {
+            int NPCIndex = 0;
+            for (int i = 0; i < Main.npc.Length; i++)
+            {
+                if (Vector2.Distance(position, Main.npc[i].Center) < Vector2.Distance(position, Main.npc[NPCIndex].Center) && !Main.npc[i].friendly)
+                {
+                    NPCIndex = i;
+                }
+            }
+
+            return Main.npc[NPCIndex];
+        }
+
         public static bool AccessoryEquiped(int type,Player player)
         {
             foreach (var Item in player.armor)
@@ -160,6 +174,27 @@ namespace AdvancedMod.Utils
             }
 
             return false;
+        }
+
+        //环绕式追逐算法（返回速度）
+        //参数： vel 自身速度 self 自身位置 target 目标位置 r 环绕半径 p 平滑度
+        //平滑度：越大越突变，越小越平滑
+        public static Vector2 ChaseAround(Vector2 vel,Vector2 self,Vector2 target,float r,float p)
+        {
+            Vector2 diff = target - self;
+            Vector2 des = target + new Vector2((float)(r / Math.Pow(1 + Math.Pow(diff.X / diff.Y, 2), 0.5)), (float)(-1 * r * diff.X / (diff.Y * Math.Pow(1 + Math.Pow(diff.X / diff.Y, 2), 0.5))));
+
+            return (vel + des * p) / (1 + p);
+        }
+
+        //圆锥曲线式环绕
+        public static Vector2 CircleAround(Vector2 vel,Vector2 self,Vector2 target,float r)
+        {
+            float v = (float)(Math.Pow((float)vel.Length(), 2) / r);
+            Vector2 diff = target - self;
+            float cos = (float)(diff.X / Math.Pow(1 + Math.Pow(diff.Y / diff.X, 2), 0.5));
+            float sin = (float)(diff.Y / Math.Pow(1+ Math.Pow(diff.Y/diff.X,2),0.5));
+            return vel + new Vector2(v*cos,v*sin);
         }
     }
 }

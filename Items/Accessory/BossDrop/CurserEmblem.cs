@@ -6,10 +6,10 @@ namespace AdvancedMod.Items.Accessory.BossDrop
 {
     public class CurserEmblem : ModItem
     {
+        public override string Texture => "AdvancedMod/Assets/Textures/Items/CurserEmblem";
+
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("诅咒师徽章");
-            Tooltip.SetDefault("诅咒伤害增加15%");
         }
 
         public override void SetDefaults()

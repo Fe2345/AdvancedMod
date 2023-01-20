@@ -6,10 +6,10 @@ namespace AdvancedMod.Items.Accessory.Curser
 {
     public class CelestialCloak : ModItem
     {
+        public override string Texture => "AdvancedMod/Assets/Textures/Items/CelestialCloak";
+
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("天界斗篷");
-            Tooltip.SetDefault("+33%诅咒与远程伤害\n减少25%弹药消耗\n减少25%魔力消耗\n增加25%魔力回复\n诅咒武器造成的减益时长增加一倍");
         }
 
         public override void SetDefaults()

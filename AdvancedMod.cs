@@ -32,6 +32,7 @@ namespace AdvancedMod
             ModContent.NPCType<NPCs.Boss.TreeDiagrammer>()
         };
 
+        [System.Obsolete]
         public override void AddRecipes()
         {
             Recipe.Create(ItemID.LuckyHorseshoe,1)

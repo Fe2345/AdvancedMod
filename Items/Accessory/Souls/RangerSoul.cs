@@ -6,10 +6,10 @@ namespace AdvancedMod.Items.Accessory.Souls
 {
     public class RangerSoul : ModItem
     {
+        public override string Texture => "AdvancedMod/Assets/Textures/Items/RangerSoul";
+
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("游侠之魂");
-            Tooltip.SetDefault("增加66%远程伤害\n减少25%弹药消耗\n附带狙击镜和弹药箱效果");
         }
 
         public override void SetDefaults()

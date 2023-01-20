@@ -69,12 +69,6 @@ namespace AdvancedMod.NPCs.Boss
             AIType = -1;
             NPC.boss = true;
 
-            if (AdvancedWorld.MutationMode) 
-            {
-                NPC.lifeMax = (int)(NPC.lifeMax * 1.5);
-                NPC.damage = (int)(NPC.damage * 1.2);
-                NPC.defense = (int)(NPC.defense * 1.5);
-            } 
 
             if (Main.getGoodWorld) //for the worthy
             {

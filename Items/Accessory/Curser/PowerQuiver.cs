@@ -6,10 +6,10 @@ namespace AdvancedMod.Items.Accessory.Curser
 {
     public class PowerQuiver : ModItem
     {
+        public override string Texture => "AdvancedMod/Assets/Textures/Items/PowerQuiver";
+
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("强力箭袋");
-            Tooltip.SetDefault("+10%诅咒与远程伤害\n减少20%弹药消耗");
         }
 
         public override void SetDefaults()

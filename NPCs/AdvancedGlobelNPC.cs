@@ -24,6 +24,25 @@ namespace AdvancedMod.NPCs
             KingCrimson = false;
         }
 
+        public override void SetDefaults(NPC npc)
+        {
+            if (AdvancedWorld.MutationMode)
+            {
+                if (npc.boss)
+                {
+                    npc.lifeMax = (int)(npc.life * 1.5);
+                    npc.damage = (int)(npc.damage * 1.2);
+                    npc.defense = (int)(npc.defense * 1.2);
+                }
+                else if (!npc.townNPC)
+                {
+                    npc.lifeMax = (int)(npc.lifeMax * 1.2);
+                    npc.damage = (int)(npc.damage * 1.2);
+                    npc.defense = (int)(npc.defense * 1.2);
+                }
+            }
+        }
+
         public override bool PreAI(NPC npc)
         {
             bool PreAI = base.PreAI(npc);

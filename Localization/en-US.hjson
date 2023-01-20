@@ -13,6 +13,47 @@
 			MagicBook:The book is willing to help those who learn from it. But when someone overuses magic, it strikes back in anger
 		}
 
+		TownNPCMood:{
+			Mutation:{
+				Content:我很好
+				NoHome:自从那场血战之后，我就连家都没有了
+				LoveSpace:我喜欢这里
+				FarFromHome:我的邻居们拜托我给他们带些东西，但是我找不到回家的路了……
+				DislikeCrowded:这里人很多，但是其中又有几个是我真心的朋友呢？
+				LikeBiome:丛林的水真是太合适了，我真是High到不行啊！
+				LoveBiome:神圣之地的力量可以洗去这片土地上的邪恶，这也正是我的愿望
+				DislikeBiome:雪原太冷了……
+				HateBiome:酸萝卜别吃！
+				LoveNPC:"{NPCName}和我虽然目标不同，但都为各自的目标而努力"
+				LoveNPC_Princesss:"{NPCName}懂得团结所有居民，这种能力实在令我佩服"
+				LikeNPC:"{NPCName}大公无私地将药水的配方分享给大家，我想我们有很多共同点"
+				DislikeNPC:"我尝试给{NPCName}一些奇异植物，但是他却不肯给我我想要的染料！"
+				HateNPC:"{NPCName}根本不关心城镇和这个世界！他只关心钱！"
+			}
+
+			Madman:{
+				Content:SXIBWSPC';,CVCYFIUOBCPNWB
+			}
+
+			
+			Watcher:{
+				Content:我没有什么可说的
+				NoHome:我能够洞察万物，却连个家都没有
+				LoveSpace:这里人很少。这让我可以不受干扰地观察万物
+				FarFromHome:让我看看……为啥我现在离家这么远？
+				DislikeCrowded:吵死了！这些声音影响了我对事物的观察！
+				LoveBiome:森林是这个世界为数不多的纯净之地了……
+				LikeBiome:丛林有很多生物……我喜欢这里。
+				DislikeBiome:雪原只有茫茫的白色……太无趣了……
+				HateBiome:这些怪物根本不值得观察！！！
+				LoveNPC:"{NPCName}懂得运用自己的眼睛来更新自己的知识。我们之间很相像。"
+				LoveNPC_Princesss:"{NPCName}很有智慧！她总会向我询问一些事情"
+				LikeNPC:"没想到{NPCName}那么喜欢火箭！我想帮帮他。"
+				DislikeNPC:"我很奇怪，{NPCName}为啥只看得到钱呢？"
+				HateNPC:"{NPCName}是怎么回事？我能感觉到他身上有智慧的气息，但是为啥他整天只是转来转去呢？"
+			}
+		}
+
 		NPCs:{
 			Mutation:Mutation
 			Madman:Madman
@@ -36,8 +77,58 @@
 			}
 		}
 
-		DamageClasses:{
-			CurseDamage:Curse Damage
+		SpecialText:{
+			NoHitReward:"[c/3F48CC:No-Hit Reward:]"
+		}
+
+		ItemName:{
+			MutationCore:"Mutation Core"
+
+			CurserEmblem:"Curser Emblem"
+			SiliconCapacitance:"Silicon Capacitance"
+			TheWorldAccessory:"The World"
+			CelestialCloak:"Celestial Cloak"
+			ManaCloak:"Mana Cloak"
+			MysteriousCloak:"Mysterious Cloak"
+			PowerQuiver:"Power Quiver"
+			CurserSoul:"Curser Soul"
+			RangerSoul:"Ranger Soul"
+			SorcererSoul:"Sorcerer Soul"
+			SoulOfDesert:"Desert Soul"
+			SoulOfForest:"Forest Soul"
+			SoulOfIceland:"Iceland Soul"
+			SoulOfJungle:"Jungle Soul"
+			SoulOfOcean:"Ocean Soul"
+			SoulOfOverworld:"Overworld Soul"
+			SummonerSoul:"Summoner Soul"
+			TerrarianSoul:"Terrarian Soul"
+			WarriorSoul:"Warrior Soul"
+		}
+
+		ItemTooltip:{
+			MutationCore_NMode:"[c/af4bff: This stuff doesn't do much in this world... maybe you should make it harder?]"
+			MutationCore_MMode:"[c/3f48cc:\" Special Invitation to Mutation \"]\n[c/af4bff: Enable/disable Mutation mode]\n[c/ec1c24: Change all Boss AI\n All Boss health increased by 50%, attack and defense increased by 20%\n All non-boss enemy health, attack and defense increased by 20%]\n[c] /fff200: some ornament effects decreased]\n[c/00a8f3: Variant, strange, magic bosses will be challenged \ nbosses and NPCS will bring you new items \n Special weapons will be dropped when certain bosses are defeated without damage]"
+			MutationCore_VMode:"[c/3f48cc:\" When you stare into the void, The Void is also staring at you \"]\n[c/141212: Enable/disable Void mode]\n[c/ec1c24: Inherit all changes in Variant mode \n Further changes to all Boss AI\n All Boss health increased by 50%, attack and defense increased by 20%\n All non-boss enemy health, attack and defense increased 20% higher]\n[c/fff200: some ornament effects decreased \n Your health recovery will be reduced by 50% when the Boss is present \n[c/00a8f3: Variant, strange and magic bosses will be challenged \ nbosses and NPCS will bring you new items \n Special weapons will be dropped when certain bosses are defeated without damage]"
+
+			CurserEmblem:"Curse damage increased by 15%"
+			SiliconCapacitance:"Capacitor accumulates charge over time \n Your attack power varies with charge \n loses half charge per hit \n[c/af4bff:Mutation mode]"
+			TheWorldAccessory:"\" Time is stopped \"\n immunity world bonus \n press bind hotkey pause \n Only you and your ammo can move freely during time pause \n[c/af4bff:Mutation mode]"
+			CelestialCloak:"+33% Curse and Ranged Damage \n Reduced ammo cost \n reduced Mana cost \n increased Mana regeneration by 25% \n Curse weapon damage duration doubled"
+			ManaCloak:"+10% Curse & Magic Damage \n Reduces mana cost by 20%"
+			MysteriousCloak:"+20% Curse damage \n Reduced ammo cost \n reduced Mana cost \n increased Mana regeneration by 20%"
+			PowerQuiver:"+10% Curse and Ranged Damage \n Reduced ammo cost by 20%"
+			CurserSoul:"Increased Curse Damage by 66% \n Reduced ammo cost by 25% and Mana cost by 50% \n Increased Mana Recovery by 50% \n with Mana Blossom, ammo box and Celestial Cloak effects"
+			RangerSoul:"Increased ranged damage by 66% \n Reduced ammo cost by 25% \n Added sniper mirror and ammo box effects"
+			SorcererSoul:"Increased Magic damage by 66% \n Reduced Mana cost by 75% \n increased Mana recovery by 50% \n with Mana Flower and Celestial Handcuffs"
+			SoulOfDesert:"+3 Defense \n \ 3% damage \n \ 3% move speed \n \ 3% critical hit \n Gain three times as much as above in desert"
+			SoulOfForest:"+3 Defense \n \ 3% damage \n \ 3% move speed \n \ 3% critical hit \n Gain three times as much as above in forest"
+			SoulOfIceland:"+3 Defense \n \ 3% damage \n \ 3% move speed \n \ 3% critical hit \n Gain three times as much as above in Snow field"
+			SoulOfJungle:"+3 Defense \n \ 3% damage \n \ 3% move speed \n \ 3% critical hit \n Gain three times the above in the jungle"
+			SoulOfOcean:"+3 Defense \n \ 3% damage \n \ 3% move speed \n \ 3% critical hit \n Gain three times as much as above in ocean"
+			SoulOfOverworld:"+15 Defense, n+15% damage, n+15% movement speed, n+15% critical hit rate, n+80 Max health, n has three times the above surface gain"
+			SummonerSoul:"Increased summoning damage by 66% \n Increased Whip Speed and Length by 50% \n+12 summoning positions"
+			TerrarianSoul:""Hello, good Samaritan of Teraria! \"\n has the effects of small animal Protection guide \n Press the Quick Healer button to heal quickly and recover a large amount of health \n Your attacks will cast prickles \n when hit will cause a resonant staff explosion to damage enemies \n Recast price reduced by 50%"
+			WarriorSoul:"Increased Melee damage by 66% \n Increased brandishing speed by 25% \n Enabled automatic brandishing \n with Fire Glove and yo-yo bag effects for all melee weapons"
 		}
 	}
 }

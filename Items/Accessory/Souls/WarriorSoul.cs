@@ -6,6 +6,8 @@ namespace AdvancedMod.Items.Accessory.Souls
 {
     public class WarriorSoul : ModItem
     {
+        public override string Texture => "AdvancedMod/Assets/Textures/Items/WarriorSoul";
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("战士之魂");
