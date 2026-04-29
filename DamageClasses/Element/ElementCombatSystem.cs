@@ -6,6 +6,7 @@ using AdvancedMod.DamageClasses.Element.Definitions;
 using AdvancedMod.DamageClasses.Element.Input;
 using AdvancedMod.DamageClasses.Element.Plans;
 using AdvancedMod.DamageClasses.Element.Reactions;
+using AdvancedMod.DamageClasses.Element.Services;
 using AdvancedMod.DamageClasses.Element.State;
 using AdvancedMod.Utils;
 using Microsoft.Xna.Framework;
@@ -103,6 +104,14 @@ namespace AdvancedMod.DamageClasses.Element
             _ = temporaryStateView;
             _ = reactionCandidate;
             _ = reactionValidationResult;
+
+            if (false)
+            {
+                IReadOnlyList<ReactionCandidate> reactionCandidates = ReactionCandidateCollector.Collect(payload, temporaryStateView!);
+                IReadOnlyList<ReactionValidationResult> validationResults = ReactionValidator.ValidateAll(reactionCandidates, temporaryStateView!);
+                ReactionValidationResult? selectedReaction = ReactionPriorityResolver.Resolve(validationResults);
+                _ = selectedReaction;
+            }
 
             foreach (ElementApplication application in payload.Applications)
             {

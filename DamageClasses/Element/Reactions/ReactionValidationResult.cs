@@ -16,6 +16,11 @@ namespace AdvancedMod.DamageClasses.Element.Reactions
         public ReactionRule Rule { get; init; } = new();
 
         /// <summary>
+        /// 参与本次校验的反应候选。
+        /// </summary>
+        public ReactionCandidate Candidate { get; init; } = new();
+
+        /// <summary>
         /// 触发侧元素的实际消耗量。
         /// </summary>
         public int TriggerConsumeAmount { get; init; }
