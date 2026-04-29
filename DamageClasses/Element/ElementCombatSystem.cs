@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using AdvancedMod.DamageClasses.Element.Data;
 using AdvancedMod.DamageClasses.Element.Definitions;
 using AdvancedMod.DamageClasses.Element.Input;
+using AdvancedMod.DamageClasses.Element.Plans;
 using AdvancedMod.DamageClasses.Element.Reactions;
 using AdvancedMod.DamageClasses.Element.State;
 using AdvancedMod.Utils;
@@ -92,6 +93,16 @@ namespace AdvancedMod.DamageClasses.Element
             AttackPayload payload = PayloadBuilder.Build(intent, augmentPlan);
             AdvancedGlobelNPC advancedNpc = target.Advanced();
             ElementComponent component = advancedNpc.ElementComponent;
+            ElementApplyPlan? applyPlan = null;
+            TemporaryElementStateView? temporaryStateView = null;
+            ReactionCandidate? reactionCandidate = null;
+            ReactionValidationResult? reactionValidationResult = null;
+
+            _ = payload;
+            _ = applyPlan;
+            _ = temporaryStateView;
+            _ = reactionCandidate;
+            _ = reactionValidationResult;
 
             foreach (ElementApplication application in payload.Applications)
             {
