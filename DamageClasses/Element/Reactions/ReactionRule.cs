@@ -3,58 +3,68 @@ using AdvancedMod.DamageClasses.Element.Definitions;
 namespace AdvancedMod.DamageClasses.Element.Reactions
 {
     /// <summary>
-    /// Defines one concrete reaction rule that can be evaluated by the prototype element system.
+    /// 定义一条可被元素系统评估的反应规则。
     /// </summary>
     public sealed class ReactionRule
     {
         /// <summary>
-        /// Gets the reaction identifier represented by this rule.
+        /// 该规则对应的反应类型。
         /// </summary>
         public ReactionType Reaction { get; init; } = ReactionType.None;
 
         /// <summary>
-        /// Gets the first participating element for this rule.
+        /// 触发侧元素。
         /// </summary>
         public ElementType TriggerElement { get; init; } = ElementType.None;
 
         /// <summary>
-        /// Gets the second participating element for this rule.
+        /// 目标侧元素。
         /// </summary>
         public ElementType TargetElement { get; init; } = ElementType.None;
 
         /// <summary>
-        /// Gets how the incoming element side should be consumed.
+        /// 触发侧元素的消耗模式。
         /// </summary>
         public ReactionConsumeMode TriggerConsumeMode { get; init; } = ReactionConsumeMode.Fixed;
 
         /// <summary>
-        /// Gets the consume value used for the incoming element side.
+        /// 触发侧元素的消耗值。
         /// </summary>
         public float TriggerConsumeValue { get; init; } = 1f;
 
         /// <summary>
-        /// Gets how the target-side stored element should be consumed.
+        /// 目标侧元素的消耗模式。
         /// </summary>
         public ReactionConsumeMode TargetConsumeMode { get; init; } = ReactionConsumeMode.Fixed;
 
         /// <summary>
-        /// Gets the consume value used for the target-side stored element.
+        /// 目标侧元素的消耗值。
         /// </summary>
         public float TargetConsumeValue { get; init; } = 1f;
 
         /// <summary>
-        /// Gets the damage model used by this reaction.
+        /// 该反应使用的伤害模型。
         /// </summary>
         public ReactionDamageModel DamageModel { get; init; } = ReactionDamageModel.ScaleFromSourceDamage;
 
         /// <summary>
-        /// Gets the base factor applied to source damage when building the prototype reaction damage.
+        /// 对原始伤害应用的基础倍率。
         /// </summary>
         public float BaseDamageFactor { get; init; } = 1f;
 
         /// <summary>
-        /// Gets the output element type used by the reaction damage instance.
+        /// 反应伤害使用的输出元素类型。
         /// </summary>
         public ElementType DamageElement { get; init; } = ElementType.None;
+
+        /// <summary>
+        /// 反应优先级，值越大越优先。
+        /// </summary>
+        public int Priority { get; init; }
+
+        /// <summary>
+        /// 是否忽略元素前后顺序。
+        /// </summary>
+        public bool IgnoreOrder { get; init; }
     }
 }

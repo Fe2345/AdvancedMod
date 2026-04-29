@@ -3,34 +3,39 @@ using System;
 namespace AdvancedMod.DamageClasses.Element.Definitions
 {
     /// <summary>
-    /// All element types currently supported by the prototype element combat system.
+    /// 当前元素战斗系统支持的元素类型。
     /// </summary>
     public enum ElementType
     {
         /// <summary>
-        /// No element.
+        /// 无元素。
         /// </summary>
         None = 0,
 
         /// <summary>
-        /// Prototype thunder element.
+        /// 雷元素。
         /// </summary>
         Thunder = 1,
 
         /// <summary>
-        /// Prototype wind element.
+        /// 风元素。
         /// </summary>
         Wind = 2,
+
+        /// <summary>
+        /// 火元素。
+        /// </summary>
+        Pyro = 3,
     }
 
     /// <summary>
-    /// Flags that describe element-side application behavior on a single incoming element payload entry.
+    /// 描述单个元素输入条目的附着行为标记。
     /// </summary>
     [Flags]
     public enum ElementApplicationFlags
     {
         /// <summary>
-        /// No special application flags are present.
+        /// 无特殊标记。
         /// </summary>
         None = 0,
     }
