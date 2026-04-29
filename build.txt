@@ -1,5 +1,5 @@
 displayName = Advanced(先进) Mod
-version = 0.3.0
+version = 0.3.0.1
 author = SwordOfWar/Latic7
 homepage = https://Fe2345.github.io
 hideCode = false

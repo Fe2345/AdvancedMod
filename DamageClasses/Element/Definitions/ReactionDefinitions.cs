@@ -1,69 +1,74 @@
 namespace AdvancedMod.DamageClasses.Element.Definitions
 {
     /// <summary>
-    /// All reaction identifiers currently recognized by the element combat system.
+    /// 当前元素战斗系统识别的反应类型。
     /// </summary>
     public enum ReactionType
     {
         /// <summary>
-        /// No reaction.
+        /// 无反应。
         /// </summary>
         None = 0,
 
         /// <summary>
-        /// Prototype thunder-wind shared reaction used for the first playable slice.
+        /// 雷风原型反应。
         /// </summary>
         ThunderWind = 1,
+
+        /// <summary>
+        /// 超载。
+        /// </summary>
+        Overloaded = 2,
     }
 
     /// <summary>
-    /// Defines how a reaction consumes element gauge from the attacker-side or target-side state.
+    /// 定义反应如何从触发侧或目标侧消耗元素量。
     /// </summary>
     public enum ReactionConsumeMode
     {
         /// <summary>
-        /// Consume a fixed amount.
+        /// 固定消耗。
         /// </summary>
         Fixed = 0,
 
         /// <summary>
-        /// Consume a ratio of the currently stored target gauge.
+        /// 按当前已存储元素量比例消耗。
         /// </summary>
         RatioOfCurrentGauge = 1,
 
         /// <summary>
-        /// Consume a ratio of the newly applied gauge.
+        /// 按本次新附着元素量比例消耗。
         /// </summary>
         RatioOfAppliedAmount = 2,
 
         /// <summary>
-        /// Consume all available gauge.
+        /// 消耗全部可用元素量。
         /// </summary>
         All = 3,
     }
 
     /// <summary>
-    /// Defines how a reaction's damage plan should derive its numeric damage value.
+    /// 定义反应伤害的数值计算模型。
     /// </summary>
     public enum ReactionDamageModel
     {
         /// <summary>
-        /// Use a rule-defined flat damage model.
+        /// 使用规则定义的固定伤害。
         /// </summary>
         FlatByRule = 0,
 
         /// <summary>
-        /// Scale from the original source-hit damage.
+        /// 按原始命中伤害缩放。
         /// </summary>
         ScaleFromSourceDamage = 1,
 
         /// <summary>
-        /// Scale from the amount of gauge consumed by the reaction.
+        /// 按消耗的元素量缩放。
         /// </summary>
         ScaleFromConsumedGauge = 2,
 
         /// <summary>
-        /// Use a hybrid of source damage and consumed gauge.
+        /// 结合原始伤害与消耗元素量进行混合计算。
         /// </summary>
         Hybrid = 3,
     }

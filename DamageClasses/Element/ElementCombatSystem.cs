@@ -4,7 +4,9 @@ using System.Collections.Generic;
 using AdvancedMod.DamageClasses.Element.Data;
 using AdvancedMod.DamageClasses.Element.Definitions;
 using AdvancedMod.DamageClasses.Element.Input;
+using AdvancedMod.DamageClasses.Element.Plans;
 using AdvancedMod.DamageClasses.Element.Reactions;
+using AdvancedMod.DamageClasses.Element.Services;
 using AdvancedMod.DamageClasses.Element.State;
 using AdvancedMod.Utils;
 using Microsoft.Xna.Framework;
@@ -14,49 +16,34 @@ using Terraria.ModLoader;
 namespace AdvancedMod.DamageClasses.Element
 {
     /// <summary>
-    /// Implements the minimal thunder-wind prototype combat flow used to validate the full element pipeline in game.
+    /// 协调一次命中的元素输入、反应选择与统一执行。
     /// </summary>
     public static class ElementCombatSystem
     {
         private const int PrototypeGaugePerHit = 1;
-        private const int PrototypeConsumePerSide = 1;
         private const int PrototypeExtraWindDamage = 10000;
-        private const string PrototypeReactionText = "TW";
-
-        private static readonly ReactionRule ThunderWindRule = new()
-        {
-            Reaction = ReactionType.ThunderWind,
-            TriggerElement = ElementType.Thunder,
-            TargetElement = ElementType.Wind,
-            TriggerConsumeMode = ReactionConsumeMode.Fixed,
-            TriggerConsumeValue = PrototypeConsumePerSide,
-            TargetConsumeMode = ReactionConsumeMode.Fixed,
-            TargetConsumeValue = PrototypeConsumePerSide,
-            DamageModel = ReactionDamageModel.ScaleFromSourceDamage,
-            BaseDamageFactor = 1.5f,
-            DamageElement = ElementType.Thunder,
-        };
+        private const float OverloadedBonusKnockback = 8f;
 
         /// <summary>
-        /// Processes a direct item hit for the prototype system.
+        /// 处理近战或直接物品命中的元素主链入口。
         /// </summary>
-        public static void ProcessItemHit(Player player, NPC target, Item item, NPC.HitInfo hit, int damageDone, ElementType element)
+        public static void ProcessItemHit(Player player, NPC target, Item item, NPC.HitInfo hit, int damageDone, ElementType element, int buildUp = 1)
         {
-            AttackSourceIntent intent = BuildIntent(player.whoAmI, item.type, AttackSourceKind.Item, damageDone, item.DamageType, item.knockBack, element);
+            AttackSourceIntent intent = BuildIntent(player.whoAmI, item.type, AttackSourceKind.Item, damageDone, item.DamageType, item.knockBack, element, buildUp);
             ProcessHit(player, target, intent);
         }
 
         /// <summary>
-        /// Processes a projectile hit for the prototype system.
+        /// 处理弹幕命中的元素主链入口。
         /// </summary>
-        public static void ProcessProjectileHit(Projectile projectile, NPC target, NPC.HitInfo hit, int damageDone, ElementType element)
+        public static void ProcessProjectileHit(Projectile projectile, NPC target, NPC.HitInfo hit, int damageDone, ElementType element, int buildUp = 1)
         {
             Player? owner = projectile.owner >= 0 && projectile.owner < Main.maxPlayers ? Main.player[projectile.owner] : null;
-            AttackSourceIntent intent = BuildIntent(projectile.owner, projectile.type, AttackSourceKind.Projectile, damageDone, projectile.DamageType, projectile.knockBack, element);
+            AttackSourceIntent intent = BuildIntent(projectile.owner, projectile.type, AttackSourceKind.Projectile, damageDone, projectile.DamageType, projectile.knockBack, element, buildUp);
             ProcessHit(owner, target, intent);
         }
 
-        private static AttackSourceIntent BuildIntent(int playerId, int sourceEntityId, AttackSourceKind sourceKind, int damage, DamageClass damageClass, float knockback, ElementType element)
+        private static AttackSourceIntent BuildIntent(int playerId, int sourceEntityId, AttackSourceKind sourceKind, int damage, DamageClass damageClass, float knockback, ElementType element, int buildUp)
         {
             return new AttackSourceIntent
             {
@@ -71,7 +58,7 @@ namespace AdvancedMod.DamageClasses.Element
                     new AttackElementSeed
                     {
                         Element = element,
-                        BaseBuildUp = PrototypeGaugePerHit,
+                        BaseBuildUp = Math.Max(1, buildUp),
                         CooldownGroup = 0,
                         CooldownTicks = 0,
                     }
@@ -92,33 +79,59 @@ namespace AdvancedMod.DamageClasses.Element
             AttackPayload payload = PayloadBuilder.Build(intent, augmentPlan);
             AdvancedGlobelNPC advancedNpc = target.Advanced();
             ElementComponent component = advancedNpc.ElementComponent;
+            ElementApplyPlan applyPlan = BuildApplyPlan(payload);
+            TemporaryElementStateView temporaryStateView = new(component, applyPlan);
+            IReadOnlyList<ReactionCandidate> reactionCandidates = payload.CanTriggerReaction
+                ? ReactionCandidateCollector.Collect(payload, temporaryStateView)
+                : [];
+            IReadOnlyList<ReactionValidationResult> validationResults = payload.CanTriggerReaction
+                ? ReactionValidator.ValidateAll(reactionCandidates, temporaryStateView)
+                : [];
+            ReactionValidationResult? selectedReaction = payload.CanTriggerReaction
+                ? ReactionPriorityResolver.Resolve(validationResults)
+                : null;
+            ReactionResult result = BuildReactionResult(sourcePlayer, payload, selectedReaction);
+
+            ReactionExecutor.Execute(sourcePlayer, target, component, applyPlan, result);
+        }
+
+        private static ElementApplyPlan BuildApplyPlan(AttackPayload payload)
+        {
+            if (!payload.CanApplyElement)
+            {
+                return new ElementApplyPlan();
+            }
+
+            List<ElementApplyEntry> entries = [];
 
             foreach (ElementApplication application in payload.Applications)
             {
-                ElementState currentState = GetState(component, application.Element);
-                ElementState oppositeState = GetOppositeState(component, application.Element);
-
-                currentState.CurrentGauge += Math.Max(PrototypeGaugePerHit, (int)Math.Round(application.BuildUp));
-
-                if (!payload.CanTriggerReaction || oppositeState.CurrentGauge <= 0)
+                entries.Add(new ElementApplyEntry
                 {
-                    continue;
-                }
-
-                currentState.CurrentGauge = Math.Max(0, currentState.CurrentGauge - PrototypeConsumePerSide);
-                oppositeState.CurrentGauge = Math.Max(0, oppositeState.CurrentGauge - PrototypeConsumePerSide);
-
-                ReactionResult result = BuildReactionResult(sourcePlayer, payload);
-                ApplyReactionResult(target, component, result);
+                    Element = application.Element,
+                    AppliedBuildUp = application.BuildUp,
+                    SourceApplication = application,
+                });
             }
+
+            return new ElementApplyPlan
+            {
+                Entries = entries,
+            };
         }
 
-        private static ReactionResult BuildReactionResult(Player? sourcePlayer, AttackPayload payload)
+        private static ReactionResult BuildReactionResult(Player? sourcePlayer, AttackPayload payload, ReactionValidationResult? selectedReaction)
         {
-            int primaryDamage = (int)Math.Round(payload.BaseDamage * ThunderWindRule.BaseDamageFactor);
+            if (selectedReaction is null || !selectedReaction.IsValid)
+            {
+                return new ReactionResult();
+            }
+
+            ReactionRule rule = selectedReaction.Rule;
+            int primaryDamage = CalculatePrimaryDamage(payload, rule);
             List<DamageInstancePlan> extras = [];
 
-            if (sourcePlayer?.Advanced().PrototypeReactionExtraWindBurst == true)
+            if (rule.Reaction == ReactionType.ThunderWind && sourcePlayer?.Advanced().PrototypeReactionExtraWindBurst == true)
             {
                 extras.Add(new DamageInstancePlan
                 {
@@ -130,61 +143,28 @@ namespace AdvancedMod.DamageClasses.Element
             return new ReactionResult
             {
                 Triggered = true,
-                Reaction = ThunderWindRule.Reaction,
+                Reaction = rule.Reaction,
+                TriggerElement = selectedReaction.Candidate.TriggerElement,
+                TargetElement = selectedReaction.Candidate.TargetElement,
+                TriggerConsumeAmount = selectedReaction.TriggerConsumeAmount,
+                TargetConsumeAmount = selectedReaction.TargetConsumeAmount,
                 PrimaryDamage = new DamageInstancePlan
                 {
                     Damage = primaryDamage,
-                    Element = ThunderWindRule.DamageElement,
+                    Element = rule.DamageElement,
                 },
                 ExtraDamages = extras,
-                DisplayText = PrototypeReactionText,
+                DisplayText = ReactionTextResolver.GetDisplayText(rule.Reaction),
+                BonusKnockback = rule.Reaction == ReactionType.Overloaded ? OverloadedBonusKnockback : 0f,
             };
         }
 
-        private static void ApplyReactionResult(NPC target, ElementComponent component, ReactionResult result)
+        private static int CalculatePrimaryDamage(AttackPayload payload, ReactionRule rule)
         {
-            if (!result.Triggered)
+            return rule.DamageModel switch
             {
-                return;
-            }
-
-            if (result.PrimaryDamage is not null)
-            {
-                ApplyDamage(target, result.PrimaryDamage.Damage);
-            }
-
-            foreach (DamageInstancePlan extraDamage in result.ExtraDamages)
-            {
-                ApplyDamage(target, extraDamage.Damage);
-            }
-
-            component.LastReactionText = result.DisplayText;
-            component.LastReactionTick = (int)Main.GameUpdateCount;
-            CombatText.NewText(target.Hitbox, Color.Gold, result.DisplayText);
-        }
-
-        private static void ApplyDamage(NPC target, int damage)
-        {
-            target.SimpleStrikeNPC(Math.Max(1, damage), 0, false, 0f, ModContent.GetInstance<ElementDamage>());
-        }
-
-        private static ElementState GetState(ElementComponent component, ElementType element)
-        {
-            return element switch
-            {
-                ElementType.Thunder => component.Thunder,
-                ElementType.Wind => component.Wind,
-                _ => component.Thunder,
-            };
-        }
-
-        private static ElementState GetOppositeState(ElementComponent component, ElementType element)
-        {
-            return element switch
-            {
-                ElementType.Thunder => component.Wind,
-                ElementType.Wind => component.Thunder,
-                _ => component.Wind,
+                ReactionDamageModel.ScaleFromSourceDamage => Math.Max(1, (int)Math.Round(payload.BaseDamage * Math.Max(0f, rule.BaseDamageFactor - 1f))),
+                _ => Math.Max(1, payload.BaseDamage),
             };
         }
     }
