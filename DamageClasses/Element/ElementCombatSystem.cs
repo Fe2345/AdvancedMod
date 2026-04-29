@@ -163,7 +163,7 @@ namespace AdvancedMod.DamageClasses.Element
         {
             return rule.DamageModel switch
             {
-                ReactionDamageModel.ScaleFromSourceDamage => Math.Max(1, (int)Math.Round(payload.BaseDamage * rule.BaseDamageFactor)),
+                ReactionDamageModel.ScaleFromSourceDamage => Math.Max(1, (int)Math.Round(payload.BaseDamage * Math.Max(0f, rule.BaseDamageFactor - 1f))),
                 _ => Math.Max(1, payload.BaseDamage),
             };
         }

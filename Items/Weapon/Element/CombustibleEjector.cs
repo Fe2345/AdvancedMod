@@ -1,5 +1,6 @@
 ﻿using AdvancedMod.DamageClasses.Element;
 using AdvancedMod.Projectiles.Weapons.Element;
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -32,6 +33,14 @@ namespace AdvancedMod.Items.Weapon.Element
             Item.shootSpeed = 10f;
             Item.useAmmo = AmmoID.Gel;
             Item.consumeAmmoOnFirstShotOnly = false;
+        }
+
+        public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
+        {
+            if (velocity.LengthSquared() > 0f)
+            {
+                position += Vector2.Normalize(velocity) * 60f;
+            }
         }
     }
 }
