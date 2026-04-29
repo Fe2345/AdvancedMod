@@ -9,6 +9,7 @@ Mods: {
 			// WindFlowerProj.DisplayName: Wind Flower Proj
 			// PrototypeThunderBolt.DisplayName: Prototype Thunder Bolt
 			// InfiniteCrystalProj.DisplayName: Infinite Crystal Proj
+			BurnedGel.DisplayName: 可燃凝胶
 		}
 
 		Items: {
@@ -35,6 +36,11 @@ Mods: {
 			PrototypeReactionWindBurstAccessory: {
 				DisplayName: 风爆原型饰品
 				Tooltip: 任意原型反应追加一段 10000 点风元素伤害
+			}
+
+			CombustibleEjector: {
+				DisplayName: 可燃物发射器
+				Tooltip: 发射可燃凝胶，命中时附着 5 层火元素
 			}
 
 			WindFlower: {

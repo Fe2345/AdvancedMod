@@ -159,13 +159,15 @@ namespace AdvancedMod
         public override void PostDraw(NPC npc, SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             Vector2 centerAboveNpc = new(npc.Center.X - screenPos.X, npc.Top.Y - screenPos.Y - 34f);
-            bool hasElementGauge = ElementComponent.Thunder.CurrentGauge > 0 || ElementComponent.Wind.CurrentGauge > 0;
+            bool hasElementGauge = ElementComponent.Thunder.CurrentGauge > 0 ||
+                ElementComponent.Wind.CurrentGauge > 0 ||
+                ElementComponent.Pyro.CurrentGauge > 0;
             bool showReactionText = !string.IsNullOrWhiteSpace(ElementComponent.LastReactionText) &&
                 Main.GameUpdateCount - ElementComponent.LastReactionTick <= 60;
 
             if (hasElementGauge)
             {
-                string gaugeText = $"T:{ElementComponent.Thunder.CurrentGauge} W:{ElementComponent.Wind.CurrentGauge}";
+                string gaugeText = $"T:{ElementComponent.Thunder.CurrentGauge} W:{ElementComponent.Wind.CurrentGauge} P:{ElementComponent.Pyro.CurrentGauge}";
                 Terraria.Utils.DrawBorderString(spriteBatch, gaugeText, centerAboveNpc, Color.White, 0.8f, 0.5f, 0f);
                 centerAboveNpc.Y -= 18f;
             }

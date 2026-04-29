@@ -9,6 +9,7 @@ Mods: {
 			WindFlowerProj.DisplayName: Wind Flower Proj
 			PrototypeThunderBolt.DisplayName: Prototype Thunder Bolt
 			InfiniteCrystalProj.DisplayName: Infinite Crystal Proj
+			BurnedGel.DisplayName: Burned Gel
 		}
 
 		Items: {
@@ -35,6 +36,11 @@ Mods: {
 			PrototypeReactionWindBurstAccessory: {
 				DisplayName: Prototype Wind Burst Accessory
 				Tooltip: Adds one extra 10000 wind damage hit to any successful prototype reaction
+			}
+
+			CombustibleEjector: {
+				DisplayName: Combustible Ejector
+				Tooltip: Fires combustible gel that applies 5 pyro gauge on hit
 			}
 
 			WindFlower: {

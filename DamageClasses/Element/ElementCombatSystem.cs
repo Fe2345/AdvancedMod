@@ -27,23 +27,23 @@ namespace AdvancedMod.DamageClasses.Element
         /// <summary>
         /// 处理近战或直接物品命中的元素主链入口。
         /// </summary>
-        public static void ProcessItemHit(Player player, NPC target, Item item, NPC.HitInfo hit, int damageDone, ElementType element)
+        public static void ProcessItemHit(Player player, NPC target, Item item, NPC.HitInfo hit, int damageDone, ElementType element, int buildUp = 1)
         {
-            AttackSourceIntent intent = BuildIntent(player.whoAmI, item.type, AttackSourceKind.Item, damageDone, item.DamageType, item.knockBack, element);
+            AttackSourceIntent intent = BuildIntent(player.whoAmI, item.type, AttackSourceKind.Item, damageDone, item.DamageType, item.knockBack, element, buildUp);
             ProcessHit(player, target, intent);
         }
 
         /// <summary>
         /// 处理弹幕命中的元素主链入口。
         /// </summary>
-        public static void ProcessProjectileHit(Projectile projectile, NPC target, NPC.HitInfo hit, int damageDone, ElementType element)
+        public static void ProcessProjectileHit(Projectile projectile, NPC target, NPC.HitInfo hit, int damageDone, ElementType element, int buildUp = 1)
         {
             Player? owner = projectile.owner >= 0 && projectile.owner < Main.maxPlayers ? Main.player[projectile.owner] : null;
-            AttackSourceIntent intent = BuildIntent(projectile.owner, projectile.type, AttackSourceKind.Projectile, damageDone, projectile.DamageType, projectile.knockBack, element);
+            AttackSourceIntent intent = BuildIntent(projectile.owner, projectile.type, AttackSourceKind.Projectile, damageDone, projectile.DamageType, projectile.knockBack, element, buildUp);
             ProcessHit(owner, target, intent);
         }
 
-        private static AttackSourceIntent BuildIntent(int playerId, int sourceEntityId, AttackSourceKind sourceKind, int damage, DamageClass damageClass, float knockback, ElementType element)
+        private static AttackSourceIntent BuildIntent(int playerId, int sourceEntityId, AttackSourceKind sourceKind, int damage, DamageClass damageClass, float knockback, ElementType element, int buildUp)
         {
             return new AttackSourceIntent
             {
@@ -58,7 +58,7 @@ namespace AdvancedMod.DamageClasses.Element
                     new AttackElementSeed
                     {
                         Element = element,
-                        BaseBuildUp = PrototypeGaugePerHit,
+                        BaseBuildUp = Math.Max(1, buildUp),
                         CooldownGroup = 0,
                         CooldownTicks = 0,
                     }
