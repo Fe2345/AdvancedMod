@@ -10,12 +10,15 @@ namespace AdvancedMod.UI
         public static bool Visible;
         public override void OnInitialize()
         {
+            
+            /*
             UIPanel Panel = new UIPanel();
 
             Panel.Width.Set(150f, 0f);
             Panel.Width.Set(30f, 0f);
             Panel.Left.Set(-350f, 0f);
             Panel.Top.Set(-10f, 0f);
+            */
         }
     }
 }

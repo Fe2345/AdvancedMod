@@ -1,17 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
-  <Import Project="..\tModLoader.targets" />
   <PropertyGroup>
+    <TModLoaderTargetsPath Condition="'$(TModLoaderTargetsPath)' == '' and Exists('..\tModLoader.targets')">..\tModLoader.targets</TModLoaderTargetsPath>
+    <TModLoaderTargetsPath Condition="'$(TModLoaderTargetsPath)' == '' and Exists('..\..\..\tModLoader.targets')">..\..\..\tModLoader.targets</TModLoaderTargetsPath>
     <AssemblyName>AdvancedMod</AssemblyName>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <PlatformTarget>AnyCPU</PlatformTarget>
-    <LangVersion>latest</LangVersion>
+    <LangVersion>12.0</LangVersion>
+    <!-- 排除所有 .bak 备份文件不被构建系统读取 -->
+    <DefaultItemExcludes>$(DefaultItemExcludes);**\*.bak</DefaultItemExcludes>
   </PropertyGroup>
+  <Import Project="$(TModLoaderTargetsPath)" Condition="'$(TModLoaderTargetsPath)' != '' and Exists('$(TModLoaderTargetsPath)')" />
   <ItemGroup>
-    <PackageReference Include="tModLoader.CodeAssist" Version="0.1.*" />
+    <PackageReference Include="Krafs.Publicizer" Version="2.3.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="tModLoader.CodeAssist" Version="0.1.5" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Assets\Effects\" />
-    <Folder Include="Assets\Textures\Items\" />
+    <Folder Include="Assets\Textures\Items\Weapon\DoT\" />
+    <Folder Include="Assets\Textures\Projectiles\Weapon\DoT\" />
+    <Folder Include="Items\Weapon\Melee\" />
+    <Folder Include="Systems\Core\" />
   </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="Buffs\DoT\Data\WeatheringDoTData.cs" />
+    <Compile Remove="Buffs\DoT\Weathering.cs" />
+    <Compile Remove="Projectiles\Weapons\Element\WindFlowerProj.cs" />
+    <Compile Remove="Systems\Globals\AdvancedGlobelItem.cs" />
+    <Compile Remove="Items\Weapon\Element\WindFlower.cs" />
+    <Compile Remove="Utils\Render\**\*.cs" />
+    <Compile Remove="Utils\Sprite\**\*.cs" />
+    <Compile Remove="Systems\Graphics\**\*.cs" />
+  </ItemGroup>
+  <Target Name="ValidateTModLoaderTargetsImport" BeforeTargets="PrepareForBuild" Condition="'$(TModLoaderTargetsPath)' == ''">
+    <Error Text="未找到 tModLoader.targets。请将该文件放在项目上级目录，或在构建时通过 /p:TModLoaderTargetsPath=... 指定路径。" />
+  </Target>
+	<Target Name="RemoveIgnoresAccessChecksToAttributeCs" AfterTargets="PublicizeAssemblies">
+		<ItemGroup>
+			<FilesToRemove Include="@(Compile)" Condition="'%(Filename)' == 'IgnoresAccessChecksToAttribute'" />
+		</ItemGroup>
+		<ItemGroup>
+			<Compile Remove="@(FilesToRemove)" />
+		</ItemGroup>
+	</Target>
+
+	<ItemGroup>
+		<Publicize Include="tModLoader" IncludeCompilerGeneratedMembers="false" IncludeVirtualMembers="false" />
+		<DoNotPublicize Include="tModLoader:Terraria.Tile" />
+
+		<Publicize Include="FNA" IncludeCompilerGeneratedMembers="false" IncludeVirtualMembers="false" />
+		<Publicize Include="ReLogic" IncludeCompilerGeneratedMembers="false" IncludeVirtualMembers="false" />
+	</ItemGroup>
+	<ItemGroup>
+		<Reference Include="Luminance">
+			<HintPath>./Assemblies/Luminance.dll</HintPath>
+		</Reference>
+	</ItemGroup>
 </Project>
