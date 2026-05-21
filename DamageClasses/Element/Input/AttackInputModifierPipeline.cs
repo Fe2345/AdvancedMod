@@ -18,6 +18,7 @@ namespace AdvancedMod.DamageClasses.Element.Input
         public static InputAugmentPlan Resolve(AttackInputResolveContext context)
         {
             AttackInputBuilder builder = new(context.Intent);
+            _ = context.CombatContextSnapshot;
 
             if (context.SourcePlayer?.Advanced().PrototypeForceWindElement == true)
             {

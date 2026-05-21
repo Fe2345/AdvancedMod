@@ -1,15 +1,16 @@
-﻿using Terraria;
-using Terraria.ModLoader;
+﻿using AdvancedMod.DamageClasses.Element.Adapters;
+using AdvancedMod.DamageClasses.Element.State;
+using AdvancedMod.Projectiles.Accessory;
+using AdvancedMod.Systems.DataStructures;
 using AdvancedMod.Utils;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework;
-using AdvancedMod.Systems.DataStructures;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
-using AdvancedMod.Projectiles.Accessory;
-using AdvancedMod.DamageClasses.Element.Adapters;
-using AdvancedMod.DamageClasses.Element.State;
+using Terraria;
+using Terraria.ModLoader;
 
 namespace AdvancedMod
 {
@@ -46,36 +47,45 @@ namespace AdvancedMod
             }
         }
 
+        public override void ApplyDifficultyAndPlayerScaling(
+        NPC npc,
+        int numPlayers,
+        float balance,
+        float bossAdjustment
+        )
+        {
+            
+            if (!AdvancedWorld.MutationMode)
+                return;
+
+            if (!Main.GameModeInfo.IsExpertMode)
+                return;
+
+            if (npc.lifeMax <= 0)
+                return;
+            float targetLifeMultiplier = AdvancedWorld.EndMode ? 4.5f : 3.5f;
+            float currentDifficultyLifeMultiplier = Main.GameModeInfo.EnemyMaxLifeMultiplier;
+
+            if (currentDifficultyLifeMultiplier <= 0f
+                || float.IsNaN(currentDifficultyLifeMultiplier)
+                || float.IsInfinity(currentDifficultyLifeMultiplier))
+            {
+                throw new InvalidOperationException("当前游戏难度的敌怪生命倍率无效。");
+            }
+
+            float correctionMultiplier = targetLifeMultiplier / currentDifficultyLifeMultiplier;
+
+            float finalMultiplier = correctionMultiplier;
+
+            if (npc.boss)
+                finalMultiplier *= balance * bossAdjustment;
+
+            npc.lifeMax = ScaleLife(npc.lifeMax, finalMultiplier);
+        }
+
         public override void SetDefaults(NPC npc)
         {
-            if (AdvancedWorld.EndMode)
-            {
-                if (npc.boss)
-                {
-                    npc.lifeMax = (int)(npc.life * 1.3);
-                    npc.damage = (int)(npc.damage * 1.2);
-                    Vulnerability -= 0.2f;
-                }
-                else if (!npc.townNPC)
-                {
-                    npc.lifeMax = (int)(npc.lifeMax * 1.2);
-                    npc.damage = (int)(npc.damage * 1.1);
-                }
-            }
-            else if (AdvancedWorld.MutationMode)
-            {
-                if (npc.boss)
-                {
-                    npc.lifeMax = (int)(npc.life * 1.125);
-                    npc.damage = (int)(npc.damage * 1.1);
-                    Vulnerability -= 0.1f;
-                }
-                else if (!npc.townNPC)
-                {
-                    npc.lifeMax = (int)(npc.lifeMax * 1.1);
-                    npc.damage = (int)(npc.damage * 1.05);
-                }
-            }
+            
         }
 
         public override void ModifyNPCLoot(NPC npc, NPCLoot npcLoot)
@@ -238,6 +248,22 @@ namespace AdvancedMod
             {
                 
             }
+        }
+
+        private static int ScaleLife(int currentLifeMax, float multiplier)
+        {
+            if (currentLifeMax <= 0)
+                throw new ArgumentOutOfRangeException(nameof(currentLifeMax), "NPC 当前生命值必须大于 0。");
+
+            if (multiplier <= 0f || float.IsNaN(multiplier) || float.IsInfinity(multiplier))
+                throw new ArgumentOutOfRangeException(nameof(multiplier), "生命倍率必须是大于 0 的有限数。");
+
+            double scaled = currentLifeMax * (double)multiplier;
+
+            if (scaled > int.MaxValue)
+                throw new OverflowException("NPC 生命值超过 int.MaxValue。");
+
+            return Math.Max(1, (int)Math.Round(scaled, MidpointRounding.AwayFromZero));
         }
     }
 }

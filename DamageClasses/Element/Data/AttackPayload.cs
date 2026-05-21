@@ -38,7 +38,7 @@ namespace AdvancedMod.DamageClasses.Element.Data
         public DamageClass? DamageClass { get; init; }
 
         /// <summary>
-        /// Gets the base source-hit damage used by prototype reaction math.
+        /// Gets the base source-hit damage captured before reaction reinterpretation.
         /// </summary>
         public int BaseDamage { get; init; }
 

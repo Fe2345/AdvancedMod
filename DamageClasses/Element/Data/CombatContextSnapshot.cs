@@ -57,5 +57,15 @@ namespace AdvancedMod.DamageClasses.Element.Data
         /// Gets the compact reaction damage and consume modifier snapshot.
         /// </summary>
         public ReactionStatSnapshot ReactionStats { get; init; } = new();
+
+        /// <summary>
+        /// Gets the player-side element offense snapshot.
+        /// </summary>
+        public ElementOffenseStatSet ElementOffense { get; init; } = new();
+
+        /// <summary>
+        /// Gets the current coordinated attack snapshot.
+        /// </summary>
+        public CoordinatedAttackStatSet CoordinatedAttacks { get; init; } = new();
     }
 }

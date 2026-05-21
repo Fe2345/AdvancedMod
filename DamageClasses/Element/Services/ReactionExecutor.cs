@@ -1,8 +1,10 @@
+#nullable enable
 using System;
 using AdvancedMod.DamageClasses.Element.Definitions;
 using AdvancedMod.DamageClasses.Element.Plans;
 using AdvancedMod.DamageClasses.Element.Reactions;
 using AdvancedMod.DamageClasses.Element.State;
+using AdvancedMod.Utils;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ModLoader;
@@ -29,14 +31,30 @@ namespace AdvancedMod.DamageClasses.Element.Services
             ConsumeGauge(component, result.TriggerElement, result.TriggerConsumeAmount);
             ConsumeGauge(component, result.TargetElement, result.TargetConsumeAmount);
 
-            if (result.PrimaryDamage is not null)
+            if (result.SemanticKind == ReactionSemanticKind.Prototype && result.PrimaryDamage is not null)
             {
-                ApplyDamage(target, result.PrimaryDamage.Damage);
+                ApplyDamage(sourcePlayer, target, result.PrimaryDamage);
             }
 
-            foreach (DamageInstancePlan extraDamage in result.ExtraDamages)
+            if (result.SemanticKind == ReactionSemanticKind.Transformative && result.TransformativeDamage is not null)
             {
-                ApplyDamage(target, extraDamage.Damage);
+                ApplyDamage(sourcePlayer, target, result.TransformativeDamage);
+            }
+
+            if (result.SemanticKind != ReactionSemanticKind.Prototype)
+            {
+                foreach (DamageInstancePlan extraDamage in result.AdditionalEffectDamages)
+                {
+                    ApplyDamage(sourcePlayer, target, extraDamage);
+                }
+            }
+
+            if (result.SemanticKind == ReactionSemanticKind.Prototype)
+            {
+                foreach (DamageInstancePlan extraDamage in result.ExtraDamages)
+                {
+                    ApplyDamage(sourcePlayer, target, extraDamage);
+                }
             }
 
             if (!string.IsNullOrWhiteSpace(result.DisplayText))
@@ -84,9 +102,28 @@ namespace AdvancedMod.DamageClasses.Element.Services
             state.CurrentGauge = Math.Max(0, state.CurrentGauge - consumeAmount);
         }
 
-        private static void ApplyDamage(NPC target, int damage)
+        private static void ApplyDamage(Player? sourcePlayer, NPC target, DamageInstancePlan damagePlan)
         {
-            target.SimpleStrikeNPC(Math.Max(1, damage), 0, false, 0f, ModContent.GetInstance<ElementDamage>());
+            DamageClass damageClass = damagePlan.DamageClass ?? ModContent.GetInstance<ElementDamage>();
+
+            if (sourcePlayer is not null &&
+                ExtraStrikeHelper.TryStrikeExtraDamage(
+                    sourcePlayer,
+                    target,
+                    Math.Max(1, damagePlan.Damage),
+                    damageClass,
+                    0,
+                    damagePlan.Knockback,
+                    damagePlan.SourceMultiplier,
+                    damagePlan.FinalMultiplier,
+                    damagePlan.CritChanceBonus,
+                    damagePlan.CanCrit,
+                    damagePlan.DamageVariation))
+            {
+                return;
+            }
+            //如果玩家已丢失，或者额外伤害未成功应用（如被免疫），则直接应用基础伤害。
+            target.SimpleStrikeNPC(Math.Max(1, damagePlan.Damage), 0, false, damagePlan.Knockback, damageClass);
         }
 
         private static void ApplyKnockback(Player? sourcePlayer, NPC target, float knockbackStrength)

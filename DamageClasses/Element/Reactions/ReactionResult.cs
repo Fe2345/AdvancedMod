@@ -20,6 +20,11 @@ namespace AdvancedMod.DamageClasses.Element.Reactions
         public ReactionType Reaction { get; init; } = ReactionType.None;
 
         /// <summary>
+        /// 本次反应在数值层面的语义分类。
+        /// </summary>
+        public ReactionSemanticKind SemanticKind { get; init; } = ReactionSemanticKind.None;
+
+        /// <summary>
         /// 本次反应的触发侧元素。
         /// </summary>
         public ElementType TriggerElement { get; init; } = ElementType.None;
@@ -40,12 +45,28 @@ namespace AdvancedMod.DamageClasses.Element.Reactions
         public int TargetConsumeAmount { get; init; }
 
         /// <summary>
-        /// 反应主伤害计划。
+        /// 对原始命中生效的增幅倍率。
+        /// 增幅反应的本体应落在这里，而不是伪装成额外伤害段。
+        /// </summary>
+        public float AmplificationMultiplier { get; init; } = 1f;
+
+        /// <summary>
+        /// 过渡兼容字段。旧链路仍可能把主反应伤害写在这里。
         /// </summary>
         public DamageInstancePlan? PrimaryDamage { get; init; }
 
         /// <summary>
-        /// 额外伤害计划。
+        /// 剧变反应本体产生的主伤害段。
+        /// </summary>
+        public DamageInstancePlan? TransformativeDamage { get; init; }
+
+        /// <summary>
+        /// 不属于反应本体的额外追加伤害段。
+        /// </summary>
+        public IReadOnlyList<DamageInstancePlan> AdditionalEffectDamages { get; init; } = [];
+
+        /// <summary>
+        /// 过渡兼容字段。旧链路仍可能读取这里的额外伤害段。
         /// </summary>
         public IReadOnlyList<DamageInstancePlan> ExtraDamages { get; init; } = [];
 

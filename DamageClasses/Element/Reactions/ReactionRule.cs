@@ -13,6 +13,11 @@ namespace AdvancedMod.DamageClasses.Element.Reactions
         public ReactionType Reaction { get; init; } = ReactionType.None;
 
         /// <summary>
+        /// 该反应在数值层面的语义分类。
+        /// </summary>
+        public ReactionSemanticKind SemanticKind { get; init; } = ReactionSemanticKind.None;
+
+        /// <summary>
         /// 触发侧元素。
         /// </summary>
         public ElementType TriggerElement { get; init; } = ElementType.None;
@@ -48,7 +53,8 @@ namespace AdvancedMod.DamageClasses.Element.Reactions
         public ReactionDamageModel DamageModel { get; init; } = ReactionDamageModel.ScaleFromSourceDamage;
 
         /// <summary>
-        /// 对原始伤害应用的基础倍率。
+        /// 该反应使用的基础倍率配置值。
+        /// 其在运行时的具体含义由反应语义与伤害模型共同解释。
         /// </summary>
         public float BaseDamageFactor { get; init; } = 1f;
 

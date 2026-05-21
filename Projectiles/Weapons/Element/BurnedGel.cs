@@ -23,7 +23,7 @@ namespace AdvancedMod.Projectiles.Weapons.Element
         {
             Projectile.width = 14;
             Projectile.height = 14;
-            Projectile.scale = 1f / 3f;
+            Projectile.scale = 1f / 2f;
             Projectile.friendly = true;
             Projectile.hostile = false;
             Projectile.DamageType = ModContent.GetInstance<ElementDamage>();
@@ -48,6 +48,11 @@ namespace AdvancedMod.Projectiles.Weapons.Element
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             ElementCombatSystem.ProcessProjectileHit(Projectile, target, hit, damageDone, ElementType.Pyro, 5);
+        }
+
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
+        {
+            ElementCombatSystem.ModifyProjectileHit(Projectile, target, ref modifiers, ElementType.Pyro, 5);
         }
     }
 }

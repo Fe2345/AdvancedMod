@@ -48,5 +48,10 @@ namespace AdvancedMod.DamageClasses.Element.Definitions
         /// No special behavior flags are present.
         /// </summary>
         None = 0,
+
+        /// <summary>
+        /// Suppresses coordinated-attack spawning for this hit to prevent derived projectiles from recursively triggering themselves.
+        /// </summary>
+        SuppressCoordinatedAttack = 1 << 0,
     }
 }

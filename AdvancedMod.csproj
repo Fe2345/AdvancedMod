@@ -58,5 +58,8 @@
 		<Reference Include="Luminance">
 			<HintPath>./Assemblies/Luminance.dll</HintPath>
 		</Reference>
+		<Reference Include="SubworldLibrary">
+			<HintPath>./Assemblies/SubworldLibrary.dll</HintPath>
+		</Reference>
 	</ItemGroup>
 </Project>

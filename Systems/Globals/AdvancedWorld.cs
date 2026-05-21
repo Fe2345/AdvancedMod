@@ -21,13 +21,16 @@ namespace AdvancedMod
         public static bool MutationMode;
 		public static bool EndMode;
 
-		public static bool TheEnd; //作为最终boss击败的保留值，用于设计一些需要击败最终boss才会解禁的效果
+        //Boss击败记录
+        public static bool downedTreeDiagrammer;
+		public static bool downedTheEnd; //作为最终boss击败的保留值，用于设计一些需要击败最终boss才会解禁的效果
 
         public override void  SaveWorldData(TagCompound tag)
         {
             List<string> data = new List<string>();
             if (MutationMode) data.Add("MutationMode");
 			if (EndMode) data.Add("EndMode");
+            if (downedTreeDiagrammer) data.Add("downedTreeDiagrammer");
 
             tag.Add("data", data);
         }
@@ -37,6 +40,7 @@ namespace AdvancedMod
             IList<string> data = tag.GetList<string>("data");
             MutationMode = data.Contains("MutationMode");
 			EndMode = data.Contains("EndMode");
+            downedTreeDiagrammer = data.Contains("downedTreeDiagrammer");
         }
 
         public override void PostUpdateWorld()

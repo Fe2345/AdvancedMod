@@ -44,5 +44,6 @@ namespace AdvancedMod.DamageClasses.Element.Data
         /// Gets the reserve multiplier bucket for unusual one-off effects.
         /// </summary>
         public float ExtraMult { get; init; } = 1f;
+
     }
 }

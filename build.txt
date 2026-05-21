@@ -1,9 +1,9 @@
 displayName = Advanced(先进) Mod
-version = 0.3.0.1
+version = 0.3.1.0
 author = SwordOfWar/Latic7
 homepage = https://Fe2345.github.io
 hideCode = false
 hideResources = false
 includeSource = true
 includePDB = true
-modReferences = Luminance@1.0.12
+modReferences = Luminance@1.0.12,SubworldLibrary@2.2.3.2

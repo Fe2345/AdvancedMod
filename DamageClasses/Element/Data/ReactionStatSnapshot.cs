@@ -42,5 +42,11 @@ namespace AdvancedMod.DamageClasses.Element.Data
         /// </summary>
         public IReadOnlyDictionary<ReactionType, float> ConsumeMult { get; init; } =
             new Dictionary<ReactionType, float>();
+
+        /// <summary>
+        /// Gets the captured element mastery value for the current hit context.
+        /// </summary>
+        public int ElementMastery { get; init; }
+
     }
 }

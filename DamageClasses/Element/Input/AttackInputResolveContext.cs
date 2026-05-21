@@ -23,5 +23,10 @@ namespace AdvancedMod.DamageClasses.Element.Input
         /// Gets the raw hit intent to reinterpret.
         /// </summary>
         public required AttackSourceIntent Intent { get; init; }
+
+        /// <summary>
+        /// Gets the player-side combat snapshot captured for this hit.
+        /// </summary>
+        public CombatContextSnapshot CombatContextSnapshot { get; init; } = new();
     }
 }

@@ -37,5 +37,10 @@ namespace AdvancedMod.Projectiles.Weapons
         {
             ElementCombatSystem.ProcessProjectileHit(Projectile, target, hit, damageDone, ElementType.Thunder);
         }
+
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
+        {
+            ElementCombatSystem.ModifyProjectileHit(Projectile, target, ref modifiers, ElementType.Thunder);
+        }
     }
 }

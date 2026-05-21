@@ -13,7 +13,7 @@ namespace AdvancedMod.DamageClasses.Element.Input
         /// <summary>
         /// Creates a payload from a source intent and an already-resolved input augment plan.
         /// </summary>
-        public static AttackPayload Build(AttackSourceIntent intent, InputAugmentPlan augmentPlan)
+        public static AttackPayload Build(AttackSourceIntent intent, InputAugmentPlan augmentPlan, CombatContextSnapshot contextSnapshot)
         {
             List<ElementApplication> applications = augmentPlan.ElementSeeds
                 .Select(seed => new ElementApplication
@@ -40,6 +40,7 @@ namespace AdvancedMod.DamageClasses.Element.Input
                 Flags = augmentPlan.Flags,
                 Applications = applications,
                 Tags = augmentPlan.Tags,
+                ContextSnapshot = contextSnapshot,
             };
         }
     }

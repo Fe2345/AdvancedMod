@@ -38,7 +38,7 @@ namespace AdvancedMod.Utils
             if (NPC.downedGolemBoss) MaxStacks += 10f;
             if (NPC.downedTowers) MaxStacks += 20f;
             if (NPC.downedMoonlord) MaxStacks += 20f;
-            if (AdvancedWorld.TheEnd) MaxStacks = -1; //击败最终boss后，解除上限
+            if (AdvancedWorld.downedTheEnd) MaxStacks = -1; //击败最终boss后，解除上限
 
 
             return new Dictionary<string, float>

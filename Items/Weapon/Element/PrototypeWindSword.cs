@@ -34,5 +34,10 @@ namespace AdvancedMod.Items.Weapon.Element
         {
             ElementCombatSystem.ProcessItemHit(player, target, Item, hit, damageDone, ElementType.Wind);
         }
+
+        public override void ModifyHitNPC(Player player, NPC target, ref NPC.HitModifiers modifiers)
+        {
+            ElementCombatSystem.ModifyItemHit(player, target, Item, ref modifiers, ElementType.Wind);
+        }
     }
 }

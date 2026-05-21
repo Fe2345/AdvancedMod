@@ -5,8 +5,10 @@ using Terraria.ModLoader.IO;
 using Microsoft.Xna.Framework;
 using Terraria.GameInput;
 using Terraria.ID;
+using AdvancedMod.DamageClasses.Element.Players;
 using AdvancedMod.Utils;
 using System.Collections.Generic;
+using SubworldLibrary;
 
 namespace AdvancedMod
 {
@@ -33,6 +35,11 @@ namespace AdvancedMod
         public bool InfiniteCrystal;
         public bool PrototypeForceWindElement;
         public bool PrototypeReactionExtraWindBurst;
+
+        /// <summary>
+        /// 玩家在当前帧聚合出的元素战斗数值状态。
+        /// </summary>
+        public ElementCombatPlayerState ElementCombatState { get; } = new();
 
         public static Vector2 DeathPosition;
 
@@ -86,6 +93,12 @@ namespace AdvancedMod
             MiniDiagrammer = false;
             PrototypeForceWindElement = false;
             PrototypeReactionExtraWindBurst = false;
+            ElementCombatState.Reset();
+        }
+
+        public override void PostUpdateEquips()
+        {
+            ElementCombatState.CollectFromEquipment(Player);
         }
     }
 }

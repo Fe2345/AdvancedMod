@@ -1,5 +1,9 @@
-﻿using Terraria;
+﻿using Microsoft.Xna.Framework;
+using System;
+using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.Utilities;
 
 namespace AdvancedMod.Utils
 {
@@ -18,24 +22,114 @@ namespace AdvancedMod.Utils
         {
             return null;
         }
-        //public static CalamityVanillaAIOverrideNPC AIOverrideNPC(this NPC npc) => npc.GetGlobalNPC<CalamityVanillaAIOverrideNPC>();
-        /*
-        public static T? AIOverride<T>(this NPC npc)
+
+        public static Vector2 AddJitter(
+            Vector2 point,
+            UnifiedRandom random,
+            float jitterXTiles,
+            float jitterYTiles)
         {
-            VanillaAIOverride aiOverride = npc.GetGlobalNPC<CalamityVanillaAIOverrideNPC>().AIOverride;
-            if (aiOverride == null)
-                throw new System.Exception("NPC does not have an AI Override");
+            float Tile = 16f;
+            float offsetX = RandomRange(random, -jitterXTiles * Tile, jitterXTiles * Tile);
+            float offsetY = RandomRange(random, -jitterYTiles * Tile, jitterYTiles * Tile);
 
-            if (aiOverride is T ai)
-                return ai;
-
-            throw new System.Exception($"NPC's AI Override is not of Type {typeof(T).Name}");
+            return new Vector2(point.X + offsetX, point.Y + offsetY);
         }
-        public static CalamityTileCollisionHarmNPC FlungNPC(this NPC npc) => npc.GetGlobalNPC<CalamityTileCollisionHarmNPC>();
-        public static CalamityPolarityNPC PolarityNPC(this NPC npc) => npc.GetGlobalNPC<CalamityPolarityNPC>();
-        public static CalamityGlobalItem Calamity(this Item item) => item.GetGlobalItem<CalamityGlobalItem>();
-        public static CalamityGlobalProjectile Calamity(this Projectile proj) => proj.GetGlobalProjectile<CalamityGlobalProjectile>();
-        public static TransformationPlayer Transformation(this Player player) => player.GetModPlayer<TransformationPlayer>();
-        */
+
+        private static float RandomRange(UnifiedRandom random, float minValue, float maxValue)
+        {
+            return minValue + (float)random.NextDouble() * (maxValue - minValue);
+        }
+    }
+
+    /// <summary>
+    /// 用途：实现一次独立的追加伤害。该伤害吃玩家职业增伤，吃目标防御和减伤，可暴击，可走自定义乘区，并且不被 NPC.immune 无敌帧吞掉
+    /// </summary>
+    public sealed class ExtraStrikePlayer : ModPlayer
+    {
+        internal bool InExtraStrike;
+    }
+
+    public static class ExtraStrikeHelper
+    {
+        public static bool TryStrikeExtraDamage(
+            Player player,
+            NPC target,
+            int baseDamage,
+            DamageClass damageClass,
+            int hitDirection,
+            float baseKnockback = 0f,
+            float sourceMultiplier = 1f,
+            float finalMultiplier = 1f,
+            float critChanceBonus = 0f,
+            bool canCrit = true,
+            bool damageVariation = true
+        )
+        {
+            if (player == null || target == null || damageClass == null)
+                return false;
+
+            if (!player.active || player.dead)
+                return false;
+
+            if (!target.active || target.life <= 0 || target.dontTakeDamage || target.immortal)
+                return false;
+
+            if (baseDamage <= 0)
+                return false;
+
+            if (hitDirection == 0)
+                hitDirection = player.Center.X < target.Center.X ? 1 : -1;
+
+            if (Main.netMode == NetmodeID.MultiplayerClient && player.whoAmI != Main.myPlayer)
+                return false;
+
+            ExtraStrikePlayer modPlayer = player.GetModPlayer<ExtraStrikePlayer>();
+
+            if (modPlayer.InExtraStrike)
+                return false;
+
+            int sourceDamage = (int)Math.Round(player.GetTotalDamage(damageClass).ApplyTo(baseDamage));
+
+            if (sourceDamage < 1)
+                sourceDamage = 1;
+
+            float knockback = player.GetTotalKnockback(damageClass).ApplyTo(baseKnockback);
+
+            float critChance = player.GetTotalCritChance(damageClass) + critChanceBonus;
+
+            if (critChance < 0f)
+                critChance = 0f;
+
+            bool crit = canCrit && Main.rand.NextDouble() * 100.0 < critChance;
+
+            NPC.HitModifiers modifiers = target.GetIncomingStrikeModifiers(damageClass, hitDirection);
+
+            modifiers.ArmorPenetration += player.GetTotalArmorPenetration(damageClass);
+
+            modifiers.SourceDamage *= sourceMultiplier;
+            modifiers.FinalDamage *= finalMultiplier;
+
+            NPC.HitInfo extraHit = modifiers.ToHitInfo(
+                baseDamage: sourceDamage,
+                crit: crit,
+                baseKnockback: knockback,
+                damageVariation: damageVariation,
+                luck: player.luck
+            );
+
+            modPlayer.InExtraStrike = true;
+
+            try
+            {
+                player.StrikeNPCDirect(target, extraHit);
+            }
+            finally
+            {
+                modPlayer.InExtraStrike = false;
+            }
+
+            return true;
+        }
     }
 }
