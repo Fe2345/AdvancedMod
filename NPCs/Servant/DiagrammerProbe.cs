@@ -13,23 +13,30 @@ namespace AdvancedMod.NPCs.Servant
     public sealed class DiagrammerProbe : ModNPC
     {
         public override string Texture => $"{Mod.Name}/Assets/Textures/NPCs/DiagrammerProbe";
-        private enum ProbeMode : byte
-        {
-            Guard = 0,
-            Suicide = 1,
-            Jammer = 2
-        }
 
+        /// <summary>
+        /// ai[0]：所属树状图设计者Boss的NPC索引。
+        /// </summary>
         private int BossIndex => (int)NPC.ai[0];
-        private ProbeMode Mode
+
+        /// <summary>
+        /// ai[1]：探测器当前形态，复用Boss侧定义以避免编号分叉。
+        /// </summary>
+        private TreeDiagrammer.ProbeMode Mode
         {
-            get => (ProbeMode)(int)NPC.ai[1];
+            get => (TreeDiagrammer.ProbeMode)(int)NPC.ai[1];
             set => NPC.ai[1] = (float)value;
         }
 
+        /// <summary>
+        /// ai[2]：基础探测器使用环绕槽位；追杀探测器后续使用正交矩阵方向，取值为1或-1。
+        /// </summary>
         private int Slot => (int)NPC.ai[2];
 
-        private bool ForcedLaserMode => (int)NPC.ai[3] == 3;
+        /// <summary>
+        /// ai[3]：探测器类别，基础探测器为Base，后续追杀探测器为Chase。
+        /// </summary>
+        private TreeDiagrammer.ProbeKind Kind => (TreeDiagrammer.ProbeKind)(int)NPC.ai[3];
         private const float ProbeLaserSpeed = 11f;
         private const float ExplosionRadius = 72f;
 
@@ -37,7 +44,7 @@ namespace AdvancedMod.NPCs.Servant
         {
             NPC.width = 36;
             NPC.height = 36;
-            NPC.lifeMax = 2500;
+            NPC.lifeMax = 1200;
             NPC.damage = 40;
             NPC.defense = 10;
             NPC.noGravity = true;
@@ -59,23 +66,17 @@ namespace AdvancedMod.NPCs.Servant
                 return;
             }
 
-            if (ForcedLaserMode)
-            {
-                RunJammerLaser(boss);
-                return;
-            }
-
             switch (Mode)
             {
-                case ProbeMode.Guard:
+                case TreeDiagrammer.ProbeMode.Guard:
                     RunGuardOrbit(boss);
                     break;
 
-                case ProbeMode.Suicide:
+                case TreeDiagrammer.ProbeMode.Suicide:
                     RunSuicideChase(boss);
                     break;
 
-                case ProbeMode.Jammer:
+                case TreeDiagrammer.ProbeMode.Jammer:
                     RunJammerLaser(boss);
                     break;
             }
@@ -210,12 +211,12 @@ namespace AdvancedMod.NPCs.Servant
 
         public override bool CanHitNPC(NPC target)
         {
-            return Mode != ProbeMode.Suicide;
+            return Mode != TreeDiagrammer.ProbeMode.Suicide;
         }
 
         public override bool CanHitPlayer(Player target, ref int cooldownSlot)
         {
-            return Mode != ProbeMode.Suicide;
+            return Mode != TreeDiagrammer.ProbeMode.Suicide;
         }
 
         private Player FindTouchingPlayer()

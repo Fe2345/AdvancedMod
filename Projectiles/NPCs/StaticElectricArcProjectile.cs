@@ -1,5 +1,5 @@
-﻿// 编写日期: 2026-05-15
-// 用途: 敌方使用的固定位置直线电弧弹幕，连接起点和终点并持续一段时间
+﻿// 编写日期: 2026-05-22
+// 用途: 敌方固定坐标电弧弹幕，在两个世界坐标之间绘制稳定淡蓝色电弧，并可切换为伤害判定线
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -17,6 +17,15 @@ namespace AdvancedMod.Projectiles.NPCs
         private const float LineWidth = 10f;
         private const float TelegraphMode = 0f;
         private const float DamageMode = 1f;
+
+        private const float SegmentLength = 24f;
+        private const int MinSegments = 4;
+        private const int MaxSegments = 48;
+
+        private const float TelegraphJitterPixels = 7f;
+        private const float DamageJitterPixels = 9f;
+
+        private static readonly Rectangle PixelSource = new Rectangle(0, 0, 1, 1);
 
         public override string Texture => $"Terraria/Images/Projectile_{ProjectileID.None}";
 
@@ -38,6 +47,7 @@ namespace AdvancedMod.Projectiles.NPCs
             Projectile.tileCollide = false;
             Projectile.ignoreWater = true;
 
+            Projectile.netImportant = true;
             Projectile.timeLeft = 3600;
         }
 
@@ -64,8 +74,8 @@ namespace AdvancedMod.Projectiles.NPCs
 
             Projectile.hostile = IsDamaging;
 
-            Lighting.AddLight(StartPoint, 0.15f, 0.45f, 0.75f);
-            Lighting.AddLight(EndPoint, 0.15f, 0.45f, 0.75f);
+            Lighting.AddLight(StartPoint, 0.12f, 0.34f, 0.55f);
+            Lighting.AddLight(EndPoint, 0.12f, 0.34f, 0.55f);
         }
 
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
@@ -77,12 +87,9 @@ namespace AdvancedMod.Projectiles.NPCs
 
             float collisionPoint = 0f;
 
-            Vector2 targetPosition = new Vector2(targetHitbox.X, targetHitbox.Y);
-            Vector2 targetSize = new Vector2(targetHitbox.Width, targetHitbox.Height);
-
             return Collision.CheckAABBvLineCollision(
-                targetPosition,
-                targetSize,
+                targetHitbox.TopLeft(),
+                targetHitbox.Size(),
                 StartPoint,
                 EndPoint,
                 LineWidth,
@@ -92,21 +99,64 @@ namespace AdvancedMod.Projectiles.NPCs
 
         public override bool PreDraw(ref Color lightColor)
         {
-            float opacity = MathHelper.Clamp(Projectile.timeLeft / 8f, 0f, 1f);
-
             Vector2 start = StartPoint - Main.screenPosition;
             Vector2 end = EndPoint - Main.screenPosition;
 
-            Color outerColor = IsDamaging ? new Color(80, 180, 255, 0) : new Color(255, 80, 50, 0);
-            Color innerColor = IsDamaging ? Color.White : new Color(255, 230, 160);
-
-            DrawLineWithPixel(Main.spriteBatch, start, end, outerColor * opacity, 10f);
-            DrawLineWithPixel(Main.spriteBatch, start, end, innerColor * opacity, 3f);
+            DrawStableArc(start, end);
 
             return false;
         }
 
-        private static void DrawLineWithPixel(SpriteBatch spriteBatch, Vector2 start, Vector2 end, Color color, float width)
+        private void DrawStableArc(Vector2 start, Vector2 end)
+        {
+            Vector2 offset = end - start;
+            float length = offset.Length();
+
+            if (!float.IsFinite(length) || length <= 0f)
+            {
+                return;
+            }
+
+            Vector2 direction = offset / length;
+            Vector2 normal = new Vector2(-direction.Y, direction.X);
+
+            int segmentCount = Math.Clamp((int)MathF.Ceiling(length / SegmentLength), MinSegments, MaxSegments);
+
+            float fadeOpacity = MathHelper.Clamp(Projectile.timeLeft / 10f, 0f, 1f);
+            float baseOpacity = IsDamaging ? 0.95f : 0.62f;
+            float opacity = fadeOpacity * baseOpacity;
+
+            float jitter = IsDamaging ? DamageJitterPixels : TelegraphJitterPixels;
+            int seed = BuildStableSeed(StartPoint, EndPoint, Projectile.identity, IsDamaging);
+
+            Vector2 previous = start;
+
+            for (int i = 1; i <= segmentCount; i++)
+            {
+                float progress = i / (float)segmentCount;
+                Vector2 current = start + offset * progress;
+
+                if (i < segmentCount)
+                {
+                    float envelope = MathF.Sin(progress * MathHelper.Pi);
+                    float noise = StableSignedNoise(seed, i);
+                    current += normal * noise * jitter * envelope;
+                }
+
+                DrawArcSegment(previous, current, opacity);
+
+                previous = current;
+            }
+        }
+
+        private static void DrawArcSegment(Vector2 start, Vector2 end, float opacity)
+        {
+            DrawLine(start, end, new Color(80, 190, 255, 180) * (0.35f * opacity), 14f);
+            DrawLine(start, end, new Color(130, 220, 255, 220) * (0.70f * opacity), 6f);
+            DrawLine(start, end, new Color(230, 250, 255, 255) * (0.85f * opacity), 2f);
+        }
+
+        private static void DrawLine(Vector2 start, Vector2 end, Color color, float width)
         {
             Vector2 delta = end - start;
             float length = delta.Length();
@@ -116,17 +166,46 @@ namespace AdvancedMod.Projectiles.NPCs
                 return;
             }
 
-            spriteBatch.Draw(
+            Main.EntitySpriteDraw(
                 TextureAssets.MagicPixel.Value,
                 start,
-                null,
+                PixelSource,
                 color,
                 delta.ToRotation(),
-                Vector2.Zero,
+                new Vector2(0f, 0.5f),
                 new Vector2(length, width),
                 SpriteEffects.None,
                 0f
             );
+        }
+
+        private static int BuildStableSeed(Vector2 start, Vector2 end, int identity, bool isDamaging)
+        {
+            unchecked
+            {
+                int hash = 17;
+                hash = hash * 31 + (int)MathF.Round(start.X);
+                hash = hash * 31 + (int)MathF.Round(start.Y);
+                hash = hash * 31 + (int)MathF.Round(end.X);
+                hash = hash * 31 + (int)MathF.Round(end.Y);
+                hash = hash * 31 + identity;
+                hash = hash * 31 + (isDamaging ? 1 : 0);
+                return hash;
+            }
+        }
+
+        private static float StableSignedNoise(int seed, int index)
+        {
+            unchecked
+            {
+                int value = seed;
+                value ^= index * 374761393;
+                value = (value ^ (value >> 13)) * 1274126177;
+                value ^= value >> 16;
+
+                int positive = value & 0x7fffffff;
+                return positive / 1073741824f - 1f;
+            }
         }
 
         public static int SpawnHostile(
@@ -173,7 +252,7 @@ namespace AdvancedMod.Projectiles.NPCs
 
             Vector2 offset = end - start;
 
-            if (offset.LengthSquared() <= 0f)
+            if (!IsFinite(offset) || offset.LengthSquared() <= 0f)
             {
                 return -1;
             }

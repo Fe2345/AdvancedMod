@@ -36,6 +36,10 @@ namespace AdvancedMod
         public bool PrototypeForceWindElement;
         public bool PrototypeReactionExtraWindBurst;
 
+        //virtual values
+        public int negativeLife;
+        public int extraLife;
+
         /// <summary>
         /// 玩家在当前帧聚合出的元素战斗数值状态。
         /// </summary>
@@ -99,6 +103,11 @@ namespace AdvancedMod
         public override void PostUpdateEquips()
         {
             ElementCombatState.CollectFromEquipment(Player);
+        }
+
+        public override void PostUpdate()
+        {
+            
         }
     }
 }

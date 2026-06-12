@@ -25,6 +25,9 @@ namespace AdvancedMod
         public static bool downedTreeDiagrammer;
 		public static bool downedTheEnd; //作为最终boss击败的保留值，用于设计一些需要击败最终boss才会解禁的效果
 
+        //special
+        public static bool TeyvatWorld => Main.ActiveWorldFileData.SeedText.Equals("Teyvat", StringComparison.OrdinalIgnoreCase);
+
         public override void  SaveWorldData(TagCompound tag)
         {
             List<string> data = new List<string>();

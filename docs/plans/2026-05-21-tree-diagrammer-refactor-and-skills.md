@@ -290,7 +290,7 @@ Expected: 编译通过；普通悬停行为仍可工作。
 ```text
 Prepare：锁定玩家上方30格锚点
 Reposition：快速到达锚点，最多120刻
-Active：每8刻发射普通瞄准激光，持续300刻
+Active：每90刻发射普通瞄准激光，持续900刻
 Recover：速度阻尼15刻
 End：进入技能2 EnsureBaseProbes
 ```
@@ -338,7 +338,7 @@ End：入场时进入PhaseOne，普通技能池时回到Idle
 ```text
 ai[0] = Boss whoAmI
 ai[1] = ProbeMode
-ai[2] = 基础槽位 0/1/2
+ai[2] = 追杀模式下正交矩阵的方向，取值为1和-1
 ai[3] = ProbeKind，0表示基础探测器
 ```
 
@@ -379,8 +379,8 @@ Expected: 基础探测器不会无限重复召唤；编译通过。
 ```text
 Prepare：锁定锚点和初始瞄准点
 Reposition：移动到玩家上方30格附近
-Telegraph：蓄能30刻
-Active：持续900刻，每8刻发射普通激光，动作状态为AnchorDrift
+Telegraph：蓄能90刻
+Active：持续900刻，每90刻发射普通激光，动作状态为AnchorDrift
 Recover：停火并速度阻尼30刻
 End：回到Idle
 ```
@@ -411,14 +411,14 @@ Expected: 普通激光不再直接被玩家实时牵引；编译通过。
 **Files:**
 - Modify: `NPCs/Boss/TreeDiagrammer.cs`
 - Verify: `Projectiles/NPCs/HostileStaticArcProjectile.cs`
+- Verify: `Projectiles/Effects/WarningMarkerProjectile.cs`
 
 **Subskills:**
 
 ```text
 Prepare：计算6个空中点位并保存到字段
 Telegraph：生成点间预警电弧
-ActiveA：释放第一组压制激光束
-ActiveB：释放第二组压制激光束
+Active：释放两组压制激光束
 Recover：电弧残留和停顿
 End：二阶段开场时进入PhaseTwo，否则回到Idle
 ```
@@ -438,21 +438,16 @@ private Vector2[] sixPointArcPoints;
 使用 `HostileStaticArcProjectile.SpawnTelegraph(...)` 连接 6 点：
 
 ```text
-p1-p2, p2-p3, p3-p4, p4-p5, p5-p6
+p1-p3, p3-p5, p2-p4, p4-p6, p3-p4，p5-p6
 ```
 
 具体连线可在实现时按战斗表现调整，但必须保持“6点电弧封锁”的可见预警。
 
 **Step 3: Spawn damage arcs or laser beams**
 
-至少生成两组压制线：
+至少生成两组压制激光：
 
-```text
-第一组：低层横向压制
-第二组：高/中层交叉压制
-```
-
-如果没有专用激光束弹幕，先复用 `HostileStaticArcProjectile.SpawnHostile(...)` 完成可伤害线段。
+每90刻沿着朝向玩家方向，发射一对普通激光（夹角为90度），持续900刻，动作为 `RailShift`，轨道在三个点位中切换。
 
 **Step 4: Phase opening behavior**
 
@@ -481,8 +476,8 @@ Expected: 技能4有预警、有伤害段、有阶段开场收束；编译通过
 ```text
 Prepare：锁定中心锚点和轨道列表
 Reposition：移动到中心轨道
-Telegraph：强激光蓄能45刻
-Active：持续600刻，每5刻发射强激光，动作状态为RailShift
+Telegraph：强激光蓄能60刻
+Active：持续720刻，每60刻发射强激光，动作状态为RailShift
 Recover：停止激光并阻尼45刻
 End：回到Idle
 ```

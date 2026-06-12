@@ -130,15 +130,6 @@ Mods: {
 					[c/00008b:-制作站-]
 					'''
 			}
-
-			Tarot0:{
-				DisplayName: #0 愚者
-				Tooltip:
-					'''
-					特殊效果：右键以切换追加游戏难度
-					[c/ffff00:异变模式]：
-					'''
-			}
 		}
 
 		Buffs: {
@@ -230,10 +221,6 @@ Mods: {
 			TreeDiagrammer.DisplayName: 树状图设计者
 			DiagrammerCannon.DisplayName: 树状图主炮
 			DiagrammerProbe.DisplayName: 树状图探测器
-		}
-
-		Bestiary: {
-			TreeDiagrammer: "某位精通太空技术的工程师制造的科学兼战斗用空间站。绝对的完美，如果他没有忘记做图灵测试的话"
 		}
 	}
 }

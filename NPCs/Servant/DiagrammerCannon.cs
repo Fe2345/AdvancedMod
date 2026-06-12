@@ -18,8 +18,8 @@ public sealed class DiagrammerCannon : ModNPC
     {
         NPC.width = 120;
         NPC.height = 80;
-        NPC.lifeMax = 12000;
-        NPC.damage = 90;
+        NPC.lifeMax = 3000;
+        NPC.damage = 80;
         NPC.defense = 20;
         NPC.noGravity = true;
         NPC.noTileCollide = true;
