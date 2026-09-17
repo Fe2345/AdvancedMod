@@ -1,7 +1,5 @@
-.worktrees/
-AGENTS.md
-CLAUDE.md
-*.bak
 .vs/
-obj/
 bin/
+obj/
+.worktrees/
+*.bak
