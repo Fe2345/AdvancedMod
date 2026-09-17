@@ -1,10 +1,1 @@
-ADVANCED(先进) MOD v0.3.0
-
-作者：
-SwordOfWar（主体部分）
-Latic7（资源制作）
-
-近期更新：
-
-v0.3.0
-- 元素伤害（引入）
+ADVANCED MOD v0.4.0

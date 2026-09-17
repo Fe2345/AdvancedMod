@@ -44,13 +44,7 @@ namespace AdvancedMod.DamageClasses.Element.State
 
         private ElementState? GetState(ElementType element)
         {
-            return element switch
-            {
-                ElementType.Thunder => _component.Thunder,
-                ElementType.Wind => _component.Wind,
-                ElementType.Pyro => _component.Pyro,
-                _ => null,
-            };
+            return _component[element];
         }
     }
 }
