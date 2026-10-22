@@ -10,6 +10,7 @@
 	- Graphics : 图形渲染
 	- Element : 元素反应核心模块
 	- Utils : 工具类
+	- Effects : 效果管理
 - Assets : 资源文件
 - Localization : 本地化文件
 - docs : 文档

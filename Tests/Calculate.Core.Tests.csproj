@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Program.cs" />
+    <Compile Include="..\Basic\Tag\*.cs" Link="Tag\%(Filename)%(Extension)" />
+    <Compile Include="..\Basic\Calculate\Core\*.cs" Link="Core\%(Filename)%(Extension)" />
+    <Compile Include="..\Basic\Calculate\Diagnostics\*.cs" Link="Diagnostics\%(Filename)%(Extension)" />
+  </ItemGroup>
+</Project>
