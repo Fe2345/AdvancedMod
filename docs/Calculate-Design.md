@@ -1,16 +1,19 @@
 # Calculate 类型与接口设计
 
-> 2026-10-22 按代码同步：Core、TML 调度、四条 Hook、加载生命周期、原生字段适配和 JSONL 重放已实现。本文描述当前接口；明确标注为后续的功能尚未实现。代码实现、离线验证和实机验收分别记录，见第 9 节与 [TODO.md](TODO.md)。
+> 2026-10-22 按代码同步：Core、TML 调度、四条 Hook、加载生命周期、原生字段适配和 JSONL 重放已实现。本文描述当前接口；明确标注为后续的功能尚未实现。双职业桥接设计已于本日撤销，见根目录 [CHANGES.md](../CHANGES.md)。代码实现、离线验证和实机验收分别记录，见第 9 节与 [TODO.md](TODO.md)。
 
 ## 当前已实现边界
 
-- `Basic/Tag/TagEnum.cs` 保留作者的八项枚举；`Tag.cs` 提供 TagEntry 与 TagSet。同类型标签不可重复，只读，不实现覆盖、继承或修改。
+- 2026-10-23：ReactionSlotCount 已扩为 20（0..19），元素仍为 10 槽，擢升仍为 4 槽；新增空槽不自动启用。ElementTarget 已共用该容量保存目标 CD，见 [Element-Design.md](Element-Design.md)；单人游戏入口已接入并通过真实客户端测试，见 [Element-Usage.md](Element-Usage.md)。
+- 扩容后逐槽结果结构变化，Trace 规则集版本升为 calculate-2（SchemaVersion 仍为 1），旧 calculate-1 记录拒绝重放，不将版本差异误报为计算差异。Core 23/23 与主项目构建通过。
+
+- `Basic/Tag/TagEnum.cs` 保留作者当前的 15 项枚举；`Tag.cs` 提供 TagEntry 与 TagSet。同类型标签不可重复，只读，不实现覆盖、继承或修改。
 - Core 已包含六类自定义目标、HitSnapshot、CalculationInput、来源与候选记录、HitProposalCollector、DamageCombiner 和 CalculationResult。
 - ContributionWriter 与 GateWriter 当前放在 Core：只依赖纯数据，绑定身份与作用域，不读取 TML 实体。TML 调度器已通过该收集器调用写入器。
-- 元素反应系数槽提交增幅，按 `1 + Σ增幅` 计算，无贡献时为 1；不注册任何具体标签映射。ReactionFactor 独立输出，与 ResistanceFactor 依次写入 SourceDamage 乘法项；AfterDefenseFactor 写入 FinalDamage 乘法项。两个适配重载已通过 CombatPipeline 接入四条 Hook；自定义因子先合入 NativeModifierPlan，适配器只应用一次。实机行为待验证。
+- 元素反应系数槽提交增幅，按 `1 + Σ增幅` 计算，无贡献时为 1；已登记当前标签注释对应的 12 条基础映射。ReactionFactor 独立输出，与 ResistanceFactor 依次写入 SourceDamage 乘法项；AfterDefenseFactor 写入 FinalDamage 乘法项。两个适配重载已通过 CombatPipeline 接入四条 Hook；自定义因子先合入 NativeModifierPlan，适配器只应用一次。实机行为待验证。
 - 贡献者使用 `[CombatContributor(1001)]` 特性声明整数 ID。已接入项目构建链的分析器对冲突报告 ADVCalc001 错误；运行时由 CombatContributorAttribute.GetId(Type) 读取同一声明。CombatRegistry 已使用此方法，不再从可动态计算的实例 Id 属性取值。
 - 原生数值／控制贡献、NativeModifierPlan、Global Hook、ModSystem 生命周期、JSONL 与命令行重放均已实现。Plan 包含自定义乘区合并后的 SourceDamage／FinalDamage 乘法增量，适配器只应用一次，不再次乘自定义因子。实际用法见 [Calculate-Usage.md](Calculate-Usage.md)。
-- CombatContext 使用受限工厂创建的只读属性类，从物品／弹幕／NPC 的独立 Global 实例读取 AttackProfile（内含 TagSet），缺省 Unknown，不自行合并标签。TagGateRule 具备 Matches，当前没有登记具体映射。元素职业桥接资格规则归后续 Tag 初始化 Register，与标签和规则统一补齐；该入口及桥接当前延期。实时弹幕原型仍待完成。
+- CombatContext 使用受限工厂创建的只读属性类，从物品／弹幕／NPC 的独立 Global 实例读取 AttackProfile（内含 TagSet），缺省 Unknown，不自行合并标签。TagGateRule 具备 Matches，当前已通过 DefaultTagRules 登记 12 条具体映射。双职业桥接设计已撤销，不根据元素标签补算元素职业加成。Tag 注册／更改／继承仍待设计，不包含该桥接。实时弹幕原型仍待完成。
 
 ## 1. 依赖与目录
 
@@ -62,7 +65,7 @@ flowchart LR
 |---|---|---|
 | `Kind` | `ModifierTargetKind` | 反应、抗性、单元素、精通、擢升、备用、原生字段；默认 Invalid 不可使用 |
 | `Field` | `NativeField?` | 仅原生字段有效 |
-| `Index` | `int?` | 仅反应 `0..9`、单元素 `0..9`、擢升 `0..3` 有效 |
+| `Index` | `int?` | 仅反应 `0..19`、单元素 `0..9`、擢升 `0..3` 有效 |
 | `Key` | `string?` | 仅备用区有效，须为已登记的稳定键 |
 
 ```csharp
@@ -81,7 +84,7 @@ ModifierTarget Reserve(string key);
 
 `AttackProfile` 保存 `string? AttackId`、`TagSet Tags`、`bool IsManagedAttack`，以及 `string? SourceItemId`。Unknown 使用空 TagSet、null 身份与非托管标志。SourceItemId 当前仅保存于 Profile，尚未自动捕获或写入 HitSnapshot。
 
-`TagSet` 实现 `IReadOnlyList<TagEntry>`，提供 Count、索引、枚举、`Contains(TagEnum)` 和 `TryGet(TagEnum, out TagEntry)`。构造时复制输入、保留输入顺序，拒绝未定义类型及重复 type，不排序或静默去重。TagEntry 的 type／cannotBeCovered 只读；覆盖标志仅保存。没有字符串标签、ContainsAll／ContainsAny 或注册、继承、更改接口；组合匹配由 TagGateRule 实现。正式标签到槽的映射尚未登记。
+`TagSet` 实现 `IReadOnlyList<TagEntry>`，提供 Count、索引、枚举、`Contains(TagEnum)` 和 `TryGet(TagEnum, out TagEntry)`。构造时复制输入、保留输入顺序，拒绝未定义类型及重复 type，不排序或静默去重。TagEntry 的 type／cannotBeCovered 只读；覆盖标志仅保存。没有字符串标签、ContainsAll／ContainsAny 或注册、继承、更改接口；组合匹配由 TagGateRule 实现。当前基础映射已登记，槽号见 Calculate-Usage.md；不会从元素组合推导反应，也不会将异化资格标签当作已异化反应。
 
 ## 3. 运行时上下文与可重放摘要
 
@@ -198,7 +201,7 @@ internal void Clear();
 
 内部保存三个有序列表：标签规则、普通贡献者、后置规则，以及用于查重的贡献者 ID、规则 ID、备用键集合。冻结后禁止新增；卸载时清理。原生字段能力表和六类自定义公式是固定定义，不建可任意替换公式的插件系统。
 
-生命周期由 `CalculateSystem : ModSystem` 管理：在 `PostSetupContent()` 中调用一个显式登记入口 `RegisterDefinitions(CombatRegistry registry)`，依次登记备用键、标签规则、贡献者和后置规则，最后 Freeze 并创建管线。该登记入口当前为空；后续内容的登记函数由它显式调用，顺序由代码确定，不依赖反射枚举或不同 ModSystem 的 Hook 执行顺序。在 `Unload()` 中释放调试流、清空注册表和管线引用；即使加载未完成也可安全清理。登记函数不读取当前世界或玩家状态；这些条件留在命中时判断。
+生命周期由 `CalculateSystem : ModSystem` 管理：在 `PostSetupContent()` 中调用一个显式登记入口 `RegisterDefinitions(CombatRegistry registry)`，依次登记备用键、标签规则、贡献者和后置规则，最后 Freeze 并创建管线。该登记入口已显式注册 DefaultTagRules.All；后续数值贡献者的登记函数由它调用，顺序由代码确定，不依赖反射枚举或不同 ModSystem 的 Hook 执行顺序。在 `Unload()` 中释放调试流、清空注册表和管线引用；即使加载未完成也可安全清理。登记函数不读取当前世界或玩家状态；这些条件留在命中时判断。
 
 选择该阶段依据本地 TML 文档：PostSetupContent 在内容设置完成后执行，适合建立内容查询表。首版登记范围是本 Mod；以后若开放第三方登记，再单独约定跨 Mod 生命周期。
 
@@ -281,7 +284,8 @@ void TmlHitAdapter.Apply(CalculationResult result, ref Player.HurtModifiers modi
 - 不开放 TargetDamageMultiplier、ModifyHitInfo／ModifyHurtInfo 回调和只读属性的写入。
 - 关闭原版字段仅排除 Calculate 管理的增量，保留进入 Hook 前的 TML／其他 Mod 修正。
 - 反应系数与抗性在防御前，映射到 SourceDamage 乘法项；单元素、精通、擢升、备用四类在防御后，映射到 FinalDamage 乘法项。阶段由目标的固定定义决定，同槽贡献者不能各自选择阶段。
-- 后续原版攻击额外获得的元素职业直接伤害加成仍在防御前，由具名贡献提交独立乘法因子，不能再次应用于原生元素职业攻击。“非元素职业攻击带任意现有元素标签”的资格规则由后续 Tag 初始化 Register 统一登记；本轮不实现该规则及自动桥接。
+- 职业加成由攻击自身的 DamageClass 与 TML 职业统计机制处理；Calculate 不因元素标签额外读取或补算 ElementalDamageClass 的职业加成，不建立双职业桥接贡献或资格规则。
+- “元素伤害”专指元素职业的伤害，带元素标签的其他职业伤害不因此改变职业身份。元素相关自定义增伤与反应资格由标签、已登记规则及反应系统裁定，不以 DamageClass 作为资格判据；元素职业身份本身也不自动启用乘区或触发反应。
 - 写入原生乘法项遵循 TML 的 Base／Additive／Multiplicative／Flat 次序。SourceDamage.Base 受该乘法项影响，SourceDamage.Flat、FlatBonusDamage 等保持原生位置；FinalDamage 的 Flat 同样保留在其乘法之后。不宣称自定义因子能覆盖其他 Mod 在任意后续 Hook 追加的全部伤害。
 
 原生字段名枚举同时包含可启停的控制目标，如 CriticalStrike、MaximumDamage、InstantKill、CancelHurt、KnockbackDisabled、HitDirection、IgnoreDefense；这些目标只允许对应的具名控制方法，不能通过 AddNative 提交数值。
@@ -311,15 +315,16 @@ Replay 使用记录的候选与决定调用同一个 DamageCombiner，比较开�
 
 ### 已实现与离线验证
 
-- Core 六类自定义乘区、原生增量计划、收集器和启停裁决已实现；2026-10-22 Core 测试 19/19 通过，包含 JSONL 往返、篡改检测、规则数据视图、输入校验及 Boss 后置禁用样例。
-- 注册表、管线、四条 Hook、逐实体 Profile、加载卸载与 Mod.Logger 连接已实现；RegisterDefinitions 仍为空，未登记正式标签映射或内容贡献者。
+- Core 六类自定义乘区、原生增量计划、收集器和启停裁决已实现；2026-10-22 Core 测试 22/22 通过，包含 JSONL 往返、篡改检测、规则数据视图、输入校验及 Boss 后置禁用样例。
+- 注册表、管线、四条 Hook、逐实体 Profile、加载卸载与 Mod.Logger 连接已实现；RegisterDefinitions 已登记 12 条正式基础标签规则，尚无数值贡献者。
 - 两个 TML 适配重载已接入；2026-10-22 NPC／玩家真实类型离线测试通过，覆盖已有分量保留、倍率位置、穿甲与上限。
 - 2026-10-22 主项目构建（BuildMod=false）成功，0 警告、0 错误；不代表游戏内打包或运行通过。
 - 贡献者 ID 验证脚本和独立命令行重放样例此前已有验收记录，本次文档同步未重跑。
 
 ### 待实现与待补充验证
 
-- 待实现：正式标签及槽映射登记、元素职业桥接、弹幕生成来源和实时属性、Tag 更改／继承、Effects 组合、Element 事务及 DoT。
+- 待实现：正式复杂反应效果与联机入口、弹幕实时属性、通用 Tag 更改／继承、Effects 组合及 DoT。Element 的单人原生事务已接入，武器配置与 NewProjectile 封装提供显式标签和元素量。
+- 已验证：离线检查正式槽位映射、异化资格及覆盖；Element 框架检查最终标签进入 Calculate 及乘区只应用一次。单人真实客户端检查四路径与临时反应系数，联机反应资格仍待验证。
 - 待补充离线验证：完整 CombatRegistry／CombatPipeline 调度、贡献者实体读取与异常路径。现有 Core 测试不加载 Terraria，适配测试也不运行完整管线。
 - 待端到端验证：Boss／饰品样例在正式贡献者、游戏上下文及 JSONL 中的完整表现；纯计算样例通过不等于已实现正式 Boss 或饰品。
 

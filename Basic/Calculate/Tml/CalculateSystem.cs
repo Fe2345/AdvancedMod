@@ -46,7 +46,9 @@ public sealed class CalculateSystem : ModSystem
 
     private static void RegisterDefinitions(CombatRegistry registry)
     {
-        // 内容登记统一放在此处，显式调用各内容的登记函数；当前不注册具体标签映射。
+        // 基础标签规则先登记；具体数值仍由后续内容贡献者提供。
+        foreach (TagGateRule rule in DefaultTagRules.All)
+            registry.Register(rule);
     }
 
     private void WriteTrace(CalculationInput input, CalculationResult result)

@@ -1,0 +1,29 @@
+DamageClasses.ElementalDamageClass.DisplayName: Elemental Damage Class
+NPCs.ElementProbeNPC.DisplayName: Element Probe N P C
+Projectiles.ElementProbeProjectile.DisplayName: Element Probe Projectile
+
+Configs: {
+	CombatTraceConfig: {
+		DisplayName: Combat Trace Config
+
+		Enabled: {
+			Label: Enabled
+			Tooltip: ""
+		}
+
+		SourceIds: {
+			Label: Source Ids
+			Tooltip: ""
+		}
+
+		PlayerIndices: {
+			Label: Player Indices
+			Tooltip: ""
+		}
+
+		TargetIds: {
+			Label: Target Ids
+			Tooltip: ""
+		}
+	}
+}

@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="../../Basic/Tag/*.cs" />
+    <Compile Include="../../Basic/Calculate/Core/*.cs" />
+    <Compile Include="../../Basic/Element/*.cs" />
+  </ItemGroup>
+</Project>

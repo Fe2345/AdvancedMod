@@ -9,5 +9,10 @@ namespace AdvancedMod.Basic.Global;
 public sealed class CombatGlobalProjectile : GlobalProjectile
 {
     public override bool InstancePerEntity => true;
+    /// <summary>本弹幕独立持有的元素消耗修正，不从武器或父弹幕继承；禁止填零。</summary>
+    public float ElementConsumptionMultiplier = 1f;
+    /// <summary>本弹幕独立持有的反应 CD 修正，不从武器或父弹幕继承。</summary>
+    public float ReactionCooldownMultiplier = 1f;
+    public double ElementAmount { get; internal set; }
     public AttackProfile Profile { get; internal set; } = AttackProfile.Unknown;
 }

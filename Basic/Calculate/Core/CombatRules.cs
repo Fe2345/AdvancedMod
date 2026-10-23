@@ -83,6 +83,31 @@ public sealed class TagGateRule
     }
 }
 
+/// <summary>按标签注释显式定义基础启用规则；槽号不从枚举值推导。</summary>
+internal static class DefaultTagRules
+{
+    public static ReadOnlyCollection<TagGateRule> All { get; } = Array.AsReadOnly(new[]
+    {
+        Enable(TagEnum.Pyro, ModifierTarget.ElementDamage(1)),
+        Enable(TagEnum.Hydro, ModifierTarget.ElementDamage(2)),
+        Enable(TagEnum.Electro, ModifierTarget.ElementDamage(3)),
+        Enable(TagEnum.Cryo, ModifierTarget.ElementDamage(4)),
+        Enable(TagEnum.Chlorophyte, ModifierTarget.ElementDamage(5)),
+        Enable(TagEnum.Anemo, ModifierTarget.ElementDamage(6)),
+        Enable(TagEnum.HydroElectro, ModifierTarget.Reaction(1)),
+        Enable(TagEnum.HydroAnemo, ModifierTarget.Reaction(2)),
+        Enable(TagEnum.PytoCryo, ModifierTarget.Reaction(3)),
+        Enable(TagEnum.Hallowed, ModifierTarget.Ascension(1)),
+        Enable(TagEnum.Lunacy, ModifierTarget.Ascension(2)),
+        Enable(TagEnum.Originated, ModifierTarget.Ascension(3))
+    });
+
+    // Hallow／Lunar／Origin 仅表示异化资格，不代表反应已异化，不在此启用擢升。
+    private static TagGateRule Enable(TagEnum tag, ModifierTarget target) =>
+        new($"AdvancedMod:Tag.{tag}", target, true, new[] { tag },
+            Array.Empty<TagEnum>(), Array.Empty<TagEnum>());
+}
+
 public interface ICombatRule
 {
     string Id { get; }

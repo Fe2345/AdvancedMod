@@ -1,6 +1,7 @@
 using Terraria.ModLoader;
 using Terraria;
 using AdvancedMod.Basic.Calculate.Tml;
+using AdvancedMod.Basic.Element;
 
 namespace AdvancedMod.Basic.Global;
 
@@ -11,11 +12,16 @@ public sealed class CombatGlobalNPC : GlobalNPC
 {
     public override bool InstancePerEntity => true;
     public AttackProfile Profile { get; internal set; } = AttackProfile.Unknown;
+    public double ElementAmount { get; internal set; }
+    public ElementTarget Elements { get; private set; } = new(ElementTarget.DefaultOperationLimit);
+
+    public override void SetDefaults(NPC npc) => Elements = new(ElementTarget.DefaultOperationLimit);
 
     public override void ModifyHitByItem(NPC npc, Player player, Item item, ref NPC.HitModifiers modifiers)
     {
         var context = CombatContext.ForItemHit(CalculateSystem.NextHitId(), player, item, npc,
             item.GetGlobalItem<CombatGlobalItem>().Profile);
+        context = Element.Tml.ElementHitSystem.PrepareNpc(context, ref modifiers);
         CalculateSystem.Pipeline.ModifyNpcHit(in context, ref modifiers);
     }
 
@@ -26,6 +32,10 @@ public sealed class CombatGlobalNPC : GlobalNPC
             return;
         var context = CombatContext.ForProjectileHit(CalculateSystem.NextHitId(), projectile, npc,
             projectile.GetGlobalProjectile<CombatGlobalProjectile>().Profile);
+        context = Element.Tml.ElementHitSystem.PrepareNpc(context, ref modifiers);
         CalculateSystem.Pipeline.ModifyNpcHit(in context, ref modifiers);
     }
+
+    public override bool? CanBeHitByProjectile(NPC npc, Projectile projectile) =>
+        Element.Tml.ElementHitSystem.CanHitNpc(npc, projectile) ? null : false;
 }

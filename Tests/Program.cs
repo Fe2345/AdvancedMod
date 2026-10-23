@@ -8,6 +8,106 @@ using AdvancedMod.Basic.Tag;
 // 直接编译纯计算源文件，不加载 Terraria；失败时进程返回非零状态。
 var cases = new (string Name, Action Run)[]
 {
+    ("反应二十槽边界及扩展槽重放", () =>
+    {
+        Check(DamageConstants.ReactionSlotCount == 20, "反应容量不是 20");
+        Throws<ArgumentOutOfRangeException>(() => ModifierTarget.Reaction(-1));
+        Throws<ArgumentOutOfRangeException>(() => ModifierTarget.Reaction(20));
+        var collector = NewCollector();
+        collector.Collect(10, 0, w =>
+        {
+            Add(w, "首个扩展槽", ModifierTarget.Reaction(10), 0.5f);
+            Add(w, "末槽", ModifierTarget.Reaction(19), 1f);
+        });
+        var input = collector.Seal(Hit());
+        var result = DamageCombiner.Evaluate(input, true);
+        Equal(3f, result.ReactionFactor);
+        var reactions = result.Targets.Where(t => t.Target.Kind == ModifierTargetKind.Reaction).ToArray();
+        Check(reactions.Length == 20 && reactions.Count(t => t.Gate.Enabled) == 2, "槽数或默认开关错误");
+        Equal(3f, result.Plan.Fields.Single(f => f.Field == NativeField.SourceDamage).Stat!.Multiplicative);
+        var trace = CombatTraceJson.Deserialize(CombatTraceJson.Serialize(CombatTrace.Create(Guid.NewGuid(), input, result)));
+        Check(CombatTraceReplay.Replay(trace).Matches, "扩展槽重放不一致");
+        Throws<NotSupportedException>(() => CombatTraceReplay.Replay(trace with { RulesetVersion = "calculate-1" }));
+    }),
+    ("正式标签逐项匹配正确槽位且覆盖四条路径", () =>
+    {
+        var expected = new (TagEnum Tag, ModifierTarget Target)[]
+        {
+            (TagEnum.Pyro, ModifierTarget.ElementDamage(1)),
+            (TagEnum.Hydro, ModifierTarget.ElementDamage(2)),
+            (TagEnum.Electro, ModifierTarget.ElementDamage(3)),
+            (TagEnum.Cryo, ModifierTarget.ElementDamage(4)),
+            (TagEnum.Chlorophyte, ModifierTarget.ElementDamage(5)),
+            (TagEnum.Anemo, ModifierTarget.ElementDamage(6)),
+            (TagEnum.HydroElectro, ModifierTarget.Reaction(1)),
+            (TagEnum.HydroAnemo, ModifierTarget.Reaction(2)),
+            (TagEnum.PytoCryo, ModifierTarget.Reaction(3)),
+            (TagEnum.Hallowed, ModifierTarget.Ascension(1)),
+            (TagEnum.Lunacy, ModifierTarget.Ascension(2)),
+            (TagEnum.Originated, ModifierTarget.Ascension(3))
+        };
+        Check(DefaultTagRules.All.Count == expected.Length, "正式映射数量不符");
+        Check(DefaultTagRules.All.Select(r => r.Id).Distinct().Count() == expected.Length, "规则 ID 重复");
+        foreach (var (tag, target) in expected)
+        foreach (HitKind kind in Enum.GetValues<HitKind>())
+        {
+            // 不可覆盖标志不决定乘区启停；职业身份也不参与标签资格匹配。
+            foreach (bool cannotBeCovered in new[] { false, true })
+            foreach (string damageClass in new[] { "Terraria/Magic", "AdvancedMod/ElementalDamageClass" })
+            {
+                var hit = Hit() with { Kind = kind, NativeDamageClassId = damageClass,
+                    Tags = new TagSet(new[] { new TagEntry(cannotBeCovered, tag) }) };
+                var matches = DefaultTagRules.All.Where(r => r.Matches(hit)).ToArray();
+                Check(matches.Length == 1 && matches[0].Target == target && matches[0].Enabled,
+                    $"标签 {tag} 在 {kind} 未唯一启用预期槽位");
+            }
+        }
+    }),
+    ("异化资格不启用擢升且标签规则不推导反应", () =>
+    {
+        var hit = Hit() with { Tags = new TagSet(new[]
+        {
+            new TagEntry(false, TagEnum.Hallow), new TagEntry(false, TagEnum.Lunar),
+            new TagEntry(false, TagEnum.Origin)
+        }) };
+        Check(!DefaultTagRules.All.Any(r => r.Matches(hit)), "异化资格被当成已异化反应");
+        Check(!DefaultTagRules.All.Any(r => r.Matches(Hit())), "无标签攻击错误启用槽位");
+        hit = hit with { Tags = new TagSet(new[]
+        {
+            new TagEntry(false, TagEnum.Hydro), new TagEntry(false, TagEnum.Electro)
+        }) };
+        Check(DefaultTagRules.All.Where(r => r.Matches(hit)).All(r => r.Target.Kind == ModifierTargetKind.ElementDamage),
+            "元素组合被自动推导成反应");
+    }),
+    ("正式标签启用后仍可由内容及后置规则覆盖", () =>
+    {
+        var hit = Hit() with { Tags = new TagSet(new[]
+        {
+            new TagEntry(true, TagEnum.Pyro), new TagEntry(false, TagEnum.PytoCryo),
+            new TagEntry(false, TagEnum.Hallowed)
+        }) };
+        var collector = NewCollector();
+        foreach (TagGateRule rule in DefaultTagRules.All.Where(r => r.Matches(hit)))
+            collector.RunTagRule(rule.Id, w => w.SetEnabled("标签匹配", rule.Target, rule.Enabled, "正式映射"));
+        collector.Collect(10, 0, w =>
+        {
+            w.AddValue("火", ModifierTarget.ElementDamage(1), 0.2f);
+            w.AddValue("反应", ModifierTarget.Reaction(3), 0.5f);
+            w.AddValue("擢升", ModifierTarget.Ascension(1), 0.3f);
+            w.SetEnabled("关闭火", ModifierTarget.ElementDamage(1), false, "内容决定");
+        });
+        collector.RunPostRule("测试:禁用擢升", w => w.SetEnabled("擢升", ModifierTarget.Ascension(1), false, "后置决定"));
+        var input = collector.Seal(hit);
+        var result = DamageCombiner.Evaluate(input, true);
+        Equal(1.5f, result.ReactionFactor);
+        Equal(1f, result.AfterDefenseFactor);
+        Check(result.Targets.Where(t => t.Gate.Enabled).Select(t => t.Target).SequenceEqual(new[] { ModifierTarget.Reaction(3) }),
+            "出现意外启用的槽位");
+        Check(result.Decisions.Count(d => d.Disposition == ContributionDisposition.TargetDisabled) == 2,
+            "被覆盖的候选没有保留排除原因");
+        Check(CombatTraceReplay.Replay(CombatTraceJson.Deserialize(CombatTraceJson.Serialize(
+            CombatTrace.Create(Guid.NewGuid(), input, result)))).Matches, "正式标签映射重放不一致");
+    }),
     ("JSONL 往返保留身份标签和原生计划", () =>
     {
         var collector = NewCollector();
@@ -236,7 +336,7 @@ var cases = new (string Name, Action Run)[]
     }),
     ("拒绝越界重复与非有限贡献", () =>
     {
-        Throws<ArgumentOutOfRangeException>(() => ModifierTarget.Reaction(10));
+        Throws<ArgumentOutOfRangeException>(() => ModifierTarget.Reaction(DamageConstants.ReactionSlotCount));
         Throws<ArgumentOutOfRangeException>(() => ModifierTarget.Ascension(-1));
         Throws<ArgumentException>(() => NewCollector().Collect(10, 0, w => w.AddValue("未知", ModifierTarget.Reserve("未注册"), 1f)));
         Throws<ArgumentException>(() => NewCollector().Collect(10, 0, w => w.AddValue("无效", ModifierTarget.Mastery, float.NaN)));

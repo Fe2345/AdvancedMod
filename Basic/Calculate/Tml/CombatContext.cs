@@ -41,10 +41,11 @@ public sealed class CombatContext
     public AttackProfile Profile { get; }
     public DamageClass? NativeDamageClass { get; }
     public ExecutionSide ExecutionSide { get; }
+    public bool IsEnvironmental { get; }
 
     private CombatContext(long hitId, HitKind kind, AttackProfile profile, Player? attackerPlayer = null,
         NPC? attackerNpc = null, Item? item = null, Projectile? projectile = null, NPC? targetNpc = null,
-        Player? targetPlayer = null, DamageClass? damageClass = null)
+        Player? targetPlayer = null, DamageClass? damageClass = null, bool isEnvironmental = false)
     {
         ArgumentNullException.ThrowIfNull(profile);
         HitId = hitId;
@@ -57,6 +58,7 @@ public sealed class CombatContext
         TargetNpc = targetNpc;
         TargetPlayer = targetPlayer;
         NativeDamageClass = damageClass;
+        IsEnvironmental = isEnvironmental;
         ExecutionSide = Main.netMode switch
         {
             NetmodeID.SinglePlayer => ExecutionSide.SinglePlayer,
@@ -111,11 +113,21 @@ public sealed class CombatContext
             : AttackerNpc is not null ? Describe(AttackerNpc) : null;
         SourceInfo? source = SourceItem is not null ? Describe(SourceItem, AttackerPlayer?.whoAmI)
             : SourceProjectile is not null ? Describe(SourceProjectile, AttackerPlayer?.whoAmI) : attacker;
+        if (IsEnvironmental) source = new(SourceKind.Environment, "AdvancedMod:IdleReaction");
         SourceInfo? target = TargetNpc is not null ? Describe(TargetNpc)
             : TargetPlayer is not null ? Describe(TargetPlayer) : null;
         return new(HitId, Kind, ExecutionSide, Profile.Tags, Profile.AttackId, Profile.IsManagedAttack,
             NativeDamageClass?.FullName, attacker, source, target);
     }
+
+    public CombatContext WithProfile(AttackProfile profile) => new(HitId, Kind, profile,
+        AttackerPlayer, AttackerNpc, SourceItem, SourceProjectile, TargetNpc, TargetPlayer, NativeDamageClass, IsEnvironmental);
+
+    public static CombatContext ForEnvironment(long hitId, NPC target, AttackProfile profile) =>
+        new(hitId, HitKind.ProjectileToNpc, profile, targetNpc: target, damageClass: DamageClass.Generic, isEnvironmental: true);
+
+    public static CombatContext ForEnvironment(long hitId, Player target, AttackProfile profile) =>
+        new(hitId, HitKind.ProjectileToPlayer, profile, targetPlayer: target, damageClass: DamageClass.Generic, isEnvironmental: true);
 
     private static SourceInfo Describe(Player player) => new(SourceKind.Player, "Terraria:Player", PlayerIndex: player.whoAmI);
     private static SourceInfo Describe(NPC npc) => new(SourceKind.Npc,

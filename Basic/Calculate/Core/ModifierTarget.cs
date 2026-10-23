@@ -7,7 +7,7 @@ namespace AdvancedMod.Basic.Calculate.Core;
 /// <summary>自定义乘区的容量和公式参数。</summary>
 public static class DamageConstants
 {
-    public const int ReactionSlotCount = 10;
+    public const int ReactionSlotCount = 20;
     public const int ElementSlotCount = 10;
     public const int AscensionSlotCount = 4;
     public const float PositiveMasteryScale = 6f;
