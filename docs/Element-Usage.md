@@ -41,7 +41,7 @@ NPC 接触伤害可用 `ConfigureNpcContact(npc, tags, elementAmount, attackId)`
 - 只在原入口正常返回且实际伤害大于 0 时提交。取消、免疫、闪避和零伤害不提交；致死仍可提交并产生反应事实。使用目标 ElementTarget 实例身份检查阻止旧事务写入复用实体，不用 active=false 否定已成功的致死命中。
 - 异常释放执行权，清空未处理队列，不回滚引擎已造成的伤害。第三方直接构造 HitInfo、绕开上述完整入口的伤害不属于本轮兼容承诺。
 
-`PostUpdateEverything` 扫描有元素或 CD 状态的存活目标，每刻先递减再尝试一次静置反应。NPC 使用原生 incoming modifiers／ToHitInfo／StrikeNPC；玩家走原生 Hurt，仍遵守玩家免疫与闪避。静置来源为环境，Calculate 保持纯计算边界。当前临时反应表来自 `DevelopmentReactions`，系数 2／1.5／1；后续正式效果替换该表。
+`PostUpdateEverything` 扫描有元素或 CD 状态的存活目标，每刻先递减再尝试一次静置反应。NPC 使用原生 incoming modifiers／ToHitInfo／StrikeNPC；玩家走原生 Hurt，仍遵守玩家免疫与闪避。静置来源为环境，Calculate 保持纯计算边界。正式反应表来自 `AmplificationReactions`，水雷／水风／火冰基础系数均为1.5，基础消耗为1:1.5／1.5:0.75／1.5:1.5，CD为60／40／40刻。水风额外计算玩家生命支付；导电派生0附着电弧，详见 Element-Design。
 
 本机入口依据安装的 TML 1.4.4.9+2026.08.3.0 方法体核对，并与 [NPC HitModifiers](https://docs.tmodloader.net/docs/stable/struct_n_p_c_1_1_hit_modifiers.html)、[Player](https://docs.tmodloader.net/docs/stable/class_player.html)、[Projectile](https://docs.tmodloader.net/docs/stable/class_projectile.html) 的官方契约对照。更新 TML 后需要复验 detour 与执行顺序。
 

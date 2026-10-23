@@ -96,11 +96,13 @@ public sealed class CombatPipeline
         return result;
     }
 
-    public void ModifyNpcHit(in CombatContext context, ref NPC.HitModifiers modifiers)
+    public CalculationResult ModifyNpcHit(in CombatContext context, ref NPC.HitModifiers modifiers)
     {
         if (context.Kind is not (HitKind.ItemToNpc or HitKind.ProjectileToNpc))
             throw new ArgumentException("该上下文不是 NPC 受击路径。", nameof(context));
-        TmlHitAdapter.Apply(Calculate(in context), ref modifiers);
+        var result = Calculate(in context);
+        TmlHitAdapter.Apply(result, ref modifiers);
+        return result;
     }
 
     public void ModifyPlayerHurt(in CombatContext context, ref Player.HurtModifiers modifiers)

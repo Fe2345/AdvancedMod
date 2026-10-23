@@ -80,14 +80,14 @@ public sealed class ElementNetworkTests : ModSystem
                 target = NPC.NewNPC(new EntitySource_Misc("元素联机自动验收"), (int)position.X, (int)position.Y,
                     ModContent.NPCType<ElementProbeNPC>());
                 var npc = Main.npc[target]; npc.ai[0] = Marker;
-                npc.GetGlobalNPC<CombatGlobalNPC>().Elements.Attach(new(3, 1, 100));
+                npc.GetGlobalNPC<CombatGlobalNPC>().Elements.Attach(new(3, 1.5, 100));
                 ElementAttacks.ConfigureNpcContact(npc, new TagSet(new[] { new TagEntry(false, TagEnum.Hydro) }), 1);
                 npc.netUpdate = true;
                 idleTarget = SpawnTarget(position + new Vector2(100, 0), Marker + 1);
                 Main.npc[idleTarget].GetGlobalNPC<CombatGlobalNPC>().Elements.Attach(new(1, 1.5, 100));
-                Main.npc[idleTarget].GetGlobalNPC<CombatGlobalNPC>().Elements.Attach(new(4, 1, 100));
+                Main.npc[idleTarget].GetGlobalNPC<CombatGlobalNPC>().Elements.Attach(new(4, 1.5, 100));
                 meleeTarget = SpawnTarget(position + new Vector2(200, 0), Marker + 2);
-                Main.npc[meleeTarget].GetGlobalNPC<CombatGlobalNPC>().Elements.Attach(new(3, 1, 100));
+                Main.npc[meleeTarget].GetGlobalNPC<CombatGlobalNPC>().Elements.Attach(new(3, 1.5, 100));
                 spawned = true;
             }
             if (++ticks < 480) return;
@@ -97,10 +97,10 @@ public sealed class ElementNetworkTests : ModSystem
             {
                 ["两个客户端真实 TCP 接入"] = Main.player.Where(p => p.active).Count() == 2,
                 ["服务器共四次提交三次反应"] = commits == 4 && reactions == 3,
-                ["共享库存及 CD：总伤害300"] = n.lifeMax - n.life == 300 && s.Elements[2].Total == 1 && s.Elements[3].Total == 0 && s.ReactionCooldowns[1] == 0,
+                ["共享库存及 CD：总伤害250"] = n.lifeMax - n.life == 250 && s.Elements[2].Total == 1 && s.Elements[3].Total == 0 && s.ReactionCooldowns[1] == 0,
                 ["玩家所属端状态同步服务器"] = Main.player.Where(p => p.active).Any(p => p.GetModPlayer<CombatPlayer>().Elements.Snapshot.Elements[1].Total == 0.75),
-                ["服务器静置反应只扣100"] = Main.npc[idleTarget].lifeMax - Main.npc[idleTarget].life == 100,
-                ["客户端近战请求服务器结算200"] = Main.npc[meleeTarget].lifeMax - Main.npc[meleeTarget].life == 200,
+                ["服务器静置反应只扣150"] = Main.npc[idleTarget].lifeMax - Main.npc[idleTarget].life == 150,
+                ["客户端近战请求服务器结算150"] = Main.npc[meleeTarget].lifeMax - Main.npc[meleeTarget].life == 150,
                 ["服务器穿透耗尽弹幕已销毁"] = !Main.projectile.Any(p => p.active && p.type == ModContent.ProjectileType<ElementProbeProjectile>())
             }, new { life = n.life, commits, reactions, damageCalls, projectileEvidence, targetPosition = n.Center.ToString() });
         }
@@ -121,9 +121,9 @@ public sealed class ElementNetworkTests : ModSystem
                     var player = Main.LocalPlayer;
                     player.immune = false; Array.Clear(player.hurtCooldowns); player.creativeGodMode = false;
                     player.statDefense = default; player.statLife = player.statLifeMax2 = 5000; player.dead = false;
-                    player.GetModPlayer<CombatPlayer>().Elements.Attach(new(3, 1, 100));
+                    player.GetModPlayer<CombatPlayer>().Elements.Attach(new(3, 1.5, 100));
                     ElementProbePlayer.Cancel = true;
-                    cancelPassed = player.Hurt(PlayerDeathReason.ByNPC(n.whoAmI), 100, 0) == 0 && player.GetModPlayer<CombatPlayer>().Elements.Snapshot.Elements[3].Total == 1;
+                    cancelPassed = player.Hurt(PlayerDeathReason.ByNPC(n.whoAmI), 100, 0) == 0 && player.GetModPlayer<CombatPlayer>().Elements.Snapshot.Elements[3].Total == 1.5;
                     ElementProbePlayer.Cancel = false;
                     hurtPassed = player.Hurt(PlayerDeathReason.ByNPC(n.whoAmI), 100, 0, dodgeable: false) > 0 && player.GetModPlayer<CombatPlayer>().Elements.Snapshot.Elements[3].Total == 0;
                     player.GetModPlayer<CombatPlayer>().Elements.Attach(new(1, 0.75, 123));
@@ -152,13 +152,13 @@ public sealed class ElementNetworkTests : ModSystem
             var state = n.GetGlobalNPC<CombatGlobalNPC>().Elements.Snapshot;
             Report(new Dictionary<string, bool>
             {
-                ["NPC 血量镜像300伤害"] = n.lifeMax - n.life == 300,
+                ["NPC 血量镜像250伤害"] = n.lifeMax - n.life == 250,
                 ["NPC 附着与 CD 镜像"] = state.Elements[2].Total == 1 && state.Elements[3].Total == 0 && state.ReactionCooldowns[1] == 0,
                 ["实体身份同步"] = n.GetGlobalNPC<CombatGlobalNPC>().NetworkIdentity > 0,
                 ["玩家状态跨客户端同步"] = Main.player.Where(p => p.active).Any(p => p.GetModPlayer<CombatPlayer>().Elements.Snapshot.Elements[1].Portions.TryGetValue(123, out double value) && value == 0.75),
                 ["服务器销毁弹幕同步到客户端"] = !Main.projectile.Any(p => p.active && p.type == ModContent.ProjectileType<ElementProbeProjectile>()),
-                ["静置反应血量镜像"] = Main.npc.Any(q => q.active && q.ai[0] == Marker + 1 && q.lifeMax - q.life == 100),
-                ["近战伤害镜像"] = Main.npc.Any(q => q.active && q.ai[0] == Marker + 2 && q.lifeMax - q.life == 200),
+                ["静置反应血量镜像"] = Main.npc.Any(q => q.active && q.ai[0] == Marker + 1 && q.lifeMax - q.life == 150),
+                ["近战伤害镜像"] = Main.npc.Any(q => q.active && q.ai[0] == Marker + 2 && q.lifeMax - q.life == 150),
                 ["所属玩家受伤与取消边界"] = role != "client1" || hurtPassed && cancelPassed
             }, new { life = n.life, localPlayer = Main.myPlayer, damageCalls, projectileEvidence });
         }

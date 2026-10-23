@@ -287,6 +287,7 @@ void TmlHitAdapter.Apply(CalculationResult result, ref Player.HurtModifiers modi
 - 职业加成由攻击自身的 DamageClass 与 TML 职业统计机制处理；Calculate 不因元素标签额外读取或补算 ElementalDamageClass 的职业加成，不建立双职业桥接贡献或资格规则。
 - “元素伤害”专指元素职业的伤害，带元素标签的其他职业伤害不因此改变职业身份。元素相关自定义增伤与反应资格由标签、已登记规则及反应系统裁定，不以 DamageClass 作为资格判据；元素职业身份本身也不自动启用乘区或触发反应。
 - 写入原生乘法项遵循 TML 的 Base／Additive／Multiplicative／Flat 次序。SourceDamage.Base 受该乘法项影响，SourceDamage.Flat、FlatBonusDamage 等保持原生位置；FinalDamage 的 Flat 同样保留在其乘法之后。不宣称自定义因子能覆盖其他 Mod 在任意后续 Hook 追加的全部伤害。
+- 正式导电需要传递不含前一目标抗性的源伤害，因此 NativeModifierPlan 额外保留 SourceDamageBeforeResistance；它与正常计划来自同一次候选折叠，不重复收集贡献者，不从最终伤害倒除抗性（抗性倍率为0时也有定义）。派生节点使用固定的继承源阶段并重新应用自身抗性、防御和防御后乘区，不再次叠乘源前段增伤。Calculate不承担扣血或派生伤害副作用。
 
 原生字段名枚举同时包含可启停的控制目标，如 CriticalStrike、MaximumDamage、InstantKill、CancelHurt、KnockbackDisabled、HitDirection、IgnoreDefense；这些目标只允许对应的具名控制方法，不能通过 AddNative 提交数值。
 

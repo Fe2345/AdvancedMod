@@ -16,6 +16,7 @@ public sealed class ReactionPlan
     public ReadOnlyCollection<ElementPortion> Consumption { get; }
     public double WeightedPanelDamage { get; }
     public double DamageSeed { get; }
+    public int LifeCost { get; }
     public float CooldownIncrease { get; }
     internal ElementWorkState NextState { get; }
     internal ReactionPlan(ElementRequest request, PreparedReaction prepared)
@@ -43,6 +44,12 @@ public sealed class ReactionPlan
             NextState.Cooldowns[Definition.Slot] = cooldown;
             if (!Hit.Tags.Contains(Definition.Tag))
                 Hit = Hit with { Tags = new TagSet(Hit.Tags.Append(new TagEntry(false, Definition.Tag))) };
+            // 资格与最终反应标签成立后才产生支付计划，纯计算阶段不触碰玩家。
+            if (Definition.Tag == TagEnum.HydroAnemo)
+            {
+                LifeCost = request.ProposedLifeCost;
+                DamageSeed = WeightedPanelDamage * (Definition.Coefficient + LifeCost * AmplificationReactions.CoefficientPerLife);
+            }
         }
         Consumption = Array.AsReadOnly(consumed);
     }

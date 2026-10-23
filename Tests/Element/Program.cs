@@ -17,6 +17,7 @@ var tests = new (string, Action)[]
     ("Calculate 标签门禁与乘区不重复", CalculateFlow),
     ("小数分量消耗与总量一致", Fractional),
     ("网络快照往返与坏包原子拒绝", Wire),
+    ("正式反应消耗、CD与生命支付计划", Formal),
 };
 int passed = 0;
 foreach (var (name, run) in tests)
@@ -30,6 +31,33 @@ return passed == tests.Length ? 0 : 1;
 static void Check(bool condition, string message = "断言失败")
 {
     if (!condition) throw new Exception(message);
+}
+static void Formal()
+{
+    var table = AmplificationReactions.Create();
+    foreach (var (tag, other, attached, incoming, slot, cd) in new[] {
+        (TagEnum.Hydro, 3, 1.5, 1.0, 1, 60), (TagEnum.Anemo, 2, 1.5, 0.75, 2, 40),
+        (TagEnum.Pyro, 4, 1.5, 1.5, 3, 40) })
+    {
+        var target = Target(new ElementAttachment(other, attached, 100));
+        target.Submit(Request(tag, incoming), table, plan => {
+            Near(plan.DamageSeed, 150); Check(plan.Definition!.Slot == slot); Near(plan.CooldownIncrease, cd); return true;
+        });
+        Near(target.Snapshot.Elements[other].Total, 0);
+    }
+    Near(AmplificationReactions.LifeCost(400, 400), 6);
+    Near(AmplificationReactions.LifeCost(100, 400), 2);
+    Near(AmplificationReactions.LifeCost(99, 400), 0);
+    var water = Target(new ElementAttachment(2, 1.5, 100));
+    water.Submit(new(Hit(TagEnum.Anemo), 100, .75, proposedLifeCost: 6), table, plan => {
+        Near(plan.LifeCost, 6); Near(plan.DamageSeed, 210); return false;
+    });
+    Near(water.Snapshot.Elements[2].Total, 1.5);
+    Near(water.Snapshot.ReactionCooldowns[2], 0);
+    var insufficient = Target(new ElementAttachment(2, 1, 100));
+    insufficient.Submit(new(Hit(TagEnum.Anemo), 100, .75, proposedLifeCost: 6), table, plan => {
+        Near(plan.LifeCost, 0); Near(plan.DamageSeed, 100); return true;
+    });
 }
 static void Near(double actual, double expected)
 {

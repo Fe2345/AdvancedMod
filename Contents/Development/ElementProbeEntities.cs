@@ -73,6 +73,11 @@ public sealed class ElementProbeProjectile : ModProjectile
 /// <summary>测试旗标仅在同步测试期间启用，不改变正常游玩。</summary>
 public sealed class ElementProbePlayer : ModPlayer
 {
+    public override void OnEnterWorld()
+    {
+        if (System.Environment.GetEnvironmentVariable("ADVANCEDMOD_ELEMENT_LIVE_TEST") == "1")
+            Main.QueueMainThreadAction(() => ModContent.GetInstance<ElementLiveTests>().RunAutomatic());
+    }
     internal static bool Cancel;
     internal static bool Dodge;
     public override void ModifyHurt(ref Player.HurtModifiers modifiers)

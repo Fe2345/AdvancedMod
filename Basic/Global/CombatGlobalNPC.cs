@@ -60,7 +60,9 @@ public sealed class CombatGlobalNPC : GlobalNPC
         var context = CombatContext.ForItemHit(CalculateSystem.NextHitId(), player, item, npc,
             item.GetGlobalItem<CombatGlobalItem>().Profile);
         context = Element.Tml.ElementHitSystem.PrepareNpc(context, ref modifiers);
-        CalculateSystem.Pipeline.ModifyNpcHit(in context, ref modifiers);
+        var source = modifiers.SourceDamage;
+        var result = CalculateSystem.Pipeline.ModifyNpcHit(in context, ref modifiers);
+        Element.Tml.AmplificationEffects.CaptureSource(context, source, result);
     }
 
     public override void ModifyHitByProjectile(NPC npc, Projectile projectile, ref NPC.HitModifiers modifiers)
@@ -71,7 +73,9 @@ public sealed class CombatGlobalNPC : GlobalNPC
         var context = CombatContext.ForProjectileHit(CalculateSystem.NextHitId(), projectile, npc,
             projectile.GetGlobalProjectile<CombatGlobalProjectile>().Profile);
         context = Element.Tml.ElementHitSystem.PrepareNpc(context, ref modifiers);
-        CalculateSystem.Pipeline.ModifyNpcHit(in context, ref modifiers);
+        var source = modifiers.SourceDamage;
+        var result = CalculateSystem.Pipeline.ModifyNpcHit(in context, ref modifiers);
+        Element.Tml.AmplificationEffects.CaptureSource(context, source, result);
     }
 
     public override bool? CanBeHitByProjectile(NPC npc, Projectile projectile) =>

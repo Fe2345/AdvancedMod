@@ -21,7 +21,7 @@ public sealed class ElementNetwork : ModSystem
 {
     internal const int SyncInterval = 6;
     private const int MaxAttackIdLength = 256;
-    private enum Packet : byte { PlayerState, ItemHit }
+    private enum Packet : byte { PlayerState, ItemHit, ReactionLife, ReactionVisual }
     private static readonly MethodInfo itemHit = typeof(Player).GetMethod("ProcessHitAgainstNPC", BindingFlags.Instance | BindingFlags.NonPublic)!;
     private static readonly ulong[] lastItemSequence = new ulong[Main.maxPlayers];
     private static ulong itemSequence;
@@ -120,6 +120,22 @@ public sealed class ElementNetwork : ModSystem
     {
         switch ((Packet)reader.ReadByte())
         {
+            case Packet.ReactionLife:
+                int cost = reader.ReadInt32();
+                if (Main.netMode == NetmodeID.MultiplayerClient && cost > 0)
+                {
+                    ApplyLifeCost(Main.LocalPlayer, cost);
+                    NetMessage.SendData(MessageID.PlayerLifeMana, number: Main.myPlayer);
+                }
+                break;
+            case Packet.ReactionVisual:
+                var start = new Vector2(reader.ReadSingle(), reader.ReadSingle());
+                var end = new Vector2(reader.ReadSingle(), reader.ReadSingle());
+                var reaction = (TagEnum)reader.ReadInt32();
+                if (Main.netMode == NetmodeID.MultiplayerClient && float.IsFinite(start.X) && float.IsFinite(start.Y) &&
+                    float.IsFinite(end.X) && float.IsFinite(end.Y) && Vector2.DistanceSquared(start, end) <= AmplificationReactions.ChainRadius * AmplificationReactions.ChainRadius)
+                    DrawReaction(start, end, reaction);
+                break;
             case Packet.PlayerState:
                 int index = reader.ReadByte();
                 var state = new ElementTarget(ElementTarget.DefaultOperationLimit);
@@ -158,6 +174,40 @@ public sealed class ElementNetwork : ModSystem
                 npc.netUpdate = true;
                 break;
             default: throw new InvalidDataException("未知元素网络消息。");
+        }
+    }
+
+    internal static void PayReactionLife(Player player, int cost)
+    {
+        ApplyLifeCost(player, cost);
+        if (Main.netMode != NetmodeID.Server) return;
+        var packet = ModContent.GetInstance<ElementNetwork>().Mod.GetPacket();
+        packet.Write((byte)Packet.ReactionLife); packet.Write(cost); packet.Send(player.whoAmI);
+    }
+    private static void ApplyLifeCost(Player player, int cost)
+    {
+        if (!player.active || player.dead) return;
+        player.statLife = Math.Max(0, player.statLife - cost);
+        if (player.statLife == 0 && Main.netMode != NetmodeID.Server)
+            player.KillMe(PlayerDeathReason.ByCustomReason(Terraria.Localization.NetworkText.FromLiteral($"{player.name} 耗尽了反应所需的生命。")), cost, 0);
+    }
+    internal static void ShowReaction(Vector2 start, Vector2 end, TagEnum reaction)
+    {
+        if (Main.netMode != NetmodeID.Server) { DrawReaction(start, end, reaction); return; }
+        var packet = ModContent.GetInstance<ElementNetwork>().Mod.GetPacket();
+        packet.Write((byte)Packet.ReactionVisual);
+        packet.Write(start.X); packet.Write(start.Y); packet.Write(end.X); packet.Write(end.Y); packet.Write((int)reaction);
+        packet.Send();
+    }
+    private static void DrawReaction(Vector2 start, Vector2 end, TagEnum reaction)
+    {
+        int dustType = reaction == TagEnum.HydroElectro ? DustID.Electric : reaction == TagEnum.PytoCryo ? DustID.IceTorch : DustID.Water;
+        const float spacing = 4;
+        int count = Math.Max(1, (int)Math.Ceiling(Vector2.Distance(start, end) / spacing));
+        for (int i = 0; i <= count; i++)
+        {
+            var dust = Dust.NewDustPerfect(Vector2.Lerp(start, end, (float)i / count), dustType, Vector2.Zero);
+            dust.noGravity = true;
         }
     }
 }

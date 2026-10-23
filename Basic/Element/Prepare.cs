@@ -16,13 +16,14 @@ public sealed class ElementRequest
     public float ConsumptionMultiplier { get; }
     public float CooldownMultiplier { get; }
     public bool IsIdle { get; }
+    public int ProposedLifeCost { get; }
     internal int? IncomingSlot { get; }
     public ElementRequest(HitSnapshot hit, int panelDamage, double amount = 0,
-        float consumptionMultiplier = 1, float cooldownMultiplier = 1, bool isIdle = false)
+        float consumptionMultiplier = 1, float cooldownMultiplier = 1, bool isIdle = false, int proposedLifeCost = 0)
     {
         ArgumentNullException.ThrowIfNull(hit);
         ArgumentNullException.ThrowIfNull(hit.Tags);
-        if (panelDamage < 0 || !double.IsFinite(amount) || amount < 0 ||
+        if (proposedLifeCost < 0 || panelDamage < 0 || !double.IsFinite(amount) || amount < 0 ||
             !float.IsFinite(consumptionMultiplier) || consumptionMultiplier <= 0 ||
             !float.IsFinite(cooldownMultiplier) || cooldownMultiplier < 0)
             throw new ArgumentOutOfRangeException(nameof(amount), "元素量与 CD 修正须非负，消耗修正须为正，输入须有限。");
@@ -37,6 +38,7 @@ public sealed class ElementRequest
         ConsumptionMultiplier = consumptionMultiplier;
         CooldownMultiplier = cooldownMultiplier;
         IsIdle = isIdle;
+        ProposedLifeCost = isIdle ? 0 : proposedLifeCost;
         IncomingSlot = slots.Length == 1 ? slots[0] : null;
     }
 }

@@ -39,13 +39,15 @@
 
 ## 测试配置与执行
 
-`Basic/Element/DevelopmentReactions.cs` 保存当前开发用临时配置，离线测试另以逆序登记验证槽序：
+正式运行使用 `Basic/Element/AmplificationReactions.cs`，按槽编号选择；历史测试配置只用于框架回归：
 
 | 槽 | 反应 | 系数 | 基础消耗 | 基础 CD |
 |---|---|---|---|---|
-| 1 | HydroElectro | 2.0 | 水 1、雷 1 | 60 刻 |
-| 2 | HydroAnemo | 1.5 | 水 1、风 1 | 60 刻 |
-| 3 | PytoCryo | 1.0 | 火 1.5、冰 1 | 60 刻 |
+| 1 | HydroElectro | 1.5 | 水 1、雷 1.5 | 60 刻 |
+| 2 | HydroAnemo | 1.5 + 拟扣生命 × 0.1 | 水 1.5、风 0.75 | 40 刻 |
+| 3 | PytoCryo | 1.5 | 火 1.5、冰 1.5 | 40 刻 |
+
+水风支付由上下文中的攻击玩家承担，生命不足25%不支付，支付量向上取整；Reaction只保存计划，外壳确认正伤害后支付。静置环境反应不扣玩家生命。导电使用目标串行队列；80像素、视线及realLife去重，0附着派生雷伤害。原始源伤害通过Calculate单次折叠保留抗性前分量，逐跳不叠乘前一目标防御／抗性。`NpcDamageObservation`从本机引擎真实扣防御步骤读取保底前值，未匹配IL时拒绝加载，未退回近似算法。异化效果本轮不实现。
 
 执行 `dotnet run --project Tests/Element/Element.Tests.csproj`。测试目标使用真实框架状态与队列，伤害回调模拟无防御无暴击实体，并调用真实 DamageCombiner 验证标签到乘区的数据流，不复刻 Terraria 完整伤害公式。
 

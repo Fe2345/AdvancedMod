@@ -32,10 +32,12 @@ public sealed class NativeModifierPlan
 {
     public HitKind Kind { get; }
     public ReadOnlyCollection<NativeFieldResult> Fields { get; }
-    internal NativeModifierPlan(HitKind kind, NativeFieldResult[] fields)
+    public StatModifierDelta SourceDamageBeforeResistance { get; }
+    internal NativeModifierPlan(HitKind kind, NativeFieldResult[] fields, StatModifierDelta? sourceDamageBeforeResistance = null)
     {
         Kind = kind;
         Fields = Array.AsReadOnly(fields);
+        SourceDamageBeforeResistance = sourceDamageBeforeResistance ?? StatModifierDelta.Identity;
     }
 }
 
@@ -102,6 +104,7 @@ internal static class NativeCombiner
         float reactionFactor, float resistanceFactor, float afterDefenseFactor)
     {
         var results = new List<NativeFieldResult>();
+        var sourceBeforeResistance = StatModifierDelta.Identity;
         foreach (NativeField field in Enum.GetValues<NativeField>())
         {
             if (!NativeCapabilities.Supports(input.Hit.Kind, field)) continue;
@@ -141,13 +144,16 @@ internal static class NativeCombiner
             NativeValueKind kind = NativeCapabilities.Kind(field);
             // 各目标的候选已经分别筛选；关闭原生目标不连带关闭独立自定义槽。
             if (field == NativeField.SourceDamage)
+            {
+                sourceBeforeResistance = stat with { Multiplicative = Finite(stat.Multiplicative * reactionFactor) };
                 stat = stat with { Multiplicative = Finite(Finite(stat.Multiplicative * reactionFactor) * resistanceFactor) };
+            }
             else if (field == NativeField.FinalDamage)
                 stat = stat with { Multiplicative = Finite(stat.Multiplicative * afterDefenseFactor) };
             results.Add(new(field, gate, kind == NativeValueKind.Stat ? stat : null,
                 kind is NativeValueKind.Add or NativeValueKind.Multiply ? value : null, selected?.Value));
         }
-        return new(input.Hit.Kind, results.ToArray());
+        return new(input.Hit.Kind, results.ToArray(), sourceBeforeResistance);
     }
 
     private static float Finite(float value) => float.IsFinite(value) ? value

@@ -123,6 +123,10 @@ public sealed class CombatContext
     public CombatContext WithProfile(AttackProfile profile) => new(HitId, Kind, profile,
         AttackerPlayer, AttackerNpc, SourceItem, SourceProjectile, TargetNpc, TargetPlayer, NativeDamageClass, IsEnvironmental);
 
+    internal CombatContext ForChain(NPC target, AttackProfile profile) => new(CalculateSystem.NextHitId(),
+        HitKind.ProjectileToNpc, profile, AttackerPlayer, AttackerNpc, SourceItem, SourceProjectile,
+        target, damageClass: DamageClass.Generic, isEnvironmental: IsEnvironmental);
+
     public static CombatContext ForEnvironment(long hitId, NPC target, AttackProfile profile) =>
         new(hitId, HitKind.ProjectileToNpc, profile, targetNpc: target, damageClass: DamageClass.Generic, isEnvironmental: true);
 

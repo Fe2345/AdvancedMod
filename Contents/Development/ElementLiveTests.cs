@@ -6,6 +6,8 @@ using System.Linq;
 using System.Reflection;
 using System.Text.Json;
 using AdvancedMod.Basic.Element;
+using AdvancedMod.Basic.Calculate.Core;
+using AdvancedMod.Basic.Calculate.Tml;
 using AdvancedMod.Basic.Element.Tml;
 using AdvancedMod.Basic.Global;
 using AdvancedMod.Basic.Tag;
@@ -25,7 +27,9 @@ public sealed class ElementLiveTests : ModSystem
     private static readonly List<NPC> spawnedNpcs = new();
     private static readonly List<Projectile> spawnedProjectiles = new();
     private static readonly List<ElementResolution> resolutions = new();
-    public override void PostUpdateEverything()
+    public override void PostUpdateEverything() => RunAutomatic();
+
+    internal void RunAutomatic()
     {
         if (ran || Main.gameMenu || Main.netMode != NetmodeID.SinglePlayer ||
             Environment.GetEnvironmentVariable("ADVANCEDMOD_ELEMENT_LIVE_TEST") != "1") return;
@@ -44,8 +48,12 @@ public sealed class ElementLiveTests : ModSystem
         var tests = new (string, Action)[]
         {
             ("嵌套生成保留来源且不继承标签", NestedSpawn),
-            ("弹幕水雷200伤害与生成标签", ProjectileReaction),
-            ("水风150与火冰100伤害", OtherCoefficients),
+            ("弹幕水雷150伤害与生成标签", ProjectileReaction),
+            ("水风生命门槛与火冰150伤害", OtherCoefficients),
+            ("水风成功支付与失败不支付", LifePayment),
+            ("导电逐跳防御与保底前终止", ConductiveChain),
+            ("导电抗性独立且源增伤不重复", ConductiveResistance),
+            ("导电距离与墙体阻挡", ConductiveGeometry),
             ("近战真实入口与元素量", WeaponHit),
             ("CD阻塞后普通附着", Cooldown),
             ("NPC到玩家伤害及取消闪避免疫", PlayerHurt),
@@ -59,6 +67,7 @@ public sealed class ElementLiveTests : ModSystem
         {
             foreach (var (name, action) in tests)
             {
+                ModContent.GetInstance<ElementLiveTests>().Mod.Logger.Info($"开始元素实机用例：{name}");
                 resolutions.Clear();
                 try { action(); results.Add(new { name, status = "PASS" }); }
                 catch (Exception e) { results.Add(new { name, status = "FAIL", error = e.ToString() }); }
@@ -92,7 +101,7 @@ public sealed class ElementLiveTests : ModSystem
         Check(Math.Abs(actual - expected) < 0.00001, $"实际 {actual}，期望 {expected}");
     }
     private static TagSet Tags(TagEnum tag) => new(new[] { new TagEntry(false, tag) });
-    private static NPC Target(int slot, double amount = 1)
+    private static NPC Target(int slot, double amount = 1.5)
     {
         Vector2 position = Main.LocalPlayer.Center + new Vector2(400, -400);
         int index = NPC.NewNPC(new EntitySource_Misc("元素实机测试"), (int)position.X, (int)position.Y,
@@ -118,7 +127,7 @@ public sealed class ElementLiveTests : ModSystem
         Check(p.GetGlobalProjectile<CombatGlobalProjectile>().Profile.Tags.Contains(TagEnum.Hydro), "生成标签丢失");
         int before = npc.life;
         p.Damage();
-        Near(before - npc.life, 200);
+        Near(before - npc.life, 150);
         Check(resolutions.Single().Outcome?.ReactionSlot == 1, "未提交水雷反应");
         Near(npc.GetGlobalNPC<CombatGlobalNPC>().Elements.Snapshot.ReactionCooldowns[1], 60);
     }
@@ -146,7 +155,9 @@ public sealed class ElementLiveTests : ModSystem
     }
     private static void OtherCoefficients()
     {
-        foreach (var (tag, slot, amount, expected) in new[] { (TagEnum.Anemo, 2, 1d, 150), (TagEnum.Pyro, 4, 1.5d, 100) })
+        Main.LocalPlayer.statLifeMax2 = 400;
+        Main.LocalPlayer.statLife = 99;
+        foreach (var (tag, slot, amount, expected) in new[] { (TagEnum.Anemo, 2, 0.75d, 150), (TagEnum.Pyro, 4, 1.5d, 150) })
         {
             var npc = Target(slot);
             var p = Shot(npc.Center, tag, amount);
@@ -167,12 +178,121 @@ public sealed class ElementLiveTests : ModSystem
         MethodInfo method = typeof(Player).GetMethod("ProcessHitAgainstNPC", BindingFlags.Instance | BindingFlags.NonPublic)!;
         int before = npc.life;
         method.Invoke(player, new object[] { item, npc.Hitbox, 100, 0f, npc.whoAmI });
-        Near(before - npc.life, 100);
+        Near(before - npc.life, 150);
         var state = npc.GetGlobalNPC<CombatGlobalNPC>().Elements.Snapshot;
         Near(state.Elements[1].Total, 0.75);
-        Near(state.Elements[4].Total, 1);
+        Near(state.Elements[4].Total, 0.75);
         var shot = Shot(npc.Center, TagEnum.Pyro, 1.5);
         Near(shot.GetGlobalProjectile<CombatGlobalProjectile>().ElementConsumptionMultiplier, 1);
+    }
+    private static void LifePayment()
+    {
+        Player player = Main.LocalPlayer;
+        foreach (var (life, cost, damage) in new[] { (400, 6, 210), (100, 2, 170), (99, 0, 150) })
+        {
+            player.statLifeMax2 = 400;
+            player.statLife = life;
+            var npc = Target(2);
+            var shot = Shot(npc.Center, TagEnum.Anemo, 0.75);
+            int before = npc.life;
+            shot.Damage();
+            Near(before - npc.life, damage);
+            Near(player.statLife, life - cost);
+            Near(resolutions.Last().Plan.LifeCost, cost);
+            Near(npc.GetGlobalNPC<CombatGlobalNPC>().Elements.Snapshot.ReactionCooldowns[2], 40);
+            npc.active = shot.active = false;
+        }
+        player.statLife = 400;
+        var insufficient = Target(2, 1);
+        var p = Shot(insufficient.Center, TagEnum.Anemo, 0.75);
+        p.Damage();
+        Near(player.statLife, 400);
+        Check(resolutions.Last().Plan.Route == ElementRoute.AttachOnly, "元素不足仍触发反应");
+        p.active = insufficient.active = false;
+        var canceled = Target(2);
+        canceled.dontTakeDamage = true;
+        Shot(canceled.Center, TagEnum.Anemo, 0.75).Damage();
+        Near(player.statLife, 400);
+        Near(canceled.GetGlobalNPC<CombatGlobalNPC>().Elements.Snapshot.Elements[2].Total, 1.5);
+    }
+
+    private static void ConductiveChain()
+    {
+        Vector2 origin = new(Main.spawnTileX * 16, 1600);
+        var first = Target(3);
+        var second = Target(0, 0);
+        var third = Target(0, 0);
+        var stop = Target(0, 0);
+        var beyond = Target(0, 0);
+        NPC[] nodes = { first, second, third, stop, beyond };
+        for (int i = 0; i < nodes.Length; i++) nodes[i].Center = origin + new Vector2(i * 64, 0);
+        second.defense = 20;
+        third.defense = 40;
+        stop.defense = 1000;
+        int[] before = nodes.Select(n => n.life).ToArray();
+        Shot(first.Center, TagEnum.Hydro).Damage();
+        Near(before[0] - first.life, 150);
+        Near(before[1] - second.life, 95);
+        Near(before[2] - third.life, 53);
+        Near(before[3] - stop.life, 0);
+        Near(before[4] - beyond.life, 0);
+        foreach (NPC node in nodes.Skip(1))
+            Check(!node.GetGlobalNPC<CombatGlobalNPC>().Elements.HasState, "电弧附着或增加了 CD");
+    }
+    private static void ConductiveResistance()
+    {
+        var registry = new CombatRegistry();
+        foreach (var rule in DefaultTagRules.All) registry.Register(rule);
+        registry.Register(new ArcTestContributor());
+        registry.Freeze();
+        var system = ModContent.GetInstance<CalculateSystem>();
+        var field = typeof(CalculateSystem).GetField("pipeline", BindingFlags.NonPublic | BindingFlags.Instance)!;
+        var previous = field.GetValue(system);
+        field.SetValue(system, new CombatPipeline(registry, (_, error) => throw error));
+        try
+        {
+            var first = Target(3);
+            var second = Target(0, 0);
+            var third = Target(0, 0);
+            first.Center = new(Main.spawnTileX * 16, 1600);
+            second.Center = first.Center + new Vector2(64, 0);
+            third.Center = second.Center + new Vector2(64, 0);
+            first.ai[1] = .5f;
+            second.ai[1] = .25f;
+            int a = first.life, b = second.life, c = third.life;
+            Shot(first.Center, TagEnum.Hydro).Damage();
+            // 源反应增伤2倍：300；首靶抗性不传递，后续为210×.75、147×1。
+            Near(a - first.life, 150);
+            Near(b - second.life, 157);
+            Near(c - third.life, 147);
+        }
+        finally { field.SetValue(system, previous); }
+    }
+    private static void ConductiveGeometry()
+    {
+        var first = Target(3);
+        var second = Target(0, 0);
+        first.Center = new(Main.spawnTileX * 16 + 8, 1608);
+        second.Center = first.Center + new Vector2(81, 0);
+        int before = second.life;
+        var shot = Shot(first.Center, TagEnum.Hydro);
+        shot.Damage();
+        Near(before - second.life, 0);
+        first.GetGlobalNPC<CombatGlobalNPC>().SetDefaults(first);
+        first.GetGlobalNPC<CombatGlobalNPC>().Elements.Attach(new(3, 1.5, 100));
+        second.Center = first.Center + new Vector2(64, 0);
+        shot.active = false;
+        int tileX = (int)first.Center.X / 16 + 2, tileY = (int)first.Center.Y / 16;
+        var tile = Main.tile[tileX, tileY];
+        bool oldHasTile = tile.HasTile;
+        ushort oldType = tile.TileType;
+        try
+        {
+            tile.HasTile = true; tile.TileType = TileID.Stone;
+            Shot(first.Center, TagEnum.Hydro).Damage();
+            Near(before - second.life, 0);
+        }
+        finally { tile.HasTile = oldHasTile; tile.TileType = oldType; }
     }
     private static void Cooldown()
     {
@@ -191,7 +311,7 @@ public sealed class ElementLiveTests : ModSystem
     {
         Player player = Main.LocalPlayer;
         player.GetModPlayer<CombatPlayer>().Initialize();
-        player.GetModPlayer<CombatPlayer>().Elements.Attach(new(3, 1, 100));
+        player.GetModPlayer<CombatPlayer>().Elements.Attach(new(3, 1.5, 100));
         player.immune = false;
         Array.Clear(player.hurtCooldowns);
         player.creativeGodMode = false;
@@ -216,7 +336,7 @@ public sealed class ElementLiveTests : ModSystem
             int count = resolutions.Count;
             damage = player.Hurt(PlayerDeathReason.ByNPC(source.whoAmI), 100, 0, dodgeable: true);
             Near(damage, 0);
-            Near(player.GetModPlayer<CombatPlayer>().Elements.Snapshot.Elements[3].Total, 1);
+            Near(player.GetModPlayer<CombatPlayer>().Elements.Snapshot.Elements[3].Total, 1.5);
             Check(resolutions.Skip(count).All(r => !r.Committed), $"{mode}仍提交了状态");
         }
     }
@@ -243,7 +363,7 @@ public sealed class ElementLiveTests : ModSystem
         npc.GetGlobalNPC<CombatGlobalNPC>().Elements.Attach(new(2, 1, 100));
         int before = npc.life;
         ModContent.GetInstance<ElementHitSystem>().PostUpdateEverything();
-        Near(before - npc.life, 200);
+        Near(before - npc.life, 150);
         Check(resolutions.Any(r => r.Outcome?.Source?.Kind == Basic.Calculate.Core.SourceKind.Environment), "静置归属非环境");
     }
     private static void NativeReentry()
@@ -261,7 +381,7 @@ public sealed class ElementLiveTests : ModSystem
         };
         int before = npc.life;
         first.Damage();
-        Near(before - npc.life, 300);
+        Near(before - npc.life, 250);
         Check(resolutions.Count == 2 && resolutions[0].Outcome is not null &&
             resolutions[1].Plan.Route == ElementRoute.AttachOnly, "重入未读取提交后的 CD");
         Near(target.Snapshot.Elements[2].Total, 1);
@@ -275,7 +395,7 @@ public sealed class ElementLiveTests : ModSystem
         try { p.Damage(); throw new Exception("原生回调异常未抛出"); }
         catch (InvalidOperationException e) when (e.Message == "预期的测试异常") { }
         Check(!old.IsResolving, "异常后目标仍被占用");
-        Near(old.Snapshot.Elements[3].Total, 1);
+        Near(old.Snapshot.Elements[3].Total, 1.5);
         Near(old.Snapshot.ReactionCooldowns[1], 0);
         ElementProbeNPC.AfterProjectileHit = (_, current) => current.SetDefaults(ModContent.NPCType<ElementProbeNPC>());
         p.localNPCImmunity[npc.whoAmI] = 0;
@@ -284,6 +404,19 @@ public sealed class ElementLiveTests : ModSystem
         Check(!ReferenceEquals(old, npc.GetGlobalNPC<CombatGlobalNPC>().Elements), "未模拟实体代次变更");
         Near(npc.GetGlobalNPC<CombatGlobalNPC>().Elements.Snapshot.Elements[2].Total, 0);
         Check(resolutions.All(r => !r.Committed), "异常或实体复用仍提交了状态");
+    }
+}
+
+[CombatContributor(901001)]
+internal sealed class ArcTestContributor : ICombatContributor
+{
+    public HitKinds SupportedHits => HitKinds.ProjectileToNpc;
+    public bool IsActive(in CombatContext context) => context.TargetNpc?.type == ModContent.NPCType<ElementProbeNPC>();
+    public void Collect(in CombatContext context, ContributionWriter writer)
+    {
+        writer.SetEnabled("测试抗性", ModifierTarget.Resistance, true, "隔离测试");
+        writer.AddValue("目标抗性", ModifierTarget.Resistance, context.TargetNpc!.ai[1]);
+        writer.AddValue("源反应增伤", ModifierTarget.Reaction(1), 1);
     }
 }
 

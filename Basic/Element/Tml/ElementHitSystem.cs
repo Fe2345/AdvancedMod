@@ -18,7 +18,7 @@ namespace AdvancedMod.Basic.Element.Tml;
 /// <summary>原生伤害事务桥；不把 Modify／OnHit 假设为必然成对的事件。</summary>
 public sealed class ElementHitSystem : ModSystem
 {
-    public static ReactionTable Reactions { get; private set; } = DevelopmentReactions.Create();
+    public static ReactionTable Reactions { get; private set; } = AmplificationReactions.Create();
     public static event Action<ElementResolution>? Resolved;
     private static readonly Stack<Frame> frames = new();
 
@@ -58,10 +58,15 @@ public sealed class ElementHitSystem : ModSystem
         On_Player.Hurt_PlayerDeathReason_int_int_refHurtInfo_bool_bool_int_bool_float_float_float -= Hurt;
         frames.Clear();
         Resolved = null;
-        Reactions = DevelopmentReactions.Create();
+        Reactions = AmplificationReactions.Create();
+        AmplificationEffects.Clear();
     }
 
-    private static void Complete(ElementResolution result) => Resolved?.Invoke(result);
+    internal static void Complete(ElementResolution result)
+    {
+        AmplificationEffects.Complete(result);
+        Resolved?.Invoke(result);
+    }
 
     private static void ItemHit(On_Player.orig_ProcessHitAgainstNPC orig, Player player, Item item,
         Rectangle rectangle, int damage, float knockback, int npcIndex)
@@ -137,7 +142,8 @@ public sealed class ElementHitSystem : ModSystem
         }
         var request = MakeRequest(context, frame.PanelDamage);
         ReactionPlan plan = entry.Transaction.Prepare(request);
-        if (plan.Route == ElementRoute.React) modifiers.SourceDamage *= SeedRatio(plan, frame.InputDamage);
+        AmplificationEffects.Prepare(context, plan, frame.InputDamage);
+        if (plan.Route == ElementRoute.React) modifiers.SourceDamage.Base += SeedOffset(plan, frame.InputDamage);
         // 在 ToHitInfo 完成计算时标记即将进入 Strike 的命中，不从普通 OnHit 推断成功。
         modifiers.ModifyHitInfo += (ref NPC.HitInfo _) => entry.Armed = true;
         return FinalContext(context, plan);
@@ -149,8 +155,12 @@ public sealed class ElementHitSystem : ModSystem
         Entry? entry = null;
         if (!fromNet && frames.Count != 0 && frames.Peek().Npcs.TryGetValue(npc, out var found) && found.Armed)
         { entry = found; entry.Armed = false; }
+        if (entry is not null) AmplificationEffects.RecordHit(entry.Transaction.Plan!, hit);
         int actual = orig(npc, hit, fromNet, noPlayerInteraction);
-        if (entry is not null) entry.Transaction.DamageDone = actual;
+        if (entry is not null)
+        {
+            entry.Transaction.DamageDone = actual;
+        }
         return actual;
     }
 
@@ -194,7 +204,8 @@ public sealed class ElementHitSystem : ModSystem
         if (frame.PlayerTransaction is null) return context;
         int panel = context.SourceProjectile?.damage ?? context.AttackerNpc?.damage ?? frame.InputDamage;
         var plan = frame.PlayerTransaction.Prepare(MakeRequest(context, panel));
-        if (plan.Route == ElementRoute.React) modifiers.SourceDamage *= SeedRatio(plan, frame.InputDamage);
+        AmplificationEffects.Prepare(context, plan);
+        if (plan.Route == ElementRoute.React) modifiers.SourceDamage.Base += SeedOffset(plan, frame.InputDamage);
         return FinalContext(context, plan);
     }
 
@@ -207,26 +218,28 @@ public sealed class ElementHitSystem : ModSystem
 
     private static ElementRequest MakeRequest(CombatContext context, int panel)
     {
+        int lifeCost = context.AttackerPlayer is { active: true, dead: false } payer
+            ? AmplificationReactions.LifeCost(payer.statLife, payer.statLifeMax2) : 0;
         if (context.SourceItem is { } item)
         {
             var data = item.GetGlobalItem<CombatGlobalItem>();
-            return new(context.CreateSnapshot(), panel, data.ElementAmount, data.ElementConsumptionMultiplier, data.ReactionCooldownMultiplier);
+            return new(context.CreateSnapshot(), panel, data.ElementAmount, data.ElementConsumptionMultiplier, data.ReactionCooldownMultiplier, proposedLifeCost: lifeCost);
         }
         if (context.SourceProjectile is { } projectile)
         {
             var data = projectile.GetGlobalProjectile<CombatGlobalProjectile>();
-            return new(context.CreateSnapshot(), panel, data.ElementAmount, data.ElementConsumptionMultiplier, data.ReactionCooldownMultiplier);
+            return new(context.CreateSnapshot(), panel, data.ElementAmount, data.ElementConsumptionMultiplier, data.ReactionCooldownMultiplier, proposedLifeCost: lifeCost);
         }
         return new(context.CreateSnapshot(), panel, context.AttackerNpc!.GetGlobalNPC<CombatGlobalNPC>().ElementAmount);
     }
     private static CombatContext FinalContext(CombatContext context, ReactionPlan plan) =>
         context.WithProfile(new(plan.Hit.Tags, context.Profile.AttackId, context.Profile.IsManagedAttack, context.Profile.SourceItemId));
-    private static float SeedRatio(ReactionPlan plan, int damage)
+    private static float SeedOffset(ReactionPlan plan, int damage)
     {
         if (damage <= 0) throw new InvalidOperationException("真实反应的原生基础伤害必须为正。");
-        float ratio = (float)(plan.DamageSeed / damage);
-        if (!float.IsFinite(ratio)) throw new ArithmeticException("原生反应伤害倍率溢出。");
-        return ratio;
+        float offset = (float)plan.DamageSeed - damage;
+        if (!float.IsFinite(offset)) throw new ArithmeticException("原生反应伤害种子溢出。");
+        return offset;
     }
 
     private static void RunFrame(Frame frame, Action execute)
@@ -236,7 +249,7 @@ public sealed class ElementHitSystem : ModSystem
         frames.Push(frame);
         try { execute(); returned = true; }
         catch (Exception exception) { error = exception; }
-        finally { frames.Pop(); }
+        finally { frames.Pop(); NpcDamageObservation.Pending = null; }
         foreach (var entry in frame.Npcs.Values.Where(e => e.Owned))
         {
             try { entry.Transaction.Finish(returned); }
@@ -260,8 +273,12 @@ public sealed class ElementHitSystem : ModSystem
                 if (npc.dontTakeDamage || npc.immortal) return false;
                 var final = FinalContext(context, plan);
                 var modifiers = npc.GetIncomingStrikeModifiers(DamageClass.Generic, 0);
-                CalculateSystem.Pipeline.ModifyNpcHit(final, ref modifiers);
+                AmplificationEffects.Prepare(final, plan);
+                var sourceModifier = modifiers.SourceDamage;
+                var calculated = CalculateSystem.Pipeline.ModifyNpcHit(final, ref modifiers);
+                AmplificationEffects.CaptureSource(final, sourceModifier, calculated);
                 var hit = modifiers.ToHitInfo(CheckedDamage(plan.DamageSeed), false, 0, false);
+                AmplificationEffects.RecordHit(plan, hit);
                 int actual = npc.StrikeNPC(hit, false, true);
                 if (Main.netMode == NetmodeID.Server) NetMessage.SendStrikeNPC(npc, in hit);
                 return actual > 0;

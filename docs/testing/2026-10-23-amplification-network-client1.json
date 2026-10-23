@@ -1,0 +1,45 @@
+{
+  "role": "client1",
+  "utc": "2026-10-23T13:21:50.1618705+00:00",
+  "mode": 1,
+  "details": {
+    "life": 299750,
+    "localPlayer": 0,
+    "damageCalls": 0,
+    "projectileEvidence": "\u672A\u89C2\u5BDF\u5230\u5F39\u5E55"
+  },
+  "results": [
+    {
+      "name": "NPC \u8840\u91CF\u955C\u50CF250\u4F24\u5BB3",
+      "status": "PASS"
+    },
+    {
+      "name": "NPC \u9644\u7740\u4E0E CD \u955C\u50CF",
+      "status": "PASS"
+    },
+    {
+      "name": "\u5B9E\u4F53\u8EAB\u4EFD\u540C\u6B65",
+      "status": "PASS"
+    },
+    {
+      "name": "\u73A9\u5BB6\u72B6\u6001\u8DE8\u5BA2\u6237\u7AEF\u540C\u6B65",
+      "status": "PASS"
+    },
+    {
+      "name": "\u670D\u52A1\u5668\u9500\u6BC1\u5F39\u5E55\u540C\u6B65\u5230\u5BA2\u6237\u7AEF",
+      "status": "PASS"
+    },
+    {
+      "name": "\u9759\u7F6E\u53CD\u5E94\u8840\u91CF\u955C\u50CF",
+      "status": "PASS"
+    },
+    {
+      "name": "\u8FD1\u6218\u4F24\u5BB3\u955C\u50CF",
+      "status": "PASS"
+    },
+    {
+      "name": "\u6240\u5C5E\u73A9\u5BB6\u53D7\u4F24\u4E0E\u53D6\u6D88\u8FB9\u754C",
+      "status": "PASS"
+    }
+  ]
+}
