@@ -15,13 +15,12 @@ using Terraria.Localization;
 
 namespace AdvancedMod.Basic.Element.Tml;
 
-/// <summary>单人原生伤害事务桥；不把 Modify／OnHit 假设为必然成对的事件。</summary>
+/// <summary>原生伤害事务桥；不把 Modify／OnHit 假设为必然成对的事件。</summary>
 public sealed class ElementHitSystem : ModSystem
 {
     public static ReactionTable Reactions { get; private set; } = DevelopmentReactions.Create();
     public static event Action<ElementResolution>? Resolved;
     private static readonly Stack<Frame> frames = new();
-    private static bool Enabled => Main.netMode == NetmodeID.SinglePlayer;
 
     private sealed class Entry
     {
@@ -68,8 +67,13 @@ public sealed class ElementHitSystem : ModSystem
         Rectangle rectangle, int damage, float knockback, int npcIndex)
     {
         var data = item.GetGlobalItem<CombatGlobalItem>();
-        if (!Enabled || !data.Profile.IsManagedAttack) { orig(player, item, rectangle, damage, knockback, npcIndex); return; }
+        if (!data.Profile.IsManagedAttack) { orig(player, item, rectangle, damage, knockback, npcIndex); return; }
         NPC npc = Main.npc[npcIndex];
+        if (Main.netMode == NetmodeID.MultiplayerClient)
+        {
+            if (player.whoAmI == Main.myPlayer) ElementNetwork.RequestItem(player, npc, rectangle);
+            return;
+        }
         var target = npc.GetGlobalNPC<CombatGlobalNPC>().Elements;
         target.RunNative(Reactions, tx =>
         {
@@ -82,7 +86,7 @@ public sealed class ElementHitSystem : ModSystem
 
     private static void ProjectileDamage(On_Projectile.orig_Damage orig, Projectile projectile)
     {
-        if (!Enabled || !projectile.GetGlobalProjectile<CombatGlobalProjectile>().Profile.IsManagedAttack)
+        if (!projectile.GetGlobalProjectile<CombatGlobalProjectile>().Profile.IsManagedAttack)
         { orig(projectile); return; }
         RunFrame(new Frame { Projectile = projectile, PanelDamage = projectile.damage,
             InputDamage = projectile.damage, ReplayProjectile = () => orig(projectile) }, () => orig(projectile));
@@ -90,7 +94,10 @@ public sealed class ElementHitSystem : ModSystem
 
     internal static bool CanHitNpc(NPC npc, Projectile projectile)
     {
-        if (!Enabled || frames.Count == 0 || frames.Peek().Projectile != projectile) return true;
+        // 只禁止客户端的托管 NPC 命中，保留原生切砖、爆炸自伤及 PvP 路径。
+        if (Main.netMode == NetmodeID.MultiplayerClient && projectile.friendly && !projectile.hostile &&
+            projectile.GetGlobalProjectile<CombatGlobalProjectile>().Profile.IsManagedAttack) return false;
+        if (frames.Count == 0 || frames.Peek().Projectile != projectile) return true;
         Frame frame = frames.Peek();
         if (frame.OnlyTarget is not null && frame.OnlyTarget != npc) return false;
         if (frame.Npcs.ContainsKey(npc)) return true;
@@ -116,7 +123,7 @@ public sealed class ElementHitSystem : ModSystem
 
     internal static CombatContext PrepareNpc(CombatContext context, ref NPC.HitModifiers modifiers)
     {
-        if (!Enabled || frames.Count == 0) return context;
+        if (frames.Count == 0) return context;
         Frame frame = frames.Peek();
         if (context.SourceItem != frame.Item || context.SourceProjectile != frame.Projectile) return context;
         NPC npc = context.TargetNpc!;
@@ -140,7 +147,7 @@ public sealed class ElementHitSystem : ModSystem
         NPC.HitInfo hit, bool fromNet, bool noPlayerInteraction)
     {
         Entry? entry = null;
-        if (Enabled && !fromNet && frames.Count != 0 && frames.Peek().Npcs.TryGetValue(npc, out var found) && found.Armed)
+        if (!fromNet && frames.Count != 0 && frames.Peek().Npcs.TryGetValue(npc, out var found) && found.Armed)
         { entry = found; entry.Armed = false; }
         int actual = orig(npc, hit, fromNet, noPlayerInteraction);
         if (entry is not null) entry.Transaction.DamageDone = actual;
@@ -151,7 +158,7 @@ public sealed class ElementHitSystem : ModSystem
         Player player, PlayerDeathReason reason, int damage, int direction, out Player.HurtInfo info,
         bool pvp, bool quiet, int cooldown, bool dodgeable, float armorPenetration, float scalingArmorPenetration, float knockback)
     {
-        if (!Enabled || pvp || !ManagedSource(reason))
+        if (pvp || Main.netMode != NetmodeID.SinglePlayer && player.whoAmI != Main.myPlayer || !ManagedSource(reason))
             return orig(player, reason, damage, direction, out info, pvp, quiet, cooldown, dodgeable, armorPenetration, scalingArmorPenetration, knockback);
         var target = player.GetModPlayer<CombatPlayer>().Elements;
         Player.HurtInfo captured = default;
@@ -182,7 +189,7 @@ public sealed class ElementHitSystem : ModSystem
 
     internal static CombatContext PreparePlayer(CombatContext context, ref Player.HurtModifiers modifiers)
     {
-        if (!Enabled || frames.Count == 0 || frames.Peek().Player != context.TargetPlayer) return context;
+        if (frames.Count == 0 || frames.Peek().Player != context.TargetPlayer) return context;
         var frame = frames.Peek();
         if (frame.PlayerTransaction is null) return context;
         int panel = context.SourceProjectile?.damage ?? context.AttackerNpc?.damage ?? frame.InputDamage;
@@ -240,10 +247,11 @@ public sealed class ElementHitSystem : ModSystem
 
     public override void PostUpdateEverything()
     {
-        if (!Enabled) return;
+
         long tick = checked((long)Main.GameUpdateCount);
         foreach (NPC npc in Main.ActiveNPCs)
         {
+            if (Main.netMode == NetmodeID.MultiplayerClient) continue;
             var target = npc.GetGlobalNPC<CombatGlobalNPC>().Elements;
             if (!target.HasState) continue;
             var context = CombatContext.ForEnvironment(CalculateSystem.NextHitId(), npc, AttackProfile.Unknown);
@@ -254,12 +262,14 @@ public sealed class ElementHitSystem : ModSystem
                 var modifiers = npc.GetIncomingStrikeModifiers(DamageClass.Generic, 0);
                 CalculateSystem.Pipeline.ModifyNpcHit(final, ref modifiers);
                 var hit = modifiers.ToHitInfo(CheckedDamage(plan.DamageSeed), false, 0, false);
-                return npc.StrikeNPC(hit, false, true) > 0;
+                int actual = npc.StrikeNPC(hit, false, true);
+                if (Main.netMode == NetmodeID.Server) NetMessage.SendStrikeNPC(npc, in hit);
+                return actual > 0;
             }, Complete, () => ReferenceEquals(target, npc.GetGlobalNPC<CombatGlobalNPC>().Elements));
         }
         foreach (Player player in Main.ActivePlayers)
         {
-            if (player.dead) continue;
+            if (player.dead || Main.netMode != NetmodeID.SinglePlayer && player.whoAmI != Main.myPlayer) continue;
             var target = player.GetModPlayer<CombatPlayer>().Elements;
             if (!target.HasState) continue;
             var context = CombatContext.ForEnvironment(CalculateSystem.NextHitId(), player, AttackProfile.Unknown);

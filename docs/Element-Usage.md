@@ -26,11 +26,11 @@ int index = ElementAttacks.NewProjectile(source, position, velocity, type,
 return false; // 已经生成，不再让原版重复生成一次。
 ```
 
-NewProjectile 封装保留原 `IEntitySource`，让 TML 正常处理源物品、面板、暴击等信息。标签和元素量在原 NewProjectile 返回后、首次 AI 前写入，所以 `ModProjectile.OnSpawn` 中尚不能读取本次参数。索引耗尽时原样返回原生失败索引，不写入其他槽位。不要从当前手持物品推断来源；子弹幕需要显式传自己的标签／元素量。两个修正保留弹幕自身定义，不继承武器或父弹幕。
+NewProjectile 封装保留原 `IEntitySource`，让 TML 正常处理源物品、面板、暴击等信息。标签和元素量在 GlobalProjectile.OnSpawn 中、首次网络包发送前写入；由于该 Hook 晚于 ModProjectile.OnSpawn， `ModProjectile.OnSpawn` 中尚不能读取本次参数。索引耗尽时原样返回原生失败索引，不写入其他槽位。不要从当前手持物品推断来源；子弹幕需要显式传自己的标签／元素量。两个修正保留弹幕自身定义，不继承武器或父弹幕。
 
 NPC 接触伤害可用 `ConfigureNpcContact(npc, tags, elementAmount, attackId)` 配置；当前 NPC 接触入口两个修正均为 1。
 
-本轮元素状态和反应接入**只启用单人**。标签／元素量没有网络序列化，联机权威、弹幕数据同步及去重仍待实现，不宣称联机可用。
+联机中 NPC 元素状态及反应由服务器结算；玩家受伤保留 TML 所属客户端权威。物品／弹幕通过 NetSend/ExtraAI 同步标签、元素量和独立修正，NPC 快照随 SyncNPC 下发，玩家快照经服务器校验所属槽后转发。镜像不参与静置反应。真实专用服务器＋双客户端共 22 项断言已通过，详见 TODO 与 testing 下的报告。
 
 ## 原生入口与提交
 
@@ -57,3 +57,10 @@ NPC 接触伤害可用 `ConfigureNpcContact(npc, tags, elementAmount, attackId)`
 4. 测试运行时关闭自动保存，写报告后退出客户端。脚本校验报告时间，拒绝把旧报告当作本轮成功；存在失败项则报错。
 
 测试记录与当前结果见 [TODO](TODO.md)。此自动化使用真实客户端和复制存档，区别于纯计算测试；它不等同于手工武器手感、画面或联机验收。
+
+## 联机自动验收
+运行 Tests/Run-ElementNetwork.ps1，传入 -TmlDirectory。脚本在 obj/element-network/时间戳 下建立服务器和两个客户端的独立存档，端口默认 17777，仅使用本机 TCP。测试报告必须由本轮三个进程分别生成，超时、进程退出或任意 FAIL 都使脚本失败。
+
+NPC 当前采用每 6 刻一次的全量元素快照，全部元素槽共允许最多 2048 个白值分量；CD 镜像可能落后最多一个同步间隔，客户端不据此裁定反应。目标死亡／复用后原生 SyncNPC 及实例身份负责隔离旧请求。玩家元素状态不持久化，离开世界和重生清空。协议沿用 TML 对所属客户端攻击配置的信任，不承诺防作弊。
+
+生成工具保留原始 IEntitySource；标签在 GlobalProjectile.OnSpawn 中写入，早于原版首次发包。ModProjectile.OnSpawn 执行在此前，因此不应在该回调中读取工具参数。嵌套原版生成不会继承父级标签；嵌套工具调用使用自己的配置。武器动态配置调用 Item.NetStateChanged，近战请求前确保当前物品包先送达。

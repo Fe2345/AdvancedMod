@@ -1,4 +1,6 @@
 using Terraria;
+using Terraria.ID;
+using AdvancedMod.Basic.Element.Tml;
 using Terraria.ModLoader;
 using AdvancedMod.Basic.Calculate.Tml;
 using AdvancedMod.Basic.Element;
@@ -10,6 +12,26 @@ public sealed class CombatPlayer : ModPlayer
 {
     public ElementTarget Elements { get; private set; } = new(ElementTarget.DefaultOperationLimit);
 
+    private bool hadState;
+    internal void SetNetworkState(ElementTarget state) => Elements = state;
+    public override void SyncPlayer(int toWho, int fromWho, bool newPlayer)
+    {
+        if (Main.netMode == NetmodeID.Server) ElementNetwork.SendPlayer(Player, toWho, fromWho);
+    }
+    public override void PostUpdate()
+    {
+        if (Main.netMode != NetmodeID.MultiplayerClient || Player.whoAmI != Main.myPlayer ||
+            Main.GameUpdateCount % ElementNetwork.SyncInterval != 0) return;
+        if (hadState || Elements.HasState) ElementNetwork.SendPlayer(Player);
+        hadState = Elements.HasState;
+    }
+
+    public override void PlayerDisconnect()
+    {
+        Elements = new(ElementTarget.DefaultOperationLimit);
+        ElementNetwork.ResetConnection(Player.whoAmI);
+    }
+    public override void PlayerConnect() => ElementNetwork.ResetConnection(Player.whoAmI);
     public override void Initialize() => Elements = new(ElementTarget.DefaultOperationLimit);
     public override void OnEnterWorld() => Elements = new(ElementTarget.DefaultOperationLimit);
     public override void OnRespawn() => Elements = new(ElementTarget.DefaultOperationLimit);

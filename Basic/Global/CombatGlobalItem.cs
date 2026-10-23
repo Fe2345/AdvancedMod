@@ -1,4 +1,7 @@
 using Terraria.ModLoader;
+using Terraria;
+using System.IO;
+using AdvancedMod.Basic.Element.Tml;
 using AdvancedMod.Basic.Calculate.Tml;
 
 namespace AdvancedMod.Basic.Global;
@@ -9,6 +12,14 @@ namespace AdvancedMod.Basic.Global;
 public sealed class CombatGlobalItem : GlobalItem
 {
     public override bool InstancePerEntity => true;
+    public override void NetSend(Item item, BinaryWriter writer) =>
+        ElementNetwork.WriteAttack(writer, Profile, ElementAmount, ElementConsumptionMultiplier, ReactionCooldownMultiplier);
+    public override void NetReceive(Item item, BinaryReader reader)
+    {
+        var data = ElementNetwork.ReadAttack(reader);
+        (Profile, ElementAmount, ElementConsumptionMultiplier, ReactionCooldownMultiplier) =
+            (data.Profile, data.Amount, data.Consumption, data.Cd);
+    }
     /// <summary>本物品直接命中时的元素消耗修正，不向弹幕继承；禁止填零。</summary>
     public float ElementConsumptionMultiplier = 1f;
     /// <summary>本物品直接命中时的反应 CD 修正，不向弹幕继承。</summary>

@@ -1,4 +1,8 @@
 using Terraria.ModLoader;
+using Terraria.ModLoader.IO;
+using Terraria.ID;
+using System.IO;
+using AdvancedMod.Basic.Element.Tml;
 using Terraria;
 using AdvancedMod.Basic.Calculate.Tml;
 using AdvancedMod.Basic.Element;
@@ -15,7 +19,41 @@ public sealed class CombatGlobalNPC : GlobalNPC
     public double ElementAmount { get; internal set; }
     public ElementTarget Elements { get; private set; } = new(ElementTarget.DefaultOperationLimit);
 
-    public override void SetDefaults(NPC npc) => Elements = new(ElementTarget.DefaultOperationLimit);
+    private static long nextIdentity;
+    public long NetworkIdentity { get; private set; }
+    private bool hadState;
+    public override void SetDefaults(NPC npc)
+    {
+        Elements = new(ElementTarget.DefaultOperationLimit);
+        NetworkIdentity = ++nextIdentity;
+        Profile = AttackProfile.Unknown;
+        ElementAmount = 0;
+        hadState = false;
+    }
+    public override void PostAI(NPC npc)
+    {
+        if (Main.netMode != NetmodeID.Server || Main.GameUpdateCount % ElementNetwork.SyncInterval != 0) return;
+        if (hadState || Elements.HasState) npc.netUpdate = true;
+        hadState = Elements.HasState;
+    }
+    public override void SendExtraAI(NPC npc, BitWriter bitWriter, BinaryWriter writer)
+    {
+        writer.Write(NetworkIdentity);
+        ElementNetwork.WriteAttack(writer, Profile, ElementAmount, 1, 1);
+        Elements.WriteState(writer);
+    }
+    public override void ReceiveExtraAI(NPC npc, BitReader bitReader, BinaryReader reader)
+    {
+        long identity = reader.ReadInt64();
+        var attack = ElementNetwork.ReadAttack(reader);
+        var state = new ElementTarget(ElementTarget.DefaultOperationLimit);
+        state.ReadState(reader);
+        if (Main.netMode != NetmodeID.MultiplayerClient) return;
+        NetworkIdentity = identity;
+        Profile = attack.Profile;
+        ElementAmount = attack.Amount;
+        Elements = state;
+    }
 
     public override void ModifyHitByItem(NPC npc, Player player, Item item, ref NPC.HitModifiers modifiers)
     {

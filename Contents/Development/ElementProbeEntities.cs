@@ -1,7 +1,21 @@
 using Terraria;
 using Terraria.ModLoader;
+using Terraria.ID;
+using AdvancedMod.Basic.Utils;
+using AdvancedMod.Basic.Tag;
 
 namespace AdvancedMod.Contents.Development;
+
+public sealed class ElementProbeSword : ModItem
+{
+    public override string Texture => "Terraria/Images/Item_24";
+    public override void SetDefaults()
+    {
+        Item.CloneDefaults(ItemID.WoodenSword);
+        Item.damage = 100;
+        ElementAttacks.ConfigureWeapon(Item, new TagSet(new[] { new TagEntry(false, TagEnum.Hydro) }), 1);
+    }
+}
 
 /// <summary>只由开发测试入口生成的无防御靶标。</summary>
 public sealed class ElementProbeNPC : ModNPC
@@ -33,6 +47,8 @@ public sealed class ElementProbeNPC : ModNPC
 
 public sealed class ElementProbeProjectile : ModProjectile
 {
+    internal static System.Action<Projectile, Terraria.DataStructures.IEntitySource> Spawned;
+    public override void OnSpawn(Terraria.DataStructures.IEntitySource source) => Spawned?.Invoke(Projectile, source);
     public override string Texture => "Terraria/Images/Projectile_1";
     public override void SetDefaults()
     {
@@ -46,6 +62,11 @@ public sealed class ElementProbeProjectile : ModProjectile
         Projectile.timeLeft = 120;
         Projectile.usesLocalNPCImmunity = true;
         Projectile.localNPCHitCooldown = 1;
+        if (!string.IsNullOrEmpty(System.Environment.GetEnvironmentVariable("ADVANCEDMOD_ELEMENT_NET_TEST")))
+        {
+            Projectile.penetrate = 1;
+            Projectile.timeLeft = 600;
+        }
     }
 }
 

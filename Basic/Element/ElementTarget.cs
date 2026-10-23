@@ -9,7 +9,7 @@ namespace AdvancedMod.Basic.Element;
 /// 一个目标的串行结算外壳，仅在游戏主线程调用。回调负责 Calculate 与应用伤害，
 /// 返回是否提交状态；取消、免疫等玩法由外层明确裁定。本层不推断引擎伤害结果。
 /// </summary>
-public sealed class ElementTarget
+public sealed partial class ElementTarget
 {
     /// <summary>防止回调无限派生命中；超限显式报错，宿主可在构造时覆盖。</summary>
     public const int DefaultOperationLimit = 1024;

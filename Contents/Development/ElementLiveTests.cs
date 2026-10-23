@@ -43,6 +43,7 @@ public sealed class ElementLiveTests : ModSystem
         ElementHitSystem.Resolved += resolutions.Add;
         var tests = new (string, Action)[]
         {
+            ("嵌套生成保留来源且不继承标签", NestedSpawn),
             ("弹幕水雷200伤害与生成标签", ProjectileReaction),
             ("水风150与火冰100伤害", OtherCoefficients),
             ("近战真实入口与元素量", WeaponHit),
@@ -69,6 +70,7 @@ public sealed class ElementLiveTests : ModSystem
                     spawnedNpcs.Clear();
                     ElementProbePlayer.Cancel = ElementProbePlayer.Dodge = false;
                     ElementProbeNPC.AfterProjectileHit = null;
+                    ElementProbeProjectile.Spawned = null;
                 }
             }
         }
@@ -119,6 +121,28 @@ public sealed class ElementLiveTests : ModSystem
         Near(before - npc.life, 200);
         Check(resolutions.Single().Outcome?.ReactionSlot == 1, "未提交水雷反应");
         Near(npc.GetGlobalNPC<CombatGlobalNPC>().Elements.Snapshot.ReactionCooldowns[1], 60);
+    }
+    private static void NestedSpawn()
+    {
+        var source = new EntitySource_Misc("嵌套生成测试");
+        Projectile? raw = null, wrapped = null;
+        ElementProbeProjectile.Spawned = (parent, receivedSource) =>
+        {
+            Check(ReferenceEquals(source, receivedSource), "生成工具替换了来源");
+            ElementProbeProjectile.Spawned = null;
+            raw = Main.projectile[Projectile.NewProjectile(source, parent.Center, Vector2.Zero,
+                parent.type, 100, 0, Main.myPlayer)];
+            wrapped = Main.projectile[ElementAttacks.NewProjectile(source, parent.Center, Vector2.Zero,
+                parent.type, 100, 0, Tags(TagEnum.Cryo), 2, Main.myPlayer)];
+            spawnedProjectiles.Add(raw); spawnedProjectiles.Add(wrapped);
+        };
+        var p = Main.projectile[ElementAttacks.NewProjectile(source, Main.LocalPlayer.Center + new Vector2(400, -400),
+            Vector2.Zero, ModContent.ProjectileType<ElementProbeProjectile>(), 100, 0, Tags(TagEnum.Hydro), 1, Main.myPlayer)];
+        spawnedProjectiles.Add(p);
+        Check(raw is not null && !raw.GetGlobalProjectile<CombatGlobalProjectile>().Profile.IsManagedAttack, "普通子弹幕错误继承标签");
+        Check(wrapped is not null && wrapped.GetGlobalProjectile<CombatGlobalProjectile>().Profile.Tags.Contains(TagEnum.Cryo), "工具子弹幕配置丢失");
+        Check(p.GetGlobalProjectile<CombatGlobalProjectile>().Profile.Tags.Contains(TagEnum.Hydro), "父弹幕配置被嵌套覆盖");
+        Near(p.GetGlobalProjectile<CombatGlobalProjectile>().ElementAmount, 1);
     }
     private static void OtherCoefficients()
     {

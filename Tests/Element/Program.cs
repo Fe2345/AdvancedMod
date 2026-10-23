@@ -16,6 +16,7 @@ var tests = new (string, Action)[]
     ("参数验证与派生链上限", Validation),
     ("Calculate 标签门禁与乘区不重复", CalculateFlow),
     ("小数分量消耗与总量一致", Fractional),
+    ("网络快照往返与坏包原子拒绝", Wire),
 };
 int passed = 0;
 foreach (var (name, run) in tests)
@@ -254,4 +255,33 @@ static void Fractional()
         Check(gauge.Portions.Values.All(v => v > 0));
         Near(gauge.Total, 0);
     }
+}
+
+static void Wire()
+{
+    var original = Target();
+    original.Attach(new(2, 0.75, 123));
+    original.Attach(new(2, 1.25, 456));
+    using var stream = new MemoryStream();
+    using var writer = new BinaryWriter(stream, System.Text.Encoding.UTF8, true);
+    original.WriteState(writer);
+    var copy = Target();
+    stream.Position = 0;
+    copy.ReadState(new BinaryReader(stream));
+    Near(copy.Snapshot.Elements[2].Total, 2);
+    Near(copy.Snapshot.Elements[2].Portions[123], 0.75);
+    byte[] valid = stream.ToArray();
+    foreach (int length in new[] { 0, 3, valid.Length - 1 })
+    {
+        try { copy.ReadState(new BinaryReader(new MemoryStream(valid[..length]))); throw new Exception("截断包未拒绝"); }
+        catch (EndOfStreamException) { }
+        Near(copy.Snapshot.Elements[2].Total, 2);
+    }
+    using var invalid = new MemoryStream();
+    using var bad = new BinaryWriter(invalid, System.Text.Encoding.UTF8, true);
+    bad.Write((ushort)1); bad.Write(100); bad.Write(double.NaN);
+    invalid.Position = 0;
+    try { copy.ReadState(new BinaryReader(invalid)); throw new Exception("非法数值未拒绝"); }
+    catch (InvalidDataException) { }
+    Near(copy.Snapshot.Elements[2].Total, 2);
 }

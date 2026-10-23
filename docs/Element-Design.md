@@ -4,7 +4,7 @@
 
 2026-10-23：`Basic/Element` 已实现可离线运行的两层框架、目标状态和串行结算外壳。NPC 的 `CombatGlobalNPC.Elements`、玩家的 `CombatPlayer.Elements` 分别持有独立目标；NPC 设置默认值、玩家初始化时创建新目标。
 
-单人四条正常伤害入口与每刻静置驱动已接入，并已在真实客户端验证；完整使用方式、入口边界及测试脚本见 [Element-Usage.md](Element-Usage.md)。联机执行端、同步及去重仍待实现。原 Word／转写 Markdown 继续作为原稿留存，以 TODO 和本文件描述当前实现。
+单人四条正常伤害入口与每刻静置驱动已接入，并已在真实客户端验证；完整使用方式、入口边界及测试脚本见 [Element-Usage.md](Element-Usage.md)。联机接入已实现 NPC 服务器权威、玩家所属端权威及镜像同步，实机验收状态见 TODO。原 Word／转写 Markdown 继续作为原稿留存，以 TODO 和本文件描述当前实现。
 
 ## 数据流
 
@@ -33,13 +33,13 @@
 
 宿主每个游戏刻调用 `Tick(gameTick, idleRequest, table, applyDamage, completed, isTargetValid)`。静置请求使用 `isIdle: true`，无来袭元素量，两个修正固定为 1；框架将伤害来源设置为环境并清除攻击者。
 
-当前可测试调度约定：先递减 CD，再做一次静置候选选择；同刻重复 Tick 不重复递减或扫描，跳过的游戏刻按差值递减。Tick 自身也进入同目标队列，主动请求与 Tick 按调用先后串行执行。首次 Tick 递减一刻；未匹配反应时不调用伤害回调。现由单人 PostUpdateEverything 驱动；跳过死亡玩家和无状态目标。玩家入世界／重生重新创建目标状态。正式每刻反应次数及联机行为仍待确认。
+当前可测试调度约定：先递减 CD，再做一次静置候选选择；同刻重复 Tick 不重复递减或扫描，跳过的游戏刻按差值递减。Tick 自身也进入同目标队列，主动请求与 Tick 按调用先后串行执行。首次 Tick 递减一刻；未匹配反应时不调用伤害回调。现由 PostUpdateEverything 驱动；联机时服务器扫描 NPC，所属客户端扫描本地玩家，其他镜像不扫描；跳过死亡玩家和无状态目标。玩家入世界／重生重新创建目标状态。每目标每刻最多选择一个静置候选，联机验证结果见 TODO。
 
 框架仅用于主线程；队列不是跨线程或跨端互斥设施。`DefaultOperationLimit=1024` 为防止无限派生链的工程保护上限，可通过构造参数覆盖；超限显式报错，不静默丢弃后继续结算。
 
 ## 测试配置与执行
 
-`Basic/Element/DevelopmentReactions.cs` 保存当前单人开发用临时配置，离线测试另以逆序登记验证槽序：
+`Basic/Element/DevelopmentReactions.cs` 保存当前开发用临时配置，离线测试另以逆序登记验证槽序：
 
 | 槽 | 反应 | 系数 | 基础消耗 | 基础 CD |
 |---|---|---|---|---|
