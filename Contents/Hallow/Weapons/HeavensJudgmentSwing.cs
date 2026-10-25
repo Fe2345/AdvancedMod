@@ -121,7 +121,8 @@ public sealed class HeavensJudgmentSwing : ModProjectile
         Owner.itemRotation = MathHelper.WrapAngle(angle - (facing < 0 ? MathHelper.Pi : 0));
         if (!Main.dedServ)
         {
-            Visuals.SetTarget(trail, new HallowSlashPose(Hilt, HallowBladeRules.BladeLength * itemScale, angle, angle - StartAngle));
+            Visuals.SetTarget(trail, new HallowSlashPose(Hilt, HallowBladeRules.BladeLength * itemScale, angle, angle - StartAngle,
+                Projectile.localAI[0] / Projectile.MaxUpdates / 60f, Duration / 60f / Math.Max(1, MathF.Abs(HallowBladeRules.Sweep(Stage)) / MathHelper.TwoPi)));
             if (Projectile.numUpdates == 0)
                 Projectile.EmitEnchantmentVisualsAt(Vector2.Lerp(Hilt, Tip, 0.5f) - new Vector2(8), 16, 16);
         }

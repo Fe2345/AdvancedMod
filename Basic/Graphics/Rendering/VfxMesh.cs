@@ -8,19 +8,23 @@ namespace AdvancedMod.Basic.Graphics.Rendering;
 /// <summary>可复用的世界坐标三角形缓冲；所有宽度参数均为半宽。</summary>
 public sealed class VfxMesh
 {
-    private VertexPositionColor[] vertices = new VertexPositionColor[384];
-    public VertexPositionColor[] Vertices => vertices;
+    private VertexPositionColorTexture[] vertices = new VertexPositionColorTexture[384];
+    public VertexPositionColorTexture[] Vertices => vertices;
     public int Count { get; private set; }
     public void Clear() => Count = 0;
     public void Triangle(Vector2 a, Vector2 b, Vector2 c, Color ca, Color cb, Color cc)
+        => Triangle(a, b, c, ca, cb, cc, Vector2.Zero, Vector2.Zero, Vector2.Zero);
+
+    public void Triangle(Vector2 a, Vector2 b, Vector2 c, Color ca, Color cb, Color cc,
+        Vector2 uvA, Vector2 uvB, Vector2 uvC)
     {
         if (!Paths.Finite(a) || !Paths.Finite(b) || !Paths.Finite(c)) return;
         float area = (b.X - a.X) * (c.Y - a.Y) - (b.Y - a.Y) * (c.X - a.X);
         if (!float.IsFinite(area) || MathF.Abs(area) < 0.001f) return;
         if (Count + 3 > vertices.Length) Array.Resize(ref vertices, vertices.Length * 2);
-        vertices[Count++] = new(new Vector3(a, 0), ca);
-        vertices[Count++] = new(new Vector3(b, 0), cb);
-        vertices[Count++] = new(new Vector3(c, 0), cc);
+        vertices[Count++] = new(new Vector3(a, 0), ca, uvA);
+        vertices[Count++] = new(new Vector3(b, 0), cb, uvB);
+        vertices[Count++] = new(new Vector3(c, 0), cc, uvC);
     }
     public void Quad(Vector2 a, Vector2 b, Vector2 c, Vector2 d, Color start, Color end)
     { Triangle(a, b, c, start, start, end); Triangle(b, d, c, start, end, end); }

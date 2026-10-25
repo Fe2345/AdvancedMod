@@ -219,6 +219,76 @@ Test("三层相切圆边界最大宽64且弧度封顶135度", () =>
     }
 });
 
+Test("剑气纹理两侧透明且强度有限", () =>
+{
+    for (int x = 0; x <= 256; x++)
+    {
+        float u = x / 256f;
+        Near(VfxTextures.SlashIntensity(u, 0), 0); Near(VfxTextures.SlashIntensity(u, 1), 0);
+        for (int y = 0; y <= 64; y++)
+        {
+            float value = VfxTextures.SlashIntensity(u, y / 64f);
+            Assert(float.IsFinite(value) && value >= 0 && value <= 1);
+        }
+    }
+});
+Test("动态剑气高速面积大于随动且双倍攻速保持相同形状", () =>
+{
+    float AreaAt(float progress, float duration)
+    {
+        var slash = new HallowSlashEffect();
+        for (int i = 0; i <= 120 * progress; i++)
+        {
+            float p = i / 120f, angle = HallowBladeRules.Angle(1, 0, p);
+            slash.SetTarget(new(Vector2.Zero, 192, angle, angle, p * duration, duration));
+        }
+        slash.CollectDrawCommands(new(), new(Vector2.Zero, new(800, 600)));
+        // 只读取最终三角形，验证可见面积而非重写生成算法。
+        var mesh = (VfxMesh)typeof(HallowSlashEffect).GetField("mesh", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic)!.GetValue(slash)!;
+        float area = 0;
+        for (int i = 0; i < mesh.Count; i += 3)
+        {
+            var a = mesh.Vertices[i]; var b = mesh.Vertices[i + 1]; var c = mesh.Vertices[i + 2];
+            Assert(float.IsFinite(a.Position.X) && a.Position.Length() <= 192.01f);
+            Assert(a.TextureCoordinate.X >= 0 && a.TextureCoordinate.X <= 1);
+            var ab = b.Position - a.Position; var ac = c.Position - a.Position;
+            area += MathF.Abs(ab.X * ac.Y - ab.Y * ac.X) / 2;
+        }
+        return area;
+    }
+    float fast = AreaAt(0.4f, 40f / 60), slow = AreaAt(0.9f, 40f / 60);
+    Assert(fast > slow * 2 && slow > 0);
+    Assert(MathF.Abs(fast - AreaAt(0.4f, 20f / 60)) < 0.01f);
+});
+Test("动态剑气停止后拒绝新姿态并按生命周期结束", () =>
+{
+    var slash = new HallowSlashEffect();
+    slash.SetTarget(new(Vector2.Zero, 192, 0, 0, 0, 1));
+    slash.SetTarget(new(Vector2.Zero, 192, 1, 1, 0.1f, 1));
+    slash.Stop(); slash.SetTarget(new(new(1000, 1000), 192, 2, 2, 0.2f, 1));
+    slash.CollectDrawCommands(new(), new(Vector2.Zero, new(800, 600)));
+    Assert(!slash.IsFinished);
+    slash.Update(new(HallowSlashEffect.FadeSeconds, HallowSlashEffect.FadeSeconds));
+    Assert(slash.IsFinished);
+});
+Test("双倍攻速两圈段补样保持圆弧而非直线弦", () =>
+{
+    var slash = new HallowSlashEffect();
+    for (int i = 0; i <= 24; i++)
+    {
+        float p = i / 60f, angle = HallowBladeRules.Angle(2, 0, p);
+        slash.SetTarget(new(Vector2.Zero, 192, angle, angle, p / 3, 1f / 6));
+    }
+    slash.CollectDrawCommands(new(), new(Vector2.Zero, new(800, 600)));
+    var mesh = (VfxMesh)typeof(HallowSlashEffect).GetField("mesh", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic)!.GetValue(slash)!;
+    Assert(mesh.Count > 0);
+    for (int i = 0; i < mesh.Count; i++)
+    {
+        var vertex = mesh.Vertices[i];
+        if (vertex.TextureCoordinate.Y == 1) Assert(MathF.Abs(vertex.Position.Length() - 192) < 0.001f);
+    }
+});
+
 if (args.Length > 0) File.WriteAllText(args[0], JsonSerializer.Serialize(new { utc = DateTimeOffset.UtcNow, results }, new JsonSerializerOptions { WriteIndented = true }));
 Console.WriteLine($"结果：{results.Count - failures}/{results.Count} 通过");
 return failures == 0 ? 0 : 1;

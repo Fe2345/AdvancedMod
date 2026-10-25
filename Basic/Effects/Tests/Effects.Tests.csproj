@@ -1,0 +1,15 @@
+<!-- 2026-10-25：不加载游戏的收集核心与 Roslyn 回归测试。 -->
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <LangVersion>12.0</LangVersion>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="BuildProbe/**/*.cs;Adapter/**/*.cs" />
+    <Compile Include="../Core/*.cs" Link="Core/%(Filename)%(Extension)" />
+    <ProjectReference Include="../Analyzers/Effects.Analyzers.csproj" />
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.8.0" />
+  </ItemGroup>
+</Project>

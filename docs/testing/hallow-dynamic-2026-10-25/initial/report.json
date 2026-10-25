@@ -1,0 +1,165 @@
+{
+  "utc": "2026-10-25T07:18:15.1990281+00:00",
+  "results": [
+    {
+      "name": "1\u500D\u653B\u901F\u7B2C1\u6BB5\u65F6\u957F\u4E0E\u547D\u4E2D",
+      "status": "PASS",
+      "actual": {
+        "Stage": 0,
+        "Duration": 40,
+        "StartAngle": -1.5707964,
+        "Identity": 1,
+        "StartTick": 0,
+        "EndTick": 40,
+        "Hits": [
+          135
+        ]
+      }
+    },
+    {
+      "name": "1\u500D\u653B\u901F\u7B2C2\u6BB5\u65F6\u957F\u4E0E\u547D\u4E2D",
+      "status": "PASS",
+      "actual": {
+        "Stage": 1,
+        "Duration": 40,
+        "StartAngle": 1.5707964,
+        "Identity": 1,
+        "StartTick": 41,
+        "EndTick": 81,
+        "Hits": [
+          135
+        ]
+      }
+    },
+    {
+      "name": "1\u500D\u653B\u901F\u7B2C2\u6BB5\u89D2\u5EA6\u8854\u63A5",
+      "status": "PASS"
+    },
+    {
+      "name": "1\u500D\u653B\u901F\u7B2C3\u6BB5\u65F6\u957F\u4E0E\u547D\u4E2D",
+      "status": "PASS",
+      "actual": {
+        "Stage": 2,
+        "Duration": 40,
+        "StartAngle": -4.712389,
+        "Identity": 1,
+        "StartTick": 82,
+        "EndTick": 122,
+        "Hits": [
+          101,
+          101
+        ]
+      }
+    },
+    {
+      "name": "1\u500D\u653B\u901F\u7B2C3\u6BB5\u89D2\u5EA6\u8854\u63A5",
+      "status": "PASS"
+    },
+    {
+      "name": "1\u500D\u653B\u901F\u7B2C4\u6BB5\u65F6\u957F\u4E0E\u547D\u4E2D",
+      "status": "PASS",
+      "actual": {
+        "Stage": 3,
+        "Duration": 40,
+        "StartAngle": 7.853982,
+        "Identity": 1,
+        "StartTick": 123,
+        "EndTick": 163,
+        "Hits": [
+          371
+        ]
+      }
+    },
+    {
+      "name": "1\u500D\u653B\u901F\u7B2C4\u6BB5\u89D2\u5EA6\u8854\u63A5",
+      "status": "PASS"
+    },
+    {
+      "name": "2\u500D\u653B\u901F\u7B2C1\u6BB5\u65F6\u957F\u4E0E\u547D\u4E2D",
+      "status": "PASS",
+      "actual": {
+        "Stage": 0,
+        "Duration": 20,
+        "StartAngle": -1.5707964,
+        "Identity": 1,
+        "StartTick": 187,
+        "EndTick": 207,
+        "Hits": [
+          135
+        ]
+      }
+    },
+    {
+      "name": "2\u500D\u653B\u901F\u7B2C2\u6BB5\u65F6\u957F\u4E0E\u547D\u4E2D",
+      "status": "PASS",
+      "actual": {
+        "Stage": 1,
+        "Duration": 20,
+        "StartAngle": 1.5707964,
+        "Identity": 1,
+        "StartTick": 208,
+        "EndTick": 228,
+        "Hits": [
+          135
+        ]
+      }
+    },
+    {
+      "name": "2\u500D\u653B\u901F\u7B2C2\u6BB5\u89D2\u5EA6\u8854\u63A5",
+      "status": "PASS"
+    },
+    {
+      "name": "2\u500D\u653B\u901F\u7B2C3\u6BB5\u65F6\u957F\u4E0E\u547D\u4E2D",
+      "status": "PASS",
+      "actual": {
+        "Stage": 2,
+        "Duration": 20,
+        "StartAngle": -4.712389,
+        "Identity": 1,
+        "StartTick": 229,
+        "EndTick": 249,
+        "Hits": [
+          101,
+          101
+        ]
+      }
+    },
+    {
+      "name": "2\u500D\u653B\u901F\u7B2C3\u6BB5\u89D2\u5EA6\u8854\u63A5",
+      "status": "PASS"
+    },
+    {
+      "name": "2\u500D\u653B\u901F\u7B2C4\u6BB5\u65F6\u957F\u4E0E\u547D\u4E2D",
+      "status": "PASS",
+      "actual": {
+        "Stage": 3,
+        "Duration": 20,
+        "StartAngle": 7.853982,
+        "Identity": 1,
+        "StartTick": 250,
+        "EndTick": 270,
+        "Hits": [
+          371
+        ]
+      }
+    },
+    {
+      "name": "2\u500D\u653B\u901F\u7B2C4\u6BB5\u89D2\u5EA6\u8854\u63A5",
+      "status": "PASS"
+    },
+    {
+      "name": "\u57FA\u7840\u66B4\u51FB\u9762\u677F8%",
+      "status": "PASS"
+    }
+  ],
+  "captures": [
+    "speed-1-stage-1",
+    "speed-1-stage-2",
+    "speed-1-stage-3",
+    "speed-1-stage-4",
+    "speed-2-stage-1",
+    "speed-2-stage-2",
+    "speed-2-stage-3",
+    "speed-2-stage-4"
+  ]
+}

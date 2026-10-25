@@ -1,0 +1,7 @@
+<!-- 2026-10-25：使用轻量 tML 替身验证真实 EffectPlayer 的生命周期和事件路由。 -->
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup><OutputType>Exe</OutputType><TargetFramework>net8.0</TargetFramework><ImplicitUsings>enable</ImplicitUsings></PropertyGroup>
+  <ItemGroup>
+    <Compile Include="../../Core/*.cs;../../EffectPlayer.cs;../../AccessoryEffect.cs" />
+  </ItemGroup>
+</Project>

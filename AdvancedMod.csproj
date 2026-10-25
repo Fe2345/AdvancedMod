@@ -10,7 +10,9 @@
     <RunAnalyzersDuringBuild>true</RunAnalyzersDuringBuild>
   </PropertyGroup>
   <ItemGroup>
-    <Folder Include="Basic\Effects\" />
+    <Compile Remove="Basic\Effects\Analyzers\**\*.cs;Basic\Effects\Tests\**\*.cs" />
+    <ProjectReference Include="Basic\Effects\Analyzers\Effects.Analyzers.csproj"
+                      OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
     <Compile Remove="Tests\**\*.cs" />
     <Compile Remove="Tools\**\*.cs" />
     <ProjectReference Include="Tools\AdvancedMod.Analyzers\AdvancedMod.Analyzers.csproj"

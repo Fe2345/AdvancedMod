@@ -13,5 +13,6 @@
     <Compile Include="../../Contents/Vfx/GoldenWard.cs" />
     <Compile Include="../../Contents/Vfx/SlashTrailEffect.cs" />
     <Compile Include="../../Contents/Hallow/Weapons/HallowBladeCombo.cs" />
+    <Compile Include="../../Contents/Hallow/Weapons/HallowSlashEffect.cs" />
   </ItemGroup>
 </Project>

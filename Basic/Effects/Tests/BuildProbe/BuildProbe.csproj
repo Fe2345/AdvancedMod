@@ -1,0 +1,11 @@
+<!-- 2026-10-25：通过真实 MSBuild 退出码验证分析器项目引用。 -->
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <RunAnalyzersDuringBuild>true</RunAnalyzersDuringBuild>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="../../Core/EffectDefinition.cs" Link="EffectDefinition.cs" />
+    <ProjectReference Include="../../Analyzers/Effects.Analyzers.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
+  </ItemGroup>
+</Project>

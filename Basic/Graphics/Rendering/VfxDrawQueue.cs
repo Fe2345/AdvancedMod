@@ -5,7 +5,7 @@ using Terraria;
 
 namespace AdvancedMod.Basic.Graphics.Rendering;
 
-public enum VfxMaterial { SoftGlow, PathCore, SlashBody }
+public enum VfxMaterial { SoftGlow, PathCore, SlashBody, SlashRibbon, SlashRibbonGlow }
 
 /// <summary>当前只接入 PostDrawTiles；稳定排序保留相同顺序的提交关系。</summary>
 public sealed class VfxDrawQueue
@@ -34,8 +34,10 @@ public sealed class VfxDrawQueue
             effect.Projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
             foreach (var command in commands)
             {
+                effect.TextureEnabled = command.Material is VfxMaterial.SlashRibbon or VfxMaterial.SlashRibbonGlow;
+                if (effect.TextureEnabled) effect.Texture = VfxTextures.SlashBands;
                 // 颜色统一预乘；辉光采用 One/One，避免再次乘入 Alpha。
-                device.BlendState = command.Material == VfxMaterial.SoftGlow ? GlowBlend : BlendState.AlphaBlend;
+                device.BlendState = command.Material is VfxMaterial.SoftGlow or VfxMaterial.SlashRibbonGlow ? GlowBlend : BlendState.AlphaBlend;
                 foreach (var pass in effect.CurrentTechnique.Passes)
                 {
                     pass.Apply();

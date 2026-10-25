@@ -6,5 +6,5 @@ hideCode = false
 hideResources = false
 includeSource = true
 includePDB = true
-buildIgnore = docs/*, Tests/*, Tools/*
+buildIgnore = docs/*, Tests/*, Tools/*, Basic/Effects/Analyzers/*, Basic/Effects/Tests/*
 modReferences = Luminance@1.0.12,SubworldLibrary@2.2.3.2
