@@ -1,0 +1,11 @@
+[15:40:12.481] [Main Thread/INFO] [tML]: Starting tModLoader client 1.4.4.9+2026.08.3.0|2026.08|stable|Stable|c9545cf27d56c456321e1896274c02adf67d0140|5250950117352386884 built 2026/10/1 8:04
+[15:40:34.413] [Main Thread/INFO] [AdvancedMod]: VFX 演示开始：tML=v1.4.4.9，Luminance=1.0.14
+[15:40:34.861] [Main Thread/INFO] [AdvancedMod]: VFX 截图已保存：frame-0006.png，演示刻 6
+[15:40:35.193] [Main Thread/INFO] [AdvancedMod]: VFX 截图已保存：frame-0018.png，演示刻 18
+[15:40:36.492] [Main Thread/INFO] [AdvancedMod]: VFX 截图已保存：frame-0090.png，演示刻 90
+[15:40:39.189] [Main Thread/INFO] [AdvancedMod]: VFX 截图已保存：frame-0245.png，演示刻 245
+[15:40:41.297] [Main Thread/INFO] [AdvancedMod]: VFX 截图已保存：frame-0365.png，演示刻 365
+[15:40:45.563] [Main Thread/INFO] [AdvancedMod]: VFX 截图已保存：frame-0615.png，演示刻 615
+[15:40:46.413] [Main Thread/INFO] [AdvancedMod]: VFX 截图已保存：frame-0660.png，演示刻 660
+[15:40:49.643] [Main Thread/INFO] [AdvancedMod]: VFX 截图已保存：frame-0850.png，演示刻 850
+[15:40:50.445] [Main Thread/INFO] [AdvancedMod]: VFX 演示时序结束；视觉结果需检查截图，不自动判定通过。

@@ -1,0 +1,93 @@
+{
+  "utc": "2026-10-24T07:40:49.6432085+00:00",
+  "captures": [
+    {
+      "requestedTick": 6,
+      "actualTick": 6,
+      "name": "frame-0006.png",
+      "width": 1024,
+      "height": 768,
+      "instances": 2,
+      "skyRequests": 1,
+      "skyIntensity": 0.083333336,
+      "status": "CAPTURED"
+    },
+    {
+      "requestedTick": 18,
+      "actualTick": 18,
+      "name": "frame-0018.png",
+      "width": 1024,
+      "height": 768,
+      "instances": 2,
+      "skyRequests": 1,
+      "skyIntensity": 0.25000006,
+      "status": "CAPTURED"
+    },
+    {
+      "requestedTick": 90,
+      "actualTick": 90,
+      "name": "frame-0090.png",
+      "width": 1024,
+      "height": 768,
+      "instances": 1,
+      "skyRequests": 1,
+      "skyIntensity": 0.85,
+      "status": "CAPTURED"
+    },
+    {
+      "requestedTick": 245,
+      "actualTick": 245,
+      "name": "frame-0245.png",
+      "width": 1024,
+      "height": 768,
+      "instances": 2,
+      "skyRequests": 1,
+      "skyIntensity": 0.85,
+      "status": "CAPTURED"
+    },
+    {
+      "requestedTick": 365,
+      "actualTick": 365,
+      "name": "frame-0365.png",
+      "width": 1024,
+      "height": 768,
+      "instances": 3,
+      "skyRequests": 1,
+      "skyIntensity": 0.85,
+      "status": "CAPTURED"
+    },
+    {
+      "requestedTick": 615,
+      "actualTick": 615,
+      "name": "frame-0615.png",
+      "width": 1024,
+      "height": 768,
+      "instances": 1,
+      "skyRequests": 0,
+      "skyIntensity": 0.6277777,
+      "status": "CAPTURED"
+    },
+    {
+      "requestedTick": 660,
+      "actualTick": 660,
+      "name": "frame-0660.png",
+      "width": 1024,
+      "height": 768,
+      "instances": 0,
+      "skyRequests": 1,
+      "skyIntensity": 0.85,
+      "status": "CAPTURED"
+    },
+    {
+      "requestedTick": 850,
+      "actualTick": 850,
+      "name": "frame-0850.png",
+      "width": 1024,
+      "height": 768,
+      "instances": 0,
+      "skyRequests": 0,
+      "skyIntensity": 0,
+      "status": "CAPTURED"
+    }
+  ]
+}

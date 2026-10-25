@@ -1,36 +1,46 @@
-DamageClasses.ElementalDamageClass.DisplayName: Elemental Damage Class
-NPCs.ElementProbeNPC.DisplayName: Element Probe N P C
-Projectiles.ElementProbeProjectile.DisplayName: Element Probe Projectile
-
 Configs: {
 	CombatTraceConfig: {
-		DisplayName: Combat Trace Config
-
-		Enabled: {
-			Label: Enabled
+		TargetIds: {
 			Tooltip: ""
-		}
-
-		SourceIds: {
-			Label: Source Ids
-			Tooltip: ""
+			Label: Target Ids
 		}
 
 		PlayerIndices: {
-			Label: Player Indices
 			Tooltip: ""
+			Label: Player Indices
 		}
 
-		TargetIds: {
-			Label: Target Ids
+		SourceIds: {
 			Tooltip: ""
+			Label: Source Ids
 		}
+
+		Enabled: {
+			Tooltip: ""
+			Label: Enabled
+		}
+
+		DisplayName: Combat Trace Config
 	}
 }
+
+Projectiles: {
+	HeavensJudgmentSwing.DisplayName: Heavens Judgment Swing
+	ElementProbeProjectile.DisplayName: Element Probe Projectile
+}
+
+NPCs.ElementProbeNPC.DisplayName: Element Probe N P C
 
 Items: {
-	ElementProbeSword: {
-		DisplayName: Element Probe Sword
+	HeavensJudgment: {
 		Tooltip: ""
+		DisplayName: Heavens Judgment
+	}
+
+	ElementProbeSword: {
+		Tooltip: ""
+		DisplayName: Element Probe Sword
 	}
 }
+
+DamageClasses.ElementalDamageClass.DisplayName: Elemental Damage Class

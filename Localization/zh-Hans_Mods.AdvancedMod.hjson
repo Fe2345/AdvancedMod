@@ -1,0 +1,69 @@
+Configs: {
+	CombatTraceConfig: {
+		TargetIds: {
+			// Tooltip: ""
+			// Label: Target Ids
+		}
+
+		PlayerIndices: {
+			// Tooltip: ""
+			// Label: Player Indices
+		}
+
+		SourceIds: {
+			// Tooltip: ""
+			// Label: Source Ids
+		}
+
+		Enabled: {
+			// Tooltip: ""
+			// Label: Enabled
+		}
+
+		// DisplayName: Combat Trace Config
+	}
+}
+
+Projectiles: {
+	HeavensJudgmentSwing.DisplayName: 天裁之刃
+	// ElementProbeProjectile.DisplayName: Element Probe Projectile
+	HolySparkleProjectile.DisplayName: 圣洁火花
+	HolySparkleSubProjectile.DisplayName: 圣洁火花
+}
+
+// NPCs.ElementProbeNPC.DisplayName: Element Probe N P C
+
+Items: {
+	HeavensJudgment: {
+		Tooltip:
+			'''
+			进行连续四段真近战攻击，随着攻击段数提升，伤害也会随之提升。
+			右键：如果身处水、岩浆、云、冰之上，吸收对应的元素并使剑刃获得附魔
+			格挡：右键可进行格挡，如果此时承受攻击会免疫一半伤害；如果在承受攻击前的瞬间发动，则会免疫全部伤害并生成一对剑进行反击
+
+			[c/808080:根据首位神圣的女皇使用至圣的巨剑代行裁罚的传说复原的大剑，尽管威力远不如传说所述，但是被添加了防御自己和调谐元素的功能]
+
+			[c/0000FF:神圣武器]
+			'''
+		DisplayName: 天裁之刃
+	}
+
+	HolySparkle: {
+		Tooltip:
+			'''
+			发射一个会分裂的神圣火花。
+
+			[c/808080:火花魔棒实在是太没用了，但是在将其和神圣之力融合后，现在它勉强可堪一用]
+
+			[c/0000FF:神圣武器]
+			'''
+		DisplayName: 神圣火花
+	}
+
+	ElementProbeSword: {
+		// Tooltip: ""
+		// DisplayName: Element Probe Sword
+	}
+}
+
+// DamageClasses.ElementalDamageClass.DisplayName: Elemental Damage Class
