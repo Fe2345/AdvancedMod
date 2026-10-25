@@ -27,6 +27,8 @@ Configs: {
 Projectiles: {
 	HeavensJudgmentSwing.DisplayName: Heavens Judgment Swing
 	ElementProbeProjectile.DisplayName: Element Probe Projectile
+	SoundSentry.DisplayName: Sound Sentry
+	SoundWave.DisplayName: Sound Wave
 }
 
 NPCs.ElementProbeNPC.DisplayName: Element Probe N P C

@@ -29,6 +29,8 @@ Projectiles: {
 	// ElementProbeProjectile.DisplayName: Element Probe Projectile
 	HolySparkleProjectile.DisplayName: 圣洁火花
 	HolySparkleSubProjectile.DisplayName: 圣洁火花
+	SoundSentry.DisplayName: 声学哨兵
+	SoundWave.DisplayName: 声波波包
 }
 
 // NPCs.ElementProbeNPC.DisplayName: Element Probe N P C

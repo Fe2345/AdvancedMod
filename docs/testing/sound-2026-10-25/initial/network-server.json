@@ -1,0 +1,40 @@
+{
+  "role": "server",
+  "results": [
+    {
+      "name": "\u670D\u52A1\u5668\u9636\u6BB50\u4E00\u6B21\u4F24\u5BB3\u4E0E\u98CE\u63D0\u4EA4",
+      "status": "FAIL",
+      "detail": {
+        "hits": 0,
+        "damage": 0,
+        "actual": 0,
+        "expectedElement": 0
+      }
+    },
+    {
+      "name": "\u670D\u52A1\u5668\u9636\u6BB51\u4E00\u6B21\u4F24\u5BB3\u4E0E\u98CE\u63D0\u4EA4",
+      "status": "FAIL",
+      "detail": {
+        "hits": 0,
+        "damage": 0,
+        "actual": 0,
+        "expectedElement": 0
+      }
+    },
+    {
+      "name": "\u670D\u52A1\u5668\u9636\u6BB52\u4E00\u6B21\u4F24\u5BB3\u4E0E\u98CE\u63D0\u4EA4",
+      "status": "FAIL",
+      "detail": {
+        "hits": 0,
+        "damage": 0,
+        "actual": 0,
+        "expectedElement": 0
+      }
+    },
+    {
+      "name": "\u670D\u52A1\u5668\u4E09\u79CD\u4EA4\u4E92\u4E0E\u6709\u754C\u6E05\u7406",
+      "status": "FAIL",
+      "detail": null
+    }
+  ]
+}

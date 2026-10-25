@@ -1,0 +1,220 @@
+{
+  "results": [
+    {
+      "name": "single\uFF1A\u6CE2\u5305\u5BFF\u547D\u7EC8\u70B9\u6E05\u7406",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "single\uFF1A\u6BCF\u4E2A\u6CE2\u5305\u5BF9\u9776\u6807\u6700\u591A\u4E00\u6B21\u547D\u4E2D",
+      "status": "PASS",
+      "detail": []
+    },
+    {
+      "name": "single\uFF1A\u53CD\u5C04\u4E0E\u878D\u5408\u6DF1\u5EA6\u6709\u754C",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "single\uFF1A\u771F\u5B9E\u547D\u4E2D\u4E14\u4F24\u5BB3\u7B49\u4E8E\u5F53\u524D\u767D\u503C",
+      "status": "PASS",
+      "detail": []
+    },
+    {
+      "name": "single\uFF1A\u98CE\u9644\u7740\u63D0\u4EA4",
+      "status": "FAIL",
+      "detail": {
+        "total": 0
+      }
+    },
+    {
+      "name": "reflect\uFF1A\u6CE2\u5305\u5BFF\u547D\u7EC8\u70B9\u6E05\u7406",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "reflect\uFF1A\u6BCF\u4E2A\u6CE2\u5305\u5BF9\u9776\u6807\u6700\u591A\u4E00\u6B21\u547D\u4E2D",
+      "status": "PASS",
+      "detail": []
+    },
+    {
+      "name": "reflect\uFF1A\u53CD\u5C04\u4E0E\u878D\u5408\u6DF1\u5EA6\u6709\u754C",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "reflect\uFF1A\u771F\u5B9E\u547D\u4E2D\u4E14\u4F24\u5BB3\u7B49\u4E8E\u5F53\u524D\u767D\u503C",
+      "status": "PASS",
+      "detail": []
+    },
+    {
+      "name": "reflect\uFF1A\u98CE\u9644\u7740\u63D0\u4EA4",
+      "status": "FAIL",
+      "detail": {
+        "total": 0
+      }
+    },
+    {
+      "name": "\u53CD\u5C04\u5B50\u6CE2\u8F6C\u5411\u540E\u547D\u4E2D",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "same\uFF1A\u6CE2\u5305\u5BFF\u547D\u7EC8\u70B9\u6E05\u7406",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "same\uFF1A\u6BCF\u4E2A\u6CE2\u5305\u5BF9\u9776\u6807\u6700\u591A\u4E00\u6B21\u547D\u4E2D",
+      "status": "PASS",
+      "detail": []
+    },
+    {
+      "name": "same\uFF1A\u53CD\u5C04\u4E0E\u878D\u5408\u6DF1\u5EA6\u6709\u754C",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "same\uFF1A\u771F\u5B9E\u547D\u4E2D\u4E14\u4F24\u5BB3\u7B49\u4E8E\u5F53\u524D\u767D\u503C",
+      "status": "FAIL",
+      "detail": []
+    },
+    {
+      "name": "same\uFF1A\u98CE\u9644\u7740\u63D0\u4EA4",
+      "status": "FAIL",
+      "detail": {
+        "total": 0
+      }
+    },
+    {
+      "name": "same\uFF1A\u4EA4\u6C47\u76F8\u4F4D\u9A71\u52A8\u878D\u5408",
+      "status": "FAIL",
+      "detail": {
+        "fusedCoherence": 1,
+        "ids": 3
+      }
+    },
+    {
+      "name": "opposite\uFF1A\u6CE2\u5305\u5BFF\u547D\u7EC8\u70B9\u6E05\u7406",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "opposite\uFF1A\u6BCF\u4E2A\u6CE2\u5305\u5BF9\u9776\u6807\u6700\u591A\u4E00\u6B21\u547D\u4E2D",
+      "status": "PASS",
+      "detail": []
+    },
+    {
+      "name": "opposite\uFF1A\u53CD\u5C04\u4E0E\u878D\u5408\u6DF1\u5EA6\u6709\u754C",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "opposite\uFF1A\u771F\u5B9E\u547D\u4E2D\u4E14\u4F24\u5BB3\u7B49\u4E8E\u5F53\u524D\u767D\u503C",
+      "status": "FAIL",
+      "detail": []
+    },
+    {
+      "name": "opposite\uFF1A\u98CE\u9644\u7740\u63D0\u4EA4",
+      "status": "FAIL",
+      "detail": {
+        "total": 0
+      }
+    },
+    {
+      "name": "opposite\uFF1A\u4EA4\u6C47\u76F8\u4F4D\u9A71\u52A8\u878D\u5408",
+      "status": "FAIL",
+      "detail": {
+        "fusedCoherence": 2.7413412E-14,
+        "ids": 3
+      }
+    },
+    {
+      "name": "partial\uFF1A\u6CE2\u5305\u5BFF\u547D\u7EC8\u70B9\u6E05\u7406",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "partial\uFF1A\u6BCF\u4E2A\u6CE2\u5305\u5BF9\u9776\u6807\u6700\u591A\u4E00\u6B21\u547D\u4E2D",
+      "status": "PASS",
+      "detail": []
+    },
+    {
+      "name": "partial\uFF1A\u53CD\u5C04\u4E0E\u878D\u5408\u6DF1\u5EA6\u6709\u754C",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "partial\uFF1A\u771F\u5B9E\u547D\u4E2D\u4E14\u4F24\u5BB3\u7B49\u4E8E\u5F53\u524D\u767D\u503C",
+      "status": "FAIL",
+      "detail": []
+    },
+    {
+      "name": "partial\uFF1A\u98CE\u9644\u7740\u63D0\u4EA4",
+      "status": "FAIL",
+      "detail": {
+        "total": 0
+      }
+    },
+    {
+      "name": "partial\uFF1A\u4EA4\u6C47\u76F8\u4F4D\u9A71\u52A8\u878D\u5408",
+      "status": "FAIL",
+      "detail": {
+        "fusedCoherence": 0.5000002,
+        "ids": 3
+      }
+    },
+    {
+      "name": "stress\uFF1A\u6CE2\u5305\u5BFF\u547D\u7EC8\u70B9\u6E05\u7406",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "stress\uFF1A\u6BCF\u4E2A\u6CE2\u5305\u5BF9\u9776\u6807\u6700\u591A\u4E00\u6B21\u547D\u4E2D",
+      "status": "PASS",
+      "detail": []
+    },
+    {
+      "name": "stress\uFF1A\u53CD\u5C04\u4E0E\u878D\u5408\u6DF1\u5EA6\u6709\u754C",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "\u6E05\u573A\u540E\u65E0\u54E8\u5175\u548C\u6CE2\u5305",
+      "status": "PASS",
+      "detail": null
+    }
+  ],
+  "captures": [
+    {
+      "file": "single.png",
+      "tick": 65,
+      "status": "CAPTURED"
+    },
+    {
+      "file": "reflect.png",
+      "tick": 65,
+      "status": "CAPTURED"
+    },
+    {
+      "file": "same.png",
+      "tick": 65,
+      "status": "CAPTURED"
+    },
+    {
+      "file": "opposite.png",
+      "tick": 65,
+      "status": "CAPTURED"
+    },
+    {
+      "file": "partial.png",
+      "tick": 65,
+      "status": "CAPTURED"
+    },
+    {
+      "file": "stress.png",
+      "tick": 65,
+      "status": "CAPTURED"
+    }
+  ]
+}

@@ -1,0 +1,55 @@
+{
+  "role": "client1",
+  "results": [
+    {
+      "name": "\u5BA2\u6237\u7AEF\u89C2\u5BDF\u670D\u52A1\u5668\u552F\u4E00ID\u4E0E\u4E09\u79CD\u5B50\u6CE2",
+      "status": "FAIL",
+      "detail": {
+        "ids": [
+          3,
+          4,
+          9,
+          10,
+          11
+        ],
+        "sawReflection": true,
+        "sawConstructive": false,
+        "sawDestructive": true
+      }
+    },
+    {
+      "name": "\u5BA2\u6237\u7AEF\u4E0D\u6267\u884C\u6258\u7BA1\u4F24\u5BB3",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "\u9636\u6BB50\u4F24\u5BB3\u4E0E\u98CE\u5E93\u5B58\u955C\u50CF",
+      "status": "PASS",
+      "detail": {
+        "damage": 68,
+        "element": 0.6801503896713257
+      }
+    },
+    {
+      "name": "\u9636\u6BB51\u4F24\u5BB3\u4E0E\u98CE\u5E93\u5B58\u955C\u50CF",
+      "status": "FAIL",
+      "detail": {
+        "damage": 0,
+        "element": 0
+      }
+    },
+    {
+      "name": "\u9636\u6BB52\u4F24\u5BB3\u4E0E\u98CE\u5E93\u5B58\u955C\u50CF",
+      "status": "PASS",
+      "detail": {
+        "damage": 21,
+        "element": 2.0960114002227783
+      }
+    },
+    {
+      "name": "\u5BA2\u6237\u7AEF\u6CE2\u5305\u548C\u54E8\u5175\u6E05\u7406",
+      "status": "PASS",
+      "detail": null
+    }
+  ]
+}

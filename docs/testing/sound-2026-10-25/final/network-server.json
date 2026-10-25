@@ -1,0 +1,40 @@
+{
+  "role": "server",
+  "results": [
+    {
+      "name": "\u670D\u52A1\u5668\u9636\u6BB50\u4E00\u6B21\u4F24\u5BB3\u4E0E\u98CE\u63D0\u4EA4",
+      "status": "PASS",
+      "detail": {
+        "hits": 1,
+        "damage": 68,
+        "actual": 0.6801503896713257,
+        "expectedElement": 0.6801503896713257
+      }
+    },
+    {
+      "name": "\u670D\u52A1\u5668\u9636\u6BB51\u4E00\u6B21\u4F24\u5BB3\u4E0E\u98CE\u63D0\u4EA4",
+      "status": "PASS",
+      "detail": {
+        "hits": 1,
+        "damage": 105,
+        "actual": 0.5240028500556946,
+        "expectedElement": 0.5240028500556946
+      }
+    },
+    {
+      "name": "\u670D\u52A1\u5668\u9636\u6BB52\u4E00\u6B21\u4F24\u5BB3\u4E0E\u98CE\u63D0\u4EA4",
+      "status": "PASS",
+      "detail": {
+        "hits": 1,
+        "damage": 21,
+        "actual": 2.0960114002227783,
+        "expectedElement": 2.0960114002227783
+      }
+    },
+    {
+      "name": "\u670D\u52A1\u5668\u4E09\u79CD\u4EA4\u4E92\u4E0E\u6709\u754C\u6E05\u7406",
+      "status": "PASS",
+      "detail": null
+    }
+  ]
+}
