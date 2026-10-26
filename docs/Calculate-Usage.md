@@ -18,7 +18,7 @@
 | 标签 | 启用目标 |
 |---|---|
 | Pyro、Hydro、Electro、Cryo、Chlorophyte、Anemo | ElementDamage(1)、(2)、(3)、(4)、(5)、(6)，按顺序对应 |
-| HydroElectro、HydroAnemo、PytoCryo | Reaction(1)、(2)、(3)，按顺序对应 |
+| HydroElectro、HydroAnemo、PyroCryo | Reaction(1)、(2)、(3)，按顺序对应 |
 | Hallowed、Lunacy、Originated | Ascension(1)、(2)、(3)，按顺序对应 |
 | Hallow、Lunar、Origin | 无；仅表示异化资格，不表示已经异化 |
 

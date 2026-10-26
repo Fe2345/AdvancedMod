@@ -57,6 +57,12 @@ Items: {
 
 DamageClasses.ElementalDamageClass.DisplayName: Elemental Damage Class
 
+Reactions: {
+	HydroElectro: Conductive
+	HydroAnemo: Vaporization
+	PyroCryo: Melt
+}
+
 Buffs: {
 	RainCloudBuff: {
 		DisplayName: Rain Cloud

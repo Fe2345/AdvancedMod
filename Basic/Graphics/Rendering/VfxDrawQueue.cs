@@ -6,7 +6,7 @@ using Terraria.ModLoader;
 
 namespace AdvancedMod.Basic.Graphics.Rendering;
 
-public enum VfxMaterial { SoftGlow, PathCore, SlashBody, SlashRibbon, SlashRibbonGlow }
+public enum VfxMaterial { SoftGlow, PathCore, SlashBody, SlashRibbon, SlashRibbonGlow, Lightning }
 
 /// <summary>当前只接入 PostDrawTiles；稳定排序保留相同顺序的提交关系。</summary>
 public sealed class VfxDrawQueue
@@ -43,6 +43,15 @@ public sealed class VfxDrawQueue
             effect.Projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
             foreach (var command in commands)
             {
+                if (command.Material == VfxMaterial.Lightning)
+                {
+                    lightningEffect ??= ModContent.Request<Effect>("AdvancedMod/Assets/Shaders/Lightning", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+                    lightningEffect.Parameters["uWorldViewProjection"].SetValue(effect.World * effect.View * effect.Projection);
+                    device.BlendState = GlowBlend;
+                    lightningEffect.CurrentTechnique.Passes["TrailPass"].Apply();
+                    device.DrawUserPrimitives(PrimitiveType.TriangleList, command.Mesh.Vertices, 0, command.Mesh.Count / 3);
+                    continue;
+                }
                 if (command.Slash is { } style)
                 {
                     slashEffect ??= ModContent.Request<Effect>("AdvancedMod/Assets/Shaders/HallowSlash", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
@@ -83,10 +92,11 @@ public sealed class VfxDrawQueue
     }
     private static BlendState glowBlend;
     private static Effect slashEffect;
+    private static Effect lightningEffect;
     private static BlendState GlowBlend => glowBlend ??= new BlendState
     {
         ColorSourceBlend = Blend.One, ColorDestinationBlend = Blend.One,
         AlphaSourceBlend = Blend.One, AlphaDestinationBlend = Blend.One
     };
-    internal static void Unload() { glowBlend?.Dispose(); glowBlend = null; slashEffect = null; }
+    internal static void Unload() { glowBlend?.Dispose(); glowBlend = null; slashEffect = null; lightningEffect = null; }
 }

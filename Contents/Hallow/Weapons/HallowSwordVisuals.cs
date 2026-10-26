@@ -46,6 +46,7 @@ internal static class HallowSwordVisuals
         TagEnum.Hydro => new Color(65, 155, 255),
         TagEnum.Electro => new Color(185, 110, 255),
         TagEnum.Cryo => new Color(135, 235, 255),
+        TagEnum.Anemo => new Color(80, 235, 190),
         _ => new Color(71, 233, 170)
     };
 

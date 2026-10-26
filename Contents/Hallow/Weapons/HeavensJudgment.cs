@@ -38,7 +38,7 @@ public sealed partial class HeavensJudgment : ModItem
             player.ownedProjectileCounts[ModContent.ProjectileType<HallowResonance>()] > 0) return false;
         if (player.altFunctionUse != 2) return true;
         var environment = HallowActionRules.Environment(player);
-        return environment.HasValue && environment != Resonance || player.GetModPlayer<HallowGuardPlayer>().CanStart;
+        return player.controlDown && environment.HasValue && environment != Resonance || player.GetModPlayer<HallowGuardPlayer>().CanStart;
     }
     public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
     {
@@ -47,7 +47,7 @@ public sealed partial class HeavensJudgment : ModItem
         if (player.altFunctionUse == 2)
         {
             var environment = HallowActionRules.Environment(player);
-            if (environment.HasValue && environment != Resonance)
+            if (player.controlDown && environment.HasValue && environment != Resonance)
                 Projectile.NewProjectile(source, player.Center, direction, ModContent.ProjectileType<HallowResonance>(), 0, 0,
                     player.whoAmI, HallowActionRules.Encode(environment));
             else if (player.GetModPlayer<HallowGuardPlayer>().CanStart)

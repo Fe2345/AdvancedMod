@@ -29,7 +29,7 @@ namespace AdvancedMod.Basic.Tag
         /// </summary>
         HydroElectro, //[1]
         HydroAnemo, //[2]
-        PytoCryo,//[3]
+        PyroCryo,//[3]
 
         /// <summary>
         /// 反应异化标签

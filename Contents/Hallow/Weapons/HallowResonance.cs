@@ -8,7 +8,7 @@ using Terraria.ModLoader;
 
 namespace AdvancedMod.Contents.Hallow.Weapons;
 
-/// <summary>共鸣仅在第30刻提交物品数据，六剑与本体始终读取同一个物品元素。</summary>
+/// <summary>共鸣仅在动画中点提交物品数据，六剑与本体始终读取同一个物品元素。</summary>
 public sealed class HallowResonance : ModProjectile
 {
     private Item sourceItem;

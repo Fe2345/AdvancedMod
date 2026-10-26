@@ -68,6 +68,11 @@ public sealed class ElementHitSystem : ModSystem
         Resolved?.Invoke(result);
     }
 
+    // 2026-10-26：提供当前受伤事务的冻结标签，仅用于原版受伤数字着色。
+    internal static ReactionPlan? CurrentPlayerTextPlan(Player player) =>
+        frames.Count > 0 && frames.Peek().Player == player
+            ? frames.Peek().EnvironmentPlan ?? frames.Peek().PlayerTransaction?.Plan : null;
+
     private static void ItemHit(On_Player.orig_ProcessHitAgainstNPC orig, Player player, Item item,
         Rectangle rectangle, int damage, float knockback, int npcIndex)
     {
@@ -142,6 +147,7 @@ public sealed class ElementHitSystem : ModSystem
         }
         var request = MakeRequest(context, frame.PanelDamage);
         ReactionPlan plan = entry.Transaction.Prepare(request);
+        ElementTextSystem.PrepareNpc(context, plan, ref modifiers);
         AmplificationEffects.Prepare(context, plan, frame.InputDamage);
         if (plan.Route == ElementRoute.React) modifiers.SourceDamage.Base += SeedOffset(plan, frame.InputDamage);
         // 在 ToHitInfo 完成计算时标记即将进入 Strike 的命中，不从普通 OnHit 推断成功。
@@ -204,6 +210,7 @@ public sealed class ElementHitSystem : ModSystem
         if (frame.PlayerTransaction is null) return context;
         int panel = context.SourceProjectile?.damage ?? context.AttackerNpc?.damage ?? frame.InputDamage;
         var plan = frame.PlayerTransaction.Prepare(MakeRequest(context, panel));
+        ElementTextSystem.Prepare(context, plan);
         AmplificationEffects.Prepare(context, plan);
         if (plan.Route == ElementRoute.React) modifiers.SourceDamage.Base += SeedOffset(plan, frame.InputDamage);
         return FinalContext(context, plan);
@@ -273,6 +280,7 @@ public sealed class ElementHitSystem : ModSystem
                 if (npc.dontTakeDamage || npc.immortal) return false;
                 var final = FinalContext(context, plan);
                 var modifiers = npc.GetIncomingStrikeModifiers(DamageClass.Generic, 0);
+                ElementTextSystem.PrepareNpc(final, plan, ref modifiers);
                 AmplificationEffects.Prepare(final, plan);
                 var sourceModifier = modifiers.SourceDamage;
                 var calculated = CalculateSystem.Pipeline.ModifyNpcHit(final, ref modifiers);
@@ -293,6 +301,7 @@ public sealed class ElementHitSystem : ModSystem
             target.Tick(tick, new(context.CreateSnapshot(), 0, isIdle: true), Reactions, plan =>
             {
                 double actual = 0;
+                ElementTextSystem.Prepare(context, plan);
                 RunFrame(new Frame { Player = player, EnvironmentPlan = plan }, () =>
                     actual = player.Hurt(PlayerDeathReason.ByCustomReason(NetworkText.FromLiteral($"{player.name} 被元素反应击败了。")), CheckedDamage(plan.DamageSeed), 0));
                 return actual > 0;

@@ -1,0 +1,7 @@
+<!-- 2026-10-26：反应文字排斥、持续时间、倾角与选色规则的离线测试。 -->
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup><OutputType>Exe</OutputType><TargetFramework>net8.0</TargetFramework><ImplicitUsings>enable</ImplicitUsings><Nullable>enable</Nullable></PropertyGroup>
+  <ItemGroup>
+    <Compile Include="../../Basic/Tag/*.cs;../../Basic/Calculate/Core/*.cs;../../Basic/Element/*.cs;../../Basic/Element/Presentation/*.cs" />
+  </ItemGroup>
+</Project>

@@ -5,8 +5,8 @@ namespace AdvancedMod.Contents.Hallow.Weapons;
 /// <summary>天裁之刃的四段数值与衔接状态；角度采用屏幕坐标，正角为顺时针。</summary>
 public static class HallowBladeRules
 {
-    public const int BaseDamage = 135;
-    public const int BaseUseTicks = 40;
+    public const int BaseDamage = 70;
+    public const int BaseUseTicks = 45;
     public const int ComboWindowTicks = 150;
     public const int StageCount = 4;
     public const int BonusCrit = 4; // 原生玩家基础暴击 4%，武器追加 4%，无加成时面板为 8%。

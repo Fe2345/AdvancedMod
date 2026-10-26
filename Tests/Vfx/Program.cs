@@ -20,6 +20,54 @@ void Test(string name, Action action)
 void Assert(bool value) { if (!value) throw new Exception("断言失败"); }
 void Near(float a, float b) { Assert(MathF.Abs(a - b) < 0.0001f); }
 
+Test("闪电多种方向长度与种子的严格端点横向约束主轴单调", () =>
+{
+    foreach (float length in new[] { 0f, 0.01f, 1f, 16f, 40f, 80f, 240f, 2000f })
+    foreach (float angle in new[] { 0f, 1f, 2f, 3f, 4.5f })
+    for (int seed = 0; seed < 100; seed++)
+    {
+        Vector2 start = new(200, 100), axis = Paths.Direction(angle), end = start + axis * length;
+        var points = LightningPath.Create(start, end, seed);
+        Assert(points[0] == start && points[^1] == end && points.Length <= LightningPath.MaximumSegments + 1);
+        float last = -0.001f;
+        foreach (var p in points)
+        {
+            Assert(Paths.Finite(p));
+            Vector2 d = p - start;
+            float forward = Vector2.Dot(d, axis), side = Vector2.Dot(d, new(-axis.Y, axis.X));
+            Assert(forward >= last - 0.001f && Math.Abs(side) <= LightningPath.Deviation(length) + 0.001f);
+            last = forward;
+        }
+    }
+});
+Test("闪电密集变化随机种子与异常输入", () =>
+{
+    var a = LightningPath.Create(Vector2.Zero, new(80, 0), 11);
+    var b = LightningPath.Create(Vector2.Zero, new(80, 0), 12);
+    int turns = 0, different = 0;
+    for (int i = 1; i < a.Length - 1; i++)
+    {
+        if ((a[i].Y - a[i - 1].Y) * (a[i + 1].Y - a[i].Y) < 0) turns++;
+        if (a[i] != b[i]) different++;
+    }
+    Assert(a.Length >= 50 && turns >= 15 && different > 40);
+    bool rejected = false;
+    try { LightningPath.Create(new(float.NaN, 0), Vector2.Zero, 1); } catch (ArgumentException) { rejected = true; }
+    Assert(rejected);
+});
+Test("闪电推进显隐寿命与清理", () =>
+{
+    Near(LightningEffect.Visibility(1, 0), 0);
+    Assert(LightningEffect.Visibility(0.5f, 0.2f) > 0.9f);
+    Near(LightningEffect.Opacity(1), 0);
+    var m = new WorldEffectManager();
+    m.Create(new LightningEffect(Vector2.Zero, new(80, 0), Color.White, 1));
+    for (int i = 0; i < 20; i++) m.Update(dt);
+    Assert(m.Count == 0);
+    var e = new LightningEffect(Vector2.Zero, Vector2.Zero, Color.White, 1);
+    e.CollectDrawCommands(new VfxDrawQueue(), new(Vector2.Zero, new(800, 600)));
+    e.Stop(); Assert(e.IsFinished);
+});
 Test("同轮创建停止与延迟取消不显示且仅释放一次", () =>
 {
     var m = new WorldEffectManager(); var e = new Probe(); var h = m.Create(e);
@@ -334,10 +382,20 @@ Test("环境优先级与元素序列化往返", () =>
     Assert(HallowActionRules.ChooseEnvironment(true, true, true, true) == AdvancedMod.Basic.Tag.TagEnum.Pyro);
     Assert(HallowActionRules.ChooseEnvironment(false, true, true, true) == AdvancedMod.Basic.Tag.TagEnum.Hydro);
     Assert(HallowActionRules.ChooseEnvironment(false, false, true, true) == AdvancedMod.Basic.Tag.TagEnum.Cryo);
-    Assert(HallowActionRules.ChooseEnvironment(false, false, false, true) == AdvancedMod.Basic.Tag.TagEnum.Electro);
+    Assert(HallowActionRules.ChooseEnvironment(false, false, false, true) == AdvancedMod.Basic.Tag.TagEnum.Anemo);
+    Assert(HallowActionRules.ChooseEnvironment(false, false, false, false, true) == AdvancedMod.Basic.Tag.TagEnum.Electro);
+    Assert(HallowActionRules.ChooseEnvironment(false, false, false, true, true) == AdvancedMod.Basic.Tag.TagEnum.Anemo);
     Assert(HallowActionRules.ChooseEnvironment(false, false, false, false) == null);
     for (int i = 0; i <= 4; i++) Assert(HallowActionRules.Encode(HallowActionRules.Decode(i)) == i);
     Assert(HallowActionRules.Decode(255) == null);
+    Assert(HallowActionRules.Decode(5) == null);
+    Assert(HallowActionRules.Decode(HallowActionRules.Encode(AdvancedMod.Basic.Tag.TagEnum.Anemo)) == AdvancedMod.Basic.Tag.TagEnum.Anemo);
+});
+Test("共鸣90刻且中点切色，抬剑展开等比例延长", () =>
+{
+    Assert(HallowActionRules.ResonanceTicks == 90 && HallowActionRules.CommitTick == 45);
+    Near(HallowActionRules.LiftTicks * 2, HallowActionRules.CommitTick);
+    Assert(HallowSwordVisuals.ElementColor(AdvancedMod.Basic.Tag.TagEnum.Anemo) != HallowSwordVisuals.ElementColor(AdvancedMod.Basic.Tag.TagEnum.Electro));
 });
 Test("完美格挡刷新衔接期限但不推进连段", () =>
 {

@@ -10,25 +10,27 @@ namespace AdvancedMod.Contents.Hallow.Weapons;
 internal static class HallowActionRules
 {
     internal const int PerfectTicks = 20, GuardCooldown = 360, ProtectionTicks = 60;
-    internal const int ResonanceTicks = 60, LiftTicks = 15, CommitTick = 30, PhantomCount = 6;
+    internal const int ResonanceTicks = 90, CommitTick = ResonanceTicks / 2, PhantomCount = 6;
+    internal const float LiftTicks = ResonanceTicks / 4f;
     internal const float CounterRange = 512, CounterOffset = 192, GuardOffset = 36, GuardThickness = 24;
     internal const float CounterSpeed = 16, CounterTurn = 0.16f;
     internal const int CounterLifetime = 120;
     internal const double Attachment = 1.5;
     internal const float GuardDamageMultiplier = 0.5f;
-    internal static byte Encode(TagEnum? element) => element is >= TagEnum.Pyro and <= TagEnum.Cryo ? (byte)((int)element.Value + 1) : (byte)0;
-    internal static TagEnum? Decode(int value) => value is >= 1 and <= 4 ? (TagEnum)(value - 1) : null;
+    // 保持旧存档的1—4编码；风使用标签对应的6，跳过尚不支持的叶绿编码5。
+    internal static byte Encode(TagEnum? element) => element is >= TagEnum.Pyro and <= TagEnum.Cryo or TagEnum.Anemo ? (byte)((int)element.Value + 1) : (byte)0;
+    internal static TagEnum? Decode(int value) => value is >= 1 and <= 4 or 6 ? (TagEnum)(value - 1) : null;
     internal static TagSet Tags(TagEnum? element) => element.HasValue ? new(new[] { new TagEntry(false, element.Value) }) : TagSet.Empty;
     internal static bool Perfect(int age) => age >= 0 && age < PerfectTicks;
     internal static bool EligibleProjectile(bool hostile, int damage, float speed, int updates, float size) =>
         hostile && damage > 1 && speed * updates > 1 && size < 300;
     internal static bool InFront(Vector2 center, Vector2 direction, Vector2 target) =>
         Vector2.DistanceSquared(center, target) <= CounterRange * CounterRange && Vector2.Dot(target - center, direction) >= 0;
-    internal static TagEnum? ChooseEnvironment(bool lava, bool water, bool ice, bool cloud) =>
-        lava ? TagEnum.Pyro : water ? TagEnum.Hydro : ice ? TagEnum.Cryo : cloud ? TagEnum.Electro : null;
+    internal static TagEnum? ChooseEnvironment(bool lava, bool water, bool ice, bool cloud, bool thunder = false) =>
+        lava ? TagEnum.Pyro : water ? TagEnum.Hydro : ice ? TagEnum.Cryo : cloud ? TagEnum.Anemo : thunder ? TagEnum.Electro : null;
     internal static TagEnum? Environment(Player player)
     {
-        bool ice = false, cloud = false;
+        bool ice = false, cloud = false, thunder = false;
         int y = (int)((player.Bottom.Y + 2) / 16);
         for (int x = (int)(player.Left.X / 16); x <= (int)((player.Right.X - 1) / 16); x++)
         {
@@ -36,7 +38,8 @@ internal static class HallowActionRules
             if (!tile.HasUnactuatedTile) continue;
             ice |= tile.TileType is TileID.IceBlock or TileID.CorruptIce or TileID.FleshIce or TileID.HallowedIce or TileID.BreakableIce;
             cloud |= tile.TileType is TileID.Cloud or TileID.RainCloud or TileID.SnowCloud;
+            thunder |= tile.TileType is TileID.Sand or TileID.Pearlsand or TileID.Pearlstone or TileID.HallowedGrass;
         }
-        return ChooseEnvironment(player.lavaWet, player.wet && !player.honeyWet && !player.shimmerWet && !player.lavaWet, ice, cloud);
+        return ChooseEnvironment(player.lavaWet, player.wet && !player.honeyWet && !player.shimmerWet && !player.lavaWet, ice, cloud, thunder);
     }
 }

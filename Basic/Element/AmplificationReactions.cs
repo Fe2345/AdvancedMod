@@ -15,7 +15,7 @@ public static class AmplificationReactions
     public static ReactionTable Create() => new(
         new(TagEnum.HydroElectro, BaseCoefficient, 60, new(2, 1), new(3, 1.5)),
         new(TagEnum.HydroAnemo, BaseCoefficient, 40, new(2, 1.5), new(6, 0.75)),
-        new(TagEnum.PytoCryo, BaseCoefficient, 40, new(1, 1.5), new(4, 1.5)));
+        new(TagEnum.PyroCryo, BaseCoefficient, 40, new(1, 1.5), new(4, 1.5)));
 
     /// <summary>仅计算拟支付量；实际扣血必须等待原生命中成功。</summary>
     public static int LifeCost(int life, int maximumLife) =>

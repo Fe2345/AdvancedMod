@@ -41,7 +41,7 @@ var cases = new (string Name, Action Run)[]
             (TagEnum.Anemo, ModifierTarget.ElementDamage(6)),
             (TagEnum.HydroElectro, ModifierTarget.Reaction(1)),
             (TagEnum.HydroAnemo, ModifierTarget.Reaction(2)),
-            (TagEnum.PytoCryo, ModifierTarget.Reaction(3)),
+            (TagEnum.PyroCryo, ModifierTarget.Reaction(3)),
             (TagEnum.Hallowed, ModifierTarget.Ascension(1)),
             (TagEnum.Lunacy, ModifierTarget.Ascension(2)),
             (TagEnum.Originated, ModifierTarget.Ascension(3))
@@ -83,7 +83,7 @@ var cases = new (string Name, Action Run)[]
     {
         var hit = Hit() with { Tags = new TagSet(new[]
         {
-            new TagEntry(true, TagEnum.Pyro), new TagEntry(false, TagEnum.PytoCryo),
+            new TagEntry(true, TagEnum.Pyro), new TagEntry(false, TagEnum.PyroCryo),
             new TagEntry(false, TagEnum.Hallowed)
         }) };
         var collector = NewCollector();

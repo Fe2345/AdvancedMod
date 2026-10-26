@@ -88,8 +88,9 @@ internal static class AmplificationEffects
         target.RunNative(ElementHitSystem.Reactions, tx =>
         {
             if (!targetNpc.active || targetNpc.dontTakeDamage || targetNpc.immortal) return;
-            tx.Prepare(new(context.CreateSnapshot(), (int)Math.Round(seed)));
+            var plan = tx.Prepare(new(context.CreateSnapshot(), (int)Math.Round(seed)));
             var modifiers = targetNpc.GetIncomingStrikeModifiers(DamageClass.Generic, 0);
+            ElementTextSystem.PrepareNpc(context, plan, ref modifiers);
             var sourceModifier = modifiers.SourceDamage;
             var result = CalculateSystem.Pipeline.ModifyNpcHit(context, ref modifiers);
             // 攻击源前段增伤已包含在传入种子中；每个新目标只重算自身抗性，不再叠乘反应增伤。

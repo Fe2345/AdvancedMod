@@ -96,7 +96,7 @@ internal static class DefaultTagRules
         Enable(TagEnum.Anemo, ModifierTarget.ElementDamage(6)),
         Enable(TagEnum.HydroElectro, ModifierTarget.Reaction(1)),
         Enable(TagEnum.HydroAnemo, ModifierTarget.Reaction(2)),
-        Enable(TagEnum.PytoCryo, ModifierTarget.Reaction(3)),
+        Enable(TagEnum.PyroCryo, ModifierTarget.Reaction(3)),
         Enable(TagEnum.Hallowed, ModifierTarget.Ascension(1)),
         Enable(TagEnum.Lunacy, ModifierTarget.Ascension(2)),
         Enable(TagEnum.Originated, ModifierTarget.Ascension(3))

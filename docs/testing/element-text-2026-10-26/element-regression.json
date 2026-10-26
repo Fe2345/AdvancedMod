@@ -1,0 +1,67 @@
+{
+  "mode": "\u771F\u5B9E TML \u5355\u4EBA\u5BA2\u6237\u7AEF",
+  "version": "v1.4.4.9",
+  "utc": "2026-10-26T07:02:51.72554+00:00",
+  "results": [
+    {
+      "name": "\u5D4C\u5957\u751F\u6210\u4FDD\u7559\u6765\u6E90\u4E14\u4E0D\u7EE7\u627F\u6807\u7B7E",
+      "status": "PASS"
+    },
+    {
+      "name": "\u5F39\u5E55\u6C34\u96F7150\u4F24\u5BB3\u4E0E\u751F\u6210\u6807\u7B7E",
+      "status": "PASS"
+    },
+    {
+      "name": "\u6C34\u98CE\u751F\u547D\u95E8\u69DB\u4E0E\u706B\u51B0150\u4F24\u5BB3",
+      "status": "PASS"
+    },
+    {
+      "name": "\u6C34\u98CE\u6210\u529F\u652F\u4ED8\u4E0E\u5931\u8D25\u4E0D\u652F\u4ED8",
+      "status": "PASS"
+    },
+    {
+      "name": "\u5BFC\u7535\u9010\u8DF3\u9632\u5FA1\u4E0E\u4FDD\u5E95\u524D\u7EC8\u6B62",
+      "status": "PASS"
+    },
+    {
+      "name": "\u5BFC\u7535\u6297\u6027\u72EC\u7ACB\u4E14\u6E90\u589E\u4F24\u4E0D\u91CD\u590D",
+      "status": "PASS"
+    },
+    {
+      "name": "\u5BFC\u7535\u8DDD\u79BB\u4E0E\u5899\u4F53\u963B\u6321",
+      "status": "PASS"
+    },
+    {
+      "name": "\u8FD1\u6218\u771F\u5B9E\u5165\u53E3\u4E0E\u5143\u7D20\u91CF",
+      "status": "PASS"
+    },
+    {
+      "name": "CD\u963B\u585E\u540E\u666E\u901A\u9644\u7740",
+      "status": "PASS"
+    },
+    {
+      "name": "NPC\u5230\u73A9\u5BB6\u4F24\u5BB3\u53CA\u53D6\u6D88\u95EA\u907F\u514D\u75AB",
+      "status": "PASS"
+    },
+    {
+      "name": "\u654C\u5BF9\u5F39\u5E55\u5230\u73A9\u5BB6",
+      "status": "PASS"
+    },
+    {
+      "name": "\u81F4\u6B7B\u547D\u4E2D\u4ECD\u8BB0\u5F55\u53CD\u5E94",
+      "status": "PASS"
+    },
+    {
+      "name": "\u6BCF\u523B\u9759\u7F6E\u73AF\u5883\u53CD\u5E94",
+      "status": "PASS"
+    },
+    {
+      "name": "\u539F\u751F\u5F39\u5E55\u56DE\u8C03\u91CD\u5165\u4E32\u884C",
+      "status": "PASS"
+    },
+    {
+      "name": "\u539F\u751F\u5F02\u5E38\u4E0E\u5B9E\u4F53\u590D\u7528\u6536\u5C3E",
+      "status": "PASS"
+    }
+  ]
+}

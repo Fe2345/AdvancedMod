@@ -17,7 +17,7 @@ public static class ElementSlots
     };
     public static int? ReactionFromTag(TagEnum tag) => tag switch
     {
-        TagEnum.HydroElectro => 1, TagEnum.HydroAnemo => 2, TagEnum.PytoCryo => 3, _ => null
+        TagEnum.HydroElectro => 1, TagEnum.HydroAnemo => 2, TagEnum.PyroCryo => 3, _ => null
     };
 }
 

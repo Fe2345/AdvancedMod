@@ -13,6 +13,8 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.DataStructures;
 using AdvancedMod.Basic.Utils;
+using AdvancedMod.Basic.Element.Presentation;
+using AdvancedMod.Basic.Graphics;
 
 namespace AdvancedMod.Basic.Element.Tml;
 
@@ -21,7 +23,8 @@ public sealed class ElementNetwork : ModSystem
 {
     internal const int SyncInterval = 6;
     private const int MaxAttackIdLength = 256;
-    private enum Packet : byte { PlayerState, ItemHit, ReactionLife, ReactionVisual }
+    private const float PlayerTextPositionTolerance = 512f;
+    private enum Packet : byte { PlayerState, ItemHit, ReactionLife, ReactionVisual, ElementText }
     private static readonly MethodInfo itemHit = typeof(Player).GetMethod("ProcessHitAgainstNPC", BindingFlags.Instance | BindingFlags.NonPublic)!;
     private static readonly ulong[] lastItemSequence = new ulong[Main.maxPlayers];
     private static ulong itemSequence;
@@ -120,6 +123,9 @@ public sealed class ElementNetwork : ModSystem
     {
         switch ((Packet)reader.ReadByte())
         {
+            case Packet.ElementText:
+                ReceiveElementText(reader, sender);
+                break;
             case Packet.ReactionLife:
                 int cost = reader.ReadInt32();
                 if (Main.netMode == NetmodeID.MultiplayerClient && cost > 0)
@@ -199,9 +205,61 @@ public sealed class ElementNetwork : ModSystem
         packet.Write(start.X); packet.Write(start.Y); packet.Write(end.X); packet.Write(end.Y); packet.Write((int)reaction);
         packet.Send();
     }
+
+    // 2026-10-26：每次确认伤害后发送一次展示数据，不同步逐刻文字动画。
+    internal static void ShowElementText(Rectangle bounds, int damage, bool crit, TagEnum element, TagEnum[] reactions, int playerIndex)
+    {
+        if (Main.netMode != NetmodeID.Server) ElementTextSystem.Show(bounds, damage, crit, element, reactions);
+        if (Main.netMode == NetmodeID.SinglePlayer || damage == 0 && reactions.Length == 0) return;
+        SendElementText(bounds, damage, crit, element, reactions, playerIndex);
+    }
+    private static void SendElementText(Rectangle bounds, int damage, bool crit, TagEnum element, TagEnum[] reactions, int playerIndex, int ignore = -1)
+    {
+        var packet = ModContent.GetInstance<ElementNetwork>().Mod.GetPacket();
+        packet.Write((byte)Packet.ElementText);
+        packet.Write((short)playerIndex);
+        packet.Write(bounds.X); packet.Write(bounds.Y); packet.Write(bounds.Width); packet.Write(bounds.Height);
+        packet.Write(damage); packet.Write(crit); packet.Write((int)element);
+        packet.Write((byte)reactions.Length);
+        foreach (var reaction in reactions) packet.Write((int)reaction);
+        packet.Send(ignoreClient: ignore);
+    }
+    private static void ReceiveElementText(BinaryReader reader, int sender)
+    {
+        int playerIndex = reader.ReadInt16();
+        var bounds = new Rectangle(reader.ReadInt32(), reader.ReadInt32(), reader.ReadInt32(), reader.ReadInt32());
+        int damage = reader.ReadInt32(); bool crit = reader.ReadBoolean();
+        var element = (TagEnum)reader.ReadInt32();
+        int count = reader.ReadByte();
+        if (count > 3) throw new InvalidDataException("反应文字标签数量非法");
+        var reactions = new TagEnum[count];
+        for (int i = 0; i < count; i++)
+        {
+            reactions[i] = (TagEnum)reader.ReadInt32();
+            if (!ElementSlots.ReactionFromTag(reactions[i]).HasValue) throw new InvalidDataException("反应文字标签非法");
+        }
+        if (!ElementSlots.FromTag(element).HasValue || damage < 0 || bounds.Width < 0 || bounds.Height < 0 ||
+            bounds.Width > short.MaxValue || bounds.Height > short.MaxValue || playerIndex < -1 || playerIndex >= Main.maxPlayers)
+            throw new InvalidDataException("元素文字数据非法");
+        if (Main.netMode == NetmodeID.Server)
+        {
+            // NPC 数字只由服务器产生；客户端只能提交自身已确认的玩家反应名。
+            if (playerIndex != sender || sender < 0 || sender >= Main.maxPlayers || damage != 0 || !Main.player[sender].active) return;
+            if (Vector2.DistanceSquared(bounds.Center.ToVector2(), Main.player[sender].Center) > PlayerTextPositionTolerance * PlayerTextPositionTolerance) return;
+            SendElementText(bounds, damage, crit, element, reactions, playerIndex, sender);
+        }
+        else if (Main.netMode == NetmodeID.MultiplayerClient)
+            ElementTextSystem.Show(bounds, damage, crit, element, reactions);
+    }
     private static void DrawReaction(Vector2 start, Vector2 end, TagEnum reaction)
     {
-        int dustType = reaction == TagEnum.HydroElectro ? DustID.Electric : reaction == TagEnum.PytoCryo ? DustID.IceTorch : DustID.Water;
+        // 两点链段只生成客户端视觉快照；沿用服务端起终点，各端独立随机，不参与伤害。
+        if (reaction == TagEnum.HydroElectro && Vector2.DistanceSquared(start, end) > 0.000001f)
+        {
+            Vfx.Create(new LightningEffect(start, end, ElementTextSystem.ColorFor(TagEnum.Electro), Main.rand.Next()));
+            return;
+        }
+        int dustType = reaction == TagEnum.HydroElectro ? DustID.Electric : reaction == TagEnum.PyroCryo ? DustID.IceTorch : DustID.Water;
         const float spacing = 4;
         int count = Math.Max(1, (int)Math.Ceiling(Vector2.Distance(start, end) / spacing));
         for (int i = 0; i <= count; i++)

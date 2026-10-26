@@ -33,7 +33,7 @@ public sealed class HallowActionsLiveTests : ModSystem
     private static bool observed, injected;
     private static string pendingCapture;
     private static TagEnum? previous;
-    private static readonly TagEnum[] elements = { TagEnum.Hydro, TagEnum.Pyro, TagEnum.Cryo, TagEnum.Electro };
+    private static readonly TagEnum[] elements = { TagEnum.Hydro, TagEnum.Pyro, TagEnum.Cryo, TagEnum.Anemo };
     private static Player P => Main.LocalPlayer;
     private static HeavensJudgment Sword => (HeavensJudgment)P.HeldItem.ModItem;
     private static void Check(string name, bool pass, object actual = null) => results.Add(new { name, status = pass ? "PASS" : "FAIL", actual });
@@ -51,6 +51,17 @@ public sealed class HallowActionsLiveTests : ModSystem
         results.Clear(); captures.Clear(); counters.Clear(); counterHits.Clear();
         P.inventory[0] = new Item(ModContent.ItemType<HeavensJudgment>()); P.selectedItem = 0;
         anchor = P.Center - new Vector2(0, 200); previous = null;
+        P.Center = anchor;
+        P.wet = P.lavaWet = P.honeyWet = P.shimmerWet = false;
+        int footY = (int)((P.Bottom.Y + 2) / 16);
+        foreach (int type in new[] { TileID.Sand, TileID.Pearlsand, TileID.Pearlstone, TileID.HallowedGrass })
+        {
+            for (int x = (int)(P.Left.X / 16); x <= (int)(P.Right.X / 16); x++)
+            { var tile = Framing.GetTileSafely(x, footY); tile.HasTile = true; tile.TileType = (ushort)type; }
+            Check($"雷元素脚下方块{type}", HallowActionRules.Environment(P) == TagEnum.Electro);
+        }
+        for (int x = (int)(P.Left.X / 16); x <= (int)(P.Right.X / 16); x++) Framing.GetTileSafely(x, footY).HasTile = false;
+        tick = -1; // 首帧仅右键，确认在可共鸣环境仍先格挡。
         foreach (var npc in Main.ActiveNPCs) if (!npc.townNPC) npc.active = false;
     }
     private static NPC Target(Vector2 offset)
@@ -69,6 +80,7 @@ public sealed class HallowActionsLiveTests : ModSystem
         // PreItemCheck位于原生右键转译之后，传入其已转译的altFunctionUse=1与controlUseItem状态。
         p.altFunctionUse = p.itemAnimation == 0 ? 1 : 2; p.controlUseItem = true; p.controlUseTile = true; p.releaseUseTile = true; p.releaseUseItem = true;
         Main.mouseRight = true; Main.mouseRightRelease = true;
+        p.controlDown = phase < 4 && tick >= 0;
         Main.mouseX = (int)(anchor.X + 300 - Main.screenPosition.X); Main.mouseY = (int)(anchor.Y - Main.screenPosition.Y);
         p.wet = phase == 0 || phase == 1; p.lavaWet = phase == 1; p.honeyWet = p.shimmerWet = false;
         int y = (int)((p.Bottom.Y + 2) / 16);
@@ -81,7 +93,7 @@ public sealed class HallowActionsLiveTests : ModSystem
         if (phase < 4)
         {
             // 共鸣结束后发起一次真实挥刀，采集共鸣后的剑气颜色。
-            if (tick >= 64) { p.altFunctionUse = 0; p.controlUseTile = false; p.controlUseItem = tick == 65; Main.mouseRight = false; }
+            if (tick >= HallowActionRules.ResonanceTicks + 4) { p.altFunctionUse = 0; p.controlUseTile = false; p.controlUseItem = tick == HallowActionRules.ResonanceTicks + 5; Main.mouseRight = false; }
             return;
         }
         if (phase >= 12) { p.controlUseTile = false; return; }
@@ -116,16 +128,25 @@ public sealed class HallowActionsLiveTests : ModSystem
     {
         if (!Running) return;
         total++;
+        // 隔离自然刷怪，避免“无目标／背后目标”用例被测试外敌人触发反击。
+        foreach (var npc in Main.ActiveNPCs)
+            if (npc != target && !npc.townNPC) npc.active = false;
         if (total > 2200) { Check("完整运行", false, new { phase, tick }); Finish(); return; }
         if (phase < 4)
         {
+            if (tick < 0)
+            {
+                Check("水中单独右键只格挡不共鸣", Main.projectile.Any(x => x.active && x.ModProjectile is HallowGuard) && !Main.projectile.Any(x => x.active && x.ModProjectile is HallowResonance));
+                foreach (var projectile in Main.ActiveProjectiles) if (projectile.ModProjectile is HallowGuard) projectile.Kill();
+                P.itemTime = P.itemAnimation = 0; tick++; return;
+            }
             var action = Main.projectile.FirstOrDefault(x => x.active && x.ModProjectile is HallowResonance)?.ModProjectile as HallowResonance;
             if (action != null)
             {
-                if (action.Age == 29) { Check($"{elements[phase]}提交前保持原元素", Sword.Resonance == previous); pendingCapture = $"resonance-{phase}-before"; }
-                if (action.Age == 30)
+                if (action.Age == HallowActionRules.CommitTick - 1) { Check($"{elements[phase]}提交前保持原元素", Sword.Resonance == previous); pendingCapture = $"resonance-{phase}-before"; }
+                if (action.Age == HallowActionRules.CommitTick)
                 {
-                    Check($"{elements[phase]}第30刻提交且六虚影无伤害", Sword.Resonance == elements[phase] && action.Committed && action.CanDamage() == false);
+                    Check($"{elements[phase]}第{HallowActionRules.CommitTick}刻提交且六虚影无伤害", Sword.Resonance == elements[phase] && action.Committed && action.CanDamage() == false);
                     pendingCapture = $"resonance-{phase}-after";
                 }
             }
@@ -136,7 +157,7 @@ public sealed class HallowActionsLiveTests : ModSystem
                 Check($"{elements[phase]}普通攻击附着量", combat.ElementAmount == 1.5);
                 pendingCapture = $"slash-{phase}";
             }
-            if (++tick >= 115)
+            if (++tick >= HallowActionRules.ResonanceTicks + 55)
             {
                 Check($"{elements[phase]}共鸣完成", Sword.Resonance == elements[phase]);
                 var saved = ItemIO.Load(ItemIO.Save(P.HeldItem));
@@ -175,7 +196,7 @@ public sealed class HallowActionsLiveTests : ModSystem
         {
             Check($"场景{phase}原生右键触发成功", observed);
             if (phase != 4) Check($"场景{phase}360刻冷却未提前结束", !state.CanStart && state.Cooldown > 250);
-            if (counters.Count > 0) Check($"场景{phase}反击实际命中1.0倍率", counterHits.Count == 2 && counterHits.All(d => d == 135), counterHits.ToArray());
+            if (counters.Count > 0) Check($"场景{phase}反击实际命中1.0倍率", counterHits.Count == 2 && counterHits.All(d => d == HallowBladeRules.BaseDamage), counterHits.ToArray());
             Next();
         }
     }
@@ -199,11 +220,16 @@ public sealed class HallowActionsLiveTests : ModSystem
         // 起手瞄准会包含原生发射点修正，验证相对锁定方向的垂线而非假定屏幕竖直。
         var guard = Main.projectile.First(x => x.active && x.ModProjectile is HallowGuard).ModProjectile as HallowGuard;
         Vector2 offset = projectile.Center - P.Center;
-        Check($"场景{phase}反击偏移及白值附着", Math.Abs(offset.Length() - 192) < 0.01f && Math.Abs(Vector2.Dot(offset, guard.Direction)) < 0.01f && projectile.damage == 135 && combat.ElementAmount == 0 && HallowActionRules.Decode((int)projectile.ai[0]) == Sword.Resonance,
+        Check($"场景{phase}反击偏移及白值附着", Math.Abs(offset.Length() - 192) < 0.01f && Math.Abs(Vector2.Dot(offset, guard.Direction)) < 0.01f && projectile.damage == HallowBladeRules.BaseDamage && combat.ElementAmount == 0 && HallowActionRules.Decode((int)projectile.ai[0]) == Sword.Resonance,
             new { offset.X, offset.Y, projectile.damage, combat.ElementAmount, element = projectile.ai[0] });
     }
     internal static void Hit(Projectile projectile, int damage)
     { if (Running && projectile.ModProjectile is HallowCounterSword) counterHits.Add(damage); }
+    internal static void End(Projectile projectile)
+    {
+        if (Running && projectile.ModProjectile is HallowResonance action)
+            Check($"{elements[phase]}动画持续90刻", action.Age == HallowActionRules.ResonanceTicks, action.Age);
+    }
     private static void Next()
     {
         foreach (var projectile in Main.ActiveProjectiles) if (projectile.owner == P.whoAmI) projectile.Kill();
@@ -239,6 +265,7 @@ public sealed class HallowActionsTestPlayer : ModPlayer
 }
 public sealed class HallowActionsTestProjectile : GlobalProjectile
 {
+    public override void OnKill(Projectile projectile, int timeLeft) => HallowActionsLiveTests.End(projectile);
     public override void OnSpawn(Projectile projectile, IEntitySource source) => HallowActionsLiveTests.Spawn(projectile);
     public override void OnHitNPC(Projectile projectile, NPC target, NPC.HitInfo hit, int damageDone) => HallowActionsLiveTests.Hit(projectile, damageDone);
 }

@@ -45,6 +45,10 @@ NPC 接触伤害可用 `ConfigureNpcContact(npc, tags, elementAmount, attackId)`
 
 本机入口依据安装的 TML 1.4.4.9+2026.08.3.0 方法体核对，并与 [NPC HitModifiers](https://docs.tmodloader.net/docs/stable/struct_n_p_c_1_1_hit_modifiers.html)、[Player](https://docs.tmodloader.net/docs/stable/class_player.html)、[Projectile](https://docs.tmodloader.net/docs/stable/class_projectile.html) 的官方契约对照。更新 TML 后需要复验 detour 与执行顺序。
 
+## 元素文字
+
+元素数字与反应名称已接入托管命中和成功提交事件，具体颜色、150 刻寿命、32 像素排斥规则及联机边界见 [元素文字说明](../Basic/Element/Presentation/README.md)。反应名称由 `Reactions` 本地化键提供；火冰标签现为 `PyroCryo`，枚举序号保持不变。
+
 ## 重跑实机测试
 
 开发内容位于 `Contents/Development`。`/elementtest` 使用真实测试 NPC／弹幕与玩家 Hurt 入口，报告写到当前存档根目录的 `Logs/AdvancedMod/element-live-tests.json`。命令会修改测试玩家生命、防御和元素状态，只在测试世界使用。
@@ -59,6 +63,9 @@ NPC 接触伤害可用 `ConfigureNpcContact(npc, tags, elementAmount, attackId)`
 测试记录与当前结果见 [TODO](TODO.md)。此自动化使用真实客户端和复制存档，区别于纯计算测试；它不等同于手工武器手感、画面或联机验收。
 
 ## 联机自动验收
+
+导电非零链段已改为双端点闪电，0.3秒内呈现密集折角与白芯紫色柔光。视觉仅读取已有起终点，各客户端独立随机；不改变伤害、视线或附着。同点触发及其他反应仍用原粒子。独立／链伤实机测试运行`Tests/Run-LightningLive.ps1`，参数与限制见[闪电说明](Conductive-Lightning-Research.md)。
+
 运行 Tests/Run-ElementNetwork.ps1，传入 -TmlDirectory。脚本在 obj/element-network/时间戳 下建立服务器和两个客户端的独立存档，端口默认 17777，仅使用本机 TCP。测试报告必须由本轮三个进程分别生成，超时、进程退出或任意 FAIL 都使脚本失败。
 
 NPC 当前采用每 6 刻一次的全量元素快照，全部元素槽共允许最多 2048 个白值分量；CD 镜像可能落后最多一个同步间隔，客户端不据此裁定反应。目标死亡／复用后原生 SyncNPC 及实例身份负责隔离旧请求。玩家元素状态不持久化，离开世界和重生清空。协议沿用 TML 对所属客户端攻击配置的信任，不承诺防作弊。
