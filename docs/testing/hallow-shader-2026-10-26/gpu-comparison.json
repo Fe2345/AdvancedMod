@@ -1,0 +1,56 @@
+[
+  {
+    "cloud": false,
+    "time": 0,
+    "litPixels": 4096,
+    "glowPixels": 4096,
+    "maximumByteError": 0,
+    "meanByteError": 0,
+    "status": "PASS"
+  },
+  {
+    "cloud": false,
+    "time": 0.37,
+    "litPixels": 4096,
+    "glowPixels": 4096,
+    "maximumByteError": 0,
+    "meanByteError": 0,
+    "status": "PASS"
+  },
+  {
+    "cloud": false,
+    "time": 2.1,
+    "litPixels": 4096,
+    "glowPixels": 4096,
+    "maximumByteError": 0,
+    "meanByteError": 0,
+    "status": "PASS"
+  },
+  {
+    "cloud": true,
+    "time": 0,
+    "litPixels": 6257,
+    "glowPixels": 6257,
+    "maximumByteError": 0,
+    "meanByteError": 0,
+    "status": "PASS"
+  },
+  {
+    "cloud": true,
+    "time": 0.37,
+    "litPixels": 6599,
+    "glowPixels": 6599,
+    "maximumByteError": 0,
+    "meanByteError": 0,
+    "status": "PASS"
+  },
+  {
+    "cloud": true,
+    "time": 2.1,
+    "litPixels": 5900,
+    "glowPixels": 5900,
+    "maximumByteError": 0,
+    "meanByteError": 0,
+    "status": "PASS"
+  }
+]

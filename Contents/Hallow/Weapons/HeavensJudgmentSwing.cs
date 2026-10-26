@@ -9,6 +9,7 @@ using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 using AdvancedMod.Basic.Graphics;
+using AdvancedMod.Basic.Tag;
 using Visuals = AdvancedMod.Basic.Graphics.Vfx;
 
 namespace AdvancedMod.Contents.Hallow.Weapons;
@@ -22,6 +23,7 @@ public sealed class HeavensJudgmentSwing : ModProjectile
     private bool validSpawn, initialized, completed;
     private Vector2 previousHilt;
     private float previousAngle;
+    private TagEnum? resonance;
     public int Stage => (int)Projectile.ai[0];
     public float StartAngle => Projectile.ai[1];
     public int Duration => (int)Projectile.ai[2];
@@ -29,7 +31,7 @@ public sealed class HeavensJudgmentSwing : ModProjectile
     public Vector2 Hilt => Projectile.Center;
     public Vector2 Tip => Hilt + Projectile.rotation.ToRotationVector2() * HallowBladeRules.BladeLength * itemScale;
     private Player Owner => Main.player[Projectile.owner];
-    public override string Texture => $"Terraria/Images/Item_{ItemID.Excalibur}";
+    public override string Texture => "AdvancedMod/Assets/Textures/Hallow/HeavensJudgmentBlade";
     public override void SetStaticDefaults()
     {
         ProjectileID.Sets.HeldProjDoesNotUsePlayerGfxOffY[Type] = true;
@@ -57,6 +59,7 @@ public sealed class HeavensJudgmentSwing : ModProjectile
         if (source is EntitySource_ItemUse itemSource && itemSource.Item.ModItem is HeavensJudgment)
         {
             sourceItem = itemSource.Item;
+            resonance = ((HeavensJudgment)sourceItem.ModItem).Resonance;
             itemScale = Owner.GetAdjustedItemScale(sourceItem);
             facing = Projectile.velocity.X == 0 ? Owner.direction : Math.Sign(Projectile.velocity.X);
             validSpawn = true;
@@ -66,11 +69,13 @@ public sealed class HeavensJudgmentSwing : ModProjectile
     {
         writer.Write(itemScale); writer.Write((short)selectedSlot); writer.Write((sbyte)facing);
         writer.Write(Projectile.localAI[0]);
+        writer.Write(HallowActionRules.Encode(resonance));
     }
     public override void ReceiveExtraAI(BinaryReader reader)
     {
         itemScale = reader.ReadSingle(); selectedSlot = reader.ReadInt16(); facing = reader.ReadSByte();
         Projectile.localAI[0] = reader.ReadSingle();
+        resonance = HallowActionRules.Decode(reader.ReadByte());
         validSpawn = float.IsFinite(itemScale) && itemScale > 0 && itemScale <= 10 && selectedSlot >= 0 && selectedSlot < 58 &&
             (facing == 1 || facing == -1) && float.IsFinite(Projectile.localAI[0]) && Projectile.localAI[0] >= 0;
     }
@@ -122,7 +127,7 @@ public sealed class HeavensJudgmentSwing : ModProjectile
         if (!Main.dedServ)
         {
             Visuals.SetTarget(trail, new HallowSlashPose(Hilt, HallowBladeRules.BladeLength * itemScale, angle, angle - StartAngle,
-                Projectile.localAI[0] / Projectile.MaxUpdates / 60f, Duration / 60f / Math.Max(1, MathF.Abs(HallowBladeRules.Sweep(Stage)) / MathHelper.TwoPi)));
+                Projectile.localAI[0] / Projectile.MaxUpdates / 60f, Duration / 60f / Math.Max(1, MathF.Abs(HallowBladeRules.Sweep(Stage)) / MathHelper.TwoPi), resonance));
             if (Projectile.numUpdates == 0)
                 Projectile.EmitEnchantmentVisualsAt(Vector2.Lerp(Hilt, Tip, 0.5f) - new Vector2(8), 16, 16);
         }
@@ -161,10 +166,7 @@ public sealed class HeavensJudgmentSwing : ModProjectile
     public override bool PreDraw(ref Color lightColor)
     {
         if (!initialized) return false;
-        var texture = TextureAssets.Projectile[Type].Value;
-        float scale = HallowBladeRules.BladeLength * itemScale / texture.Size().Length();
-        Main.EntitySpriteDraw(texture, Hilt - Main.screenPosition, null, lightColor, Projectile.rotation + MathHelper.PiOver4,
-            new Vector2(0, texture.Height), scale, SpriteEffects.None);
+        HallowSwordVisuals.DrawBody(Hilt, Projectile.rotation, HallowBladeRules.BladeLength * itemScale, resonance, lightColor);
         return false;
     }
 }

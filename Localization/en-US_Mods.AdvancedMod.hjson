@@ -25,15 +25,25 @@ Configs: {
 }
 
 Projectiles: {
+	RainCloud.DisplayName: Rain Cloud
+	RainCloudDrop.DisplayName: Rain Drop
 	HeavensJudgmentSwing.DisplayName: Heavens Judgment Swing
 	ElementProbeProjectile.DisplayName: Element Probe Projectile
 	SoundSentry.DisplayName: Sound Sentry
 	SoundWave.DisplayName: Sound Wave
+	HallowCounterSword.DisplayName: Hallow Counter Sword
+	HallowGuard.DisplayName: Hallow Guard
+	HallowResonance.DisplayName: Hallow Resonance
 }
 
 NPCs.ElementProbeNPC.DisplayName: Element Probe N P C
 
 Items: {
+	RainCloudStaff: {
+		DisplayName: Rain Cloud Staff
+		Tooltip: Summons a cloud that follows enemies and rains down Hydro damage
+	}
+
 	HeavensJudgment: {
 		Tooltip: ""
 		DisplayName: Heavens Judgment
@@ -46,3 +56,10 @@ Items: {
 }
 
 DamageClasses.ElementalDamageClass.DisplayName: Elemental Damage Class
+
+Buffs: {
+	RainCloudBuff: {
+		DisplayName: Rain Cloud
+		Description: A rain cloud showers your enemies
+	}
+}

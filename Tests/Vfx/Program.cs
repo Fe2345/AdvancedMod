@@ -288,6 +288,74 @@ Test("双倍攻速两圈段补样保持圆弧而非直线弦", () =>
         if (vertex.TextureCoordinate.Y == 1) Assert(MathF.Abs(vertex.Position.Length() - 192) < 0.001f);
     }
 });
+Test("剑气头部宽度为攻击半径一半且随半径缩放", () =>
+{
+    foreach (float radius in new[] { 192f, 288f })
+    {
+        var slash = new HallowSlashEffect();
+        slash.SetTarget(new(Vector2.Zero, radius, 0, 0, 0, 1));
+        slash.SetTarget(new(Vector2.Zero, radius, 1, 1, 0.2f, 1));
+        slash.CollectDrawCommands(new(), new(Vector2.Zero, new(800, 600)));
+        var mesh = (VfxMesh)typeof(HallowSlashEffect).GetField("mesh", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic)!.GetValue(slash)!;
+        float inner = float.MaxValue, outer = 0;
+        for (int i = 0; i < mesh.Count; i++)
+        {
+            var v = mesh.Vertices[i];
+            if (v.TextureCoordinate.X < 0.99999f) continue;
+            inner = Math.Min(inner, v.Position.Length()); outer = Math.Max(outer, v.Position.Length());
+        }
+        Assert(MathF.Abs(outer - radius) < 0.001f);
+        Assert(MathF.Abs(outer - inner - radius / 2) < 0.001f);
+    }
+});
+
+Test("完美格挡20刻窗口严格排除第21次更新", () =>
+{
+    Assert(!HallowActionRules.Perfect(-1)); Assert(HallowActionRules.Perfect(0));
+    Assert(HallowActionRules.Perfect(19)); Assert(!HallowActionRules.Perfect(20));
+});
+Test("招架保持弹幕伤害速度尺寸筛选且计入额外更新", () =>
+{
+    Assert(HallowActionRules.EligibleProjectile(true, 2, 0.6f, 2, 299));
+    Assert(!HallowActionRules.EligibleProjectile(false, 100, 2, 1, 12));
+    Assert(!HallowActionRules.EligibleProjectile(true, 1, 2, 1, 12));
+    Assert(!HallowActionRules.EligibleProjectile(true, 2, 1, 1, 12));
+    Assert(!HallowActionRules.EligibleProjectile(true, 2, 2, 1, 300));
+});
+Test("反击限制512半径正面半圆", () =>
+{
+    Assert(HallowActionRules.InFront(Vector2.Zero, Vector2.UnitX, new(512, 0)));
+    Assert(HallowActionRules.InFront(Vector2.Zero, Vector2.UnitX, new(0, 512)));
+    Assert(!HallowActionRules.InFront(Vector2.Zero, Vector2.UnitX, new(513, 0)));
+    Assert(!HallowActionRules.InFront(Vector2.Zero, Vector2.UnitX, new(-1, 0)));
+});
+Test("环境优先级与元素序列化往返", () =>
+{
+    Assert(HallowActionRules.ChooseEnvironment(true, true, true, true) == AdvancedMod.Basic.Tag.TagEnum.Pyro);
+    Assert(HallowActionRules.ChooseEnvironment(false, true, true, true) == AdvancedMod.Basic.Tag.TagEnum.Hydro);
+    Assert(HallowActionRules.ChooseEnvironment(false, false, true, true) == AdvancedMod.Basic.Tag.TagEnum.Cryo);
+    Assert(HallowActionRules.ChooseEnvironment(false, false, false, true) == AdvancedMod.Basic.Tag.TagEnum.Electro);
+    Assert(HallowActionRules.ChooseEnvironment(false, false, false, false) == null);
+    for (int i = 0; i <= 4; i++) Assert(HallowActionRules.Encode(HallowActionRules.Decode(i)) == i);
+    Assert(HallowActionRules.Decode(255) == null);
+});
+Test("完美格挡刷新衔接期限但不推进连段", () =>
+{
+    var combo = new HallowBladeCombo(); combo.Complete(1, 3, 0); combo.Refresh(100);
+    var next = combo.Begin(0, 200); Assert(next.Stage == 2); Near(next.StartAngle, 3);
+});
+
+Test("剑气云纹周期接缝连续且亮度有限", () =>
+{
+    for (int i = 0; i <= 128; i++)
+    {
+        float t = i / 128f;
+        Near(VfxTextures.SlashCloudIntensity(0, t), VfxTextures.SlashCloudIntensity(1, t));
+        Near(VfxTextures.SlashCloudIntensity(t, 0), VfxTextures.SlashCloudIntensity(t, 1));
+        float value = VfxTextures.SlashCloudIntensity(t, t * 0.63f);
+        Assert(float.IsFinite(value) && value >= 0 && value <= 1);
+    }
+});
 
 if (args.Length > 0) File.WriteAllText(args[0], JsonSerializer.Serialize(new { utc = DateTimeOffset.UtcNow, results }, new JsonSerializerOptions { WriteIndented = true }));
 Console.WriteLine($"结果：{results.Count - failures}/{results.Count} 通过");

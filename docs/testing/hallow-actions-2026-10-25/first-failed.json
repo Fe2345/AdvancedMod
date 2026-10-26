@@ -1,0 +1,211 @@
+{
+  "utc": "2026-10-25T12:04:19.0589972+00:00",
+  "results": [
+    {
+      "name": "Hydro\u666E\u901A\u653B\u51FB\u9644\u7740\u91CF",
+      "status": "FAIL",
+      "actual": null
+    },
+    {
+      "name": "Hydro\u666E\u901A\u653B\u51FB\u9644\u7740\u91CF",
+      "status": "FAIL",
+      "actual": null
+    },
+    {
+      "name": "Hydro\u666E\u901A\u653B\u51FB\u9644\u7740\u91CF",
+      "status": "FAIL",
+      "actual": null
+    },
+    {
+      "name": "Hydro\u5171\u9E23\u5B8C\u6210",
+      "status": "FAIL",
+      "actual": null
+    },
+    {
+      "name": "Hydro\u5B58\u6863\u4E0E\u514B\u9686\u4FDD\u5B58\u5143\u7D20",
+      "status": "PASS",
+      "actual": null
+    },
+    {
+      "name": "Hydro\u7F51\u7EDC\u5143\u7D20\u5F80\u8FD4",
+      "status": "PASS",
+      "actual": null
+    },
+    {
+      "name": "Pyro\u666E\u901A\u653B\u51FB\u9644\u7740\u91CF",
+      "status": "FAIL",
+      "actual": null
+    },
+    {
+      "name": "Pyro\u666E\u901A\u653B\u51FB\u9644\u7740\u91CF",
+      "status": "FAIL",
+      "actual": null
+    },
+    {
+      "name": "Pyro\u666E\u901A\u653B\u51FB\u9644\u7740\u91CF",
+      "status": "FAIL",
+      "actual": null
+    },
+    {
+      "name": "Pyro\u5171\u9E23\u5B8C\u6210",
+      "status": "FAIL",
+      "actual": null
+    },
+    {
+      "name": "Pyro\u5B58\u6863\u4E0E\u514B\u9686\u4FDD\u5B58\u5143\u7D20",
+      "status": "PASS",
+      "actual": null
+    },
+    {
+      "name": "Pyro\u7F51\u7EDC\u5143\u7D20\u5F80\u8FD4",
+      "status": "PASS",
+      "actual": null
+    },
+    {
+      "name": "Cryo\u666E\u901A\u653B\u51FB\u9644\u7740\u91CF",
+      "status": "FAIL",
+      "actual": null
+    },
+    {
+      "name": "Cryo\u666E\u901A\u653B\u51FB\u9644\u7740\u91CF",
+      "status": "FAIL",
+      "actual": null
+    },
+    {
+      "name": "Cryo\u666E\u901A\u653B\u51FB\u9644\u7740\u91CF",
+      "status": "FAIL",
+      "actual": null
+    },
+    {
+      "name": "Cryo\u5171\u9E23\u5B8C\u6210",
+      "status": "FAIL",
+      "actual": null
+    },
+    {
+      "name": "Cryo\u5B58\u6863\u4E0E\u514B\u9686\u4FDD\u5B58\u5143\u7D20",
+      "status": "PASS",
+      "actual": null
+    },
+    {
+      "name": "Cryo\u7F51\u7EDC\u5143\u7D20\u5F80\u8FD4",
+      "status": "PASS",
+      "actual": null
+    },
+    {
+      "name": "Electro\u666E\u901A\u653B\u51FB\u9644\u7740\u91CF",
+      "status": "FAIL",
+      "actual": null
+    },
+    {
+      "name": "Electro\u666E\u901A\u653B\u51FB\u9644\u7740\u91CF",
+      "status": "FAIL",
+      "actual": null
+    },
+    {
+      "name": "Electro\u666E\u901A\u653B\u51FB\u9644\u7740\u91CF",
+      "status": "FAIL",
+      "actual": null
+    },
+    {
+      "name": "Electro\u5171\u9E23\u5B8C\u6210",
+      "status": "FAIL",
+      "actual": null
+    },
+    {
+      "name": "Electro\u5B58\u6863\u4E0E\u514B\u9686\u4FDD\u5B58\u5143\u7D20",
+      "status": "PASS",
+      "actual": null
+    },
+    {
+      "name": "Electro\u7F51\u7EDC\u5143\u7D20\u5F80\u8FD4",
+      "status": "PASS",
+      "actual": null
+    },
+    {
+      "name": "\u573A\u666F4\u539F\u751F\u53F3\u952E\u89E6\u53D1\u6210\u529F",
+      "status": "FAIL",
+      "actual": null
+    },
+    {
+      "name": "\u573A\u666F4360\u523B\u51B7\u5374\u672A\u63D0\u524D\u7ED3\u675F",
+      "status": "FAIL",
+      "actual": null
+    },
+    {
+      "name": "\u573A\u666F5\u539F\u751F\u53F3\u952E\u89E6\u53D1\u6210\u529F",
+      "status": "FAIL",
+      "actual": null
+    },
+    {
+      "name": "\u573A\u666F5360\u523B\u51B7\u5374\u672A\u63D0\u524D\u7ED3\u675F",
+      "status": "FAIL",
+      "actual": null
+    },
+    {
+      "name": "\u573A\u666F6\u539F\u751F\u53F3\u952E\u89E6\u53D1\u6210\u529F",
+      "status": "FAIL",
+      "actual": null
+    },
+    {
+      "name": "\u573A\u666F6360\u523B\u51B7\u5374\u672A\u63D0\u524D\u7ED3\u675F",
+      "status": "FAIL",
+      "actual": null
+    },
+    {
+      "name": "\u573A\u666F7\u539F\u751F\u53F3\u952E\u89E6\u53D1\u6210\u529F",
+      "status": "FAIL",
+      "actual": null
+    },
+    {
+      "name": "\u573A\u666F7360\u523B\u51B7\u5374\u672A\u63D0\u524D\u7ED3\u675F",
+      "status": "FAIL",
+      "actual": null
+    },
+    {
+      "name": "\u573A\u666F8\u539F\u751F\u53F3\u952E\u89E6\u53D1\u6210\u529F",
+      "status": "FAIL",
+      "actual": null
+    },
+    {
+      "name": "\u573A\u666F8360\u523B\u51B7\u5374\u672A\u63D0\u524D\u7ED3\u675F",
+      "status": "FAIL",
+      "actual": null
+    },
+    {
+      "name": "\u573A\u666F9\u539F\u751F\u53F3\u952E\u89E6\u53D1\u6210\u529F",
+      "status": "FAIL",
+      "actual": null
+    },
+    {
+      "name": "\u573A\u666F9360\u523B\u51B7\u5374\u672A\u63D0\u524D\u7ED3\u675F",
+      "status": "FAIL",
+      "actual": null
+    },
+    {
+      "name": "\u573A\u666F10\u539F\u751F\u53F3\u952E\u89E6\u53D1\u6210\u529F",
+      "status": "FAIL",
+      "actual": null
+    },
+    {
+      "name": "\u573A\u666F10360\u523B\u51B7\u5374\u672A\u63D0\u524D\u7ED3\u675F",
+      "status": "FAIL",
+      "actual": null
+    },
+    {
+      "name": "\u573A\u666F11\u539F\u751F\u53F3\u952E\u89E6\u53D1\u6210\u529F",
+      "status": "FAIL",
+      "actual": null
+    },
+    {
+      "name": "\u573A\u666F11360\u523B\u51B7\u5374\u672A\u63D0\u524D\u7ED3\u675F",
+      "status": "FAIL",
+      "actual": null
+    }
+  ],
+  "captures": [
+    "slash-0",
+    "slash-1",
+    "slash-2",
+    "slash-3"
+  ]
+}

@@ -25,17 +25,25 @@ Configs: {
 }
 
 Projectiles: {
+	RainCloud.DisplayName: 雨云
+	RainCloudDrop.DisplayName: 雨滴
 	HeavensJudgmentSwing.DisplayName: 天裁之刃
 	// ElementProbeProjectile.DisplayName: Element Probe Projectile
-	HolySparkleProjectile.DisplayName: 圣洁火花
-	HolySparkleSubProjectile.DisplayName: 圣洁火花
 	SoundSentry.DisplayName: 声学哨兵
 	SoundWave.DisplayName: 声波波包
+	HallowCounterSword.DisplayName: 天裁反击
+	HallowGuard.DisplayName: 天裁格挡
+	HallowResonance.DisplayName: 元素共鸣
 }
 
 // NPCs.ElementProbeNPC.DisplayName: Element Probe N P C
 
 Items: {
+	RainCloudStaff: {
+		DisplayName: 雨云召唤杖
+		Tooltip: 召唤一朵随时跟随敌人移动的云朵来向敌人降下大雨，造成一定水元素伤害
+	}
+
 	HeavensJudgment: {
 		Tooltip:
 			'''
@@ -50,18 +58,6 @@ Items: {
 		DisplayName: 天裁之刃
 	}
 
-	HolySparkle: {
-		Tooltip:
-			'''
-			发射一个会分裂的神圣火花。
-
-			[c/808080:火花魔棒实在是太没用了，但是在将其和神圣之力融合后，现在它勉强可堪一用]
-
-			[c/0000FF:神圣武器]
-			'''
-		DisplayName: 神圣火花
-	}
-
 	ElementProbeSword: {
 		// Tooltip: ""
 		// DisplayName: Element Probe Sword
@@ -69,3 +65,10 @@ Items: {
 }
 
 // DamageClasses.ElementalDamageClass.DisplayName: Elemental Damage Class
+
+Buffs: {
+	RainCloudBuff: {
+		DisplayName: 雨云
+		Description: 雨云会向敌人降下大雨
+	}
+}

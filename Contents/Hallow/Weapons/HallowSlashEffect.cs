@@ -3,17 +3,19 @@ using Microsoft.Xna.Framework;
 using AdvancedMod.Basic.Graphics;
 using AdvancedMod.Basic.Graphics.Geometry;
 using AdvancedMod.Basic.Graphics.Rendering;
+using AdvancedMod.Basic.Tag;
 
 namespace AdvancedMod.Contents.Hallow.Weapons;
 
 public readonly record struct HallowSlashPose(Vector2 Center, float Radius, float Angle, float SweptAngle,
-    float ElapsedSeconds, float DurationSeconds);
+    float ElapsedSeconds, float DurationSeconds, TagEnum? Resonance = null);
 
 /// <summary>保存相对持握中心的真实挥刀历史；快速展开、慢速收短，停止后自然消散。</summary>
 public sealed class HallowSlashEffect : WorldEffect, IVfxTarget<HallowSlashPose>
 {
-    public const float MemoryFraction = 0.22f;
-    public const float WidthRatio = 1f / 3;
+    public const float WidthRatio = 0.5f;
+    // 相对首版宽度同比延长记忆，维持宽厚剑气的弧长比例。
+    public const float MemoryFraction = 0.22f * (WidthRatio / (1f / 3));
     public const float FadeSeconds = 0.12f;
     private const float TeleportDistance = 256;
     private const float AngularSampleStep = 0.025f;
@@ -67,7 +69,8 @@ public sealed class HallowSlashEffect : WorldEffect, IVfxTarget<HallowSlashPose>
             Vector2 ao = pose.Center + a.OuterWorldPosition, bo = pose.Center + b.OuterWorldPosition;
             Vector2 ai = Vector2.Lerp(ao, pose.Center + a.InnerWorldPosition, MathF.Sqrt(ua));
             Vector2 bi = Vector2.Lerp(bo, pose.Center + b.InnerWorldPosition, MathF.Sqrt(ub));
-            Color ca = Tint(ua) * (ua * opacity), cb = Tint(ub) * (ub * opacity);
+            // 刀光FX按UV生成颜色和衰减；顶点色不参与该材质，避免重复压暗。
+            Color ca = Color.White, cb = Color.White;
             mesh.Triangle(ai, ao, bi, ca, ca, cb, new(ua, 0), new(ua, 1), new(ub, 0));
             mesh.Triangle(ao, bo, bi, ca, cb, cb, new(ua, 1), new(ub, 1), new(ub, 0));
         }
@@ -81,14 +84,15 @@ public sealed class HallowSlashEffect : WorldEffect, IVfxTarget<HallowSlashPose>
             float pulse = 0.75f + 0.25f * MathF.Sin(pose.ElapsedSeconds * 16 + i * 2);
             float size = pose.Radius * 0.065f * life * pulse;
             Vector2 center = pose.Center + sample.OuterWorldPosition * (0.88f + i * 0.025f);
-            Color color = new Color(173, 255, 170) * (life * opacity * 0.65f);
+            Color starColor = pose.Resonance.HasValue ? Color.Lerp(HallowSwordVisuals.ElementColor(pose.Resonance), Color.White, 0.45f) : new Color(173, 255, 170);
+            Color color = starColor * (life * opacity * 0.65f);
             Star(center, size, color);
         }
-        queue.Add(mesh, VfxMaterial.SlashRibbon);
-        queue.Add(mesh, VfxMaterial.SlashRibbonGlow);
+        Color head = pose.Resonance.HasValue ? HallowSwordVisuals.ElementColor(pose.Resonance) : new Color(71, 233, 60);
+        Color tail = pose.Resonance.HasValue ? head * 0.55f : new Color(0, 162, 232);
+        queue.AddSlash(mesh, tail, head, head, opacity);
         queue.Add(glow, VfxMaterial.SoftGlow, 1);
     }
-    private static Color Tint(float u) => Color.Lerp(new Color(0, 162, 232), new Color(71, 233, 60), Math.Clamp(u * 1.4f, 0, 1));
     private void Star(Vector2 center, float size, Color color)
     {
         for (int i = 0; i < 4; i++)

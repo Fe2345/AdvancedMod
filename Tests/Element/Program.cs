@@ -18,6 +18,7 @@ var tests = new (string, Action)[]
     ("小数分量消耗与总量一致", Fractional),
     ("网络快照往返与坏包原子拒绝", Wire),
     ("正式反应消耗、CD与生命支付计划", Formal),
+    ("雨云水附着阈值与下一滴前CD恢复", RainCloudCadence),
 };
 int passed = 0;
 foreach (var (name, run) in tests)
@@ -31,6 +32,25 @@ return passed == tests.Length ? 0 : 1;
 static void Check(bool condition, string message = "断言失败")
 {
     if (!condition) throw new Exception(message);
+}
+static void RainCloudCadence()
+{
+    var table = AmplificationReactions.Create();
+    var rain = Request(TagEnum.Hydro, 0.10, 40, 0.075f, 0.1f);
+    var electro = Target(new ElementAttachment(3, 10, 40));
+    electro.Submit(rain, table, p => { Check(p.Route == ElementRoute.React); Near(p.CooldownIncrease, 6); return true; });
+    for (int tick = 1; tick <= 9; tick++)
+    {
+        electro.Tick(tick, Idle(), table, _ => true);
+        Near(electro.Snapshot.ReactionCooldowns[1], Math.Max(0, 6 - tick));
+    }
+    electro.Submit(rain, table, p => { Check(p.Route == ElementRoute.React, "下一滴被前滴CD阻塞"); return true; });
+    var wind = Target(new ElementAttachment(6, 10, 40));
+    // 首滴0.10水不足以支付1.5*0.075，必须允许普通附着积累。
+    wind.Submit(rain, table, p => { Check(p.Route == ElementRoute.AttachOnly); return true; });
+    wind.Submit(rain, table, p => { Check(p.Route == ElementRoute.React); Near(p.CooldownIncrease, 4); return true; });
+    for (int tick = 1; tick <= 9; tick++) wind.Tick(tick, Idle(), table, _ => true);
+    Near(wind.Snapshot.ReactionCooldowns[2], 0);
 }
 static void Formal()
 {

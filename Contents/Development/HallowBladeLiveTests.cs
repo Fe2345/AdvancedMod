@@ -40,6 +40,7 @@ public sealed class HallowBladeLiveTests : ModSystem
     internal static void Start()
     {
         if (!Enabled || Running || Main.netMode != NetmodeID.SinglePlayer) return;
+        HallowShaderLiveTests.Run();
         Main.autoSave = false;
         Running = true; ticks = round = wait = 0; swings.Clear(); results.Clear(); captured.Clear(); pendingCapture = null;
         var p = Main.LocalPlayer;

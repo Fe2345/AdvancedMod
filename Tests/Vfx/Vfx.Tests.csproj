@@ -14,5 +14,9 @@
     <Compile Include="../../Contents/Vfx/SlashTrailEffect.cs" />
     <Compile Include="../../Contents/Hallow/Weapons/HallowBladeCombo.cs" />
     <Compile Include="../../Contents/Hallow/Weapons/HallowSlashEffect.cs" />
+    <Compile Include="../../Contents/Hallow/Weapons/HallowSwordVisuals.cs" />
+    <Compile Include="../../Basic/Tag/TagEnum.cs" />
+    <Compile Include="../../Basic/Tag/Tag.cs" />
+    <Compile Include="../../Contents/Hallow/Weapons/HallowActionRules.cs" />
   </ItemGroup>
 </Project>

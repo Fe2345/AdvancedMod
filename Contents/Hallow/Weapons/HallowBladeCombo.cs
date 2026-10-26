@@ -71,5 +71,7 @@ public sealed class HallowBladeCombo
         // 四段完成后开始新一轮，首段可重新选择攻击方向。
         canContinue = NextStage != 0;
     }
+    /// <summary>完美格挡只刷新已有连段期限，不推进段号或自动攻击。</summary>
+    public void Refresh(ulong tick) { if (canContinue) completedAt = tick; }
     public void Reset() { NextStage = 0; EndAngle = 0; completedAt = 0; canContinue = false; }
 }

@@ -1,0 +1,792 @@
+{
+  "utc": "2026-10-25T12:18:32.2248619+00:00",
+  "results": [
+    {
+      "name": "Hydro\u63D0\u4EA4\u524D\u4FDD\u6301\u539F\u5143\u7D20",
+      "status": "PASS",
+      "actual": null
+    },
+    {
+      "name": "Hydro\u7B2C30\u523B\u63D0\u4EA4\u4E14\u516D\u865A\u5F71\u65E0\u4F24\u5BB3",
+      "status": "PASS",
+      "actual": null
+    },
+    {
+      "name": "Hydro\u666E\u901A\u653B\u51FB\u9644\u7740\u91CF",
+      "status": "PASS",
+      "actual": null
+    },
+    {
+      "name": "Hydro\u666E\u901A\u653B\u51FB\u9644\u7740\u91CF",
+      "status": "PASS",
+      "actual": null
+    },
+    {
+      "name": "Hydro\u666E\u901A\u653B\u51FB\u9644\u7740\u91CF",
+      "status": "PASS",
+      "actual": null
+    },
+    {
+      "name": "Hydro\u5171\u9E23\u5B8C\u6210",
+      "status": "PASS",
+      "actual": null
+    },
+    {
+      "name": "Hydro\u5B58\u6863\u4E0E\u514B\u9686\u4FDD\u5B58\u5143\u7D20",
+      "status": "PASS",
+      "actual": null
+    },
+    {
+      "name": "Hydro\u7F51\u7EDC\u5143\u7D20\u5F80\u8FD4",
+      "status": "PASS",
+      "actual": null
+    },
+    {
+      "name": "Pyro\u63D0\u4EA4\u524D\u4FDD\u6301\u539F\u5143\u7D20",
+      "status": "PASS",
+      "actual": null
+    },
+    {
+      "name": "Pyro\u7B2C30\u523B\u63D0\u4EA4\u4E14\u516D\u865A\u5F71\u65E0\u4F24\u5BB3",
+      "status": "PASS",
+      "actual": null
+    },
+    {
+      "name": "Pyro\u666E\u901A\u653B\u51FB\u9644\u7740\u91CF",
+      "status": "PASS",
+      "actual": null
+    },
+    {
+      "name": "Pyro\u666E\u901A\u653B\u51FB\u9644\u7740\u91CF",
+      "status": "PASS",
+      "actual": null
+    },
+    {
+      "name": "Pyro\u666E\u901A\u653B\u51FB\u9644\u7740\u91CF",
+      "status": "PASS",
+      "actual": null
+    },
+    {
+      "name": "Pyro\u5171\u9E23\u5B8C\u6210",
+      "status": "PASS",
+      "actual": null
+    },
+    {
+      "name": "Pyro\u5B58\u6863\u4E0E\u514B\u9686\u4FDD\u5B58\u5143\u7D20",
+      "status": "PASS",
+      "actual": null
+    },
+    {
+      "name": "Pyro\u7F51\u7EDC\u5143\u7D20\u5F80\u8FD4",
+      "status": "PASS",
+      "actual": null
+    },
+    {
+      "name": "Cryo\u63D0\u4EA4\u524D\u4FDD\u6301\u539F\u5143\u7D20",
+      "status": "PASS",
+      "actual": null
+    },
+    {
+      "name": "Cryo\u7B2C30\u523B\u63D0\u4EA4\u4E14\u516D\u865A\u5F71\u65E0\u4F24\u5BB3",
+      "status": "PASS",
+      "actual": null
+    },
+    {
+      "name": "Cryo\u666E\u901A\u653B\u51FB\u9644\u7740\u91CF",
+      "status": "PASS",
+      "actual": null
+    },
+    {
+      "name": "Cryo\u666E\u901A\u653B\u51FB\u9644\u7740\u91CF",
+      "status": "PASS",
+      "actual": null
+    },
+    {
+      "name": "Cryo\u666E\u901A\u653B\u51FB\u9644\u7740\u91CF",
+      "status": "PASS",
+      "actual": null
+    },
+    {
+      "name": "Cryo\u5171\u9E23\u5B8C\u6210",
+      "status": "PASS",
+      "actual": null
+    },
+    {
+      "name": "Cryo\u5B58\u6863\u4E0E\u514B\u9686\u4FDD\u5B58\u5143\u7D20",
+      "status": "PASS",
+      "actual": null
+    },
+    {
+      "name": "Cryo\u7F51\u7EDC\u5143\u7D20\u5F80\u8FD4",
+      "status": "PASS",
+      "actual": null
+    },
+    {
+      "name": "Electro\u63D0\u4EA4\u524D\u4FDD\u6301\u539F\u5143\u7D20",
+      "status": "PASS",
+      "actual": null
+    },
+    {
+      "name": "Electro\u7B2C30\u523B\u63D0\u4EA4\u4E14\u516D\u865A\u5F71\u65E0\u4F24\u5BB3",
+      "status": "PASS",
+      "actual": null
+    },
+    {
+      "name": "Electro\u666E\u901A\u653B\u51FB\u9644\u7740\u91CF",
+      "status": "PASS",
+      "actual": null
+    },
+    {
+      "name": "Electro\u666E\u901A\u653B\u51FB\u9644\u7740\u91CF",
+      "status": "PASS",
+      "actual": null
+    },
+    {
+      "name": "Electro\u666E\u901A\u653B\u51FB\u9644\u7740\u91CF",
+      "status": "PASS",
+      "actual": null
+    },
+    {
+      "name": "Electro\u5171\u9E23\u5B8C\u6210",
+      "status": "PASS",
+      "actual": null
+    },
+    {
+      "name": "Electro\u5B58\u6863\u4E0E\u514B\u9686\u4FDD\u5B58\u5143\u7D20",
+      "status": "PASS",
+      "actual": null
+    },
+    {
+      "name": "Electro\u7F51\u7EDC\u5143\u7D20\u5F80\u8FD4",
+      "status": "PASS",
+      "actual": null
+    },
+    {
+      "name": "\u573A\u666F4\u53CD\u51FB\u504F\u79FB\u53CA\u767D\u503C\u9644\u7740",
+      "status": "PASS",
+      "actual": {
+        "X": -25.375,
+        "Y": -190.31543,
+        "damage": 135,
+        "ElementAmount": 0,
+        "element": 0
+      }
+    },
+    {
+      "name": "\u573A\u666F4\u53CD\u51FB\u504F\u79FB\u53CA\u767D\u503C\u9644\u7740",
+      "status": "PASS",
+      "actual": {
+        "X": 25.375,
+        "Y": 190.31543,
+        "damage": 135,
+        "ElementAmount": 0,
+        "element": 0
+      }
+    },
+    {
+      "name": "\u573A\u666F4\u7A97\u53E3\u4E0E\u4E00\u6B21\u6210\u529F",
+      "status": "PASS",
+      "actual": {
+        "injectedAge": 5,
+        "LastPerfect": true
+      }
+    },
+    {
+      "name": "\u573A\u666F4\u683C\u6321\u7ED3\u675F\u4E14\u65E0\u76F4\u63A5\u4F24\u5BB3",
+      "status": "PASS",
+      "actual": 354
+    },
+    {
+      "name": "\u573A\u666F4\u53CD\u51FB\u53CC\u5251\u89E6\u53D1",
+      "status": "PASS",
+      "actual": 2
+    },
+    {
+      "name": "\u573A\u666F4\u4FDD\u6301\u4E0B\u4E00\u6BB5",
+      "status": "PASS",
+      "actual": null
+    },
+    {
+      "name": "\u573A\u666F4\u62DB\u67B6\u51CF\u4F24\u4E0E\u65E0\u654C\u5E27",
+      "status": "PASS",
+      "actual": {
+        "actual": 0,
+        "immune": false,
+        "immuneTime": 0
+      }
+    },
+    {
+      "name": "\u5176\u4ED6\u4F24\u5BB3\u6E90\u4E0D\u53D7\u4FDD\u62A4",
+      "status": "PASS",
+      "actual": null
+    },
+    {
+      "name": "\u573A\u666F4\u7B2C59\u523B\u4ECD\u4FDD\u62A4",
+      "status": "PASS",
+      "actual": {
+        "actual": 0,
+        "immune": false,
+        "immuneTime": 0
+      }
+    },
+    {
+      "name": "\u573A\u666F4\u7B2C60\u523B\u4FDD\u62A4\u7ED3\u675F",
+      "status": "PASS",
+      "actual": {
+        "actual": 300,
+        "immune": true,
+        "immuneTime": 40
+      }
+    },
+    {
+      "name": "\u51B7\u5374359\u523B\u5C1A\u672A\u7ED3\u675F",
+      "status": "PASS",
+      "actual": 1
+    },
+    {
+      "name": "\u51B7\u5374360\u523B\u53EF\u91CD\u65B0\u8D77\u624B",
+      "status": "PASS",
+      "actual": 0
+    },
+    {
+      "name": "\u573A\u666F4\u539F\u751F\u53F3\u952E\u89E6\u53D1\u6210\u529F",
+      "status": "PASS",
+      "actual": null
+    },
+    {
+      "name": "\u573A\u666F4\u53CD\u51FB\u5B9E\u9645\u547D\u4E2D1.0\u500D\u7387",
+      "status": "PASS",
+      "actual": [
+        135,
+        135
+      ]
+    },
+    {
+      "name": "\u573A\u666F5\u53CD\u51FB\u504F\u79FB\u53CA\u767D\u503C\u9644\u7740",
+      "status": "PASS",
+      "actual": {
+        "X": 0,
+        "Y": -192,
+        "damage": 135,
+        "ElementAmount": 0,
+        "element": 1
+      }
+    },
+    {
+      "name": "\u573A\u666F5\u53CD\u51FB\u504F\u79FB\u53CA\u767D\u503C\u9644\u7740",
+      "status": "PASS",
+      "actual": {
+        "X": 0,
+        "Y": 192,
+        "damage": 135,
+        "ElementAmount": 0,
+        "element": 1
+      }
+    },
+    {
+      "name": "\u573A\u666F5\u7A97\u53E3\u4E0E\u4E00\u6B21\u6210\u529F",
+      "status": "PASS",
+      "actual": {
+        "injectedAge": 19,
+        "LastPerfect": true
+      }
+    },
+    {
+      "name": "\u573A\u666F5\u683C\u6321\u7ED3\u675F\u4E14\u65E0\u76F4\u63A5\u4F24\u5BB3",
+      "status": "PASS",
+      "actual": 340
+    },
+    {
+      "name": "\u573A\u666F5\u53CD\u51FB\u53CC\u5251\u89E6\u53D1",
+      "status": "PASS",
+      "actual": 2
+    },
+    {
+      "name": "\u573A\u666F5\u4FDD\u6301\u4E0B\u4E00\u6BB5",
+      "status": "PASS",
+      "actual": null
+    },
+    {
+      "name": "\u573A\u666F5\u62DB\u67B6\u51CF\u4F24\u4E0E\u65E0\u654C\u5E27",
+      "status": "PASS",
+      "actual": {
+        "actual": 0,
+        "immune": false,
+        "immuneTime": 0
+      }
+    },
+    {
+      "name": "\u5176\u4ED6\u4F24\u5BB3\u6E90\u4E0D\u53D7\u4FDD\u62A4",
+      "status": "PASS",
+      "actual": null
+    },
+    {
+      "name": "\u573A\u666F5\u7B2C59\u523B\u4ECD\u4FDD\u62A4",
+      "status": "PASS",
+      "actual": {
+        "actual": 0,
+        "immune": false,
+        "immuneTime": 0
+      }
+    },
+    {
+      "name": "\u573A\u666F5\u7B2C60\u523B\u4FDD\u62A4\u7ED3\u675F",
+      "status": "PASS",
+      "actual": {
+        "actual": 300,
+        "immune": true,
+        "immuneTime": 40
+      }
+    },
+    {
+      "name": "\u573A\u666F5\u539F\u751F\u53F3\u952E\u89E6\u53D1\u6210\u529F",
+      "status": "PASS",
+      "actual": null
+    },
+    {
+      "name": "\u573A\u666F5360\u523B\u51B7\u5374\u672A\u63D0\u524D\u7ED3\u675F",
+      "status": "PASS",
+      "actual": null
+    },
+    {
+      "name": "\u573A\u666F5\u53CD\u51FB\u5B9E\u9645\u547D\u4E2D1.0\u500D\u7387",
+      "status": "PASS",
+      "actual": [
+        135,
+        135
+      ]
+    },
+    {
+      "name": "\u573A\u666F6\u7A97\u53E3\u4E0E\u4E00\u6B21\u6210\u529F",
+      "status": "PASS",
+      "actual": {
+        "injectedAge": 20,
+        "LastPerfect": false
+      }
+    },
+    {
+      "name": "\u573A\u666F6\u683C\u6321\u7ED3\u675F\u4E14\u65E0\u76F4\u63A5\u4F24\u5BB3",
+      "status": "PASS",
+      "actual": 339
+    },
+    {
+      "name": "\u573A\u666F6\u53CD\u51FB\u53CC\u5251\u89E6\u53D1",
+      "status": "PASS",
+      "actual": 0
+    },
+    {
+      "name": "\u573A\u666F6\u62DB\u67B6\u51CF\u4F24\u4E0E\u65E0\u654C\u5E27",
+      "status": "PASS",
+      "actual": {
+        "actual": 150,
+        "immune": false,
+        "immuneTime": 0
+      }
+    },
+    {
+      "name": "\u5176\u4ED6\u4F24\u5BB3\u6E90\u4E0D\u53D7\u4FDD\u62A4",
+      "status": "PASS",
+      "actual": null
+    },
+    {
+      "name": "\u573A\u666F6\u7B2C59\u523B\u4ECD\u4FDD\u62A4",
+      "status": "PASS",
+      "actual": {
+        "actual": 150,
+        "immune": false,
+        "immuneTime": 0
+      }
+    },
+    {
+      "name": "\u573A\u666F6\u7B2C60\u523B\u4FDD\u62A4\u7ED3\u675F",
+      "status": "PASS",
+      "actual": {
+        "actual": 300,
+        "immune": true,
+        "immuneTime": 40
+      }
+    },
+    {
+      "name": "\u573A\u666F6\u539F\u751F\u53F3\u952E\u89E6\u53D1\u6210\u529F",
+      "status": "PASS",
+      "actual": null
+    },
+    {
+      "name": "\u573A\u666F6360\u523B\u51B7\u5374\u672A\u63D0\u524D\u7ED3\u675F",
+      "status": "PASS",
+      "actual": null
+    },
+    {
+      "name": "\u573A\u666F7\u7A97\u53E3\u4E0E\u4E00\u6B21\u6210\u529F",
+      "status": "PASS",
+      "actual": {
+        "injectedAge": 30,
+        "LastPerfect": false
+      }
+    },
+    {
+      "name": "\u573A\u666F7\u683C\u6321\u7ED3\u675F\u4E14\u65E0\u76F4\u63A5\u4F24\u5BB3",
+      "status": "PASS",
+      "actual": 329
+    },
+    {
+      "name": "\u573A\u666F7\u53CD\u51FB\u53CC\u5251\u89E6\u53D1",
+      "status": "PASS",
+      "actual": 0
+    },
+    {
+      "name": "\u573A\u666F7\u62DB\u67B6\u51CF\u4F24\u4E0E\u65E0\u654C\u5E27",
+      "status": "PASS",
+      "actual": {
+        "actual": 150,
+        "immune": false,
+        "immuneTime": 0
+      }
+    },
+    {
+      "name": "\u5176\u4ED6\u4F24\u5BB3\u6E90\u4E0D\u53D7\u4FDD\u62A4",
+      "status": "PASS",
+      "actual": null
+    },
+    {
+      "name": "\u573A\u666F7\u7B2C59\u523B\u4ECD\u4FDD\u62A4",
+      "status": "PASS",
+      "actual": {
+        "actual": 150,
+        "immune": false,
+        "immuneTime": 0
+      }
+    },
+    {
+      "name": "\u573A\u666F7\u7B2C60\u523B\u4FDD\u62A4\u7ED3\u675F",
+      "status": "PASS",
+      "actual": {
+        "actual": 300,
+        "immune": true,
+        "immuneTime": 40
+      }
+    },
+    {
+      "name": "\u573A\u666F7\u539F\u751F\u53F3\u952E\u89E6\u53D1\u6210\u529F",
+      "status": "PASS",
+      "actual": null
+    },
+    {
+      "name": "\u573A\u666F7360\u523B\u51B7\u5374\u672A\u63D0\u524D\u7ED3\u675F",
+      "status": "PASS",
+      "actual": null
+    },
+    {
+      "name": "\u573A\u666F8\u7A97\u53E3\u4E0E\u4E00\u6B21\u6210\u529F",
+      "status": "PASS",
+      "actual": {
+        "injectedAge": 5,
+        "LastPerfect": true
+      }
+    },
+    {
+      "name": "\u573A\u666F8\u683C\u6321\u7ED3\u675F\u4E14\u65E0\u76F4\u63A5\u4F24\u5BB3",
+      "status": "PASS",
+      "actual": 354
+    },
+    {
+      "name": "\u573A\u666F8\u53CD\u51FB\u53CC\u5251\u89E6\u53D1",
+      "status": "PASS",
+      "actual": 0
+    },
+    {
+      "name": "\u573A\u666F8\u4FDD\u6301\u4E0B\u4E00\u6BB5",
+      "status": "PASS",
+      "actual": null
+    },
+    {
+      "name": "\u573A\u666F8\u62DB\u67B6\u51CF\u4F24\u4E0E\u65E0\u654C\u5E27",
+      "status": "PASS",
+      "actual": {
+        "actual": 0,
+        "immune": false,
+        "immuneTime": 0
+      }
+    },
+    {
+      "name": "\u5176\u4ED6\u4F24\u5BB3\u6E90\u4E0D\u53D7\u4FDD\u62A4",
+      "status": "PASS",
+      "actual": null
+    },
+    {
+      "name": "\u573A\u666F8\u7B2C59\u523B\u4ECD\u4FDD\u62A4",
+      "status": "PASS",
+      "actual": {
+        "actual": 0,
+        "immune": false,
+        "immuneTime": 0
+      }
+    },
+    {
+      "name": "\u573A\u666F8\u7B2C60\u523B\u4FDD\u62A4\u7ED3\u675F",
+      "status": "PASS",
+      "actual": {
+        "actual": 300,
+        "immune": true,
+        "immuneTime": 40
+      }
+    },
+    {
+      "name": "\u573A\u666F8\u539F\u751F\u53F3\u952E\u89E6\u53D1\u6210\u529F",
+      "status": "PASS",
+      "actual": null
+    },
+    {
+      "name": "\u573A\u666F8360\u523B\u51B7\u5374\u672A\u63D0\u524D\u7ED3\u675F",
+      "status": "PASS",
+      "actual": null
+    },
+    {
+      "name": "\u573A\u666F9\u7A97\u53E3\u4E0E\u4E00\u6B21\u6210\u529F",
+      "status": "PASS",
+      "actual": {
+        "injectedAge": 5,
+        "LastPerfect": true
+      }
+    },
+    {
+      "name": "\u573A\u666F9\u683C\u6321\u7ED3\u675F\u4E14\u65E0\u76F4\u63A5\u4F24\u5BB3",
+      "status": "PASS",
+      "actual": 354
+    },
+    {
+      "name": "\u573A\u666F9\u53CD\u51FB\u53CC\u5251\u89E6\u53D1",
+      "status": "PASS",
+      "actual": 0
+    },
+    {
+      "name": "\u573A\u666F9\u4FDD\u6301\u4E0B\u4E00\u6BB5",
+      "status": "PASS",
+      "actual": null
+    },
+    {
+      "name": "\u573A\u666F9\u62DB\u67B6\u51CF\u4F24\u4E0E\u65E0\u654C\u5E27",
+      "status": "PASS",
+      "actual": {
+        "actual": 0,
+        "immune": false,
+        "immuneTime": 0
+      }
+    },
+    {
+      "name": "\u5176\u4ED6\u4F24\u5BB3\u6E90\u4E0D\u53D7\u4FDD\u62A4",
+      "status": "PASS",
+      "actual": null
+    },
+    {
+      "name": "\u573A\u666F9\u7B2C59\u523B\u4ECD\u4FDD\u62A4",
+      "status": "PASS",
+      "actual": {
+        "actual": 0,
+        "immune": false,
+        "immuneTime": 0
+      }
+    },
+    {
+      "name": "\u573A\u666F9\u7B2C60\u523B\u4FDD\u62A4\u7ED3\u675F",
+      "status": "PASS",
+      "actual": {
+        "actual": 300,
+        "immune": true,
+        "immuneTime": 40
+      }
+    },
+    {
+      "name": "\u573A\u666F9\u539F\u751F\u53F3\u952E\u89E6\u53D1\u6210\u529F",
+      "status": "PASS",
+      "actual": null
+    },
+    {
+      "name": "\u573A\u666F9360\u523B\u51B7\u5374\u672A\u63D0\u524D\u7ED3\u675F",
+      "status": "PASS",
+      "actual": null
+    },
+    {
+      "name": "\u573A\u666F10\u7A97\u53E3\u4E0E\u4E00\u6B21\u6210\u529F",
+      "status": "PASS",
+      "actual": {
+        "injectedAge": 5,
+        "LastPerfect": true
+      }
+    },
+    {
+      "name": "\u573A\u666F10\u683C\u6321\u7ED3\u675F\u4E14\u65E0\u76F4\u63A5\u4F24\u5BB3",
+      "status": "PASS",
+      "actual": 354
+    },
+    {
+      "name": "\u573A\u666F10\u53CD\u51FB\u53CC\u5251\u89E6\u53D1",
+      "status": "PASS",
+      "actual": 0
+    },
+    {
+      "name": "\u573A\u666F10\u4FDD\u6301\u4E0B\u4E00\u6BB5",
+      "status": "PASS",
+      "actual": null
+    },
+    {
+      "name": "\u573A\u666F10\u62DB\u67B6\u51CF\u4F24\u4E0E\u65E0\u654C\u5E27",
+      "status": "PASS",
+      "actual": {
+        "actual": 0,
+        "immune": false,
+        "immuneTime": 0
+      }
+    },
+    {
+      "name": "\u5176\u4ED6\u4F24\u5BB3\u6E90\u4E0D\u53D7\u4FDD\u62A4",
+      "status": "PASS",
+      "actual": null
+    },
+    {
+      "name": "\u573A\u666F10\u7B2C59\u523B\u4ECD\u4FDD\u62A4",
+      "status": "PASS",
+      "actual": {
+        "actual": 0,
+        "immune": false,
+        "immuneTime": 0
+      }
+    },
+    {
+      "name": "\u573A\u666F10\u7B2C60\u523B\u4FDD\u62A4\u7ED3\u675F",
+      "status": "PASS",
+      "actual": {
+        "actual": 300,
+        "immune": true,
+        "immuneTime": 40
+      }
+    },
+    {
+      "name": "\u573A\u666F10\u539F\u751F\u53F3\u952E\u89E6\u53D1\u6210\u529F",
+      "status": "PASS",
+      "actual": null
+    },
+    {
+      "name": "\u573A\u666F10360\u523B\u51B7\u5374\u672A\u63D0\u524D\u7ED3\u675F",
+      "status": "PASS",
+      "actual": null
+    },
+    {
+      "name": "\u573A\u666F11\u53CD\u51FB\u504F\u79FB\u53CA\u767D\u503C\u9644\u7740",
+      "status": "PASS",
+      "actual": {
+        "X": 0,
+        "Y": -192,
+        "damage": 135,
+        "ElementAmount": 0,
+        "element": 3
+      }
+    },
+    {
+      "name": "\u573A\u666F11\u53CD\u51FB\u504F\u79FB\u53CA\u767D\u503C\u9644\u7740",
+      "status": "PASS",
+      "actual": {
+        "X": 0,
+        "Y": 192,
+        "damage": 135,
+        "ElementAmount": 0,
+        "element": 3
+      }
+    },
+    {
+      "name": "\u573A\u666F11\u7A97\u53E3\u4E0E\u4E00\u6B21\u6210\u529F",
+      "status": "PASS",
+      "actual": {
+        "injectedAge": 5,
+        "LastPerfect": true
+      }
+    },
+    {
+      "name": "\u573A\u666F11\u683C\u6321\u7ED3\u675F\u4E14\u65E0\u76F4\u63A5\u4F24\u5BB3",
+      "status": "PASS",
+      "actual": 354
+    },
+    {
+      "name": "\u573A\u666F11\u53CD\u51FB\u53CC\u5251\u89E6\u53D1",
+      "status": "PASS",
+      "actual": 2
+    },
+    {
+      "name": "\u573A\u666F11\u4FDD\u6301\u4E0B\u4E00\u6BB5",
+      "status": "PASS",
+      "actual": null
+    },
+    {
+      "name": "\u573A\u666F11\u62DB\u67B6\u51CF\u4F24\u4E0E\u65E0\u654C\u5E27",
+      "status": "PASS",
+      "actual": {
+        "actual": 0,
+        "immune": false,
+        "immuneTime": 0
+      }
+    },
+    {
+      "name": "\u5176\u4ED6\u4F24\u5BB3\u6E90\u4E0D\u53D7\u4FDD\u62A4",
+      "status": "PASS",
+      "actual": null
+    },
+    {
+      "name": "\u573A\u666F11\u7B2C59\u523B\u4ECD\u4FDD\u62A4",
+      "status": "PASS",
+      "actual": {
+        "actual": 0,
+        "immune": false,
+        "immuneTime": 0
+      }
+    },
+    {
+      "name": "\u573A\u666F11\u7B2C60\u523B\u4FDD\u62A4\u7ED3\u675F",
+      "status": "PASS",
+      "actual": {
+        "actual": 100,
+        "immune": true,
+        "immuneTime": 40
+      }
+    },
+    {
+      "name": "\u573A\u666F11\u539F\u751F\u53F3\u952E\u89E6\u53D1\u6210\u529F",
+      "status": "PASS",
+      "actual": null
+    },
+    {
+      "name": "\u573A\u666F11360\u523B\u51B7\u5374\u672A\u63D0\u524D\u7ED3\u675F",
+      "status": "PASS",
+      "actual": null
+    },
+    {
+      "name": "\u573A\u666F11\u53CD\u51FB\u5B9E\u9645\u547D\u4E2D1.0\u500D\u7387",
+      "status": "PASS",
+      "actual": [
+        135,
+        135
+      ]
+    }
+  ],
+  "captures": [
+    "resonance-0-before",
+    "resonance-0-after",
+    "slash-0",
+    "resonance-1-before",
+    "resonance-1-after",
+    "slash-1",
+    "resonance-2-before",
+    "resonance-2-after",
+    "slash-2",
+    "resonance-3-before",
+    "resonance-3-after",
+    "slash-3",
+    "counter-4",
+    "counter-5",
+    "counter-6",
+    "counter-7",
+    "counter-8",
+    "counter-9",
+    "counter-10",
+    "counter-11"
+  ]
+}

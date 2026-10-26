@@ -37,3 +37,16 @@ $report.results | Format-Table name,status
 if (@($report.results | Where-Object status -ne 'PASS').Count -gt 0) { throw "天裁实机测试失败：$reportPath" }
 if ($report.captures.Count -ne 8) { throw "未取得八段动作的全部截图：$reportPath" }
 Write-Output "天裁原生物品使用测试通过，截图需人工检查：$reportPath"
+
+# 对照报告必须来自本轮，不能因连招通过而忽略材质复原失败。
+if ($env:ADVANCEDMOD_HALLOW_SHADER_REFERENCE) {
+    $comparisonPath = Join-Path $isolatedRoot 'HallowShaderComparison.json'
+    if (-not (Test-Path -LiteralPath $comparisonPath) -or (Get-Item -LiteralPath $comparisonPath).LastWriteTimeUtc -lt $started) {
+        throw '缺少本轮GPU着色器对照报告。'
+    }
+    $comparison = Get-Content -LiteralPath $comparisonPath -Raw | ConvertFrom-Json
+    if ($comparison.Count -ne 6 -or @($comparison | Where-Object status -ne 'PASS').Count -gt 0) {
+        throw "GPU着色器对照失败：$comparisonPath"
+    }
+    Write-Output 'GPU着色器对照6/6通过。'
+}
