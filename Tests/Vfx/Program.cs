@@ -391,10 +391,19 @@ Test("环境优先级与元素序列化往返", () =>
     Assert(HallowActionRules.Decode(5) == null);
     Assert(HallowActionRules.Decode(HallowActionRules.Encode(AdvancedMod.Basic.Tag.TagEnum.Anemo)) == AdvancedMod.Basic.Tag.TagEnum.Anemo);
 });
-Test("共鸣90刻且中点切色，抬剑展开等比例延长", () =>
+Test("共鸣展开后停顿30刻切色，收回保持同向旋转", () =>
 {
-    Assert(HallowActionRules.ResonanceTicks == 90 && HallowActionRules.CommitTick == 45);
-    Near(HallowActionRules.LiftTicks * 2, HallowActionRules.CommitTick);
+    Assert(HallowActionRules.ResonanceTicks == 120 && HallowActionRules.CommitTick == 75);
+    var expanded = HallowActionRules.ResonancePose(45);
+    var held = HallowActionRules.ResonancePose(74);
+    Near(expanded.Spread, 1); Near(held.Turn, expanded.Turn);
+    Near(held.Spread, expanded.Spread);
+    var closing = HallowActionRules.ResonancePose(95);
+    Assert(closing.Spread < 1 && closing.Turn > held.Turn);
+    Near(HallowActionRules.ResonancePose(120).Spread, 0);
+    Near(HallowActionRules.ResonancePose(120).Lift, 0);
+    for (int age = 1; age <= 120; age++)
+        Assert(HallowActionRules.ResonancePose(age).Turn >= HallowActionRules.ResonancePose(age - 1).Turn);
     Assert(HallowSwordVisuals.ElementColor(AdvancedMod.Basic.Tag.TagEnum.Anemo) != HallowSwordVisuals.ElementColor(AdvancedMod.Basic.Tag.TagEnum.Electro));
 });
 Test("完美格挡刷新衔接期限但不推进连段", () =>

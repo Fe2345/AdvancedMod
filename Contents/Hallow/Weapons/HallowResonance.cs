@@ -8,7 +8,7 @@ using Terraria.ModLoader;
 
 namespace AdvancedMod.Contents.Hallow.Weapons;
 
-/// <summary>共鸣仅在动画中点提交物品数据，六剑与本体始终读取同一个物品元素。</summary>
+/// <summary>共鸣仅在展开停顿结束时提交物品数据，六剑与本体始终读取同一个物品元素。</summary>
 public sealed class HallowResonance : ModProjectile
 {
     private Item sourceItem;
@@ -52,20 +52,43 @@ public sealed class HallowResonance : ModProjectile
     public override bool PreDraw(ref Color lightColor)
     {
         if (Owner.HeldItem.ModItem is not HeavensJudgment sword) return false;
-        float phase = Age <= HallowActionRules.CommitTick ? Age : HallowActionRules.ResonanceTicks - Age;
-        float lift = MathHelper.SmoothStep(0, 1, Math.Clamp(phase / HallowActionRules.LiftTicks, 0, 1));
-        float unfold = MathHelper.SmoothStep(0, 1, Math.Clamp((phase - HallowActionRules.LiftTicks) / HallowActionRules.LiftTicks, 0, 1));
+        var pose = HallowActionRules.ResonancePose(Age);
         float radius = HallowBladeRules.BladeLength * itemScale;
-        Vector2 grip = Owner.MountedCenter + new Vector2(0, -radius * 0.65f * lift);
-        float angle = MathHelper.Lerp(Projectile.velocity.ToRotation(), -MathHelper.PiOver2, lift);
-        HallowSwordVisuals.DrawBody(grip, angle, radius, sword.Resonance, lightColor);
+        Vector2 grip = Owner.MountedCenter + new Vector2(0, -radius * 0.65f * pose.Lift);
+        float angle = MathHelper.Lerp(Projectile.velocity.ToRotation(), -MathHelper.PiOver2, pose.Lift);
         Color color = HallowSwordVisuals.ElementColor(sword.Resonance);
-        for (int i = 0; i < HallowActionRules.PhantomCount && unfold > 0; i++)
+        // 深度由远到近排序，把本体放在环的中间；仅使用栈内存。
+        Span<Vector3> orbit = stackalloc Vector3[HallowActionRules.PhantomCount];
+        for (int i = 0; i < orbit.Length; i++)
         {
-            float orbit = MathHelper.TwoPi * i / HallowActionRules.PhantomCount + unfold * MathHelper.PiOver2;
-            Vector2 offset = orbit.ToRotationVector2() * radius * 0.6f * unfold;
-            HallowSwordVisuals.DrawSimple(grip + offset, angle + unfold * (orbit + MathHelper.PiOver2), radius, color, unfold * 0.65f);
+            float turn = MathHelper.TwoPi * i / orbit.Length + pose.Turn;
+            orbit[i] = new Vector3(MathF.Cos(turn), MathF.Sin(turn), turn);
         }
+        for (int i = 1; i < orbit.Length; i++)
+        {
+            var value = orbit[i]; int j = i - 1;
+            while (j >= 0 && orbit[j].Y > value.Y) { orbit[j + 1] = orbit[j]; j--; }
+            orbit[j + 1] = value;
+        }
+        bool bodyDrawn = false;
+        for (int i = 0; i < orbit.Length; i++)
+        {
+            var point = orbit[i];
+            if (!bodyDrawn && point.Y >= 0)
+            {
+                HallowSwordVisuals.DrawBody(grip, angle, radius, sword.Resonance, lightColor);
+                bodyDrawn = true;
+            }
+            float depth = point.Y * pose.Spread;
+            float perspective = 1 / (1 - depth * HallowActionRules.OrbitPerspective);
+            Vector2 offset = new Vector2(point.X, point.Y * HallowActionRules.OrbitFlattening)
+                * radius * HallowActionRules.OrbitRadius * pose.Spread * perspective;
+            // 围绕剑身中点投影，近剑变大且偏下，所有虚影保持竖直。
+            Vector2 phantomGrip = grip + offset + new Vector2(0, radius * (perspective - 1) / 2);
+            HallowSwordVisuals.DrawPhantom(phantomGrip, -MathHelper.PiOver2, radius * perspective,
+                color, pose.Spread * HallowActionRules.PhantomOpacity, point.Z);
+        }
+        if (!bodyDrawn) HallowSwordVisuals.DrawBody(grip, angle, radius, sword.Resonance, lightColor);
         return false;
     }
 }

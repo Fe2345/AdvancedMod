@@ -1,19 +1,32 @@
+using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
-using Terraria.GameContent;
 using AdvancedMod.Basic.Tag;
 using Terraria.ModLoader;
 
 namespace AdvancedMod.Contents.Hallow.Weapons;
 
-/// <summary>天裁的元素配色及简约剑形；虚影与反击共用同一套线段尺寸。</summary>
+/// <summary>天裁的元素配色及程序化剑形；虚影与反击共用轮廓材质。</summary>
 internal static class HallowSwordVisuals
 {
+    // 保留反击原有碰撞宽度，视觉材质加宽不扩大伤害判定。
     internal const float BladeThickness = 4;
-    internal const float GuardLength = 28;
-    internal const float GuardThickness = 3;
     private static Texture2D monochrome;
+    private static Texture2D phantomFront, phantomSide, phantomGlow;
+
+    private static Texture2D PhantomMask(ref Texture2D cached, string name)
+    {
+        if (cached != null) return cached;
+        var source = ModContent.Request<Texture2D>("AdvancedMod/Assets/Textures/Hallow/HeavensJudgmentPhantom" + name).Value;
+        var pixels = new Color[source.Width * source.Height];
+        source.GetData(pixels);
+        // 遮罩只读取Alpha，再显式生成预乘白色，避免PNG透明边缘的白RGB造成硬白边。
+        for (int i = 0; i < pixels.Length; i++) pixels[i] = Color.White * (pixels[i].A / 255f);
+        cached = new Texture2D(Main.instance.GraphicsDevice, source.Width, source.Height);
+        cached.SetData(pixels);
+        return cached;
+    }
     private static readonly Vector2 Grip = new(24, 196);
     private const float GripToTip = 192;
     internal static void DrawBody(Vector2 grip, float angle, float radius, TagEnum? element, Color lightColor)
@@ -39,7 +52,12 @@ internal static class HallowSwordVisuals
         Main.EntitySpriteDraw(texture, grip - Main.screenPosition, null, color, angle + MathHelper.PiOver2,
             Grip, radius / GripToTip, SpriteEffects.None);
     }
-    internal static void Unload() { var texture = monochrome; monochrome = null; if (texture != null) Main.QueueMainThreadAction(texture.Dispose); }
+    internal static void Unload()
+    {
+        foreach (var texture in new[] { monochrome, phantomFront, phantomSide, phantomGlow })
+            if (texture != null) Main.QueueMainThreadAction(texture.Dispose);
+        monochrome = phantomFront = phantomSide = phantomGlow = null;
+    }
     internal static Color ElementColor(TagEnum? element) => element switch
     {
         TagEnum.Pyro => new Color(255, 110, 45),
@@ -50,23 +68,33 @@ internal static class HallowSwordVisuals
         _ => new Color(71, 233, 170)
     };
 
-    /// <summary>握点为剑柄短横线中心，长线终点与真实剑尖一致，所有尺寸随武器缩放。</summary>
-    internal static void DrawSimple(Vector2 grip, float angle, float radius, Color color, float opacity)
+    private static readonly Vector2 PhantomGrip = new(32, 204);
+    private const float PhantomSideShade = 0.68f;
+
+    /// <summary>白色轮廓统一染色；纵轴偏转压缩正面并显露厚度，侧面不会消失。</summary>
+    internal static void DrawPhantom(Vector2 grip, float angle, float radius, Color color, float opacity, float yaw)
     {
-        float scale = radius / HallowBladeRules.BladeLength;
-        Vector2 forward = angle.ToRotationVector2(), side = new(-forward.Y, forward.X);
-        Line(grip, grip + forward * radius, BladeThickness * scale, color * opacity);
-        Line(grip - side * GuardLength * scale / 2, grip + side * GuardLength * scale / 2,
-            GuardThickness * scale, color * opacity);
+        float scale = radius / GripToTip;
+        float face = MathF.Cos(yaw), edge = MathF.Abs(MathF.Sin(yaw));
+        SpriteEffects flip = face < 0 ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
+        void Layer(Texture2D texture, float width, Color tint, SpriteEffects effects)
+        {
+            if (width < 0.001f) return;
+            Main.EntitySpriteDraw(texture, grip - Main.screenPosition, null, tint * opacity,
+                angle + MathHelper.PiOver2, PhantomGrip, new Vector2(width, 1) * scale, effects);
+        }
+        Layer(PhantomMask(ref phantomGlow, "Glow"), MathF.Max(MathF.Abs(face), edge * 0.15f), color, flip);
+        Layer(PhantomMask(ref phantomSide, "Side"), edge, color * PhantomSideShade, SpriteEffects.None);
+        Layer(PhantomMask(ref phantomFront, "Front"), MathF.Abs(face), color, flip);
     }
 
-    private static void Line(Vector2 from, Vector2 to, float width, Color color)
+    /// <summary>反击复用新虚影正面纹理，握点到剑尖仍等于实际剑长。</summary>
+    internal static void DrawSimple(Vector2 grip, float angle, float radius, Color color, float opacity)
     {
-        Vector2 delta = to - from;
-        // MagicPixel资源不是1×1，必须裁出单像素，才能让缩放向量表示实际线段长宽。
-        Main.EntitySpriteDraw(TextureAssets.MagicPixel.Value, from - Main.screenPosition, new Rectangle(0, 0, 1, 1), color,
-            delta.ToRotation(), new Vector2(0, 0.5f), new Vector2(delta.Length(), width), SpriteEffects.None);
+        DrawPhantom(grip, angle, radius, color, opacity, 0);
     }
+
+
 }
 
 public sealed class HallowSwordVisualSystem : ModSystem

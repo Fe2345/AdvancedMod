@@ -10,8 +10,21 @@ namespace AdvancedMod.Contents.Hallow.Weapons;
 internal static class HallowActionRules
 {
     internal const int PerfectTicks = 20, GuardCooldown = 360, ProtectionTicks = 60;
-    internal const int ResonanceTicks = 90, CommitTick = ResonanceTicks / 2, PhantomCount = 6;
-    internal const float LiftTicks = ResonanceTicks / 4f;
+    internal const int ExpandTicks = 45, HoldTicks = 30, ReturnTicks = 45;
+    internal const int CommitTick = ExpandTicks + HoldTicks, ResonanceTicks = CommitTick + ReturnTicks, PhantomCount = 6;
+    internal const float LiftTicks = ExpandTicks / 2f;
+    internal const float OrbitRadius = 0.65f, OrbitFlattening = 0.32f, OrbitPerspective = 0.16f;
+    internal const float OrbitTurn = MathHelper.TwoPi, PhantomOpacity = 0.8f;
+
+    /// <summary>展开与收回角度同向递增，停顿时姿态固定；收回末段才放下本体。</summary>
+    internal static (float Lift, float Spread, float Turn) ResonancePose(float age)
+    {
+        static float Smooth(float value) => MathHelper.SmoothStep(0, 1, Math.Clamp(value, 0, 1));
+        float expand = Smooth((age - LiftTicks) / (ExpandTicks - LiftTicks));
+        float close = Smooth((age - CommitTick) / ReturnTicks);
+        float lift = Smooth(age / LiftTicks) * (1 - Smooth((age - (ResonanceTicks - LiftTicks)) / LiftTicks));
+        return (lift, expand * (1 - close), OrbitTurn * (expand + close));
+    }
     internal const float CounterRange = 512, CounterOffset = 192, GuardOffset = 36, GuardThickness = 24;
     internal const float CounterSpeed = 16, CounterTurn = 0.16f;
     internal const int CounterLifetime = 120;

@@ -143,6 +143,12 @@ public sealed class HallowActionsLiveTests : ModSystem
             var action = Main.projectile.FirstOrDefault(x => x.active && x.ModProjectile is HallowResonance)?.ModProjectile as HallowResonance;
             if (action != null)
             {
+                if (action.Age == HallowActionRules.ExpandTicks)
+                {
+                    Check($"{elements[phase]}展开后仍为原元素", Sword.Resonance == previous);
+                    pendingCapture = $"resonance-{phase}-expanded";
+                }
+                if (action.Age == HallowActionRules.CommitTick + 20) pendingCapture = $"resonance-{phase}-closing";
                 if (action.Age == HallowActionRules.CommitTick - 1) { Check($"{elements[phase]}提交前保持原元素", Sword.Resonance == previous); pendingCapture = $"resonance-{phase}-before"; }
                 if (action.Age == HallowActionRules.CommitTick)
                 {
@@ -228,7 +234,7 @@ public sealed class HallowActionsLiveTests : ModSystem
     internal static void End(Projectile projectile)
     {
         if (Running && projectile.ModProjectile is HallowResonance action)
-            Check($"{elements[phase]}动画持续90刻", action.Age == HallowActionRules.ResonanceTicks, action.Age);
+            Check($"{elements[phase]}动画持续{HallowActionRules.ResonanceTicks}刻", action.Age == HallowActionRules.ResonanceTicks, action.Age);
     }
     private static void Next()
     {
