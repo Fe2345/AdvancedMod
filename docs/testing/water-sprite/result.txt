@@ -1,0 +1,1 @@
+atlas=2400x1600; frame=0; viewport=1280x900; sizes=200,300,400; sampler=PointClamp; captures=2

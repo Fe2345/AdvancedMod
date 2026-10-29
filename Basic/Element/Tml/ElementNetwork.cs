@@ -119,9 +119,9 @@ public sealed class ElementNetwork : ModSystem
         packet.Send();
         player.SetMeleeHitCooldown(npc.whoAmI, Math.Max(1, player.itemAnimation));
     }
-    internal static void Receive(BinaryReader reader, int sender)
+    internal static void Receive(BinaryReader reader, int sender, byte? kind = null)
     {
-        switch ((Packet)reader.ReadByte())
+        switch ((Packet)(kind ?? reader.ReadByte()))
         {
             case Packet.ElementText:
                 ReceiveElementText(reader, sender);

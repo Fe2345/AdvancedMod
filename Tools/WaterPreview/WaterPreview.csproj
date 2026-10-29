@@ -1,0 +1,12 @@
+<!-- 2026-10-27：使用目标 TML 的同一 FNA 二进制运行独立实验。 -->
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType><TargetFramework>net8.0</TargetFramework><ImplicitUsings>enable</ImplicitUsings><Nullable>enable</Nullable>
+    <TmlDirectory Condition="'$(TmlDirectory)' == ''">D:/Program Files (x86)/Steam/steamapps/common/tModLoader</TmlDirectory>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="FNA"><HintPath>$(TmlDirectory)/Libraries/FNA/1.0.0/FNA.dll</HintPath></Reference>
+    <Compile Include="../../Basic/Graphics/Water/*.cs" Link="Core/%(Filename)%(Extension)" />
+    <None Include="$(TmlDirectory)/Libraries/Native/Windows/*.dll" Link="%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+</Project>
