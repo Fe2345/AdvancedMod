@@ -48,8 +48,8 @@ public sealed class ElementLiveTests : ModSystem
         var tests = new (string, Action)[]
         {
             ("嵌套生成保留来源且不继承标签", NestedSpawn),
-            ("弹幕水雷150伤害与生成标签", ProjectileReaction),
-            ("水风生命门槛与火冰150伤害", OtherCoefficients),
+            ("弹幕水雷125伤害与生成标签", ProjectileReaction),
+            ("水风生命门槛与火冰175伤害", OtherCoefficients),
             ("水风成功支付与失败不支付", LifePayment),
             ("导电逐跳防御与保底前终止", ConductiveChain),
             ("导电抗性独立且源增伤不重复", ConductiveResistance),
@@ -127,7 +127,7 @@ public sealed class ElementLiveTests : ModSystem
         Check(p.GetGlobalProjectile<CombatGlobalProjectile>().Profile.Tags.Contains(TagEnum.Hydro), "生成标签丢失");
         int before = npc.life;
         p.Damage();
-        Near(before - npc.life, 150);
+        Near(before - npc.life, 125);
         Check(resolutions.Single().Outcome?.ReactionSlot == 1, "未提交水雷反应");
         Near(npc.GetGlobalNPC<CombatGlobalNPC>().Elements.Snapshot.ReactionCooldowns[1], 60);
     }
@@ -157,7 +157,7 @@ public sealed class ElementLiveTests : ModSystem
     {
         Main.LocalPlayer.statLifeMax2 = 400;
         Main.LocalPlayer.statLife = 99;
-        foreach (var (tag, slot, amount, expected) in new[] { (TagEnum.Anemo, 2, 0.75d, 150), (TagEnum.Pyro, 4, 1.5d, 150) })
+        foreach (var (tag, slot, amount, expected) in new[] { (TagEnum.Anemo, 2, 0.75d, 150), (TagEnum.Pyro, 4, 1.5d, 175) })
         {
             var npc = Target(slot);
             var p = Shot(npc.Center, tag, amount);
@@ -178,7 +178,7 @@ public sealed class ElementLiveTests : ModSystem
         MethodInfo method = typeof(Player).GetMethod("ProcessHitAgainstNPC", BindingFlags.Instance | BindingFlags.NonPublic)!;
         int before = npc.life;
         method.Invoke(player, new object[] { item, npc.Hitbox, 100, 0f, npc.whoAmI });
-        Near(before - npc.life, 150);
+        Near(before - npc.life, 175);
         var state = npc.GetGlobalNPC<CombatGlobalNPC>().Elements.Snapshot;
         Near(state.Elements[1].Total, 0.75);
         Near(state.Elements[4].Total, 0.75);
@@ -231,9 +231,9 @@ public sealed class ElementLiveTests : ModSystem
         stop.defense = 1000;
         int[] before = nodes.Select(n => n.life).ToArray();
         Shot(first.Center, TagEnum.Hydro).Damage();
-        Near(before[0] - first.life, 150);
-        Near(before[1] - second.life, 95);
-        Near(before[2] - third.life, 53);
+        Near(before[0] - first.life, 125);
+        Near(before[1] - second.life, 77);
+        Near(before[2] - third.life, 41);
         Near(before[3] - stop.life, 0);
         Near(before[4] - beyond.life, 0);
         foreach (NPC node in nodes.Skip(1))
@@ -261,10 +261,10 @@ public sealed class ElementLiveTests : ModSystem
             second.ai[1] = .25f;
             int a = first.life, b = second.life, c = third.life;
             Shot(first.Center, TagEnum.Hydro).Damage();
-            // 源反应增伤2倍：300；首靶抗性不传递，后续为210×.75、147×1。
-            Near(a - first.life, 150);
-            Near(b - second.life, 157);
-            Near(c - third.life, 147);
+            // 源反应增伤2倍：250；首靶抗性不传递，后续为175×.75、122.5×1。
+            Near(a - first.life, 125);
+            Near(b - second.life, 131);
+            Near(c - third.life, 122);
         }
         finally { field.SetValue(system, previous); }
     }
@@ -363,7 +363,7 @@ public sealed class ElementLiveTests : ModSystem
         npc.GetGlobalNPC<CombatGlobalNPC>().Elements.Attach(new(2, 1, 100));
         int before = npc.life;
         ModContent.GetInstance<ElementHitSystem>().PostUpdateEverything();
-        Near(before - npc.life, 150);
+        Near(before - npc.life, 125);
         Check(resolutions.Any(r => r.Outcome?.Source?.Kind == Basic.Calculate.Core.SourceKind.Environment), "静置归属非环境");
     }
     private static void NativeReentry()
@@ -381,7 +381,7 @@ public sealed class ElementLiveTests : ModSystem
         };
         int before = npc.life;
         first.Damage();
-        Near(before - npc.life, 250);
+        Near(before - npc.life, 225);
         Check(resolutions.Count == 2 && resolutions[0].Outcome is not null &&
             resolutions[1].Plan.Route == ElementRoute.AttachOnly, "重入未读取提交后的 CD");
         Near(target.Snapshot.Elements[2].Total, 1);

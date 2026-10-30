@@ -1,0 +1,93 @@
+{
+  "role": "client2",
+  "results": [
+    {
+      "name": "\u9996\u6B21\u5C55\u5F00\u4E0E\u665A\u52A0\u5165",
+      "status": "PASS"
+    },
+    {
+      "name": "\u9636\u6BB50\u5BA2\u6237\u7AEF\u65E0\u7ED3\u7B97\u7ED3\u754C",
+      "status": "PASS"
+    },
+    {
+      "name": "\u79FB\u52A8\u5230\u76EE\u6807",
+      "status": "PASS"
+    },
+    {
+      "name": "\u9636\u6BB51\u5BA2\u6237\u7AEF\u65E0\u7ED3\u7B97\u7ED3\u754C",
+      "status": "PASS"
+    },
+    {
+      "name": "\u4F20\u9001\u65E7\u5173\u65B0\u5F00",
+      "status": "PASS"
+    },
+    {
+      "name": "\u9636\u6BB52\u5BA2\u6237\u7AEF\u65E0\u7ED3\u7B97\u7ED3\u754C",
+      "status": "PASS"
+    },
+    {
+      "name": "\u4F20\u9001\u89E6\u53D1\u65E7\u5173\u65B0\u5F00",
+      "status": "PASS"
+    },
+    {
+      "name": "\u751F\u547D\u4E0E\u5145\u80FD\u66F4\u65B0",
+      "status": "PASS"
+    },
+    {
+      "name": "\u9636\u6BB53\u5BA2\u6237\u7AEF\u65E0\u7ED3\u7B97\u7ED3\u754C",
+      "status": "PASS"
+    },
+    {
+      "name": "\u663E\u5F0F\u5173\u95ED",
+      "status": "PASS"
+    },
+    {
+      "name": "\u9636\u6BB54\u5BA2\u6237\u7AEF\u65E0\u7ED3\u7B97\u7ED3\u754C",
+      "status": "PASS"
+    },
+    {
+      "name": "\u91CD\u65B0\u5C55\u5F00",
+      "status": "PASS"
+    },
+    {
+      "name": "\u9636\u6BB55\u5BA2\u6237\u7AEF\u65E0\u7ED3\u7B97\u7ED3\u754C",
+      "status": "PASS"
+    },
+    {
+      "name": "\u5012\u8BA1\u65F6\u7ED3\u675F\u5173\u95ED",
+      "status": "PASS"
+    },
+    {
+      "name": "\u9636\u6BB56\u5BA2\u6237\u7AEF\u65E0\u7ED3\u7B97\u7ED3\u754C",
+      "status": "PASS"
+    },
+    {
+      "name": "\u6B7B\u4EA1\u524D\u5C55\u5F00",
+      "status": "PASS"
+    },
+    {
+      "name": "\u9636\u6BB57\u5BA2\u6237\u7AEF\u65E0\u7ED3\u7B97\u7ED3\u754C",
+      "status": "PASS"
+    },
+    {
+      "name": "\u4E3B\u4EBA\u6B7B\u4EA1\u5173\u95ED",
+      "status": "PASS"
+    },
+    {
+      "name": "\u9636\u6BB58\u5BA2\u6237\u7AEF\u65E0\u7ED3\u7B97\u7ED3\u754C",
+      "status": "PASS"
+    },
+    {
+      "name": "\u5F00\u5173\u6B21\u6570\u4E00\u81F4",
+      "status": "PASS"
+    },
+    {
+      "name": "\u5173\u95ED\u5C3E\u8FF9\u91CA\u653E\u5B8C\u6210",
+      "status": "PASS"
+    },
+    {
+      "name": "\u5B9E\u9645\u63D0\u4EA4\u7ED3\u754C\u7ED8\u5236",
+      "status": "PASS"
+    }
+  ]
+}

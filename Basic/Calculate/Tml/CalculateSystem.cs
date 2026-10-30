@@ -49,6 +49,8 @@ public sealed class CalculateSystem : ModSystem
         // 基础标签规则先登记；具体数值仍由后续内容贡献者提供。
         foreach (TagGateRule rule in DefaultTagRules.All)
             registry.Register(rule);
+        registry.Register(new Element.Tml.HolyFieldContributor());
+        registry.Register(new Element.Tml.HolyTrueDamageRule());
     }
 
     private void WriteTrace(CalculationInput input, CalculationResult result)

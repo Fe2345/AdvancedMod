@@ -11,8 +11,10 @@ if (-not (Test-Path -LiteralPath $save)) {
 $configPath = Join-Path $save 'config.json'
 $config = Get-Content -LiteralPath $configPath -Raw | ConvertFrom-Json
 $config.Language = 'zh-Hans'
+$config.ThrottleWhenInactive = $false
+$config.DisplayWidth = 1280; $config.DisplayHeight = 900; $config.UIScale = 1.0; $config.Zoom = 1.0
 $config | ConvertTo-Json -Depth 30 | Set-Content -LiteralPath $configPath -Encoding utf8
-& dotnet build (Join-Path $root 'AdvancedMod.csproj') -p:BuildMod=false -p:NuGetAudit=false --nologo
+& dotnet build (Join-Path $root 'AdvancedMod.csproj') -p:BuildMod=false -p:NuGetAudit=false --no-restore --nologo
 if ($LASTEXITCODE -ne 0) { throw '主项目构建失败' }
 $started = [DateTime]::UtcNow
 $previous = $env:ADVANCEDMOD_ELEMENT_TEXT_TEST

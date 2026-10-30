@@ -147,8 +147,10 @@ public sealed class ElementHitSystem : ModSystem
         }
         var request = MakeRequest(context, frame.PanelDamage);
         ReactionPlan plan = entry.Transaction.Prepare(request);
+        bool holy = plan.IsHallowed || plan.Definition is not null && HolyFieldSystem.Eligible(context);
+        if (plan.Definition is not null && holy) plan.MakeHallowed();
         ElementTextSystem.PrepareNpc(context, plan, ref modifiers);
-        AmplificationEffects.Prepare(context, plan, frame.InputDamage);
+        AmplificationEffects.Prepare(context, plan, frame.InputDamage, plan.Definition is null && HolyFieldSystem.CanSkyFire(context, request));
         if (plan.Route == ElementRoute.React) modifiers.SourceDamage.Base += SeedOffset(plan, frame.InputDamage);
         // 在 ToHitInfo 完成计算时标记即将进入 Strike 的命中，不从普通 OnHit 推断成功。
         modifiers.ModifyHitInfo += (ref NPC.HitInfo _) => entry.Armed = true;

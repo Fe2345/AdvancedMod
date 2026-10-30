@@ -1,0 +1,50 @@
+[
+  {
+    "sha256": "F55EB3D15469833AE2D5E22D2F7B6389DF11890FA31721DDCD9ED08E71C0DCB3",
+    "path": "Basic/Element/HolyReactionRules.cs"
+  },
+  {
+    "sha256": "E04B44D5837A49CEB24D23A52EEC726EAFE2FF3D755E52C9B585B1103B4BBE9E",
+    "path": "Basic/Element/Tml/HolyFieldSystem.cs"
+  },
+  {
+    "sha256": "EC543CD3194AC4849F00AA0E15821E05D6491C3B401C33EA9F82B09976D70634",
+    "path": "Basic/Element/Tml/HolyChordSelection.cs"
+  },
+  {
+    "sha256": "C845128DB70D864CCB9E1E7EE5264F1603590DB9D6D5527BCFF142940608FE8F",
+    "path": "Basic/Element/Tml/AmplificationEffects.cs"
+  },
+  {
+    "sha256": "73645EC46026F5CBCE9B52298590FC55EC801336197A12A841F9DD36847CCD5D",
+    "path": "Basic/Element/Tml/ElementHitSystem.cs"
+  },
+  {
+    "sha256": "4E80E0A1A5E727218675A6DBC08398B85C83A17D4A7C412ACDF2ACAC90D4F315",
+    "path": "Basic/Element/ElementState.cs"
+  },
+  {
+    "sha256": "5D2939876FA533CA812B60B661B2A133CD2CF7B2A51C367E2A6167EE0D9B68ED",
+    "path": "Basic/Element/ElementTarget.Wire.cs"
+  },
+  {
+    "sha256": "DF1B3B49D2D8898A2E40AA82220EA30F81A77316D1DB9F45C29B94660B35B1CC",
+    "path": "Basic/Element/Reaction.cs"
+  },
+  {
+    "sha256": "AFCC16066F1D746F5B61D410070B386E3E03BEBE08BBAB83AA712B22C931546D",
+    "path": "Basic/Element/Prepare.cs"
+  },
+  {
+    "sha256": "A458697E1FBF661E75CDBFF08686D7D1E15A1D9C36CFA90B598824674797DFA4",
+    "path": "Basic/Element/AmplificationReactions.cs"
+  },
+  {
+    "sha256": "192C5057AE21B72A74BE02467308E32DEADB98824D64BED1980826BA994D735F",
+    "path": "Contents/Development/HolyReactionLiveTests.cs"
+  },
+  {
+    "sha256": "0169E2268DB422ED060E0238A820F8DCD3FF41A482052BADBCC8F113A9C831D0",
+    "path": "Contents/Development/ElementLiveTests.cs"
+  }
+]

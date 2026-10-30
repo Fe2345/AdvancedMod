@@ -19,6 +19,7 @@ var tests = new (string, Action)[]
     ("网络快照往返与坏包原子拒绝", Wire),
     ("正式反应消耗、CD与生命支付计划", Formal),
     ("雨云水附着阈值与下一滴前CD恢复", RainCloudCadence),
+    ("神圣支付、滚动窗口和弹射边界", HolyNumbers),
 };
 int passed = 0;
 foreach (var (name, run) in tests)
@@ -32,6 +33,30 @@ return passed == tests.Length ? 0 : 1;
 static void Check(bool condition, string message = "断言失败")
 {
     if (!condition) throw new Exception(message);
+}
+static void HolyNumbers()
+{
+    Near(HolyReactionRules.Payment(6, 100, 1000), 1);
+    Near(HolyReactionRules.Payment(6, 1000, 100), 6);
+    Near(HolyReactionRules.Payment(6, 100, 0), 0);
+    Near(HolyReactionRules.Bounces(150), 10);
+    Near(HolyReactionRules.Bounces(960), 64);
+    Near(HolyReactionRules.Bounces(9999), 64);
+    Check(Math.Abs(HolyReactionRules.Reduction(750) - .15) < 1e-6);
+    Check(HolyReactionRules.FlightSpeed(1000, 89) == 1000);
+    var record = new HolyLifeRecord();
+    record.Add(0, 6); record.Add(1199, 2); record.Expire(1200);
+    Near(record.Total, 2); record.Expire(2399); Near(record.Total, 0);
+    var attached = Target(new ElementAttachment(2, 1.5, 100, true));
+    using var bytes = new MemoryStream();
+    attached.WriteState(new BinaryWriter(bytes, System.Text.Encoding.UTF8, true)); bytes.Position = 0;
+    var mirror = Target(); mirror.ReadState(new BinaryReader(bytes));
+    mirror.Submit(Request(TagEnum.Anemo, .75), AmplificationReactions.Create(), plan => {
+        Check(plan.IsHallowed && plan.Hit.Tags.Contains(TagEnum.Hallowed), "快照丢失神圣附着"); return false;
+    });
+    mirror.Submit(Request(TagEnum.Anemo, .75), AmplificationReactions.Create(), plan => {
+        Check(plan.IsHallowed, "取消命中丢失神圣库存"); return true;
+    });
 }
 static void RainCloudCadence()
 {
@@ -61,7 +86,7 @@ static void Formal()
     {
         var target = Target(new ElementAttachment(other, attached, 100));
         target.Submit(Request(tag, incoming), table, plan => {
-            Near(plan.DamageSeed, 150); Check(plan.Definition!.Slot == slot); Near(plan.CooldownIncrease, cd); return true;
+            Near(plan.DamageSeed, slot == 1 ? 125 : slot == 3 ? 175 : 150); Check(plan.Definition!.Slot == slot); Near(plan.CooldownIncrease, cd); return true;
         });
         Near(target.Snapshot.Elements[other].Total, 0);
     }

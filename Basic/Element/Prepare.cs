@@ -2,6 +2,7 @@
 using System;
 using System.Linq;
 using AdvancedMod.Basic.Calculate.Core;
+using AdvancedMod.Basic.Tag;
 
 namespace AdvancedMod.Basic.Element;
 
@@ -58,7 +59,8 @@ internal static class Prepare
             return new(hasElement && hasReaction ? ElementRoute.DirectReaction : ElementRoute.Direct, null, working);
         }
         if (!request.IsIdle)
-            working.Attach(new(request.IncomingSlot!.Value, request.Amount, request.PanelDamage));
+            working.Attach(new(request.IncomingSlot!.Value, request.Amount, request.PanelDamage,
+                request.Hit.Tags.Contains(TagEnum.Hallow)));
         foreach (var definition in table.Slots)
         {
             if (definition is null || working.Cooldowns[definition.Slot] != 0) continue;

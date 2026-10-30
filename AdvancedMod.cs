@@ -10,6 +10,8 @@ public sealed class AdvancedMod : Mod
         byte kind = reader.ReadByte();
         if (kind == Contents.Hallow.NPCs.HallowMechanicalSummonItem.PacketKind)
             Contents.Hallow.NPCs.HallowMechanicalSummonItem.Receive(reader, whoAmI);
+        else if (kind == Basic.Element.Tml.HolyFieldVisuals.PacketKind)
+            Basic.Element.Tml.HolyFieldVisuals.Receive(reader, whoAmI);
         else
             Basic.Element.Tml.ElementNetwork.Receive(reader, whoAmI, kind);
     }

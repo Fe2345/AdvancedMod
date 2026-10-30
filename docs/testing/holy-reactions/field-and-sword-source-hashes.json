@@ -1,0 +1,26 @@
+[
+  {
+    "path": "Basic/Element/Tml/HolyFieldSystem.cs",
+    "sha256": "C5DC81A9CE8797D564582D3EB52CFF30A1849CA1D542A5A42968F6C3EF81D6A2"
+  },
+  {
+    "path": "Basic/Element/Tml/AmplificationEffects.cs",
+    "sha256": "46A3A7F536F50FF7930C85C3DFDC92394B5359BE2034DC9D0296B59E8CE03EC7"
+  },
+  {
+    "path": "Contents/Hallow/Weapons/HallowActionRules.cs",
+    "sha256": "1881EAB5D106A10B9DFACD4D76E2DC24D8FAA6AC65B3BF8B3BB4AA1F06CC901C"
+  },
+  {
+    "path": "Contents/Hallow/Weapons/HeavensJudgment.cs",
+    "sha256": "98B8635140A1BB78C1A27478A9BB25441676298B48DB3E0C925FFC4779A7269C"
+  },
+  {
+    "path": "Contents/Development/HolyReactionLiveTests.cs",
+    "sha256": "5B37908AE8E8179699960290A27FAADE11D431CEF50B65BD503E2DFE2B0BAD09"
+  },
+  {
+    "path": "Contents/Development/HallowActionsLiveTests.cs",
+    "sha256": "B673AB2F38A407A26F3073B345E4FC17C94CDBF4B841B7624960DD2E1B3191CF"
+  }
+]

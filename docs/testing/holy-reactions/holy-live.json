@@ -1,0 +1,82 @@
+{
+  "mode": "\u771F\u5B9ETML\u5355\u4EBA\u5BA2\u6237\u7AEF\uFF0C\u5305\u542B1201\u523B\u6301\u7EED\u89C2\u5BDF\uFF1B\u5176\u4F59\u8FB9\u754C\u76F4\u63A5\u9A71\u52A8\u72B6\u6001\u66F4\u65B0",
+  "utc": "2026-10-29T06:49:45.1809133+00:00",
+  "results": [
+    {
+      "name": "\u6B63\u5F0F\u878D\u5316175\u53CA\u5BFC\u7535125",
+      "status": "PASS"
+    },
+    {
+      "name": "\u795E\u5723\u6C7D\u5316\u65A9\u6740\u652F\u4ED8\u4E0E\u8BB0\u5F55",
+      "status": "PASS"
+    },
+    {
+      "name": "\u672A\u6210\u529F\u547D\u4E2D\u4E0D\u521B\u5EFA\u7ED3\u754C\u4E0D\u652F\u4ED8",
+      "status": "PASS"
+    },
+    {
+      "name": "\u795E\u5723\u9644\u7740\u8DE8\u653B\u51FB\u4FDD\u7559",
+      "status": "PASS"
+    },
+    {
+      "name": "\u7ED3\u754C\u79FB\u52A8\u901F\u5EA6\u4E0E\u8D85\u8DDD\u4F20\u9001",
+      "status": "PASS"
+    },
+    {
+      "name": "\u540C\u961F\u4F0D\u6700\u9AD8\u51CF\u6297\u4E0E\u65E0\u961F\u4F0D\u9694\u79BB",
+      "status": "PASS"
+    },
+    {
+      "name": "\u5355\u8282\u70B9\u6865\u63A5\u4EC5\u8870\u51CF\u4E00\u6B21",
+      "status": "PASS"
+    },
+    {
+      "name": "\u7981\u6B62\u8FDE\u7EED\u4E24\u4E2A\u8282\u70B9",
+      "status": "PASS"
+    },
+    {
+      "name": "\u8282\u70B9\u5237\u65B0\u53CA\u5341\u8282\u70B9\u4E0A\u9650",
+      "status": "PASS"
+    },
+    {
+      "name": "\u540C\u6B21\u5BFC\u7535\u6838\u5FC3\u6700\u591A\u5145\u80FD\u4E00\u6B21",
+      "status": "PASS"
+    },
+    {
+      "name": "\u5929\u706B\u4E00\u6B21\u51B7\u5374\u4EC5\u89E6\u53D1\u4E00\u6B21",
+      "status": "PASS"
+    },
+    {
+      "name": "\u771F\u5B9E\u4F24\u5BB3\u4FDD\u7559\u589E\u4F24\u4E14\u5FFD\u7565\u9632\u5FA1\u6297\u6027",
+      "status": "PASS"
+    },
+    {
+      "name": "\u9F99\u5377\u4E24\u76EE\u6807\u5F80\u8FD4\u4E0E\u5B64\u7ACB\u76EE\u6807\u7EC8\u6B62",
+      "status": "PASS"
+    },
+    {
+      "name": "\u9F99\u5377\u9996\u8F6E\u53CA\u7ED3\u675F\u8BA1\u65F6",
+      "status": "PASS"
+    },
+    {
+      "name": "\u4EFB\u610F\u5F26\u8986\u76D6\u4E0E\u4EA4\u53C9\u4E0D\u91CD\u590D\u4F24\u5BB3",
+      "status": "PASS"
+    },
+    {
+      "name": "Level\u5B9E\u65F6\u8BFB\u53D6\u89D2\u8272\u8BB0\u5F55",
+      "status": "PASS"
+    },
+    {
+      "name": "\u9F99\u5377\u4FDD\u7559100%\u66B4\u51FB",
+      "status": "PASS"
+    },
+    {
+      "name": "\u771F\u5B9E\u6E38\u620F900\u523B\u53EC\u5524\u5E76\u7ED3\u675F\u540E\u91CD\u65B0\u8BA1\u65F6",
+      "status": "PASS"
+    },
+    {
+      "name": "\u771F\u5B9E\u6E38\u620F1200\u523B\u7ED3\u754C\u5173\u95ED",
+      "status": "PASS"
+    }
+  ]
+}

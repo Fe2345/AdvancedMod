@@ -1,5 +1,15 @@
 # 元素攻击开发入口与实机验收
 
+## 2026-10-29 神圣反应
+
+实际神圣异化的反应名前显示三弧图标，自动与CombatText字体高度、旋转和缩放对齐；图标路径为`AdvancedMod/Assets/UI/HallowIcon`，无光晕且交叉处连续，见[资源与绘制说明](HallowIcon.md)。网络文字包新增异化标记，联机两端需使用同版模组。
+
+正常托管攻击的标签中加入`Hallow`即可给参与的元素神圣属性；也可在反应目标所在的神圣环境或普通神圣结界内触发。不要由内容直接伪造`Hallowed`替代反应资格；真实反应在计算前补充该标签。附着的神圣属性保留到其实际被消耗，跨攻击生效。
+
+玩家普通结界与三种神圣派生效果已接入，数值以[Design.md](Design.md)为准。结界复用GoldenWard三弧交叉图案，核心比例1/8，线宽为demo的4倍，边界粒子为3倍。仅反应位置在当前结界外才更新移动目标，内部及边界反应只续时。龙卷与天火专用表现仍待补充；满充能暂用既有导电电弧，在伤害目标去重和结算之后播放。
+
+使用`Tests/Run-HolyReactionLive.ps1`构建打包并启动隔离客户端，存档位于`obj/holy-live`，报告写入其`Logs/AdvancedMod/holy-live.json`。脚本需要已有`obj/element-live`中的测试玩家、世界及模组配置。它不会发布模组，也不会改写日常玩家和世界。测试结果与适用边界见[神圣反应验收](testing/holy-reactions/README.md)。
+
 ## 武器与弹幕
 
 使用 `AdvancedMod.Basic.Utils.ElementAttacks` 配置现有 Item 或生成弹幕。武器的正常近战行为仍由 TML 执行；无需自行调用 StrikeNPC，也无需在 Modify 中手工扣元素。
@@ -41,7 +51,7 @@ NPC 接触伤害可用 `ConfigureNpcContact(npc, tags, elementAmount, attackId)`
 - 只在原入口正常返回且实际伤害大于 0 时提交。取消、免疫、闪避和零伤害不提交；致死仍可提交并产生反应事实。使用目标 ElementTarget 实例身份检查阻止旧事务写入复用实体，不用 active=false 否定已成功的致死命中。
 - 异常释放执行权，清空未处理队列，不回滚引擎已造成的伤害。第三方直接构造 HitInfo、绕开上述完整入口的伤害不属于本轮兼容承诺。
 
-`PostUpdateEverything` 扫描有元素或 CD 状态的存活目标，每刻先递减再尝试一次静置反应。NPC 使用原生 incoming modifiers／ToHitInfo／StrikeNPC；玩家走原生 Hurt，仍遵守玩家免疫与闪避。静置来源为环境，Calculate 保持纯计算边界。正式反应表来自 `AmplificationReactions`，水雷／水风／火冰基础系数均为1.5，基础消耗为1:1.5／1.5:0.75／1.5:1.5，CD为60／40／40刻。水风额外计算玩家生命支付；导电派生0附着电弧，详见 Element-Design。
+`PostUpdateEverything` 扫描有元素或 CD 状态的存活目标，每刻先递减再尝试一次静置反应。NPC 使用原生 incoming modifiers／ToHitInfo／StrikeNPC；玩家走原生 Hurt，仍遵守玩家免疫与闪避。静置来源为环境，Calculate 保持纯计算边界。正式反应表来自 `AmplificationReactions`，水雷／水风／火冰基础系数分别为1.25／1.5／1.75，基础消耗为1:1.5／1.5:0.75／1.5:1.5，CD为60／40／40刻。水风额外计算玩家生命支付；导电派生0附着电弧，详见 Element-Design。
 
 本机入口依据安装的 TML 1.4.4.9+2026.08.3.0 方法体核对，并与 [NPC HitModifiers](https://docs.tmodloader.net/docs/stable/struct_n_p_c_1_1_hit_modifiers.html)、[Player](https://docs.tmodloader.net/docs/stable/class_player.html)、[Projectile](https://docs.tmodloader.net/docs/stable/class_projectile.html) 的官方契约对照。更新 TML 后需要复验 detour 与执行顺序。
 

@@ -29,6 +29,7 @@ public sealed partial class HeavensJudgment : ModItem
         Item.value = Item.sellPrice(gold: 5, silver: 9, copper: 1);
         Item.shoot = ModContent.ProjectileType<HeavensJudgmentSwing>();
         Item.shootSpeed = 1;
+        SetResonance(null);
     }
     public override bool MeleePrefix() => true;
     public override bool AltFunctionUse(Player player) => true;

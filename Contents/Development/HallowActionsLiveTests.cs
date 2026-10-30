@@ -223,6 +223,8 @@ public sealed class HallowActionsLiveTests : ModSystem
         if (!Running || projectile.ModProjectile is not HallowCounterSword) return;
         counters.Add(projectile);
         var combat = projectile.GetGlobalProjectile<CombatGlobalProjectile>();
+        Check($"场景{phase}反击具有神圣资格且无附着", combat.Profile.Tags.Contains(TagEnum.Hallow) &&
+            !combat.Profile.Tags.Contains(TagEnum.Hallowed) && combat.ElementAmount == 0);
         // 起手瞄准会包含原生发射点修正，验证相对锁定方向的垂线而非假定屏幕竖直。
         var guard = Main.projectile.First(x => x.active && x.ModProjectile is HallowGuard).ModProjectile as HallowGuard;
         Vector2 offset = projectile.Center - P.Center;

@@ -1,0 +1,30 @@
+[
+  {
+    "path": "Basic/Graphics/HolyFieldEffect.cs",
+    "sha256": "15EB11EEF5F0D08656267F786FB68FD3505F002924AA6EB329DB04B946A423E3"
+  },
+  {
+    "path": "Contents/Vfx/GoldenWard.cs",
+    "sha256": "EB8312CE09C90709F9EB86E7010482B958B83F18537AA098BAA7F2AA13B38293"
+  },
+  {
+    "path": "Basic/Element/Tml/HolyFieldSystem.cs",
+    "sha256": "349879784D3F33F359590224859DBAC808B5AE243E9FCEC88ACE94903352A53F"
+  },
+  {
+    "path": "Contents/Development/HolyReactionLiveTests.cs",
+    "sha256": "C239EE4AACF58C5381F157FDED34FA416146FABE7D74546FD052CEE301AA082B"
+  },
+  {
+    "path": "Contents/Development/HolyFieldNetworkTests.cs",
+    "sha256": "F82E8BCEDEDF5BCC39201642744DD0FC959F8113603949BEEAAF1EF61E4C8FA6"
+  },
+  {
+    "path": "Tests/Vfx/Program.cs",
+    "sha256": "53AE29D4C6FDDA769F123CA5A62D5CA1BB2E5CCF1AB35BC1D9398CD380EE59EA"
+  },
+  {
+    "path": "Tests/Vfx/Vfx.Tests.csproj",
+    "sha256": "0864056E497F1838536CD363EA4E208A6B1E2FE98208044A46445862EF628D46"
+  }
+]

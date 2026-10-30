@@ -1,0 +1,29 @@
+{
+  "mode": "server",
+  "results": [
+    {
+      "name": "\u521D\u59CB\u63A2\u6D4B\u602A\u4E0A\u9650\u6765\u81EA\u8EAB\u4F53\u6570\u91CF",
+      "status": "PASS"
+    },
+    {
+      "name": "\u771F\u5B9EHitEffect\u91CA\u653E\u5341\u53EA",
+      "status": "PASS"
+    },
+    {
+      "name": "\u91CA\u653E\u4E0D\u6263\u80FD\u91CF",
+      "status": "PASS"
+    },
+    {
+      "name": "\u91CA\u653E\u5F52\u5C5E\u8BB0\u5F55",
+      "status": "PASS"
+    },
+    {
+      "name": "\u51FB\u8D25\u4E94\u53EA\u6263\u4E94\u70B9",
+      "status": "PASS"
+    },
+    {
+      "name": "\u670D\u52A1\u7AEF\u6700\u7EC8\u751F\u547D",
+      "status": "PASS"
+    }
+  ]
+}

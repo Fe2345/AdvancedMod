@@ -9,7 +9,7 @@
   <Import Project="../../../tModLoader.targets" />
   <ItemGroup>
     <Compile Include="Program.cs" />
-    <Compile Include="../../Basic/Graphics/**/*.cs" Exclude="../../Basic/Graphics/Vfx.cs;../../Basic/Graphics/WorldVfxSystem.cs" />
+    <Compile Include="../../Basic/Graphics/**/*.cs" Exclude="../../Basic/Graphics/Vfx.cs;../../Basic/Graphics/WorldVfxSystem.cs;../../Basic/Graphics/BossBars/**/*.cs" />
     <Compile Include="../../Contents/Vfx/GoldenWard.cs" />
     <Compile Include="../../Contents/Vfx/SlashTrailEffect.cs" />
     <Compile Include="../../Contents/Hallow/Weapons/HallowBladeCombo.cs" />

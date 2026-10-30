@@ -8,8 +8,8 @@ using AdvancedMod.Basic.Calculate.Core;
 namespace AdvancedMod.Basic.Element;
 
 /// <summary>一次附着；面板白值沿用 TML 的整数伤害字段。</summary>
-public sealed record ElementAttachment(int Slot, double Amount, int PanelDamage);
-public sealed record ElementPortion(int Slot, int PanelDamage, double Amount);
+public sealed record ElementAttachment(int Slot, double Amount, int PanelDamage, bool Hallow = false);
+public sealed record ElementPortion(int Slot, int PanelDamage, double Amount, bool Hallow = false);
 
 /// <summary>只读元素槽快照；分量以攻击面板白值为键。</summary>
 public sealed class ElementGauge
@@ -41,11 +41,14 @@ internal sealed class ElementWorkState
     internal Dictionary<int, double>[] Elements = Enumerable.Range(0, DamageConstants.ElementSlotCount)
         .Select(_ => new Dictionary<int, double>()).ToArray();
     internal float[] Cooldowns = new float[DamageConstants.ReactionSlotCount];
+    internal Dictionary<int, double>[] HolyElements = Enumerable.Range(0, DamageConstants.ElementSlotCount)
+        .Select(_ => new Dictionary<int, double>()).ToArray();
     internal double[] Totals = new double[DamageConstants.ElementSlotCount];
     internal ElementWorkState Copy() => new()
     {
         Elements = Elements.Select(p => new Dictionary<int, double>(p)).ToArray(),
         Cooldowns = (float[])Cooldowns.Clone(),
+        HolyElements = HolyElements.Select(p => new Dictionary<int, double>(p)).ToArray(),
         Totals = (double[])Totals.Clone()
     };
     internal static void Validate(ElementAttachment attachment)
@@ -63,6 +66,11 @@ internal sealed class ElementWorkState
         if (!double.IsFinite(sum)) throw new ArithmeticException("元素总量溢出。");
         portions.TryGetValue(attachment.PanelDamage, out double previous);
         portions[attachment.PanelDamage] = previous + attachment.Amount;
+        if (attachment.Hallow)
+        {
+            HolyElements[attachment.Slot].TryGetValue(attachment.PanelDamage, out double holy);
+            HolyElements[attachment.Slot][attachment.PanelDamage] = holy + attachment.Amount;
+        }
         Totals[attachment.Slot] = portions.Values.Sum();
     }
     internal ElementPortion[] Take(int slot, double amount, bool highFirst)
@@ -76,7 +84,13 @@ internal sealed class ElementWorkState
         {
             double taken = Math.Min(amount, portions[key]);
             if (taken <= 0) break;
-            result.Add(new(slot, key, taken));
+            // 同白值合并分量中优先消耗神圣部分；实际消耗标签决定是否异化。
+            HolyElements[slot].TryGetValue(key, out double holy);
+            double holyTaken = Math.Min(taken, holy);
+            if (holyTaken > 0) result.Add(new(slot, key, holyTaken, true));
+            if (taken > holyTaken) result.Add(new(slot, key, taken - holyTaken));
+            if (holy == holyTaken) HolyElements[slot].Remove(key);
+            else HolyElements[slot][key] = holy - holyTaken;
             double left = portions[key] - taken;
             if (left == 0) portions.Remove(key); else portions[key] = left;
             amount -= taken;

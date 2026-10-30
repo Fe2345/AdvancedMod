@@ -1,0 +1,22 @@
+[
+  {
+    "path": "Assets/UI/HallowIcon.png",
+    "sha256": "5FD3D2522889174473FD6F0FFB2CB27E2ACB2E74F108B7A564C40FD8F6D5B056"
+  },
+  {
+    "path": "Tools/Generate-HallowIcon.ps1",
+    "sha256": "2729BBEB9D324718797A62EA28B5DA819E2D1401F3990AA4459FAC7278007E9E"
+  },
+  {
+    "path": "Basic/Element/Tml/ElementTextSystem.cs",
+    "sha256": "041869B5D453888FEDA20EEC15F28AA3371B1C487E4DEDD05EBD0B14148654DA"
+  },
+  {
+    "path": "Basic/Element/Tml/ElementNetwork.cs",
+    "sha256": "EB4D78C4F85759A7B8EB9A351B8229C7589021781B8304CCFA7CB453FAF06C47"
+  },
+  {
+    "path": "Contents/Development/ElementTextLiveTests.cs",
+    "sha256": "725B6C380C2F7543A4FDE5E59BECFD32E8C86CD9CEC24DE239B22ACBE371FE40"
+  }
+]

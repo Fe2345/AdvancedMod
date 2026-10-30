@@ -36,7 +36,10 @@ Projectiles: {
 	HallowResonance.DisplayName: 元素共鸣
 }
 
-// NPCs.ElementProbeNPC.DisplayName: Element Probe N P C
+NPCs: {
+	// ElementProbeNPC.DisplayName: Element Probe N P C
+	// HolyCriticalProbeNPC.DisplayName: Holy Critical Probe N P C
+}
 
 Items: {
 	RainCloudStaff: {
@@ -77,5 +80,13 @@ Buffs: {
 	RainCloudBuff: {
 		DisplayName: 雨云
 		Description: 雨云会向敌人降下大雨
+	}
+}
+
+BossBars: {
+	Destroyer: {
+		DisplayName: 毁灭者
+		Description: 神圣金属铸造的钢铁蠕虫
+		HallowDescription: 被神圣意志掌控的钢铁蠕虫
 	}
 }

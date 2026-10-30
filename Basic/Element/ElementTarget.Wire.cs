@@ -12,11 +12,17 @@ public sealed partial class ElementTarget
         int totalCount = 0;
         foreach (var slot in state.Elements) totalCount += slot.Count;
         if (totalCount > MaxWirePortions) throw new InvalidOperationException("元素分量超过网络协议容量。");
-        foreach (var slot in state.Elements)
+        for (int slotIndex = 0; slotIndex < state.Elements.Length; slotIndex++)
         {
+            var slot = state.Elements[slotIndex];
             if (slot.Count > MaxWirePortions) throw new InvalidOperationException("元素分量超过网络协议容量。");
             writer.Write((ushort)slot.Count);
-            foreach (var part in slot) { writer.Write(part.Key); writer.Write(part.Value); }
+            foreach (var part in slot)
+            {
+                writer.Write(part.Key); writer.Write(part.Value);
+                state.HolyElements[slotIndex].TryGetValue(part.Key, out double holy);
+                writer.Write(holy);
+            }
         }
         foreach (float cooldown in state.Cooldowns) writer.Write(cooldown);
     }
@@ -37,7 +43,11 @@ public sealed partial class ElementTarget
                 double amount = reader.ReadDouble();
                 if (panel < 0 || !double.IsFinite(amount) || amount <= 0 || next.Elements[slot].ContainsKey(panel))
                     throw new InvalidDataException("元素分量非法。");
-                next.Attach(new(slot, amount, panel));
+                double holy = reader.ReadDouble();
+                if (panel < 0 || !double.IsFinite(amount) || amount <= 0 || !double.IsFinite(holy) || holy < 0 || holy > amount || next.Elements[slot].ContainsKey(panel))
+                    throw new InvalidDataException("元素分量非法。");
+                next.Attach(new(slot, amount - holy, panel));
+                next.Attach(new(slot, holy, panel, true));
             }
         }
         for (int i = 0; i < next.Cooldowns.Length; i++)

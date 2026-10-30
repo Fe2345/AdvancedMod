@@ -1,0 +1,26 @@
+[
+  {
+    "path": "AdvancedMod.cs",
+    "sha256": "6DF48D7F27079C3F764D2A8C1E14F1779543A6DC2B3C90D65AE296361D30CC8B"
+  },
+  {
+    "path": "Basic/Element/Tml/HolyFieldSystem.cs",
+    "sha256": "064687DE642C5BC9DC72A0379A5011D5FB87D0AF650604F54D29F55F111BE604"
+  },
+  {
+    "path": "Basic/Element/Tml/HolyFieldVisuals.cs",
+    "sha256": "431FC900D31909D1D3F721CB93D681B71243AEDD9229D27B72080E6817C9F84A"
+  },
+  {
+    "path": "Basic/Graphics/HolyFieldEffect.cs",
+    "sha256": "5DF19D74854E4DA9107713E8BE68FC98F0D327E4C71F76F2524298892CFBF892"
+  },
+  {
+    "path": "Contents/Development/HolyFieldNetworkTests.cs",
+    "sha256": "B56BF80E2B1DB2F2E37CDC0FF9217AD9ABCCD23B40B235095D74C9AAA3186382"
+  },
+  {
+    "path": "Tests/Run-HolyFieldNetwork.ps1",
+    "sha256": "F98902E0F4CA0C3BD24D307795F47FCF1FFF6E6B52EAE5889C5F59413525A931"
+  }
+]

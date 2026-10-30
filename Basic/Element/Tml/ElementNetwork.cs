@@ -207,13 +207,13 @@ public sealed class ElementNetwork : ModSystem
     }
 
     // 2026-10-26：每次确认伤害后发送一次展示数据，不同步逐刻文字动画。
-    internal static void ShowElementText(Rectangle bounds, int damage, bool crit, TagEnum element, TagEnum[] reactions, int playerIndex)
+    internal static void ShowElementText(Rectangle bounds, int damage, bool crit, TagEnum element, TagEnum[] reactions, int playerIndex, bool hallowed = false)
     {
-        if (Main.netMode != NetmodeID.Server) ElementTextSystem.Show(bounds, damage, crit, element, reactions);
+        if (Main.netMode != NetmodeID.Server) ElementTextSystem.Show(bounds, damage, crit, element, reactions, hallowed);
         if (Main.netMode == NetmodeID.SinglePlayer || damage == 0 && reactions.Length == 0) return;
-        SendElementText(bounds, damage, crit, element, reactions, playerIndex);
+        SendElementText(bounds, damage, crit, element, reactions, playerIndex, hallowed);
     }
-    private static void SendElementText(Rectangle bounds, int damage, bool crit, TagEnum element, TagEnum[] reactions, int playerIndex, int ignore = -1)
+    private static void SendElementText(Rectangle bounds, int damage, bool crit, TagEnum element, TagEnum[] reactions, int playerIndex, bool hallowed, int ignore = -1)
     {
         var packet = ModContent.GetInstance<ElementNetwork>().Mod.GetPacket();
         packet.Write((byte)Packet.ElementText);
@@ -222,6 +222,7 @@ public sealed class ElementNetwork : ModSystem
         packet.Write(damage); packet.Write(crit); packet.Write((int)element);
         packet.Write((byte)reactions.Length);
         foreach (var reaction in reactions) packet.Write((int)reaction);
+        packet.Write(hallowed);
         packet.Send(ignoreClient: ignore);
     }
     private static void ReceiveElementText(BinaryReader reader, int sender)
@@ -238,6 +239,7 @@ public sealed class ElementNetwork : ModSystem
             reactions[i] = (TagEnum)reader.ReadInt32();
             if (!ElementSlots.ReactionFromTag(reactions[i]).HasValue) throw new InvalidDataException("反应文字标签非法");
         }
+        bool hallowed = reader.ReadBoolean();
         if (!ElementSlots.FromTag(element).HasValue || damage < 0 || bounds.Width < 0 || bounds.Height < 0 ||
             bounds.Width > short.MaxValue || bounds.Height > short.MaxValue || playerIndex < -1 || playerIndex >= Main.maxPlayers)
             throw new InvalidDataException("元素文字数据非法");
@@ -246,10 +248,10 @@ public sealed class ElementNetwork : ModSystem
             // NPC 数字只由服务器产生；客户端只能提交自身已确认的玩家反应名。
             if (playerIndex != sender || sender < 0 || sender >= Main.maxPlayers || damage != 0 || !Main.player[sender].active) return;
             if (Vector2.DistanceSquared(bounds.Center.ToVector2(), Main.player[sender].Center) > PlayerTextPositionTolerance * PlayerTextPositionTolerance) return;
-            SendElementText(bounds, damage, crit, element, reactions, playerIndex, sender);
+            SendElementText(bounds, damage, crit, element, reactions, playerIndex, hallowed, sender);
         }
         else if (Main.netMode == NetmodeID.MultiplayerClient)
-            ElementTextSystem.Show(bounds, damage, crit, element, reactions);
+            ElementTextSystem.Show(bounds, damage, crit, element, reactions, hallowed);
     }
     private static void DrawReaction(Vector2 start, Vector2 end, TagEnum reaction)
     {

@@ -11,13 +11,20 @@ namespace AdvancedMod.Basic.Element;
 public sealed class ReactionPlan
 {
     public ElementRoute Route { get; }
-    public HitSnapshot Hit { get; }
+    public HitSnapshot Hit { get; private set; }
     public ReactionDefinition? Definition { get; }
     public ReadOnlyCollection<ElementPortion> Consumption { get; }
     public double WeightedPanelDamage { get; }
     public double DamageSeed { get; }
     public int LifeCost { get; }
     public float CooldownIncrease { get; }
+    public bool IsHallowed { get; private set; }
+    internal void MakeHallowed()
+    {
+        IsHallowed = true;
+        if (!Hit.Tags.Contains(TagEnum.Hallowed))
+            Hit = Hit with { Tags = new TagSet(Hit.Tags.Append(new TagEntry(false, TagEnum.Hallowed))) };
+    }
     internal ElementWorkState NextState { get; }
     internal ReactionPlan(ElementRequest request, PreparedReaction prepared)
     {
@@ -52,6 +59,7 @@ public sealed class ReactionPlan
             }
         }
         Consumption = Array.AsReadOnly(consumed);
+        if (Definition is not null && consumed.Any(c => c.Hallow)) MakeHallowed();
     }
 }
 

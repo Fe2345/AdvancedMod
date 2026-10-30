@@ -7,15 +7,17 @@ namespace AdvancedMod.Basic.Element;
 public static class AmplificationReactions
 {
     public const double BaseCoefficient = 1.5;
+    public const double ConductiveCoefficient = 1.25;
+    public const double MeltCoefficient = 1.75;
     public const double LifeFraction = 0.015;
     public const double LifeThreshold = 0.25;
     public const double CoefficientPerLife = 0.1;
     public const float ChainDecay = 0.7f;
     public const float ChainRadius = 5 * 16;
     public static ReactionTable Create() => new(
-        new(TagEnum.HydroElectro, BaseCoefficient, 60, new(2, 1), new(3, 1.5)),
+        new(TagEnum.HydroElectro, ConductiveCoefficient, 60, new(2, 1), new(3, 1.5)),
         new(TagEnum.HydroAnemo, BaseCoefficient, 40, new(2, 1.5), new(6, 0.75)),
-        new(TagEnum.PyroCryo, BaseCoefficient, 40, new(1, 1.5), new(4, 1.5)));
+        new(TagEnum.PyroCryo, MeltCoefficient, 40, new(1, 1.5), new(4, 1.5)));
 
     /// <summary>仅计算拟支付量；实际扣血必须等待原生命中成功。</summary>
     public static int LifeCost(int life, int maximumLife) =>

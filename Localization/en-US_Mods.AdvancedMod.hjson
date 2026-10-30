@@ -36,7 +36,10 @@ Projectiles: {
 	HallowResonance.DisplayName: Hallow Resonance
 }
 
-NPCs.ElementProbeNPC.DisplayName: Element Probe N P C
+NPCs: {
+	ElementProbeNPC.DisplayName: Element Probe N P C
+	HolyCriticalProbeNPC.DisplayName: Holy Critical Probe N P C
+}
 
 Items: {
 	RainCloudStaff: {
@@ -67,5 +70,13 @@ Buffs: {
 	RainCloudBuff: {
 		DisplayName: Rain Cloud
 		Description: A rain cloud showers your enemies
+	}
+}
+
+BossBars: {
+	Destroyer: {
+		DisplayName: The Destroyer
+		Description: A steel worm forged from hallowed metal
+		HallowDescription: A steel worm ruled by the Hallow
 	}
 }

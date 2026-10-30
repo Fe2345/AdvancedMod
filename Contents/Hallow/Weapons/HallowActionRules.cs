@@ -33,7 +33,10 @@ internal static class HallowActionRules
     // 保持旧存档的1—4编码；风使用标签对应的6，跳过尚不支持的叶绿编码5。
     internal static byte Encode(TagEnum? element) => element is >= TagEnum.Pyro and <= TagEnum.Cryo or TagEnum.Anemo ? (byte)((int)element.Value + 1) : (byte)0;
     internal static TagEnum? Decode(int value) => value is >= 1 and <= 4 or 6 ? (TagEnum)(value - 1) : null;
-    internal static TagSet Tags(TagEnum? element) => element.HasValue ? new(new[] { new TagEntry(false, element.Value) }) : TagSet.Empty;
+    // 神圣仅表示异化资格；未共鸣及零附着反击不会因此凭空触发反应或获得擢升。
+    internal static TagSet Tags(TagEnum? element) => element.HasValue
+        ? new(new[] { new TagEntry(false, element.Value), new TagEntry(false, TagEnum.Hallow) })
+        : new(new[] { new TagEntry(false, TagEnum.Hallow) });
     internal static bool Perfect(int age) => age >= 0 && age < PerfectTicks;
     internal static bool EligibleProjectile(bool hostile, int damage, float speed, int updates, float size) =>
         hostile && damage > 1 && speed * updates > 1 && size < 300;

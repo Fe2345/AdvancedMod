@@ -20,6 +20,19 @@ void Test(string name, Action action)
 void Assert(bool value) { if (!value) throw new Exception("断言失败"); }
 void Near(float a, float b) { Assert(MathF.Abs(a - b) < 0.0001f); }
 
+Test("神圣结界复用三弧样式比例线宽密度与半途关闭", () =>
+{
+    var demo = new WardStyle(); var style = HolyFieldEffect.Style;
+    Assert(ReferenceEquals(style.Path, KnotPath.Reference));
+    Near(style.PatternScale, 1f / 8);
+    Near(style.CoreHalfWidth, demo.CoreHalfWidth * 4); Near(style.GlowHalfWidth, demo.GlowHalfWidth * 4);
+    Assert(style.ParticleCount == demo.ParticleCount * 3);
+    var manager = new WorldEffectManager(); var effect = new HolyFieldEffect(Vector2.Zero, 1024, 17);
+    var handle = manager.Create(effect); manager.Update(dt * 6); manager.Stop(handle);
+    for (int i = 0; i < 26; i++) manager.Update(dt);
+    Assert(effect.IsFinished && manager.Count == 0);
+});
+
 Test("闪电多种方向长度与种子的严格端点横向约束主轴单调", () =>
 {
     foreach (float length in new[] { 0f, 0.01f, 1f, 16f, 40f, 80f, 240f, 2000f })
