@@ -1,0 +1,237 @@
+{
+  "tml": "2026.8.3.0",
+  "results": [
+    {
+      "name": "original",
+      "changedPixels": 12403
+    },
+    {
+      "name": "original-light",
+      "changedPixels": 14753
+    },
+    {
+      "name": "angles-chord",
+      "changedPixels": 17854
+    },
+    {
+      "name": "angles-radius",
+      "changedPixels": 16343
+    },
+    {
+      "name": "background-light",
+      "changedPixels": 3658
+    },
+    {
+      "name": "rotation-179",
+      "changedPixels": 2932
+    },
+    {
+      "name": "rotation-181",
+      "changedPixels": 2906
+    },
+    {
+      "name": "rotation-minus179",
+      "changedPixels": 2906
+    },
+    {
+      "name": "animation-00",
+      "changedPixels": 0
+    },
+    {
+      "name": "original-animation-00",
+      "changedPixels": 0
+    },
+    {
+      "name": "animation-01",
+      "changedPixels": 857
+    },
+    {
+      "name": "original-animation-01",
+      "changedPixels": 1105
+    },
+    {
+      "name": "animation-02",
+      "changedPixels": 2434
+    },
+    {
+      "name": "original-animation-02",
+      "changedPixels": 10768
+    },
+    {
+      "name": "animation-03",
+      "changedPixels": 3041
+    },
+    {
+      "name": "original-animation-03",
+      "changedPixels": 12506
+    },
+    {
+      "name": "animation-04",
+      "changedPixels": 3102
+    },
+    {
+      "name": "original-animation-04",
+      "changedPixels": 12687
+    },
+    {
+      "name": "animation-05",
+      "changedPixels": 3058
+    },
+    {
+      "name": "original-animation-05",
+      "changedPixels": 12670
+    },
+    {
+      "name": "animation-06",
+      "changedPixels": 3022
+    },
+    {
+      "name": "original-animation-06",
+      "changedPixels": 12576
+    },
+    {
+      "name": "animation-07",
+      "changedPixels": 2925
+    },
+    {
+      "name": "original-animation-07",
+      "changedPixels": 12433
+    },
+    {
+      "name": "animation-08",
+      "changedPixels": 2825
+    },
+    {
+      "name": "original-animation-08",
+      "changedPixels": 12188
+    },
+    {
+      "name": "animation-09",
+      "changedPixels": 2733
+    },
+    {
+      "name": "original-animation-09",
+      "changedPixels": 11787
+    },
+    {
+      "name": "animation-10",
+      "changedPixels": 2592
+    },
+    {
+      "name": "original-animation-10",
+      "changedPixels": 11192
+    },
+    {
+      "name": "animation-11",
+      "changedPixels": 2485
+    },
+    {
+      "name": "original-animation-11",
+      "changedPixels": 10369
+    },
+    {
+      "name": "animation-12",
+      "changedPixels": 2381
+    },
+    {
+      "name": "original-animation-12",
+      "changedPixels": 9481
+    },
+    {
+      "name": "animation-13",
+      "changedPixels": 2226
+    },
+    {
+      "name": "original-animation-13",
+      "changedPixels": 8909
+    },
+    {
+      "name": "animation-14",
+      "changedPixels": 2200
+    },
+    {
+      "name": "original-animation-14",
+      "changedPixels": 8579
+    },
+    {
+      "name": "animation-15",
+      "changedPixels": 2165
+    },
+    {
+      "name": "original-animation-15",
+      "changedPixels": 8500
+    },
+    {
+      "name": "animation-16",
+      "changedPixels": 2127
+    },
+    {
+      "name": "original-animation-16",
+      "changedPixels": 8408
+    },
+    {
+      "name": "animation-17",
+      "changedPixels": 2101
+    },
+    {
+      "name": "original-animation-17",
+      "changedPixels": 8237
+    },
+    {
+      "name": "animation-18",
+      "changedPixels": 2004
+    },
+    {
+      "name": "original-animation-18",
+      "changedPixels": 8033
+    },
+    {
+      "name": "animation-19",
+      "changedPixels": 1940
+    },
+    {
+      "name": "original-animation-19",
+      "changedPixels": 7750
+    },
+    {
+      "name": "animation-20",
+      "changedPixels": 1756
+    },
+    {
+      "name": "original-animation-20",
+      "changedPixels": 7320
+    },
+    {
+      "name": "animation-21",
+      "changedPixels": 1391
+    },
+    {
+      "name": "original-animation-21",
+      "changedPixels": 6323
+    },
+    {
+      "name": "animation-22",
+      "changedPixels": 934
+    },
+    {
+      "name": "original-animation-22",
+      "changedPixels": 2254
+    },
+    {
+      "name": "animation-23",
+      "changedPixels": 588
+    },
+    {
+      "name": "original-animation-23",
+      "changedPixels": 881
+    },
+    {
+      "name": "animation-24",
+      "changedPixels": 0
+    },
+    {
+      "name": "original-animation-24",
+      "changedPixels": 0
+    }
+  ]
+}

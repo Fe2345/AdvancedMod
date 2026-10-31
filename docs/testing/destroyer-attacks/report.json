@@ -1,0 +1,194 @@
+{
+  "results": [
+    {
+      "name": "\u53D1\u5C04\u6570\u91CF-Fire",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "\u795E\u5723\u5143\u7D20\u4E0E\u6765\u6E90-0",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "\u4F24\u5BB3\u500D\u7387\u4EC5\u5E94\u7528\u4E00\u6B21-0",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "12\u5411\u7B49\u89D2\u706B\u7130",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "\u4E8C\u9636\u6BB5\u5927\u5C3A\u5BF8\u65E0\u91CD\u529B\u9B54\u7130\u5C3E\u8FF9",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "\u771F\u5B9E\u4F24\u5BB3\u4E0E\u795E\u5723\u5145\u80FD-0",
+      "status": "PASS",
+      "detail": {
+        "life": 5000,
+        "after": 4892,
+        "charge": 0,
+        "actual": 1
+      }
+    },
+    {
+      "name": "\u53D1\u5C04\u6570\u91CF-Wind",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "\u795E\u5723\u5143\u7D20\u4E0E\u6765\u6E90-1",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "\u4F24\u5BB3\u500D\u7387\u4EC5\u5E94\u7528\u4E00\u6B21-1",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "\u516D\u98CE\u5203\u4ECE\u5706\u5916\u6307\u5411\u9501\u5B9A\u5706\u5FC3",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "\u771F\u5B9E\u4F24\u5BB3\u4E0E\u795E\u5723\u5145\u80FD-1",
+      "status": "PASS",
+      "detail": {
+        "life": 4892,
+        "after": 4801,
+        "charge": 1,
+        "actual": 2
+      }
+    },
+    {
+      "name": "\u53D1\u5C04\u6570\u91CF-Laser",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "\u795E\u5723\u5143\u7D20\u4E0E\u6765\u6E90-2",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "\u4F24\u5BB3\u500D\u7387\u4EC5\u5E94\u7528\u4E00\u6B21-2",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "\u516B\u4F53\u8282\u5404\u81EA\u7784\u51C6",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "\u771F\u5B9E\u4F24\u5BB3\u4E0E\u795E\u5723\u5145\u80FD-2",
+      "status": "PASS",
+      "detail": {
+        "life": 4801,
+        "after": 4723,
+        "charge": 2,
+        "actual": 3
+      }
+    },
+    {
+      "name": "\u53D1\u5C04\u6570\u91CF-Water",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "\u795E\u5723\u5143\u7D20\u4E0E\u6765\u6E90-3",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "\u4F24\u5BB3\u500D\u7387\u4EC5\u5E94\u7528\u4E00\u6B21-3",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "\u65CB\u98CE\u7ED5\u9501\u5B9A\u5706\u5FC3\u7F29\u5708",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "\u771F\u5B9E\u4F24\u5BB3\u4E0E\u795E\u5723\u5145\u80FD-3",
+      "status": "PASS",
+      "detail": {
+        "life": 4723,
+        "after": 4671,
+        "charge": 3,
+        "actual": 4
+      }
+    },
+    {
+      "name": "\u53D1\u5C04\u6570\u91CF-Frost",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "\u795E\u5723\u5143\u7D20\u4E0E\u6765\u6E90-4",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "\u4F24\u5BB3\u500D\u7387\u4EC5\u5E94\u7528\u4E00\u6B21-4",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "\u5BD2\u971C\u4E0D\u91CD\u65B0\u8DDF\u8E2A\u73A9\u5BB6",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "\u5BD2\u971C\u5149\u675F\u6CBF\u7EBF\u5224\u5B9A",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "\u5BD2\u971C\u8FDC\u79BB\u5C04\u7EBF\u4E0D\u547D\u4E2D",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "\u771F\u5B9E\u4F24\u5BB3\u4E0E\u795E\u5723\u5145\u80FD-4",
+      "status": "PASS",
+      "detail": {
+        "life": 4671,
+        "after": 4582,
+        "charge": 4,
+        "actual": 5
+      }
+    },
+    {
+      "name": "\u4E00\u9636\u6BB5\u9B54\u7130\u540C\u6837\u6062\u590D\u5C3E\u8FF9",
+      "status": "PASS",
+      "detail": {
+        "dustBefore": 2,
+        "dustAfter": 5,
+        "probeElement": 2,
+        "shotElement": 2
+      }
+    },
+    {
+      "name": "\u9884\u8B66\u7CBE\u786E\u65CB\u8F6C180\u5EA6",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "\u7EC8\u6B62\u7EBF\u505C\u7559\u4E14\u9884\u8B66\u65E0\u4F24\u5BB3",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "\u97AD\u5F62\u5168\u7A0B\u4F4D\u4E8E\u5DF2\u63D0\u793A\u534A\u5706\u5185",
+      "status": "PASS",
+      "detail": null
+    }
+  ]
+}

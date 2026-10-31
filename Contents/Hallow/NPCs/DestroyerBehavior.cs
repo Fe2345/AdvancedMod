@@ -10,6 +10,11 @@ public sealed partial class DestroyerBehavior : HallowMechanicalBehavior
     {
         base.SetDefaults(npc);
         State = MovementState.Burrowing;
+        SegmentElement = ProbeElement.None;
+        ResetPhaseTwo();
     }
-    protected override void BehaviorAI(NPC npc) => TickStateMachine(npc);
+    protected override void BehaviorAI(NPC npc)
+    {
+        if (!TickPhaseTwo(npc)) TickStateMachine(npc);
+    }
 }

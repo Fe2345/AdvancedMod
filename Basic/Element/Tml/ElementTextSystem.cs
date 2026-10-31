@@ -107,8 +107,9 @@ public sealed class ElementTextSystem : ModSystem
         {
             var tags = source switch
             {
-                NPC npc => npc.GetGlobalNPC<CombatGlobalNPC>().Profile.Tags,
-                Projectile projectile => projectile.GetGlobalProjectile<CombatGlobalProjectile>().Profile.Tags,
+                // 晚加入的远端受伤消息可能先于来源实体同步到达，不能假定组件已创建。
+                NPC npc when npc.active && npc.TryGetGlobalNPC<CombatGlobalNPC>(out var data) => data.Profile.Tags,
+                Projectile projectile when projectile.active && projectile.TryGetGlobalProjectile<CombatGlobalProjectile>(out var data) => data.Profile.Tags,
                 _ => TagSet.Empty
             };
             element = ElementTextStyle.SelectElement(tags);

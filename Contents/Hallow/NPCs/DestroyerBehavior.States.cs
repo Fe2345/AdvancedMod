@@ -45,7 +45,7 @@ public sealed partial class DestroyerBehavior
         if (Main.netMode != NetmodeID.MultiplayerClient)
         {
             if (npc.type == NPCID.TheDestroyer && npc.ai[0] == 0f) SpawnSegments(npc);
-            if (npc.type == NPCID.TheDestroyerBody) TickLaser(npc);
+            if (npc.type == NPCID.TheDestroyerBody && HeadBehavior(npc)?.PhaseTwo != true) TickLaser(npc);
         }
 
         bool burrowing = ScanEnvironment(npc);

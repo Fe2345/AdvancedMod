@@ -1,0 +1,100 @@
+{
+  "role": "client2",
+  "unmarkedTicks": 0,
+  "consumed": 0,
+  "remaining": 79,
+  "shots": [
+    {
+      "identity": 1,
+      "owner": 255,
+      "element": "Water",
+      "Returning": true
+    },
+    {
+      "identity": 2,
+      "owner": 255,
+      "element": "Fire",
+      "Returning": false
+    },
+    {
+      "identity": 3,
+      "owner": 255,
+      "element": "Ice",
+      "Returning": false
+    },
+    {
+      "identity": 4,
+      "owner": 255,
+      "element": "Lightning",
+      "Returning": false
+    },
+    {
+      "identity": 5,
+      "owner": 255,
+      "element": "Wind",
+      "Returning": false
+    }
+  ],
+  "players": [
+    {
+      "name": "Mechanical-client1",
+      "ZoneHallow": false,
+      "held": 557
+    },
+    {
+      "name": "Mechanical-client2",
+      "ZoneHallow": true,
+      "held": 3507
+    }
+  ],
+  "results": [
+    {
+      "name": "\u4E09\u738B\u56DB\u4E2A\u5934\u90E8\u5747\u751F\u6210",
+      "status": "PASS"
+    },
+    {
+      "name": "\u5934\u90E8Hallow\u540C\u6B65",
+      "status": "PASS"
+    },
+    {
+      "name": "\u5B8C\u6574\u6BC1\u706D\u8005\u5B50\u8282\u540C\u6B65",
+      "status": "PASS"
+    },
+    {
+      "name": "\u5B50\u8282Hallow\u540C\u6B65",
+      "status": "PASS"
+    },
+    {
+      "name": "\u9996\u6B21AI\u524D\u5DF2\u6709\u6807\u8BB0",
+      "status": "PASS"
+    },
+    {
+      "name": "\u673A\u68B0\u9AB7\u9AC5\u738B\u7A7AAI\u672A\u751F\u6210\u624B\u81C2",
+      "status": "PASS"
+    },
+    {
+      "name": "\u8EAB\u4F53\u5143\u7D20\u9996\u6B21\u4E0E\u665A\u52A0\u5165\u540C\u6B65",
+      "status": "PASS"
+    },
+    {
+      "name": "\u4E94\u79CD\u63A2\u6D4B\u602A\u5143\u7D20\u540C\u6B65",
+      "status": "PASS"
+    },
+    {
+      "name": "\u4E94\u79CD\u5F39\u5E55\u540C\u6B65",
+      "status": "PASS"
+    },
+    {
+      "name": "\u5F39\u5E55\u5143\u7D20\u4E0E\u975E\u795E\u5723\u8D44\u683C\u540C\u6B65",
+      "status": "PASS"
+    },
+    {
+      "name": "\u51FB\u8D25\u6570\u548C\u51CF\u4F24\u540C\u6B65",
+      "status": "PASS"
+    },
+    {
+      "name": "\u5B9E\u9645\u8FDC\u7AEF\u547D\u4E2D\u6C34\u5F39\u8FD4\u822A\u540C\u6B65",
+      "status": "PASS"
+    }
+  ]
+}

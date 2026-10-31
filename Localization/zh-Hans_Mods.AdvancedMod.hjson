@@ -34,6 +34,8 @@ Projectiles: {
 	HallowCounterSword.DisplayName: 天裁反击
 	HallowGuard.DisplayName: 天裁格挡
 	HallowResonance.DisplayName: 元素共鸣
+	// DestroyerCrashProjectile.DisplayName: Destroyer Crash Projectile
+	// DestroyerUltimatePreview.DisplayName: Destroyer Ultimate Preview
 }
 
 NPCs: {

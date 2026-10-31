@@ -1,0 +1,411 @@
+{
+  "role": "server",
+  "unmarkedTicks": 0,
+  "consumed": 0,
+  "remaining": 0,
+  "phaseTwo": [
+    {
+      "state": "Idle",
+      "ReactionCount": 7,
+      "UltimateSerial": 1,
+      "UltimateRepetition": 3
+    }
+  ],
+  "phaseDiagnostics": [
+    {
+      "tick": 1,
+      "state": "Inactive",
+      "ReactionCount": 0,
+      "UltimateSerial": 0,
+      "awaitingReaction": false,
+      "chargeBeforeShot": 0
+    },
+    {
+      "tick": 2,
+      "state": "Crash",
+      "ReactionCount": 0,
+      "UltimateSerial": 0,
+      "awaitingReaction": false,
+      "chargeBeforeShot": 0
+    },
+    {
+      "tick": 16,
+      "state": "Crash",
+      "ReactionCount": 1,
+      "UltimateSerial": 0,
+      "awaitingReaction": true,
+      "chargeBeforeShot": 0
+    },
+    {
+      "tick": 27,
+      "state": "Crash",
+      "ReactionCount": 2,
+      "UltimateSerial": 0,
+      "awaitingReaction": true,
+      "chargeBeforeShot": 1
+    },
+    {
+      "tick": 38,
+      "state": "Crash",
+      "ReactionCount": 3,
+      "UltimateSerial": 0,
+      "awaitingReaction": true,
+      "chargeBeforeShot": 2
+    },
+    {
+      "tick": 51,
+      "state": "Crash",
+      "ReactionCount": 4,
+      "UltimateSerial": 0,
+      "awaitingReaction": true,
+      "chargeBeforeShot": 3
+    },
+    {
+      "tick": 62,
+      "state": "Crash",
+      "ReactionCount": 5,
+      "UltimateSerial": 0,
+      "awaitingReaction": true,
+      "chargeBeforeShot": 4
+    },
+    {
+      "tick": 73,
+      "state": "Crash",
+      "ReactionCount": 6,
+      "UltimateSerial": 0,
+      "awaitingReaction": true,
+      "chargeBeforeShot": 5
+    },
+    {
+      "tick": 86,
+      "state": "Crash",
+      "ReactionCount": 7,
+      "UltimateSerial": 0,
+      "awaitingReaction": true,
+      "chargeBeforeShot": 6
+    },
+    {
+      "tick": 98,
+      "state": "Crash",
+      "ReactionCount": 8,
+      "UltimateSerial": 0,
+      "awaitingReaction": true,
+      "chargeBeforeShot": 7
+    },
+    {
+      "tick": 110,
+      "state": "Crash",
+      "ReactionCount": 9,
+      "UltimateSerial": 0,
+      "awaitingReaction": true,
+      "chargeBeforeShot": 8
+    },
+    {
+      "tick": 122,
+      "state": "Crash",
+      "ReactionCount": 10,
+      "UltimateSerial": 0,
+      "awaitingReaction": true,
+      "chargeBeforeShot": 9
+    },
+    {
+      "tick": 133,
+      "state": "Crash",
+      "ReactionCount": 11,
+      "UltimateSerial": 0,
+      "awaitingReaction": true,
+      "chargeBeforeShot": 10
+    },
+    {
+      "tick": 146,
+      "state": "Crash",
+      "ReactionCount": 12,
+      "UltimateSerial": 0,
+      "awaitingReaction": true,
+      "chargeBeforeShot": 11
+    },
+    {
+      "tick": 158,
+      "state": "Crash",
+      "ReactionCount": 13,
+      "UltimateSerial": 0,
+      "awaitingReaction": true,
+      "chargeBeforeShot": 12
+    },
+    {
+      "tick": 169,
+      "state": "Crash",
+      "ReactionCount": 14,
+      "UltimateSerial": 0,
+      "awaitingReaction": true,
+      "chargeBeforeShot": 13
+    },
+    {
+      "tick": 182,
+      "state": "Crash",
+      "ReactionCount": 15,
+      "UltimateSerial": 0,
+      "awaitingReaction": true,
+      "chargeBeforeShot": 14
+    },
+    {
+      "tick": 194,
+      "state": "Crash",
+      "ReactionCount": 16,
+      "UltimateSerial": 0,
+      "awaitingReaction": true,
+      "chargeBeforeShot": 15
+    },
+    {
+      "tick": 206,
+      "state": "Crash",
+      "ReactionCount": 17,
+      "UltimateSerial": 0,
+      "awaitingReaction": true,
+      "chargeBeforeShot": 16
+    },
+    {
+      "tick": 219,
+      "state": "Crash",
+      "ReactionCount": 18,
+      "UltimateSerial": 0,
+      "awaitingReaction": true,
+      "chargeBeforeShot": 17
+    },
+    {
+      "tick": 231,
+      "state": "Crash",
+      "ReactionCount": 19,
+      "UltimateSerial": 0,
+      "awaitingReaction": true,
+      "chargeBeforeShot": 18
+    },
+    {
+      "tick": 241,
+      "state": "Crash",
+      "ReactionCount": 20,
+      "UltimateSerial": 0,
+      "awaitingReaction": true,
+      "chargeBeforeShot": 19
+    },
+    {
+      "tick": 330,
+      "state": "Recover",
+      "ReactionCount": 20,
+      "UltimateSerial": 0,
+      "awaitingReaction": false,
+      "chargeBeforeShot": 19
+    },
+    {
+      "tick": 372,
+      "state": "UltimateWarning",
+      "ReactionCount": 0,
+      "UltimateSerial": 1,
+      "awaitingReaction": false,
+      "chargeBeforeShot": 19
+    },
+    {
+      "tick": 417,
+      "state": "UltimateStrike",
+      "ReactionCount": 0,
+      "UltimateSerial": 1,
+      "awaitingReaction": false,
+      "chargeBeforeShot": 19
+    },
+    {
+      "tick": 435,
+      "state": "UltimateWarning",
+      "ReactionCount": 0,
+      "UltimateSerial": 1,
+      "awaitingReaction": false,
+      "chargeBeforeShot": 19
+    },
+    {
+      "tick": 480,
+      "state": "UltimateStrike",
+      "ReactionCount": 0,
+      "UltimateSerial": 1,
+      "awaitingReaction": false,
+      "chargeBeforeShot": 19
+    },
+    {
+      "tick": 498,
+      "state": "UltimateWarning",
+      "ReactionCount": 0,
+      "UltimateSerial": 1,
+      "awaitingReaction": false,
+      "chargeBeforeShot": 19
+    },
+    {
+      "tick": 543,
+      "state": "UltimateStrike",
+      "ReactionCount": 0,
+      "UltimateSerial": 1,
+      "awaitingReaction": false,
+      "chargeBeforeShot": 19
+    },
+    {
+      "tick": 561,
+      "state": "Reposition",
+      "ReactionCount": 0,
+      "UltimateSerial": 1,
+      "awaitingReaction": false,
+      "chargeBeforeShot": 19
+    },
+    {
+      "tick": 566,
+      "state": "Reposition",
+      "ReactionCount": 1,
+      "UltimateSerial": 1,
+      "awaitingReaction": true,
+      "chargeBeforeShot": 0
+    },
+    {
+      "tick": 579,
+      "state": "Reposition",
+      "ReactionCount": 2,
+      "UltimateSerial": 1,
+      "awaitingReaction": true,
+      "chargeBeforeShot": 1
+    },
+    {
+      "tick": 590,
+      "state": "Reposition",
+      "ReactionCount": 3,
+      "UltimateSerial": 1,
+      "awaitingReaction": true,
+      "chargeBeforeShot": 2
+    },
+    {
+      "tick": 602,
+      "state": "Reposition",
+      "ReactionCount": 4,
+      "UltimateSerial": 1,
+      "awaitingReaction": true,
+      "chargeBeforeShot": 3
+    },
+    {
+      "tick": 614,
+      "state": "Reposition",
+      "ReactionCount": 5,
+      "UltimateSerial": 1,
+      "awaitingReaction": true,
+      "chargeBeforeShot": 4
+    },
+    {
+      "tick": 621,
+      "state": "Telegraph",
+      "ReactionCount": 5,
+      "UltimateSerial": 1,
+      "awaitingReaction": false,
+      "chargeBeforeShot": 4
+    },
+    {
+      "tick": 626,
+      "state": "Telegraph",
+      "ReactionCount": 6,
+      "UltimateSerial": 1,
+      "awaitingReaction": true,
+      "chargeBeforeShot": 5
+    },
+    {
+      "tick": 633,
+      "state": "Reposition",
+      "ReactionCount": 6,
+      "UltimateSerial": 1,
+      "awaitingReaction": false,
+      "chargeBeforeShot": 5
+    },
+    {
+      "tick": 638,
+      "state": "Reposition",
+      "ReactionCount": 7,
+      "UltimateSerial": 1,
+      "awaitingReaction": true,
+      "chargeBeforeShot": 6
+    },
+    {
+      "tick": 639,
+      "state": "Idle",
+      "ReactionCount": 7,
+      "UltimateSerial": 1,
+      "awaitingReaction": false,
+      "chargeBeforeShot": 6
+    }
+  ],
+  "shots": [],
+  "players": [
+    {
+      "name": "Mechanical-client1",
+      "ZoneHallow": true,
+      "held": 557
+    },
+    {
+      "name": "Mechanical-client2",
+      "ZoneHallow": true,
+      "held": 3507
+    }
+  ],
+  "results": [
+    {
+      "name": "\u4E09\u738B\u56DB\u4E2A\u5934\u90E8\u5747\u751F\u6210",
+      "status": "PASS"
+    },
+    {
+      "name": "\u5934\u90E8Hallow\u540C\u6B65",
+      "status": "PASS"
+    },
+    {
+      "name": "\u5B8C\u6574\u6BC1\u706D\u8005\u5B50\u8282\u540C\u6B65",
+      "status": "PASS"
+    },
+    {
+      "name": "\u5B50\u8282Hallow\u540C\u6B65",
+      "status": "PASS"
+    },
+    {
+      "name": "\u9996\u6B21AI\u524D\u5DF2\u6709\u6807\u8BB0",
+      "status": "PASS"
+    },
+    {
+      "name": "\u673A\u68B0\u9AB7\u9AC5\u738B\u7A7AAI\u672A\u751F\u6210\u624B\u81C2",
+      "status": "PASS"
+    },
+    {
+      "name": "\u4E8C\u9636\u6BB5\u81EA\u52A8\u8FDB\u5165\u5E76\u540C\u6B65",
+      "status": "PASS"
+    },
+    {
+      "name": "\u63A2\u6D4B\u602A\u5F52\u96F6\u540C\u6B65",
+      "status": "PASS"
+    },
+    {
+      "name": "\u771F\u5B9E\u8FDC\u7AEF\u53CD\u5E94\u5B8C\u6210Ultimate",
+      "status": "PASS"
+    },
+    {
+      "name": "\u91CA\u653E\u540E\u771F\u5B9E\u53CD\u5E94\u91CD\u65B0\u5145\u80FD7",
+      "status": "PASS"
+    },
+    {
+      "name": "Ultimate\u4E09\u8F6E\u5B8C\u6210\u6062\u590D\u53EF\u89C1",
+      "status": "PASS"
+    },
+    {
+      "name": "\u4E94\u7C7BCrash\u5F39\u5E55\u9996\u6B21\u53CA\u665A\u52A0\u5165\u540C\u6B65",
+      "status": "PASS"
+    },
+    {
+      "name": "\u65B0\u5F39\u5E55\u795E\u5723\u6807\u7B7E\u4E0EBoss\u6765\u6E90\u540C\u6B65",
+      "status": "PASS"
+    },
+    {
+      "name": "\u65CB\u98CE\u9501\u5B9A\u4E2D\u5FC3\u540C\u6B65",
+      "status": "PASS"
+    },
+    {
+      "name": "Ultimate\u9884\u8B66\u89D2\u5EA6\u4E0E\u65E0\u4F24\u5BB3\u540C\u6B65",
+      "status": "PASS"
+    }
+  ]
+}

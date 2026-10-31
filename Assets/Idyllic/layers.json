@@ -1,0 +1,1077 @@
+[
+  {
+    "texture_size": [
+      160.0,
+      160.0
+    ],
+    "progress": 0.3,
+    "derive_progress": 0.0,
+    "ease_progress": 2.0,
+    "time_scale": 1.0,
+    "mesh_wide_mask": "GradientTexture2D_vhaoy",
+    "apply_mwm": 0.0,
+    "final_base_pow": 1.0,
+    "polarize_uv": 1.0,
+    "polarize_settings": [
+      0.5,
+      0.5,
+      0.6,
+      1.0
+    ],
+    "polar_rot_deg": 0.0,
+    "fisheye_uv": [
+      0.0,
+      0.0
+    ],
+    "fisheye_origin": [
+      0.5,
+      0.5,
+      0.5,
+      0.5
+    ],
+    "fisheye_uv_driver": 0.0,
+    "fisheye_origin_driver": 0.0,
+    "apply_distortion": 1.0,
+    "distort_texture": "NoiseTexture2D_61t0t",
+    "distort_str": 0.10000004619372004,
+    "final_distort_str": 0.6000000536443197,
+    "scroll_distortion": [
+      0.2,
+      -0.5,
+      0.0,
+      -0.5
+    ],
+    "scale_distortion": [
+      0.3,
+      1.0,
+      1.0,
+      1.0
+    ],
+    "polarize_distortion": [
+      0.5,
+      0.5,
+      0.6,
+      1.0
+    ],
+    "distort_str_driver": 5.0,
+    "distort_scroll_driver": 2.0,
+    "distort_scale_driver": 0.0,
+    "index_shift_distortion": false,
+    "base_preset": 4.0,
+    "custom_poly_base_point_count": 10.0,
+    "tweak_with_custom": false,
+    "base_shape_size": 1.0,
+    "base_rot_deg": 0.0,
+    "base_position_if": [
+      -0.05,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "base_scale_if": [
+      0.075,
+      1.0,
+      1.0,
+      1.0
+    ],
+    "base_pos_driver": 0.0,
+    "base_scale_driver": 0.0,
+    "base_feather": 2.0,
+    "feather_falloff": 0.0,
+    "feather_falloff_control": [
+      0.1,
+      0.2,
+      32.0
+    ],
+    "base_energy": [
+      0.6,
+      1.0
+    ],
+    "base_energy_driver": 0.0,
+    "base_mask": "NoiseTexture2D_hsxkh",
+    "base_mask_control": 2.0,
+    "base_mask_pow": [
+      0.1,
+      1.0
+    ],
+    "base_mask_edge": [
+      0.0,
+      0.01,
+      0.0,
+      1.0
+    ],
+    "base_mask_scroll": [
+      0.4,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "base_mask_scale": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+    ],
+    "bm_pow_driver": 0.0,
+    "bm_edge_driver": 6.0,
+    "bm_scroll_driver": 2.0,
+    "bm_scale_driver": 0.0,
+    "index_shift_mask": false,
+    "bm_auto_grad": 2.0,
+    "bmag_edge": [
+      -0.5,
+      1.0,
+      0.0,
+      1.0
+    ],
+    "bmag_str": [
+      1.0,
+      1.0
+    ],
+    "bmag_str_driver": 0.0,
+    "bmag_edge_driver": 0.0,
+    "base_scale_anim": 4.0,
+    "base_scale_anim_driver": 6.0,
+    "color_gradient": "GradientTexture1D_6pf0q",
+    "emission_intensity": 2.0000000298024,
+    "chunky_color": 0.0,
+    "tweak_alpha": 0.0,
+    "shift_gradient": [
+      0.5,
+      -0.25
+    ],
+    "sample_edge_pow": [
+      0.0,
+      3.0,
+      1.0
+    ],
+    "shift_gradient_driver": 5.0,
+    "gradient_bias": 2.0,
+    "gbias_edge": [
+      -1.0,
+      1.0,
+      0.5,
+      1.0
+    ],
+    "gbias_str": [
+      1.0,
+      1.0
+    ],
+    "gbias_shift": [
+      0.0,
+      0.0
+    ],
+    "gbias_rot": [
+      0.0,
+      0.0
+    ],
+    "gb_edge_driver": 4.0,
+    "gb_str_driver": 0.0,
+    "gb_shift_driver": 0.0,
+    "gb_rot_driver": 0.0,
+    "apply_chroma": 0.0,
+    "chroma_samples": 10.0,
+    "chroma_offset": [
+      0.035,
+      0.2
+    ],
+    "chroma_arrangement": 0.0,
+    "chroma_power": 4.0,
+    "tweak_chroma_weight": [
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "rescale_vertex": [
+      3.0,
+      3.0
+    ],
+    "mesh_offset": [
+      0.0,
+      -8.0
+    ],
+    "final_mesh_offset": [
+      0.0,
+      0.0
+    ],
+    "mesh_offset_driver": 0.0,
+    "index_rand_mesh_rot": 0.0,
+    "maintain_irm_domain": false,
+    "mesh_rotation": 0.0,
+    "animate_mesh_rotation": 0.0,
+    "animate_mesh_rot_with": 2.0,
+    "cull_backface": false,
+    "fov": 90.0000042275,
+    "rot_y_deg": 11.000017622500025,
+    "rot_x_deg": 70.000020425,
+    "inset": 0.0,
+    "randomness": 0.0,
+    "randomness_seed": 0.0,
+    "index_shift_randomness": 0.0,
+    "disable_mask": false,
+    "disable_colorize": false,
+    "disable_transparency": false,
+    "isolate_base": 0.0
+  },
+  {
+    "texture_size": [
+      160.0,
+      160.0
+    ],
+    "progress": 0.3,
+    "derive_progress": 0.0,
+    "ease_progress": 2.0,
+    "time_scale": 1.0,
+    "mesh_wide_mask": "GradientTexture2D_whbtt",
+    "apply_mwm": 0.0,
+    "final_base_pow": 1.0,
+    "polarize_uv": 1.0,
+    "polarize_settings": [
+      0.5,
+      0.5,
+      0.6,
+      1.0
+    ],
+    "polar_rot_deg": 0.0,
+    "fisheye_uv": [
+      0.0,
+      0.0
+    ],
+    "fisheye_origin": [
+      0.5,
+      0.5,
+      0.5,
+      0.5
+    ],
+    "fisheye_uv_driver": 0.0,
+    "fisheye_origin_driver": 0.0,
+    "apply_distortion": 1.0,
+    "distort_texture": "NoiseTexture2D_2r2q4",
+    "distort_str": 0.10000004619372004,
+    "final_distort_str": 0.20000004768384017,
+    "scroll_distortion": [
+      0.2,
+      0.1,
+      0.0,
+      0.1
+    ],
+    "scale_distortion": [
+      0.02,
+      1.0,
+      1.0,
+      1.0
+    ],
+    "polarize_distortion": [
+      0.5,
+      0.5,
+      0.6,
+      64.0
+    ],
+    "distort_str_driver": 5.0,
+    "distort_scroll_driver": 0.0,
+    "distort_scale_driver": 0.0,
+    "index_shift_distortion": false,
+    "base_preset": 4.0,
+    "custom_poly_base_point_count": 10.0,
+    "tweak_with_custom": false,
+    "base_shape_size": 1.0,
+    "base_rot_deg": 0.0,
+    "base_position_if": [
+      0.005,
+      -0.1,
+      0.005,
+      0.0
+    ],
+    "base_scale_if": [
+      0.125,
+      1.0,
+      1.0,
+      1.0
+    ],
+    "base_pos_driver": 4.0,
+    "base_scale_driver": 0.0,
+    "base_feather": 0.4,
+    "feather_falloff": 0.0,
+    "feather_falloff_control": [
+      0.1,
+      0.5,
+      0.5
+    ],
+    "base_energy": [
+      1.0,
+      0.0
+    ],
+    "base_energy_driver": 3.0,
+    "base_mask": "NoiseTexture2D_ifnmq",
+    "base_mask_control": 2.0,
+    "base_mask_pow": [
+      1.0,
+      1.0
+    ],
+    "base_mask_edge": [
+      0.0,
+      0.4,
+      0.0,
+      0.6
+    ],
+    "base_mask_scroll": [
+      -0.1,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "base_mask_scale": [
+      0.1,
+      0.1,
+      1.0,
+      1.0
+    ],
+    "bm_pow_driver": 0.0,
+    "bm_edge_driver": 2.0,
+    "bm_scroll_driver": 0.0,
+    "bm_scale_driver": 0.0,
+    "index_shift_mask": false,
+    "bm_auto_grad": 2.0,
+    "bmag_edge": [
+      -0.5,
+      1.0,
+      0.0,
+      1.0
+    ],
+    "bmag_str": [
+      1.0,
+      1.0
+    ],
+    "bmag_str_driver": 0.0,
+    "bmag_edge_driver": 0.0,
+    "base_scale_anim": 5.0,
+    "base_scale_anim_driver": 4.0,
+    "color_gradient": "GradientTexture1D_60yrm",
+    "emission_intensity": 16.0,
+    "chunky_color": 0.0,
+    "tweak_alpha": 0.0,
+    "shift_gradient": [
+      0.5,
+      -0.25
+    ],
+    "sample_edge_pow": [
+      0.0,
+      3.0,
+      1.0
+    ],
+    "shift_gradient_driver": 5.0,
+    "gradient_bias": 2.0,
+    "gbias_edge": [
+      -1.0,
+      1.0,
+      0.5,
+      1.0
+    ],
+    "gbias_str": [
+      1.0,
+      1.0
+    ],
+    "gbias_shift": [
+      0.0,
+      0.0
+    ],
+    "gbias_rot": [
+      0.0,
+      0.0
+    ],
+    "gb_edge_driver": 6.0,
+    "gb_str_driver": 0.0,
+    "gb_shift_driver": 0.0,
+    "gb_rot_driver": 0.0,
+    "apply_chroma": 0.0,
+    "chroma_samples": 10.0,
+    "chroma_offset": [
+      0.035,
+      0.2
+    ],
+    "chroma_arrangement": 0.0,
+    "chroma_power": 4.0,
+    "tweak_chroma_weight": [
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "rescale_vertex": [
+      3.0,
+      3.0
+    ],
+    "mesh_offset": [
+      0.0,
+      -10.0
+    ],
+    "final_mesh_offset": [
+      0.0,
+      0.0
+    ],
+    "mesh_offset_driver": 0.0,
+    "index_rand_mesh_rot": 0.0,
+    "maintain_irm_domain": false,
+    "mesh_rotation": 0.0,
+    "animate_mesh_rotation": 0.0,
+    "animate_mesh_rot_with": 2.0,
+    "cull_backface": false,
+    "fov": 90.0000042275,
+    "rot_y_deg": 11.000017622500025,
+    "rot_x_deg": 70.000020425,
+    "inset": 0.0,
+    "randomness": 0.0,
+    "randomness_seed": 0.0,
+    "index_shift_randomness": 0.0,
+    "disable_mask": false,
+    "disable_colorize": false,
+    "disable_transparency": false,
+    "isolate_base": 0.0
+  },
+  {
+    "texture_size": [
+      160.0,
+      160.0
+    ],
+    "progress": 0.3,
+    "derive_progress": 0.0,
+    "ease_progress": 2.0,
+    "time_scale": 1.0,
+    "mesh_wide_mask": "GradientTexture2D_1o7i5",
+    "apply_mwm": 0.0,
+    "final_base_pow": 1.0,
+    "polarize_uv": 1.0,
+    "polarize_settings": [
+      0.5,
+      0.5,
+      0.6,
+      1.0
+    ],
+    "polar_rot_deg": 0.0,
+    "fisheye_uv": [
+      0.0,
+      0.0
+    ],
+    "fisheye_origin": [
+      0.5,
+      0.5,
+      0.5,
+      0.5
+    ],
+    "fisheye_uv_driver": 0.0,
+    "fisheye_origin_driver": 0.0,
+    "apply_distortion": 1.0,
+    "distort_texture": "NoiseTexture2D_i5j5h",
+    "distort_str": 0.10000004619372004,
+    "final_distort_str": 0.20000004768384017,
+    "scroll_distortion": [
+      -0.2,
+      -0.1,
+      0.0,
+      -0.1
+    ],
+    "scale_distortion": [
+      0.02,
+      1.0,
+      1.0,
+      1.0
+    ],
+    "polarize_distortion": [
+      0.5,
+      0.5,
+      0.6,
+      64.0
+    ],
+    "distort_str_driver": 5.0,
+    "distort_scroll_driver": 0.0,
+    "distort_scale_driver": 0.0,
+    "index_shift_distortion": false,
+    "base_preset": 4.0,
+    "custom_poly_base_point_count": 10.0,
+    "tweak_with_custom": false,
+    "base_shape_size": 1.0,
+    "base_rot_deg": 0.0,
+    "base_position_if": [
+      0.005,
+      0.0,
+      0.005,
+      -0.1
+    ],
+    "base_scale_if": [
+      0.125,
+      1.0,
+      1.0,
+      1.0
+    ],
+    "base_pos_driver": 4.0,
+    "base_scale_driver": 0.0,
+    "base_feather": 0.4,
+    "feather_falloff": 0.0,
+    "feather_falloff_control": [
+      0.1,
+      0.5,
+      0.5
+    ],
+    "base_energy": [
+      1.0,
+      0.0
+    ],
+    "base_energy_driver": 3.0,
+    "base_mask": "NoiseTexture2D_doo0j",
+    "base_mask_control": 2.0,
+    "base_mask_pow": [
+      1.5,
+      1.0
+    ],
+    "base_mask_edge": [
+      0.0,
+      0.3,
+      0.0,
+      1.0
+    ],
+    "base_mask_scroll": [
+      0.1,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "base_mask_scale": [
+      0.1,
+      0.1,
+      1.0,
+      1.0
+    ],
+    "bm_pow_driver": 0.0,
+    "bm_edge_driver": 0.0,
+    "bm_scroll_driver": 0.0,
+    "bm_scale_driver": 0.0,
+    "index_shift_mask": false,
+    "bm_auto_grad": 2.0,
+    "bmag_edge": [
+      -0.5,
+      1.0,
+      0.0,
+      1.0
+    ],
+    "bmag_str": [
+      1.0,
+      1.0
+    ],
+    "bmag_str_driver": 0.0,
+    "bmag_edge_driver": 0.0,
+    "base_scale_anim": 5.0,
+    "base_scale_anim_driver": 4.0,
+    "color_gradient": "GradientTexture1D_jgtai",
+    "emission_intensity": 16.0,
+    "chunky_color": 0.0,
+    "tweak_alpha": 0.0,
+    "shift_gradient": [
+      0.5,
+      -0.25
+    ],
+    "sample_edge_pow": [
+      0.0,
+      3.0,
+      1.0
+    ],
+    "shift_gradient_driver": 5.0,
+    "gradient_bias": 2.0,
+    "gbias_edge": [
+      -1.0,
+      1.0,
+      0.5,
+      1.0
+    ],
+    "gbias_str": [
+      1.0,
+      1.0
+    ],
+    "gbias_shift": [
+      0.0,
+      0.0
+    ],
+    "gbias_rot": [
+      0.0,
+      0.0
+    ],
+    "gb_edge_driver": 0.0,
+    "gb_str_driver": 0.0,
+    "gb_shift_driver": 0.0,
+    "gb_rot_driver": 0.0,
+    "apply_chroma": 0.0,
+    "chroma_samples": 10.0,
+    "chroma_offset": [
+      0.035,
+      0.2
+    ],
+    "chroma_arrangement": 0.0,
+    "chroma_power": 4.0,
+    "tweak_chroma_weight": [
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "rescale_vertex": [
+      2.6,
+      2.6
+    ],
+    "mesh_offset": [
+      0.0,
+      -10.0
+    ],
+    "final_mesh_offset": [
+      0.0,
+      0.0
+    ],
+    "mesh_offset_driver": 0.0,
+    "index_rand_mesh_rot": 0.0,
+    "maintain_irm_domain": false,
+    "mesh_rotation": 0.0,
+    "animate_mesh_rotation": 0.0,
+    "animate_mesh_rot_with": 2.0,
+    "cull_backface": false,
+    "fov": 90.0000042275,
+    "rot_y_deg": 11.000017622500025,
+    "rot_x_deg": 70.000020425,
+    "inset": 1.0,
+    "randomness": 0.0,
+    "randomness_seed": 0.0,
+    "index_shift_randomness": 0.0,
+    "disable_mask": false,
+    "disable_colorize": false,
+    "disable_transparency": false,
+    "isolate_base": 0.0
+  },
+  {
+    "texture_size": [
+      160.0,
+      160.0
+    ],
+    "progress": 0.3,
+    "derive_progress": 0.0,
+    "ease_progress": 2.0,
+    "time_scale": 1.0,
+    "mesh_wide_mask": "GradientTexture2D_uc5dh",
+    "apply_mwm": 0.0,
+    "final_base_pow": 1.0,
+    "polarize_uv": 1.0,
+    "polarize_settings": [
+      0.5,
+      0.5,
+      0.6,
+      1.0
+    ],
+    "polar_rot_deg": 0.0,
+    "fisheye_uv": [
+      0.0,
+      0.0
+    ],
+    "fisheye_origin": [
+      0.5,
+      0.5,
+      0.5,
+      0.5
+    ],
+    "fisheye_uv_driver": 0.0,
+    "fisheye_origin_driver": 0.0,
+    "apply_distortion": 1.0,
+    "distort_texture": "NoiseTexture2D_i8qbd",
+    "distort_str": 0.10000004619372004,
+    "final_distort_str": 0.6000000536443197,
+    "scroll_distortion": [
+      0.2,
+      -0.5,
+      0.0,
+      -0.5
+    ],
+    "scale_distortion": [
+      0.3,
+      1.0,
+      1.0,
+      1.0
+    ],
+    "polarize_distortion": [
+      0.5,
+      0.5,
+      0.6,
+      1.0
+    ],
+    "distort_str_driver": 5.0,
+    "distort_scroll_driver": 2.0,
+    "distort_scale_driver": 0.0,
+    "index_shift_distortion": false,
+    "base_preset": 6.0,
+    "custom_poly_base_point_count": 10.0,
+    "tweak_with_custom": false,
+    "base_shape_size": 1.0,
+    "base_rot_deg": 0.0,
+    "base_position_if": [
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "base_scale_if": [
+      0.5,
+      1.0,
+      1.0,
+      1.0
+    ],
+    "base_pos_driver": 0.0,
+    "base_scale_driver": 0.0,
+    "base_feather": 0.109,
+    "feather_falloff": 1.0,
+    "feather_falloff_control": [
+      0.1,
+      0.5,
+      0.5
+    ],
+    "base_energy": [
+      1.0,
+      1.0
+    ],
+    "base_energy_driver": 0.0,
+    "base_mask": "NoiseTexture2D_16eli",
+    "base_mask_control": 2.0,
+    "base_mask_pow": [
+      1.0,
+      1.0
+    ],
+    "base_mask_edge": [
+      0.0,
+      0.01,
+      0.0,
+      1.0
+    ],
+    "base_mask_scroll": [
+      0.4,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "base_mask_scale": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+    ],
+    "bm_pow_driver": 0.0,
+    "bm_edge_driver": 6.0,
+    "bm_scroll_driver": 2.0,
+    "bm_scale_driver": 0.0,
+    "index_shift_mask": false,
+    "bm_auto_grad": 2.0,
+    "bmag_edge": [
+      -0.5,
+      1.0,
+      0.0,
+      1.0
+    ],
+    "bmag_str": [
+      1.0,
+      1.0
+    ],
+    "bmag_str_driver": 0.0,
+    "bmag_edge_driver": 0.0,
+    "base_scale_anim": 4.0,
+    "base_scale_anim_driver": 6.0,
+    "color_gradient": "GradientTexture1D_i0rfo",
+    "emission_intensity": 3.0000000447036004,
+    "chunky_color": 0.0,
+    "tweak_alpha": 0.0,
+    "shift_gradient": [
+      0.5,
+      -0.25
+    ],
+    "sample_edge_pow": [
+      0.0,
+      3.0,
+      1.0
+    ],
+    "shift_gradient_driver": 5.0,
+    "gradient_bias": 5.0,
+    "gbias_edge": [
+      0.0,
+      1.0,
+      0.5,
+      1.0
+    ],
+    "gbias_str": [
+      1.0,
+      1.0
+    ],
+    "gbias_shift": [
+      0.0,
+      -0.25
+    ],
+    "gbias_rot": [
+      0.0,
+      0.0
+    ],
+    "gb_edge_driver": 4.0,
+    "gb_str_driver": 5.0,
+    "gb_shift_driver": 0.0,
+    "gb_rot_driver": 0.0,
+    "apply_chroma": 1.0,
+    "chroma_samples": 10.0,
+    "chroma_offset": [
+      0.035,
+      -0.2
+    ],
+    "chroma_arrangement": 0.0,
+    "chroma_power": 4.0,
+    "tweak_chroma_weight": [
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "rescale_vertex": [
+      3.0,
+      3.0
+    ],
+    "mesh_offset": [
+      0.0,
+      -10.0
+    ],
+    "final_mesh_offset": [
+      0.0,
+      0.0
+    ],
+    "mesh_offset_driver": 0.0,
+    "index_rand_mesh_rot": 0.0,
+    "maintain_irm_domain": false,
+    "mesh_rotation": 0.0,
+    "animate_mesh_rotation": 0.0,
+    "animate_mesh_rot_with": 2.0,
+    "cull_backface": false,
+    "fov": 90.0000042275,
+    "rot_y_deg": 11.000017622500025,
+    "rot_x_deg": 70.000020425,
+    "inset": 0.0,
+    "randomness": 0.0,
+    "randomness_seed": 0.0,
+    "index_shift_randomness": 0.0,
+    "disable_mask": false,
+    "disable_colorize": false,
+    "disable_transparency": false,
+    "isolate_base": 0.0
+  },
+  {
+    "texture_size": [
+      160.0,
+      160.0
+    ],
+    "progress": 0.3,
+    "derive_progress": 0.0,
+    "ease_progress": 2.0,
+    "time_scale": 1.0,
+    "mesh_wide_mask": "GradientTexture2D_ayelw",
+    "apply_mwm": 0.0,
+    "final_base_pow": 1.0,
+    "polarize_uv": 1.0,
+    "polarize_settings": [
+      0.5,
+      0.5,
+      0.6,
+      1.0
+    ],
+    "polar_rot_deg": 0.0,
+    "fisheye_uv": [
+      0.0,
+      0.0
+    ],
+    "fisheye_origin": [
+      0.5,
+      0.5,
+      0.5,
+      0.5
+    ],
+    "fisheye_uv_driver": 0.0,
+    "fisheye_origin_driver": 0.0,
+    "apply_distortion": 1.0,
+    "distort_texture": "NoiseTexture2D_84poo",
+    "distort_str": 0.10000004619372004,
+    "final_distort_str": 0.20000004768384017,
+    "scroll_distortion": [
+      0.2,
+      -0.5,
+      0.0,
+      -0.5
+    ],
+    "scale_distortion": [
+      0.3,
+      1.0,
+      1.0,
+      1.0
+    ],
+    "polarize_distortion": [
+      0.5,
+      0.5,
+      0.6,
+      1.0
+    ],
+    "distort_str_driver": 5.0,
+    "distort_scroll_driver": 2.0,
+    "distort_scale_driver": 0.0,
+    "index_shift_distortion": false,
+    "base_preset": 6.0,
+    "custom_poly_base_point_count": 10.0,
+    "tweak_with_custom": false,
+    "base_shape_size": 1.0,
+    "base_rot_deg": 0.0,
+    "base_position_if": [
+      0.005,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "base_scale_if": [
+      0.125,
+      1.0,
+      1.0,
+      1.0
+    ],
+    "base_pos_driver": 0.0,
+    "base_scale_driver": 0.0,
+    "base_feather": 0.2,
+    "feather_falloff": 2.0,
+    "feather_falloff_control": [
+      0.1,
+      0.5,
+      0.5
+    ],
+    "base_energy": [
+      1.0,
+      0.0
+    ],
+    "base_energy_driver": 4.0,
+    "base_mask": "NoiseTexture2D_ws2vs",
+    "base_mask_control": 2.0,
+    "base_mask_pow": [
+      0.1,
+      1.0
+    ],
+    "base_mask_edge": [
+      0.0,
+      0.01,
+      0.0,
+      1.0
+    ],
+    "base_mask_scroll": [
+      0.4,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "base_mask_scale": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+    ],
+    "bm_pow_driver": 0.0,
+    "bm_edge_driver": 6.0,
+    "bm_scroll_driver": 2.0,
+    "bm_scale_driver": 0.0,
+    "index_shift_mask": false,
+    "bm_auto_grad": 2.0,
+    "bmag_edge": [
+      -0.5,
+      1.0,
+      0.0,
+      1.0
+    ],
+    "bmag_str": [
+      1.0,
+      1.0
+    ],
+    "bmag_str_driver": 0.0,
+    "bmag_edge_driver": 0.0,
+    "base_scale_anim": 4.0,
+    "base_scale_anim_driver": 6.0,
+    "color_gradient": "GradientTexture1D_vm8f5",
+    "emission_intensity": 16.0,
+    "chunky_color": 0.0,
+    "tweak_alpha": 0.0,
+    "shift_gradient": [
+      0.5,
+      -0.25
+    ],
+    "sample_edge_pow": [
+      0.0,
+      3.0,
+      1.0
+    ],
+    "shift_gradient_driver": 5.0,
+    "gradient_bias": 2.0,
+    "gbias_edge": [
+      -1.0,
+      1.0,
+      0.5,
+      1.0
+    ],
+    "gbias_str": [
+      1.0,
+      1.0
+    ],
+    "gbias_shift": [
+      0.0,
+      0.0
+    ],
+    "gbias_rot": [
+      0.0,
+      0.0
+    ],
+    "gb_edge_driver": 4.0,
+    "gb_str_driver": 0.0,
+    "gb_shift_driver": 0.0,
+    "gb_rot_driver": 0.0,
+    "apply_chroma": 0.0,
+    "chroma_samples": 10.0,
+    "chroma_offset": [
+      0.035,
+      0.2
+    ],
+    "chroma_arrangement": 0.0,
+    "chroma_power": 4.0,
+    "tweak_chroma_weight": [
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "rescale_vertex": [
+      3.0,
+      3.0
+    ],
+    "mesh_offset": [
+      0.0,
+      -11.0
+    ],
+    "final_mesh_offset": [
+      0.0,
+      0.0
+    ],
+    "mesh_offset_driver": 0.0,
+    "index_rand_mesh_rot": 0.0,
+    "maintain_irm_domain": false,
+    "mesh_rotation": 0.0,
+    "animate_mesh_rotation": 0.0,
+    "animate_mesh_rot_with": 2.0,
+    "cull_backface": false,
+    "fov": 90.0000042275,
+    "rot_y_deg": 11.000017622500025,
+    "rot_x_deg": 70.000020425,
+    "inset": 0.0,
+    "randomness": 0.0,
+    "randomness_seed": 0.0,
+    "index_shift_randomness": 0.0,
+    "disable_mask": false,
+    "disable_colorize": false,
+    "disable_transparency": false,
+    "isolate_base": 0.0
+  }
+]

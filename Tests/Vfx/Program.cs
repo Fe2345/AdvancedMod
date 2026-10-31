@@ -437,6 +437,29 @@ Test("剑气云纹周期接缝连续且亮度有限", () =>
     }
 });
 
+Test("风刃暂停不推进、恢复按有限生命周期退出", () =>
+{
+    var fx=new IdyllicEffect(Vector2.Zero,new(),.3f,true);
+    fx.Update(new(10,10));Near(fx.Progress,.3f);Assert(!fx.IsFinished);
+    fx.Paused=false;fx.Update(new(IdyllicEffect.Lifetime,12));Assert(fx.IsFinished);
+    var manager=new WorldEffectManager();var single=new IdyllicEffect(Vector2.Zero,new());
+    manager.Create(single);manager.Update(2);Assert(manager.Count==0);
+});
+Test("风刃极端厚度受半径约束且伪透视有限", () =>
+{
+    foreach(int angle in IdyllicAngles())foreach(float size in new[]{32f,640f,1024f})
+    {
+        var settings=(new IdyllicSettings{ArcAngleDegrees=angle,Size=size,Thickness=48}).Validated();
+        var g=new IdyllicArcGeometry(angle,size);
+        Assert(settings.Thickness<=g.Radius/8+.0001f);
+        for(int i=0;i<=128;i++)
+        {
+            var projected=IdyllicEffect.Perspective(g.Point(i/128f)/640);
+            Assert(float.IsFinite(projected.X)&&float.IsFinite(projected.Y));
+        }
+    }
+});
+static int[] IdyllicAngles()=>new[]{120,90,60,45,30,15};
 if (args.Length > 0) File.WriteAllText(args[0], JsonSerializer.Serialize(new { utc = DateTimeOffset.UtcNow, results }, new JsonSerializerOptions { WriteIndented = true }));
 Console.WriteLine($"结果：{results.Count - failures}/{results.Count} 通过");
 return failures == 0 ? 0 : 1;

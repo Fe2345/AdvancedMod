@@ -1,0 +1,340 @@
+{
+  "results": [
+    {
+      "name": "\u53CD\u5E94\u56DE\u6267\u5141\u8BB8\u4E8B\u52A1\u5B8C\u6210\u987A\u5E8F\u53D8\u5316",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "\u91CD\u590D\u53CD\u5E94\u56DE\u6267\u4E0D\u518D\u7D2F\u8BA1",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "\u91CD\u8FDE\u6E05\u9664\u65E7\u56DE\u6267\u8EAB\u4EFD",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "\u672A\u6E05\u7A7A\u63A2\u6D4B\u602A\u4FDD\u6301\u4E00\u9636\u6BB5",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "\u539F\u751F\u91CA\u653E\u51FB\u8D25\u540E\u8D26\u672C\u5F52\u96F6",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "\u81EA\u52A8\u8FDB\u5165\u5347\u7A7A\u51C6\u5907",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "\u4E8C\u9636\u6BB5\u63A5\u89E6\u6709\u795E\u5723\u8D44\u683C\u4F46\u65E0\u5143\u7D20\u9644\u7740",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "\u51B2\u649E\u8D77\u70B9\u8DDD\u79BB-1",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "\u51B2\u649E\u8D77\u70B9\u8DDD\u79BB-2",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "\u51B2\u649E\u8D77\u70B9\u8DDD\u79BB-3",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "\u51B2\u649E\u8D77\u70B9\u8DDD\u79BB-4",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "\u81EA\u7136\u4E24\u51B2\u4E00\u5DE1\u822A\u5B8C\u6210\u4E24\u8F6E",
+      "status": "PASS",
+      "detail": {
+        "crashStarts": 4,
+        "idleEntries": 2,
+        "PhaseState": 6
+      }
+    },
+    {
+      "name": "\u96F6\u53CD\u5E94\u4E0D\u91CA\u653EUltimate",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "\u901F\u5EA6\u8FDE\u7EED\u65E0\u77AC\u65F6\u8DF3\u6863",
+      "status": "PASS",
+      "detail": 0.6525297
+    },
+    {
+      "name": "\u4E8C\u9636\u6BB5\u4E0D\u4EA7\u751F\u8EAB\u4F53\u6FC0\u5149",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "\u79FB\u52A8\u76EE\u6807\u5B8C\u6210\u53CC\u51B2-\u8DD1\u978B\u5300\u901F7",
+      "status": "PASS",
+      "detail": {
+        "steps": 579,
+        "state": "Recover",
+        "distance": 352.6194
+      }
+    },
+    {
+      "name": "\u79FB\u52A8\u76EE\u6807\u5B8C\u6210\u53CC\u51B2-\u5F80\u8FD47",
+      "status": "PASS",
+      "detail": {
+        "steps": 850,
+        "state": "Recover",
+        "distance": 865.2328
+      }
+    },
+    {
+      "name": "\u79FB\u52A8\u76EE\u6807\u5B8C\u6210\u53CC\u51B2-\u7A7A\u4E2D\u6A2A\u79FB10",
+      "status": "PASS",
+      "detail": {
+        "steps": 874,
+        "state": "Recover",
+        "distance": 289.23322
+      }
+    },
+    {
+      "name": "\u666E\u901A\u53CD\u5E94\u4E0D\u5145\u80FD",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "\u975E\u8BE5Boss\u6765\u6E90\u4E0D\u5145\u80FD",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "\u5931\u6548\u6218\u6597\u8EAB\u4EFD\u4E0D\u5145\u80FD",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "\u4EC5\u9644\u7740\u4E0D\u5145\u80FD",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "\u514D\u75AB\u53D6\u6D88\u547D\u4E2D\u4E0D\u5145\u80FD",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "20\u6B21\u771F\u5B9E\u795E\u5723\u53CD\u5E94\u8BB0\u6EE1",
+      "status": "PASS",
+      "detail": 20
+    },
+    {
+      "name": "\u5145\u80FD\u5C01\u987620",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "\u6EE1\u5145\u4E0D\u6253\u65AD\u6B63\u5728\u51B2\u649E",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "\u5F53\u524D\u6280\u80FD\u7ED3\u675F\u5FC5\u653E\u5E76\u6E05\u96F6",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "Ultimate\u6574\u6761\u94FE\u9690\u85CF\u4E14\u65E0\u63A5\u89E6\u4F24\u5BB3",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "Ultimate\u4E09\u6B21\u9884\u8B66\u4E09\u6B21\u97AD\u6253\u72B6\u6001",
+      "status": "PASS",
+      "detail": {
+        "warning": 3,
+        "strike": 3
+      }
+    },
+    {
+      "name": "Ultimate\u7ED3\u675F\u6062\u590D\u4E24\u51B2\u5FAA\u73AF",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "\u7ED3\u675F\u540E\u6062\u590D\u63A5\u89E6\u4F24\u5BB3",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "\u6D41\u7A0B\u7248\u6CA1\u6709\u97AD\u6253\u4F24\u5BB3\u5F39\u5E55",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "\u767D\u5929\u64A4\u9000\u4ECD\u4E0D\u6062\u590D\u8EAB\u4F53\u6FC0\u5149",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "\u540E\u7EED\u5145\u80FD\u91CD\u65B0\u7D2F\u8BA1",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "\u795E\u5723\u56FE\u6807\u8D44\u6E90\u53EF\u52A0\u8F7D",
+      "status": "PASS",
+      "detail": null
+    }
+  ],
+  "transitions": [
+    {
+      "tick": 122,
+      "from": "Prepare",
+      "to": "Reposition",
+      "distance": 1026.6909,
+      "speed": 13.999999
+    },
+    {
+      "tick": 182,
+      "from": "Reposition",
+      "to": "Telegraph",
+      "distance": 1570.4447,
+      "speed": 14
+    },
+    {
+      "tick": 222,
+      "from": "Telegraph",
+      "to": "Crash",
+      "distance": 1184.486,
+      "speed": 14
+    },
+    {
+      "tick": 309,
+      "from": "Crash",
+      "to": "Recover",
+      "distance": 541.0093,
+      "speed": 21
+    },
+    {
+      "tick": 351,
+      "from": "Recover",
+      "to": "Reposition",
+      "distance": 1272.5059,
+      "speed": 14
+    },
+    {
+      "tick": 411,
+      "from": "Reposition",
+      "to": "Telegraph",
+      "distance": 1542.2313,
+      "speed": 14
+    },
+    {
+      "tick": 441,
+      "from": "Telegraph",
+      "to": "Crash",
+      "distance": 1165.8029,
+      "speed": 13.999999
+    },
+    {
+      "tick": 527,
+      "from": "Crash",
+      "to": "Recover",
+      "distance": 538.7199,
+      "speed": 21
+    },
+    {
+      "tick": 569,
+      "from": "Recover",
+      "to": "Idle",
+      "distance": 1270.2192,
+      "speed": 13.999999
+    },
+    {
+      "tick": 719,
+      "from": "Idle",
+      "to": "Reposition",
+      "distance": 323.76797,
+      "speed": 14
+    },
+    {
+      "tick": 842,
+      "from": "Reposition",
+      "to": "Telegraph",
+      "distance": 913.1431,
+      "speed": 14.000001
+    },
+    {
+      "tick": 881,
+      "from": "Telegraph",
+      "to": "Reposition",
+      "distance": 884.1184,
+      "speed": 14
+    },
+    {
+      "tick": 941,
+      "from": "Reposition",
+      "to": "Telegraph",
+      "distance": 1372.8176,
+      "speed": 14.000001
+    },
+    {
+      "tick": 1001,
+      "from": "Telegraph",
+      "to": "Crash",
+      "distance": 1180.9502,
+      "speed": 14
+    },
+    {
+      "tick": 1087,
+      "from": "Crash",
+      "to": "Recover",
+      "distance": 522.6145,
+      "speed": 21
+    },
+    {
+      "tick": 1129,
+      "from": "Recover",
+      "to": "Reposition",
+      "distance": 1253.209,
+      "speed": 14
+    },
+    {
+      "tick": 1189,
+      "from": "Reposition",
+      "to": "Telegraph",
+      "distance": 1508.5138,
+      "speed": 14.000001
+    },
+    {
+      "tick": 1219,
+      "from": "Telegraph",
+      "to": "Crash",
+      "distance": 1129.4526,
+      "speed": 14
+    },
+    {
+      "tick": 1303,
+      "from": "Crash",
+      "to": "Recover",
+      "distance": 533.0552,
+      "speed": 21
+    },
+    {
+      "tick": 1345,
+      "from": "Recover",
+      "to": "Idle",
+      "distance": 1264.5588,
+      "speed": 13.999999
+    }
+  ]
+}

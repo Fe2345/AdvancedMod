@@ -1,0 +1,247 @@
+[17:04:16.127] [Main Thread/INFO] [tML]: Starting tModLoader client 1.4.4.9+2026.08.3.0|2026.08|stable|Stable|c9545cf27d56c456321e1896274c02adf67d0140|5250950117352386884 built 2026/10/1 8:04
+[17:04:16.133] [Main Thread/INFO] [tML]: Log date: 2026/10/30
+[17:04:16.133] [Main Thread/INFO] [tML]: Running on Windows (v10.0.26200.0) X64 NetCore 8.0.19
+[17:04:16.135] [Main Thread/INFO] [tML]: CPU: 24 processors. RAM: 31.4 GB
+[17:04:16.135] [Main Thread/INFO] [tML]: FrameworkDescription: .NET 8.0.19
+[17:04:16.135] [Main Thread/INFO] [tML]: Executable: D:\Program Files (x86)\Steam\steamapps\common\tModLoader\tModLoader.dll
+[17:04:16.135] [Main Thread/INFO] [tML]: Working Directory: D:\Program Files (x86)\Steam\steamapps\common\tModLoader
+[17:04:16.136] [Main Thread/INFO] [tML]: Launch Parameters: -nosteam -tmlsavedirectory C:\Users\zl\Documents\My Games\Terraria\tModLoader\ModSources\AdvancedMod\obj\idyllic-live -skipselect testPlayer:testWorld
+[17:04:16.138] [Main Thread/INFO] [tML]: Parsed Launch Parameters: -nosteam -tmlsavedirectory C:\Users\zl\Documents\My Games\Terraria\tModLoader\ModSources\AdvancedMod\obj\idyllic-live -skipselect testPlayer:testWorld
+[17:04:16.417] [Main Thread/INFO] [tML]: Saves Are Located At: C:\Users\zl\Documents\My Games\Terraria\tModLoader\ModSources\AdvancedMod\obj\idyllic-live
+[17:04:16.430] [Main Thread/INFO] [tML]: Display DPI: Diagonal DPI is 144. Vertical DPI is 144. Horizontal DPI is 144
+[17:04:16.430] [Main Thread/INFO] [tML]: High DPI Display detected: setting FNA to highdpi mode
+[17:04:16.433] [Main Thread/DEBUG] [FNA]: Querying linked library versions...
+[17:04:16.434] [Main Thread/DEBUG] [FNA]: SDL v2.28.2
+[17:04:16.434] [Main Thread/DEBUG] [FNA]: FNA3D v23.10.0
+[17:04:16.438] [Main Thread/DEBUG] [FNA]: FAudio v22.9.1
+[17:04:16.725] [Main Thread/INFO] [tML]: Distribution Platform: Steam. Detection method: CWD is /steamapps/
+[17:04:16.731] [Main Thread/DEBUG] [TerrariaSteamClient]: Disabled. Launched outside steam client.
+[17:04:16.874] [Main Thread/INFO] [FNA]: SDL.SDL_Init(SDL.SDL_INIT_VIDEO)...
+[17:04:16.877] [Main Thread/INFO] [FNA]: Success
+[17:04:16.877] [Main Thread/INFO] [FNA]: SDL.SDL_InitSubSystem(SDL.SDL_INIT_GAMECONTROLLER)...
+[17:04:17.215] [Main Thread/INFO] [FNA]: Success
+[17:04:17.450] [Main Thread/DEBUG] [tML]: Native Resolve: Steamworks.NET, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null -> steam_api
+[17:04:17.450] [Main Thread/DEBUG] [tML]: 	delegating to Steamworks.NET.AnyCPU resolver
+[17:04:18.000] [Main Thread/INFO] [tML]: Attempt to Port from "D:\Program Files (x86)\Steam\userdata\1015135615\105600\remote\tModLoader" to "D:\Program Files (x86)\Steam\userdata\1015135615\105600\remote\tModLoader-1.4.3" aborted, "2026.8.3.0" is a newer version.
+[17:04:18.050] [Main Thread/INFO] [Terraria]: Steam Cloud Quota: 821.8 MB available
+[17:04:18.074] [Main Thread/INFO] [tML]: Steam beta branch: None
+[17:04:18.074] [Main Thread/INFO] [tML]: SteamBackend: Running standard Steam Desktop Client API
+[17:04:18.099] [Main Thread/INFO] [tML]: Current 1281930 Workshop Folder Directory: D:\Program Files (x86)\Steam\steamapps\common\tModLoader\..\..\workshop
+[17:04:18.436] [Main Thread/INFO] [FNA]: SDL Video Diver: windows
+[17:04:18.437] [Main Thread/INFO] [FNA]: FNA3D Driver: D3D11
+[17:04:18.437] [Main Thread/INFO] [FNA]: D3D11 Adapter: NVIDIA GeForce RTX 5060 Laptop GPU
+[17:04:18.465] [Main Thread/INFO] [tML]: Terraria Steam Install Location assumed to be: D:\Program Files (x86)\Steam\steamapps\common\Terraria
+[17:04:18.833] [Main Thread/INFO] [tML]: Maximum Resolution is 2560 x 1600
+[17:04:18.842] [Main Thread/DEBUG] [Terraria]: Device Created, Adapter: Lenovo DisplayHDR, DisplayMode: {{Width:2560 Height:1600 Format:Color}}, Profile: HiDef, Width: 1280, Height: 900, Fullscreen: False, Display: \\.\DISPLAY1
+[17:04:18.848] [Main Thread/INFO] [tML]: Language: en-US
+[17:04:19.211] [Main Thread/INFO] [FNA]: SDL Audio Driver: 
+[17:04:20.034] [8/DEBUG] [tML]: SSDP search line separator: CRLF
+[17:04:20.617] [8/DEBUG] [tML]: Hook System.Runtime.Loader.AssemblyLoadContext::ValidateAssemblyNameWithSimpleName(Assembly, string) added by tModLoader
+[17:04:33.014] [Main Thread/INFO] [tML]: Finding Mods...
+[17:04:33.146] [Main Thread/INFO] [tML]: 3 most recently changed workshop mods: ContinentOfJourney v0.8.71.23 10/30/2026, RecipeBrowser v0.12.0.3 10/28/2026, FancyLighting v1.2.4 10/27/2026
+[17:04:33.147] [Main Thread/INFO] [tML]: Finding Mods...
+[17:04:33.733] [Main Thread/INFO] [tML]: Finding Mods...
+[17:04:33.760] [Main Thread/INFO] [tML]: Finding Mods...
+[17:04:34.777] [.NET TP Worker/INFO] [tML]: Finding Mods...
+[17:04:34.799] [.NET TP Worker/DEBUG] [tML]: Selected AdvancedMod 0.3.1.0 for tML 2026.8.3.0 from Local.
+[17:04:34.799] [.NET TP Worker/DEBUG] [tML]: Skipped BetterZoom 4.3.1 for tML 2022.9.47.30 from Workshop. Reason: mod is for a different Terraria version/LTS release stream.
+[17:04:34.799] [.NET TP Worker/DEBUG] [tML]: Skipped BetterZoom 5.2.4 for tML 2026.5.3.0 from Workshop. Reason: a newer version exists.
+[17:04:34.799] [.NET TP Worker/DEBUG] [tML]: Skipped BetterZoom 5.2.3 for tML 2025.6.3.0 from Workshop. Reason: a newer version exists.
+[17:04:34.800] [.NET TP Worker/DEBUG] [tML]: Selected BetterZoom 5.3.0 for tML 2026.6.3.4 from Workshop.
+[17:04:34.800] [.NET TP Worker/WARN] [tML]: All remaining versions of BloodSoul would be ignored, continuing anyway so that at least one can be shown. Reason: mod is for a different Terraria version/LTS release stream
+[17:04:34.800] [.NET TP Worker/DEBUG] [tML]: Skipped BloodSoul 0.1.1.2 for tML 2022.3.35.12 from Workshop. Reason: a newer version exists.
+[17:04:34.800] [.NET TP Worker/DEBUG] [tML]: Selected BloodSoul 0.1.1.3 for tML 2022.4.62.6 from Workshop.
+[17:04:34.800] [.NET TP Worker/DEBUG] [tML]: Skipped BossChecklist 1.5.1 for tML 2022.9.47.50 from Workshop. Reason: mod is for a different Terraria version/LTS release stream.
+[17:04:34.800] [.NET TP Worker/DEBUG] [tML]: Skipped BossChecklist 2.2.3.1 for tML 2025.4.3.0 from Workshop. Reason: a newer version exists.
+[17:04:34.800] [.NET TP Worker/DEBUG] [tML]: Skipped BossChecklist 2.2.3 for tML 2025.3.3.1 from Workshop. Reason: a newer version exists.
+[17:04:34.800] [.NET TP Worker/DEBUG] [tML]: Selected BossChecklist 2.2.4 for tML 2026.3.3.0 from Workshop.
+[17:04:34.800] [.NET TP Worker/DEBUG] [tML]: Skipped CalamityCN 2.3.18 for tML 2022.9.47.82 from Workshop. Reason: mod is for a different Terraria version/LTS release stream.
+[17:04:34.800] [.NET TP Worker/DEBUG] [tML]: Skipped CalamityCN 4.0.3.7 for tML 2026.6.3.6 from Workshop. Reason: a newer version exists.
+[17:04:34.800] [.NET TP Worker/DEBUG] [tML]: Skipped CalamityCN 4.0.3.3 for tML 2026.5.3.0 from Workshop. Reason: a newer version exists.
+[17:04:34.800] [.NET TP Worker/DEBUG] [tML]: Selected CalamityCN 4.0.3.8 for tML 2026.8.3.0 from Workshop.
+[17:04:34.800] [.NET TP Worker/DEBUG] [tML]: Skipped CalamityMod 2.0.2.3 for tML 2022.9.47.46 from Workshop. Reason: mod is for a different Terraria version/LTS release stream.
+[17:04:34.800] [.NET TP Worker/DEBUG] [tML]: Skipped CalamityMod 2.2.1 for tML 2026.4.3.0 from Workshop. Reason: a newer version exists.
+[17:04:34.800] [.NET TP Worker/DEBUG] [tML]: Skipped CalamityMod 2.1.2 for tML 2025.12.3.1 from Workshop. Reason: a newer version exists.
+[17:04:34.800] [.NET TP Worker/DEBUG] [tML]: Selected CalamityMod 2.2.4 for tML 2026.6.3.4 from Workshop.
+[17:04:34.800] [.NET TP Worker/DEBUG] [tML]: Skipped CalamityModMusic 2.0.2.2 for tML 2022.9.47.30 from Workshop. Reason: mod is for a different Terraria version/LTS release stream.
+[17:04:34.800] [.NET TP Worker/DEBUG] [tML]: Skipped CalamityModMusic 2.0.5 for tML 2025.4.3.0 from Workshop. Reason: a newer version exists.
+[17:04:34.800] [.NET TP Worker/DEBUG] [tML]: Skipped CalamityModMusic 2.0.4.3 for tML 2024.4.3.0 from Workshop. Reason: a newer version exists.
+[17:04:34.800] [.NET TP Worker/DEBUG] [tML]: Selected CalamityModMusic 2.1 for tML 2025.12.3.0 from Workshop.
+[17:04:34.800] [.NET TP Worker/DEBUG] [tML]: Skipped CatalystMod 1.1.1.1 for tML 2022.9.47.50 from Workshop. Reason: mod is for a different Terraria version/LTS release stream.
+[17:04:34.800] [.NET TP Worker/DEBUG] [tML]: Skipped CatalystMod 1.1.7 for tML 2026.4.3.0 from Workshop. Reason: a newer version exists.
+[17:04:34.800] [.NET TP Worker/DEBUG] [tML]: Skipped CatalystMod 1.1.5 for tML 2025.12.3.0 from Workshop. Reason: a newer version exists.
+[17:04:34.800] [.NET TP Worker/DEBUG] [tML]: Selected CatalystMod 1.1.8 for tML 2026.6.3.4 from Workshop.
+[17:04:34.800] [.NET TP Worker/DEBUG] [tML]: Skipped ContinentOfJourney 0.8.30.33 for tML 2022.9.47.30 from Workshop. Reason: mod is for a different Terraria version/LTS release stream.
+[17:04:34.800] [.NET TP Worker/DEBUG] [tML]: Skipped ContinentOfJourney 0.8.71.15 for tML 2026.7.3.0 from Workshop. Reason: a newer version exists.
+[17:04:34.800] [.NET TP Worker/DEBUG] [tML]: Skipped ContinentOfJourney 0.8.70.88 for tML 2026.3.3.0 from Workshop. Reason: a newer version exists.
+[17:04:34.800] [.NET TP Worker/DEBUG] [tML]: Selected ContinentOfJourney 0.8.71.23 for tML 2026.8.3.0 from Workshop.
+[17:04:34.800] [.NET TP Worker/DEBUG] [tML]: Skipped DDmod 0.2.0.3 for tML 2022.9.47.42 from Workshop. Reason: mod is for a different Terraria version/LTS release stream.
+[17:04:34.800] [.NET TP Worker/DEBUG] [tML]: Skipped DDmod 0.4.4.1 for tML 2026.7.3.0 from Workshop. Reason: a newer version exists.
+[17:04:34.800] [.NET TP Worker/DEBUG] [tML]: Skipped DDmod 0.4.3.8 for tML 2026.4.3.0 from Workshop. Reason: a newer version exists.
+[17:04:34.800] [.NET TP Worker/DEBUG] [tML]: Selected DDmod 0.4.4.2 for tML 2026.8.3.0 from Workshop.
+[17:04:34.800] [.NET TP Worker/DEBUG] [tML]: Skipped DDMusicMod 0.1 for tML 2025.8.3.1 from Workshop. Reason: a newer version exists.
+[17:04:34.800] [.NET TP Worker/DEBUG] [tML]: Skipped DDMusicMod 0.2 for tML 2025.12.3.0 from Workshop. Reason: a newer version exists.
+[17:04:34.800] [.NET TP Worker/DEBUG] [tML]: Selected DDMusicMod 0.2.1 for tML 2026.2.3.0 from Workshop.
+[17:04:34.800] [.NET TP Worker/DEBUG] [tML]: Skipped FancyLighting 0.6.1 for tML 2022.9.47.30 from Workshop. Reason: mod is for a different Terraria version/LTS release stream.
+[17:04:34.800] [.NET TP Worker/DEBUG] [tML]: Skipped FancyLighting 1.1.2 for tML 2026.4.3.0 from Workshop. Reason: a newer version exists.
+[17:04:34.800] [.NET TP Worker/DEBUG] [tML]: Skipped FancyLighting 1.0.2 for tML 2025.10.3.1 from Workshop. Reason: a newer version exists.
+[17:04:34.801] [.NET TP Worker/DEBUG] [tML]: Selected FancyLighting 1.2.4 for tML 2026.8.3.0 from Workshop.
+[17:04:34.801] [.NET TP Worker/DEBUG] [tML]: Skipped FargoSeeds 0.2.1 for tML 2022.5.103.34 from Workshop. Reason: mod is for a different Terraria version/LTS release stream.
+[17:04:34.801] [.NET TP Worker/DEBUG] [tML]: Skipped FargoSeeds 0.5.2 for tML 2024.8.3.2 from Workshop. Reason: a newer version exists.
+[17:04:34.801] [.NET TP Worker/DEBUG] [tML]: Skipped FargoSeeds 0.4 for tML 2024.6.3.1 from Workshop. Reason: a newer version exists.
+[17:04:34.801] [.NET TP Worker/DEBUG] [tML]: Selected FargoSeeds 0.5.3 for tML 2025.5.3.0 from Workshop.
+[17:04:34.801] [.NET TP Worker/DEBUG] [tML]: Skipped Fargowiltas 2.8.8 for tML 2022.9.47.45 from Workshop. Reason: mod is for a different Terraria version/LTS release stream.
+[17:04:34.801] [.NET TP Worker/DEBUG] [tML]: Skipped Fargowiltas 3.3.6.5 for tML 2025.8.3.1 from Workshop. Reason: a newer version exists.
+[17:04:34.801] [.NET TP Worker/DEBUG] [tML]: Skipped Fargowiltas 3.3.6.4 for tML 2025.7.3.0 from Workshop. Reason: a newer version exists.
+[17:04:34.801] [.NET TP Worker/DEBUG] [tML]: Selected Fargowiltas 3.3.6.7 for tML 2026.2.3.0 from Workshop.
+[17:04:34.801] [.NET TP Worker/DEBUG] [tML]: Skipped FargowiltasMusic 0.1 for tML 0.12 from Workshop. Reason: mod is for a different Terraria version/LTS release stream.
+[17:04:34.801] [.NET TP Worker/DEBUG] [tML]: Skipped FargowiltasMusic 0.1.7.1 for tML 2024.8.3.2 from Workshop. Reason: a newer version exists.
+[17:04:34.801] [.NET TP Worker/DEBUG] [tML]: Skipped FargowiltasMusic 0.1.7.2 for tML 2024.10.3.0 from Workshop. Reason: a newer version exists.
+[17:04:34.801] [.NET TP Worker/DEBUG] [tML]: Selected FargowiltasMusic 0.1.7.3 for tML 2024.11.3.1 from Workshop.
+[17:04:34.801] [.NET TP Worker/DEBUG] [tML]: Skipped FargowiltasSouls 1.4.2.5 for tML 2022.9.47.50 from Workshop. Reason: mod is for a different Terraria version/LTS release stream.
+[17:04:34.801] [.NET TP Worker/DEBUG] [tML]: Skipped FargowiltasSouls 1.7.3.8 for tML 2026.2.3.0 from Workshop. Reason: a newer version exists.
+[17:04:34.801] [.NET TP Worker/DEBUG] [tML]: Skipped FargowiltasSouls 1.7.3.7 for tML 2026.1.3.3 from Workshop. Reason: a newer version exists.
+[17:04:34.801] [.NET TP Worker/DEBUG] [tML]: Selected FargowiltasSouls 1.7.3.9 for tML 2026.3.3.0 from Workshop.
+[17:04:34.801] [.NET TP Worker/DEBUG] [tML]: Skipped HEROsMod 0.4.12 for tML 2022.9.47.30 from Workshop. Reason: mod is for a different Terraria version/LTS release stream.
+[17:04:34.801] [.NET TP Worker/DEBUG] [tML]: Skipped HEROsMod 0.4.18 for tML 2025.9.3.0 from Workshop. Reason: a newer version exists.
+[17:04:34.801] [.NET TP Worker/DEBUG] [tML]: Skipped HEROsMod 0.4.17.2 for tML 2025.7.3.1 from Workshop. Reason: a newer version exists.
+[17:04:34.801] [.NET TP Worker/DEBUG] [tML]: Selected HEROsMod 0.4.18.1 for tML 2026.7.3.0 from Workshop.
+[17:04:34.801] [.NET TP Worker/DEBUG] [tML]: Skipped ImproveGame 1.6.3.3 for tML 2022.9.47.47 from Workshop. Reason: mod is for a different Terraria version/LTS release stream.
+[17:04:34.801] [.NET TP Worker/DEBUG] [tML]: Skipped ImproveGame 1.8.1.22 for tML 2026.1.3.2 from Workshop. Reason: a newer version exists.
+[17:04:34.801] [.NET TP Worker/DEBUG] [tML]: Skipped ImproveGame 1.8.1.14 for tML 2025.9.3.0 from Workshop. Reason: a newer version exists.
+[17:04:34.801] [.NET TP Worker/DEBUG] [tML]: Selected ImproveGame 1.8.2 for tML 2026.3.3.0 from Workshop.
+[17:04:34.801] [.NET TP Worker/DEBUG] [tML]: Skipped Lights 1.2.2 for tML 2022.9.47.29 from Workshop. Reason: mod is for a different Terraria version/LTS release stream.
+[17:04:34.801] [.NET TP Worker/DEBUG] [tML]: Skipped Lights 1.4.1 for tML 2024.9.3.0 from Workshop. Reason: a newer version exists.
+[17:04:34.801] [.NET TP Worker/DEBUG] [tML]: Skipped Lights 1.4 for tML 2024.7.3.2 from Workshop. Reason: a newer version exists.
+[17:04:34.801] [.NET TP Worker/DEBUG] [tML]: Selected Lights 1.4.2 for tML 2024.10.3.0 from Workshop.
+[17:04:34.801] [.NET TP Worker/DEBUG] [tML]: Skipped Luminance 1.0.13 for tML 2025.8.3.1 from Workshop. Reason: a newer version exists.
+[17:04:34.801] [.NET TP Worker/DEBUG] [tML]: Skipped Luminance 1.0.12 for tML 2025.2.3.3 from Workshop. Reason: a newer version exists.
+[17:04:34.801] [.NET TP Worker/DEBUG] [tML]: Skipped Luminance 1.0.14 for tML 2026.4.3.0 from Workshop. Reason: a local copy with the same version (but different hash) exists.
+[17:04:34.801] [.NET TP Worker/DEBUG] [tML]: Selected Luminance 1.0.14 for tML 2026.4.3.0 from Local.
+[17:04:34.801] [.NET TP Worker/DEBUG] [tML]: Skipped MagicStorage 0.6.0.3 for tML 2022.9.47.85 from Workshop. Reason: mod is for a different Terraria version/LTS release stream.
+[17:04:34.801] [.NET TP Worker/DEBUG] [tML]: Skipped MagicStorage 0.7.0.9 for tML 2025.6.3.0 from Workshop. Reason: a newer version exists.
+[17:04:34.801] [.NET TP Worker/DEBUG] [tML]: Skipped MagicStorage 0.7.0.8 for tML 2025.5.3.0 from Workshop. Reason: a newer version exists.
+[17:04:34.801] [.NET TP Worker/DEBUG] [tML]: Selected MagicStorage 0.7.0.11 for tML 2025.7.3.0 from Workshop.
+[17:04:34.801] [.NET TP Worker/DEBUG] [tML]: Skipped MEAC 0.1.7 for tML 2022.8.54.4 from Workshop. Reason: mod is for a different Terraria version/LTS release stream.
+[17:04:34.801] [.NET TP Worker/DEBUG] [tML]: Skipped MEAC 0.2.3 for tML 2023.11.3.3 from Workshop. Reason: a newer version exists.
+[17:04:34.801] [.NET TP Worker/DEBUG] [tML]: Selected MEAC 0.3 for tML 2025.3.3.1 from Workshop.
+[17:04:34.801] [.NET TP Worker/DEBUG] [tML]: Skipped RecipeBrowser 0.9.9 for tML 2022.9.47.50 from Workshop. Reason: mod is for a different Terraria version/LTS release stream.
+[17:04:34.801] [.NET TP Worker/DEBUG] [tML]: Skipped RecipeBrowser 0.12 for tML 2025.9.3.3 from Workshop. Reason: a newer version exists.
+[17:04:34.801] [.NET TP Worker/DEBUG] [tML]: Skipped RecipeBrowser 0.10.13 for tML 2025.6.3.0 from Workshop. Reason: a newer version exists.
+[17:04:34.801] [.NET TP Worker/DEBUG] [tML]: Selected RecipeBrowser 0.12.0.3 for tML 2026.7.3.0 from Workshop.
+[17:04:34.801] [.NET TP Worker/DEBUG] [tML]: Skipped SerousCommonLib 1.0.5 for tML 2022.9.47.87 from Workshop. Reason: mod is for a different Terraria version/LTS release stream.
+[17:04:34.801] [.NET TP Worker/DEBUG] [tML]: Skipped SerousCommonLib 1.0.6.1 for tML 2025.4.3.0 from Workshop. Reason: a newer version exists.
+[17:04:34.801] [.NET TP Worker/DEBUG] [tML]: Skipped SerousCommonLib 1.0.5.1 for tML 2023.11.3.3 from Workshop. Reason: a newer version exists.
+[17:04:34.801] [.NET TP Worker/DEBUG] [tML]: Selected SerousCommonLib 1.0.6.2 for tML 2025.6.3.0 from Workshop.
+[17:04:34.801] [.NET TP Worker/DEBUG] [tML]: Skipped SilkyUIFramework 0.2.27.3091 for tML 2026.1.3.2 from Workshop. Reason: a newer version exists.
+[17:04:34.801] [.NET TP Worker/DEBUG] [tML]: Skipped SilkyUIFramework 0.2.26.1181 for tML 2025.11.3.1 from Workshop. Reason: a newer version exists.
+[17:04:34.801] [.NET TP Worker/DEBUG] [tML]: Selected SilkyUIFramework 0.3.0 for tML 2026.3.3.0 from Workshop.
+[17:04:34.801] [.NET TP Worker/DEBUG] [tML]: Skipped StructureHelper 2.2.0 for tML 2022.9.47.30 from Workshop. Reason: mod is for a different Terraria version/LTS release stream.
+[17:04:34.801] [.NET TP Worker/DEBUG] [tML]: Skipped StructureHelper 3.1.0 for tML 2025.8.3.1 from Workshop. Reason: a newer version exists.
+[17:04:34.801] [.NET TP Worker/DEBUG] [tML]: Skipped StructureHelper 3.0.1 for tML 2025.1.3.1 from Workshop. Reason: a newer version exists.
+[17:04:34.801] [.NET TP Worker/DEBUG] [tML]: Selected StructureHelper 3.1.1 for tML 2026.3.3.0 from Workshop.
+[17:04:34.801] [.NET TP Worker/DEBUG] [tML]: Skipped SubworldLibrary 2.2.1.3 for tML 2022.9.47.82 from Workshop. Reason: mod is for a different Terraria version/LTS release stream.
+[17:04:34.802] [.NET TP Worker/DEBUG] [tML]: Skipped SubworldLibrary 2.2.3.3 for tML 2025.9.3.4 from Workshop. Reason: a newer version exists.
+[17:04:34.802] [.NET TP Worker/DEBUG] [tML]: Skipped SubworldLibrary 2.2.3.2 for tML 2025.6.3.0 from Workshop. Reason: a newer version exists.
+[17:04:34.802] [.NET TP Worker/DEBUG] [tML]: Skipped SubworldLibrary 2.3.0.1 for tML 2026.6.3.6 from Workshop. Reason: a local copy with the same version (but different hash) exists.
+[17:04:34.802] [.NET TP Worker/DEBUG] [tML]: Selected SubworldLibrary 2.3.0.1 for tML 2026.6.3.6 from Local.
+[17:04:34.802] [.NET TP Worker/DEBUG] [tML]: Skipped ThoriumMod 1.7.0.3 for tML 2022.9.47.47 from Workshop. Reason: mod is for a different Terraria version/LTS release stream.
+[17:04:34.802] [.NET TP Worker/DEBUG] [tML]: Skipped ThoriumMod 1.7.2.6 for tML 2026.4.3.0 from Workshop. Reason: a newer version exists.
+[17:04:34.802] [.NET TP Worker/DEBUG] [tML]: Skipped ThoriumMod 1.7.2.5 for tML 2025.8.3.1 from Workshop. Reason: a newer version exists.
+[17:04:34.802] [.NET TP Worker/DEBUG] [tML]: Selected ThoriumMod 1.7.2.8 for tML 2026.6.3.3 from Workshop.
+[17:04:34.802] [.NET TP Worker/DEBUG] [tML]: Skipped ThoriumModzhcn 2026.9.10.3 for tML 2026.7.3.0 from Workshop. Reason: a newer version exists.
+[17:04:34.802] [.NET TP Worker/DEBUG] [tML]: Skipped ThoriumModzhcn 2026.8.9.1 for tML 2026.6.3.4 from Workshop. Reason: a newer version exists.
+[17:04:34.802] [.NET TP Worker/DEBUG] [tML]: Selected ThoriumModzhcn 2026.10.12.0 for tML 2026.8.3.0 from Workshop.
+[17:04:34.802] [.NET TP Worker/DEBUG] [tML]: Skipped WingSlotExtra 1.3.4 for tML 2022.8.54.4 from Workshop. Reason: mod is for a different Terraria version/LTS release stream.
+[17:04:34.802] [.NET TP Worker/DEBUG] [tML]: Skipped WingSlotExtra 1.4.5 for tML 2025.3.3.1 from Workshop. Reason: a newer version exists.
+[17:04:34.802] [.NET TP Worker/DEBUG] [tML]: Skipped WingSlotExtra 1.4.4 for tML 2023.12.3.1 from Workshop. Reason: a newer version exists.
+[17:04:34.802] [.NET TP Worker/DEBUG] [tML]: Selected WingSlotExtra 1.4.9 for tML 2026.8.3.0 from Workshop.
+[17:04:34.805] [.NET TP Worker/INFO] [tML]: Finding Mods...
+[17:04:34.826] [.NET TP Worker/INFO] [tML]: Sandboxing: Luminance (Luminance) v1.0.14
+[17:04:34.874] [.NET TP Worker/INFO] [tML]: Sandboxing: SubworldLibrary (Subworld Library) v2.3.0.1
+[17:04:34.887] [.NET TP Worker/INFO] [tML]: Sandboxing: AdvancedMod (Advanced(先进) Mod) v0.3.1.0
+[17:04:34.947] [.NET TP Worker/INFO] [tML]: Constructing Mods...
+[17:04:34.956] [.NET TP Worker/INFO] [tML]: Adding Content: ModLoader (tModLoader) v2026.8.3.0
+[17:04:35.015] [.NET TP Worker/INFO] [tML]: JITModsAsync completed in 65ms
+[17:04:35.020] [.NET TP Worker/INFO] [tML]: Adding Content: Luminance (Luminance) v1.0.14
+[17:04:35.041] [.NET TP Worker/WARN] [Luminance]: Failed to load icon_small.png. Reason: icon_small.png does not exist.
+[17:04:35.059] [.NET TP Worker/DEBUG] [tML]: Hook Terraria.Main::DrawNPCs(bool) added by Luminance
+[17:04:35.068] [.NET TP Worker/DEBUG] [tML]: Hook Terraria.Main::DrawDust() added by Luminance
+[17:04:35.075] [.NET TP Worker/DEBUG] [tML]: Hook Terraria.Main::CheckMonoliths() added by Luminance
+[17:04:35.078] [.NET TP Worker/DEBUG] [tML]: Hook Terraria.Main::DoDraw_DrawNPCsOverTiles() added by Luminance
+[17:04:35.080] [.NET TP Worker/DEBUG] [tML]: Hook Terraria.Main::DrawProjectiles() added by Luminance
+[17:04:35.085] [.NET TP Worker/DEBUG] [tML]: Hook Terraria.Graphics.Effects.FilterManager::EndCapture(RenderTarget2D, RenderTarget2D, RenderTarget2D, Color) added by Luminance
+[17:04:35.091] [.NET TP Worker/DEBUG] [tML]: Hook Terraria.Graphics.Shaders.ArmorShaderData::Apply(Entity, Nullable`1) added by Luminance
+[17:04:35.101] [.NET TP Worker/DEBUG] [tML]: Hook Terraria.Main::SetDisplayMode(int, int, bool) added by Luminance
+[17:04:35.115] [.NET TP Worker/DEBUG] [tML]: Hook Terraria.Audio.SoundEngine::Update() added by Luminance
+[17:04:35.116] [.NET TP Worker/INFO] [tML]: Adding Content: SubworldLibrary (Subworld Library) v2.3.0.1
+[17:04:35.167] [Main Thread/DEBUG] [tML]: ILHook Terraria.Main::DoDraw(GameTime) added by Luminance
+[17:04:35.194] [.NET TP Worker/DEBUG] [tML]: ILHook Terraria.WorldGen::clearWorld() added by SubworldLibrary
+[17:04:35.207] [.NET TP Worker/DEBUG] [tML]: ILHook Terraria.Main::DoUpdateInWorld(Stopwatch) added by SubworldLibrary
+[17:04:35.210] [.NET TP Worker/DEBUG] [tML]: ILHook Terraria.WorldGen::UpdateWorld() added by SubworldLibrary
+[17:04:35.390] [.NET TP Worker/DEBUG] [tML]: ILHook Terraria.Player::Update(int) added by SubworldLibrary
+[17:04:35.393] [.NET TP Worker/DEBUG] [tML]: ILHook Terraria.NPC::UpdateNPC_UpdateGravity() added by SubworldLibrary
+[17:04:35.413] [.NET TP Worker/DEBUG] [tML]: ILHook Terraria.Liquid::Update() added by SubworldLibrary
+[17:04:35.416] [.NET TP Worker/DEBUG] [tML]: ILHook Terraria.Player::SavePlayer(PlayerFileData, bool) added by SubworldLibrary
+[17:04:35.418] [.NET TP Worker/DEBUG] [tML]: ILHook Terraria.IO.WorldFile::SaveWorld(bool, bool) added by SubworldLibrary
+[17:04:35.432] [.NET TP Worker/DEBUG] [tML]: ILHook Terraria.Main::DoDraw(GameTime) added by SubworldLibrary
+[17:04:35.463] [.NET TP Worker/DEBUG] [tML]: ILHook Terraria.Main::DrawBackground() added by SubworldLibrary
+[17:04:35.495] [.NET TP Worker/DEBUG] [tML]: ILHook Terraria.Main::OldDrawBackground() added by SubworldLibrary
+[17:04:35.504] [.NET TP Worker/DEBUG] [tML]: ILHook Terraria.Main::UpdateAudio() added by SubworldLibrary
+[17:04:35.540] [.NET TP Worker/DEBUG] [tML]: ILHook Terraria.IngameOptions::Draw(Main, SpriteBatch) added by SubworldLibrary
+[17:04:35.543] [.NET TP Worker/DEBUG] [tML]: ILHook Terraria.Graphics.Light.TileLightScanner::GetTileLight(int, int, out Vector3) added by SubworldLibrary
+[17:04:35.563] [.NET TP Worker/DEBUG] [tML]: ILHook Terraria.Player::UpdateBiomes() added by SubworldLibrary
+[17:04:35.565] [.NET TP Worker/DEBUG] [tML]: ILHook Terraria.Main::DrawUnderworldBackground(bool) added by SubworldLibrary
+[17:04:35.588] [.NET TP Worker/DEBUG] [tML]: ILHook Terraria.Netplay::AddCurrentServerToRecentList() added by SubworldLibrary
+[17:04:35.591] [.NET TP Worker/DEBUG] [tML]: ILHook Terraria.Main::EraseWorld(int) added by SubworldLibrary
+[17:04:35.591] [.NET TP Worker/WARN] [tML]: SubworldLibrary spent 52ms blocking on asset loading. Avoid using AssetRequestMode.ImmediateLoad during mod loading where possible
+[17:04:35.591] [.NET TP Worker/INFO] [tML]: Adding Content: AdvancedMod (Advanced(先进) Mod) v0.3.1.0
+[17:04:35.640] [.NET TP Worker/DEBUG] [tML]: Hook Terraria.Player::ProcessHitAgainstNPC(Item, Rectangle, int, float, int) added by AdvancedMod
+[17:04:35.685] [.NET TP Worker/DEBUG] [tML]: Hook Terraria.Projectile::Damage() added by AdvancedMod
+[17:04:35.691] [.NET TP Worker/DEBUG] [tML]: Hook Terraria.NPC::StrikeNPC(HitInfo, bool, bool) added by AdvancedMod
+[17:04:35.696] [.NET TP Worker/DEBUG] [tML]: Hook Terraria.Player::Hurt(PlayerDeathReason, int, int, out HurtInfo, bool, bool, int, bool, float, float, float) added by AdvancedMod
+[17:04:35.747] [.NET TP Worker/DEBUG] [tML]: ILHook Terraria.Projectile::Damage() added by AdvancedMod
+[17:04:35.753] [.NET TP Worker/DEBUG] [tML]: Hook Terraria.Projectile::NewProjectile(IEntitySource, float, float, float, float, int, int, float, int, float, float, float) added by AdvancedMod
+[17:04:35.758] [.NET TP Worker/DEBUG] [tML]: Hook Terraria.CombatText::Update() added by AdvancedMod
+[17:04:35.761] [.NET TP Worker/DEBUG] [tML]: Hook Terraria.CombatText::NewText(Rectangle, Color, string, bool, bool) added by AdvancedMod
+[17:04:35.763] [.NET TP Worker/DEBUG] [tML]: Hook Terraria.CombatText::NewText(Rectangle, Color, int, bool, bool) added by AdvancedMod
+[17:04:35.776] [.NET TP Worker/DEBUG] [tML]: Hook Terraria.Player::Hurt(HurtInfo, bool) added by AdvancedMod
+[17:04:35.780] [.NET TP Worker/DEBUG] [tML]: ILHook Terraria.NPC+HitModifiers::GetDamage(float, bool, bool, float) added by AdvancedMod
+[17:04:35.781] [.NET TP Worker/WARN] [tML]: AdvancedMod.Basic.Global.CombatGlobalItem has reference fields (<Profile>k__BackingField) that may not be safe to share between clones.
+For deep-cloning, add a custom Clone override and make proper copies of these fields. If shallow (memberwise) cloning is acceptable, mark the fields with [CloneByReference] or properties with [field: CloneByReference]
+[17:04:35.786] [.NET TP Worker/DEBUG] [tML]: Hook Terraria.Main::Draw(GameTime) added by AdvancedMod
+[17:04:35.788] [.NET TP Worker/WARN] [tML]: AdvancedMod spent 32ms blocking on asset loading. Avoid using AssetRequestMode.ImmediateLoad during mod loading where possible
+[17:04:35.788] [.NET TP Worker/INFO] [tML]: Resizing...
+[17:04:35.851] [.NET TP Worker/INFO] [tML]: Configuring Content: ModLoader (tModLoader) v2026.8.3.0
+[17:04:35.854] [.NET TP Worker/INFO] [tML]: Configuring Content: Luminance (Luminance) v1.0.14
+[17:04:35.854] [.NET TP Worker/INFO] [tML]: Configuring Content: SubworldLibrary (Subworld Library) v2.3.0.1
+[17:04:35.854] [.NET TP Worker/INFO] [tML]: Configuring Content: AdvancedMod (Advanced(先进) Mod) v0.3.1.0
+[17:04:35.922] [.NET TP Worker/INFO] [tML]: Finalizing Content: ModLoader (tModLoader) v2026.8.3.0
+[17:04:35.923] [.NET TP Worker/INFO] [tML]: Finalizing Content: Luminance (Luminance) v1.0.14
+[17:04:35.940] [.NET TP Worker/DEBUG] [tML]: Hook Terraria.GameContent.UI.Elements.UICharacterListItem::DrawSelf(SpriteBatch) added by Luminance
+[17:04:35.942] [.NET TP Worker/DEBUG] [tML]: Hook Terraria.GameContent.UI.States.UICharacterSelect::Draw(SpriteBatch) added by Luminance
+[17:04:35.947] [.NET TP Worker/DEBUG] [tML]: Hook Terraria.GameContent.UI.Elements.UIWorldListItem::DrawSelf(SpriteBatch) added by Luminance
+[17:04:35.949] [.NET TP Worker/DEBUG] [tML]: Hook Terraria.GameContent.UI.States.UIWorldSelect::Draw(SpriteBatch) added by Luminance
+[17:04:35.951] [.NET TP Worker/DEBUG] [tML]: Hook Terraria.ModLoader.NPCLoader::SetDefaults(NPC, bool) added by Luminance
+[17:04:35.964] [.NET TP Worker/INFO] [tML]: Finalizing Content: SubworldLibrary (Subworld Library) v2.3.0.1
+[17:04:35.967] [.NET TP Worker/INFO] [tML]: Finalizing Content: AdvancedMod (Advanced(先进) Mod) v0.3.1.0
+[17:04:35.973] [.NET TP Worker/INFO] [tML]: Mods using the most RAM: SubworldLibrary 10.2 MB, AdvancedMod 8.0 MB, Luminance 347.2 KB
+[17:04:36.027] [.NET TP Worker/INFO] [tML]: RAM physical: tModLoader usage: 870.5 MB, All processes usage: 34.5 GB, Available: -3.1 GB, Total Installed: 31.4 GB
+[17:04:36.027] [.NET TP Worker/INFO] [tML]: RAM virtual: tModLoader usage: 1.5 GB, All processes usage: 32.2 GB
+[17:04:36.028] [.NET TP Worker/WARN] [tML]: Total system memory usage exceeds installed physical memory, tModLoader will likely experience performance issues due to frequent page file access.
+[17:04:36.064] [.NET TP Worker/DEBUG] [tML]: GlobalItem registration stats. Count: 4, Slots per Entity: 2
+	Instanced: 2, Conditional with slot: 0, Conditional by type: 1, Applies to single type: 0
+	List Permutations: 2, Est Memory Consumption: 56 bytes
+[17:04:36.101] [.NET TP Worker/DEBUG] [tML]: GlobalNPC registration stats. Count: 9, Slots per Entity: 8
+	Instanced: 8, Conditional with slot: 4, Conditional by type: 0, Applies to single type: 0
+	List Permutations: 28, Est Memory Consumption: 1192 bytes
+[17:04:36.105] [.NET TP Worker/DEBUG] [tML]: GlobalProjectile registration stats. Count: 4, Slots per Entity: 2
+	Instanced: 2, Conditional with slot: 0, Conditional by type: 0, Applies to single type: 0
+	List Permutations: 1, Est Memory Consumption: 16 bytes
+[17:04:36.174] [.NET TP Worker/INFO] [tML]: Adding Recipes...
+[17:04:36.336] [.NET TP Worker/INFO] [tML]: Finding Mods...
+[17:04:36.360] [.NET TP Worker/INFO] [tML]: Mod Load Completed in 1558ms
+[17:04:36.432] [.NET TP Worker/INFO] [Terraria]: Loading World: testWorld, IsCloud=False, Width: 8400, Height: 2400, Evil: 1, GameMode: 2
+[17:04:36.440] [.NET TP Worker/INFO] [StatusText]: Loading world data
+[17:04:37.159] [.NET TP Worker/INFO] [StatusText]: Settling liquids
+[17:04:38.107] [Main Thread/INFO] [Terraria]: Entering world with player: testPlayer, IsCloud=False, Width: 8400, Height: 2400, Evil: 1, GameMode: 2

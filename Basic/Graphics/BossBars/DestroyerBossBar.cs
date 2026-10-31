@@ -9,6 +9,7 @@ using Terraria.GameContent.UI.BigProgressBar;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
+using ReLogic.Content;
 
 namespace AdvancedMod.Basic.Graphics.BossBars;
 
@@ -25,6 +26,12 @@ public sealed class DestroyerBossBar : ModBossBar
     private static readonly Color Red = new(239, 76, 71);
     private static readonly Color Gold = new(255, 209, 101);
     public static int DrawCount { get; private set; }
+    private Asset<Texture2D> hallowIcon;
+    public override void Load()
+    {
+        if (!Main.dedServ) hallowIcon = ModContent.Request<Texture2D>("AdvancedMod/Assets/UI/HallowIcon", AssetRequestMode.ImmediateLoad);
+    }
+    public override void Unload() => hallowIcon = null;
     public override bool? ModifyInfo(ref BigProgressBarInfo info, ref float life, ref float lifeMax, ref float shield, ref float shieldMax)
     {
         if (info.npcIndexToAimAt < 0 || info.npcIndexToAimAt >= Main.maxNPCs) return false;
@@ -35,13 +42,18 @@ public sealed class DestroyerBossBar : ModBossBar
     public override bool PreDraw(SpriteBatch spriteBatch, NPC npc, ref BossBarDrawParams drawParams)
     {
         var state = npc.GetGlobalNPC<DestroyerBarState>();
-        bool hallow = npc.GetGlobalNPC<DestroyerBehavior>().Hallow;
+        var behavior = npc.GetGlobalNPC<DestroyerBehavior>();
+        bool hallow = behavior.Hallow;
         Main.instance.LoadNPC(NPCID.Probe);
         Texture2D icon = TextureAssets.Npc[NPCID.Probe].Value;
+        Rectangle frame = icon.Frame(1, Main.npcFrameCount[NPCID.Probe]);
+        int energy = state.Remaining, maximum = state.Maximum;
+        if (hallow && behavior.PhaseTwo)
+        { icon = hallowIcon.Value; frame = icon.Bounds; energy = behavior.ReactionCount; maximum = DestroyerPhaseTwoRules.ChargeMaximum; }
         DrawBar(spriteBatch, Language.GetTextValue("Mods.AdvancedMod.BossBars.Destroyer.DisplayName"),
             Language.GetTextValue("Mods.AdvancedMod.BossBars.Destroyer." + (hallow ? "HallowDescription" : "Description")),
             drawParams.LifeMax > 0 ? drawParams.Life / drawParams.LifeMax : 0,
-            state.YellowRatio, state.Remaining, state.Maximum, icon, icon.Frame(1, Main.npcFrameCount[NPCID.Probe]));
+            state.YellowRatio, energy, maximum, icon, frame);
         DrawCount++;
         return false;
     }

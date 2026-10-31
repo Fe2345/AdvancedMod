@@ -15,8 +15,9 @@ internal readonly record struct IdyllicArcGeometry
     public float ArcLength => Radius * AngleRadians;
     public float Sagitta => 2 * Radius * MathF.Pow(MathF.Sin(AngleRadians / 4), 2);
 
+    public IdyllicArcGeometry() : this(60, 640, false) { }
     // 固定半径模式以 60 度对应半径为基准，因此两种模式在默认角度重合。
-    public IdyllicArcGeometry(float arcAngleDegrees = 60, float size = 240, bool fixedRadius = false)
+    public IdyllicArcGeometry(float arcAngleDegrees = 60, float size = 640, bool fixedRadius = false)
     {
         if (!float.IsFinite(arcAngleDegrees) || !float.IsFinite(size))
             throw new ArgumentException("角度和尺寸必须为有限数值。");

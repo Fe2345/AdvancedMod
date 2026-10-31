@@ -1,0 +1,11 @@
+{
+  "license": "MIT",
+  "date": "2026-10-30",
+  "author": "Alkaliii / Ali",
+  "sceneUrl": "https://github.com/Alkaliii/spellbook-gd/blob/master/demos/slash/procedural_idyllic_slash2D.tscn",
+  "sha256": {
+    "scene": "032B67517A576C015733AFD0CAD9C3BEBA4E2D38DE43D345F7FC6917D26DAB98",
+    "shader": "A2E8447E5027AB7B2112A6240D9DA42E1178666960B1B461125F66D53EA6265B"
+  },
+  "shaderUrl": "https://github.com/Alkaliii/spellbook-gd/blob/master/assets/shaders/ps_Idyllic2D.gdshader"
+}

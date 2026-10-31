@@ -1,0 +1,97 @@
+// 2026-10-30：Alkaliii CosmicSlash 五层预设的 HLSL 移植模板。许可见 Assets/Idyllic/LICENSE.txt。
+float4x4 uWorldViewProjection;
+float Progress, Thickness, Feather, TextureScale, Original, Brightness;
+float WindOpacity;
+float3 WindTint;
+texture MaskTexture, DistortTexture, GradientTexture, WideTexture;
+sampler Mask = sampler_state { Texture=<MaskTexture>; MinFilter=Linear; MagFilter=Linear; AddressU=Wrap; AddressV=Wrap; };
+sampler Distort = sampler_state { Texture=<DistortTexture>; MinFilter=Linear; MagFilter=Linear; AddressU=Wrap; AddressV=Wrap; };
+sampler Gradient = sampler_state { Texture=<GradientTexture>; MinFilter=Linear; MagFilter=Linear; AddressU=Clamp; AddressV=Clamp; };
+sampler Wide = sampler_state { Texture=<WideTexture>; MinFilter=Linear; MagFilter=Linear; AddressU=Clamp; AddressV=Clamp; };
+struct VI {float4 Position:POSITION0;float4 Color:COLOR0;float2 UV:TEXCOORD0;};
+struct VO {float4 Position:POSITION0;float2 UV:TEXCOORD0;};
+VO VS(VI v){VO o;o.Position=mul(v.Position,uWorldViewProjection);o.UV=v.UV;return o;}
+float chrono(float n) {
+ float p=Progress;
+ if(n==0)return 0;if(n==1)return p;if(n==2)return p;
+ if(n==3)return p*p*p;if(n==4)return 1-pow(1-p,3);
+ if(n==5)return p<.5?4*p*p*p:1-pow(-2*p+2,3)/2;
+ return 4*pow(p-.5,3)+.5;
+}
+float2 polar(float2 uv){float2 d=uv-.5;return frac(float2(length(d)*1.2,atan2(d.y,d.x)/6.2832));}
+float2 project(float2 uv){
+ float sy=sin(radians(11)),cy=cos(radians(11)),sx=sin(radians(70)),cx=cos(radians(70));
+ float3 w=float3(cy*(uv.x-.5)+sy*sx*(uv.y-.5)+sy*cx*.5,cx*(uv.y-.5)-sx*.5,-sy*(uv.x-.5)+cy*sx*(uv.y-.5)+cy*cx*.5);
+ return w.xy*(cy*cx)/w.z-float2(sy*cx,-sx)+.5;
+}
+float edgeDistance(float2 q,float2 a,float2 b){float2 e=b-a;float2 w=q-a;return dot(w-e*saturate(dot(w,e)/dot(e,e)),w-e*saturate(dot(w,e)/dot(e,e)));}
+float polygonDistance(float2 q,float preset){
+ float2 v[4];int count;
+ if(preset==4){v[0]=float2(-.025,-.5);v[1]=float2(0,.3);v[2]=float2(-.025,.35);v[3]=float2(-.05,.3);count=4;}
+ else{v[0]=float2(-.05,-.5);v[1]=float2(-.05,.4);v[2]=float2(-.15,.4);v[3]=v[2];count=3;}
+ float d=100,s=1;int j=count-1;
+ [unroll]for(int i=0;i<4;i++){if(i<count){float2 a=v[i],b=v[j],e=b-a,w=q-a;d=min(d,edgeDistance(q,a,b));bool3 c=bool3(q.y>=a.y,q.y<b.y,e.x*w.y>e.y*w.x);if(all(c)||all(!c))s=-s;j=i;}}
+ return s*sqrt(d);
+}
+float falloff(float d,float feather,float kind,float3 control){
+ float x=saturate(d/max(feather,0.0001));
+ if(kind==1){float a=control.x,b=control.y;return x<=a?b-b*pow(1-x/a,3):b+(1-b)*pow((x-a)/(1-a),3);}
+ if(kind==2)return pow(x,control.x<.5?2*control.x:1/(2-2*control.x));
+ return x*x*(3-2*x);
+}
+float maskgrad(float2 uv,float type,float2 edge){uv=smoothstep(edge.x,edge.y,uv);return type==5?(uv.x+uv.y)/2:uv.y;}
+// LAYER_BEGIN：由生成器用场景参数替换以下标识符，每层独立编译以消除无用分支。
+float baseImage_LAYER(float2 uv){
+ float2 baseUV=uv-lerp(base_position_if.xy,base_position_if.zw,chrono(base_pos_driver));
+ float2 q=(baseUV-.5)/lerp(base_scale_if.xy,base_scale_if.zw,chrono(base_scale_driver))+.5;
+ float cp=chrono(base_scale_anim_driver),from=step(.5,cp);float wp=base_scale_anim==5?min(cp,.5):cp;float wave=max(1.0/4096,(-cos(wp*6.2831853)*.5+.5));
+ q.y=(q.y-from)/wave+from;
+ float d=polygonDistance(q-.5,base_preset);
+ float aa=max(abs(ddx(d))+abs(ddy(d)),.0001);
+ float shape=1-falloff(d,max(base_feather*Feather,aa),feather_falloff,feather_falloff_control);
+ float2 bmuv=baseUV;
+ // 形状使用归一化角坐标，纹理独立使用实际弧长比例。
+ bmuv+=lerp(base_mask_scroll.xy,base_mask_scroll.zw,chrono(bm_scroll_driver))*Progress;
+ bmuv=(bmuv-.5)/lerp(base_mask_scale.xy,base_mask_scale.zw,chrono(bm_scale_driver))+.5;
+ float2 sampleUV=bmuv;
+ if(Original<.5)sampleUV.y=(sampleUV.y-.5)*TextureScale+.5;
+ float value=tex2D(Mask,sampleUV).r;
+ value*=maskgrad(saturate(bmuv),bm_auto_grad,lerp(bmag_edge.xy,bmag_edge.zw,chrono(bmag_edge_driver)));
+ float2 edge=lerp(base_mask_edge.xy,base_mask_edge.zw,chrono(bm_edge_driver));
+ value=smoothstep(edge.x,edge.y,pow(max(value,0),lerp(base_mask_pow.x,base_mask_pow.y,chrono(bm_pow_driver))));
+ return shape*pow(value,final_base_pow);
+}
+float4 PS_LAYER(VO input):COLOR0{
+ float2 uv=input.UV,a;
+ if(Original>.5){uv=project(uv);clip(uv);clip(1-uv);a=polar(float2(1-uv.y,uv.x));}
+ else a=uv;
+ float2 duv=Original>.5?polar(uv):float2(a.x,(a.y-.5)*TextureScale+.5);
+ duv=(duv-.5)/scale_distortion.xy+.5;
+ float2 scroll=lerp(scroll_distortion.xy,scroll_distortion.zw,chrono(distort_scroll_driver))*Progress*.5;
+ float2 distortion=float2(tex2D(Distort,duv+scroll).r,tex2D(Distort,1-duv.yx+scroll).g)*2-1;
+ a+=distortion*lerp(distort_str,final_distort_str,chrono(distort_str_driver))*.1;
+ float4 poly=baseImage_LAYER(a);float shade=poly.r;
+ if(apply_chroma==1){
+  float4 sum=0,weight=0;
+  [loop]for(int i=0;i<=10;i++){float t=i/10.0;float value=baseImage_LAYER(a+(t-.5)*chroma_offset);float4 w=pow(float4(t,1-abs(2*t-1),1-t,.5),4);sum+=value*value*w;weight+=w;}
+  poly=sqrt(sum/weight);shade=dot(poly.rgb,float3(.333333,.333333,.333333));
+ }
+ float energy=lerp(base_energy.x,base_energy.y,chrono(base_energy_driver));poly*=energy;
+ float2 baseUV=a-lerp(base_position_if.xy,base_position_if.zw,chrono(base_pos_driver));
+ float shift=maskgrad(baseUV,gradient_bias,lerp(gbias_edge.xy,gbias_edge.zw,chrono(gb_edge_driver)))+lerp(gbias_shift.x,gbias_shift.y,chrono(gb_shift_driver));
+ float sample=pow(smoothstep(sample_edge_pow.x,sample_edge_pow.y,shade*energy),sample_edge_pow.z)+lerp(shift_gradient.x,shift_gradient.y,chrono(shift_gradient_driver))+shift;
+ float4 color=tex2D(Gradient,float2(sample,0));
+ float wide=tex2D(Wide,float2(.5,Original>.5?polar(float2(1-uv.y,uv.x)).y:input.UV.y)).r;
+ float alpha=smoothstep(tweak_alpha,1,saturate(dot(poly.rgb,float3(.333333,.333333,.333333)))*color.a*wide);
+ // 原 blend_mix 为直通 RGB/Alpha；FNA AlphaBlend 要求输出预乘。无全屏泛白矩形。
+  float3 rgb=saturate(poly.rgb*color.rgb*emission_intensity*wide*Brightness);
+ // 2026-10-30：风刃改为微冷浅白；保留明暗纹理，透明度同时作用于预乘 RGB 与 Alpha。
+ float light=max(rgb.r,max(rgb.g,rgb.b));rgb=light*WindTint;alpha*=WindOpacity;
+ return float4(rgb*alpha,alpha);
+}
+technique Layer_LAYER {pass Pass0 {VertexShader=compile vs_3_0 VS();PixelShader=compile ps_3_0 PS_LAYER();}}
+// LAYER_END
+
+
+
+

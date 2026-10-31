@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
+using AdvancedMod.Contents.Vfx;
 
 namespace AdvancedMod.Basic.Graphics.Rendering;
 
@@ -12,11 +13,14 @@ public enum VfxMaterial { SoftGlow, PathCore, SlashBody, SlashRibbon, SlashRibbo
 public sealed class VfxDrawQueue
 {
     private readonly record struct SlashStyle(Vector3 Primary, Vector3 Secondary, Vector3 Flame, float Opacity);
-    private readonly record struct Command(VfxMesh Mesh, VfxMaterial Material, int Order, int Sequence, SlashStyle? Slash = null);
+    private readonly record struct Command(VfxMesh Mesh, VfxMaterial Material, int Order, int Sequence, SlashStyle? Slash = null, IdyllicDraw? Idyllic = null);
     private readonly List<Command> commands = new();
     public void Add(VfxMesh mesh, VfxMaterial material, int order = 0)
     { if (mesh.Count > 0) commands.Add(new(mesh, material, order, commands.Count)); }
     public void Clear() => commands.Clear();
+    // 2026-10-30：专用五层材质沿用现有队列与状态恢复，不另建生命周期容器。
+    internal void AddIdyllic(VfxMesh mesh, IdyllicDraw draw)
+    { if(mesh.Count>0) commands.Add(new(mesh,VfxMaterial.SlashBody,0,commands.Count,Idyllic:draw)); }
     /// <summary>提交刀光材质的三色与整体退场透明度；几何仍由调用方持有。</summary>
     public void AddSlash(VfxMesh mesh, Color primary, Color secondary, Color flame, float opacity)
     {
@@ -30,6 +34,8 @@ public sealed class VfxDrawQueue
         var blend = device.BlendState; var depth = device.DepthStencilState; var raster = device.RasterizerState;
         var sampler = device.SamplerStates[0]; var texture = device.Textures[0];
         var sampler1 = device.SamplerStates[1]; var texture1 = device.Textures[1];
+        var sampler2 = device.SamplerStates[2]; var texture2 = device.Textures[2];
+        var sampler3 = device.SamplerStates[3]; var texture3 = device.Textures[3];
         var indices = device.Indices; var bindings = device.GetVertexBuffers();
         try
         {
@@ -43,6 +49,11 @@ public sealed class VfxDrawQueue
             effect.Projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
             foreach (var command in commands)
             {
+                if(command.Idyllic is {} idyllic)
+                {
+                    IdyllicMaterial.Draw(device,command.Mesh,effect.World*effect.View*effect.Projection,idyllic);
+                    continue;
+                }
                 if (command.Material == VfxMaterial.Lightning)
                 {
                     lightningEffect ??= ModContent.Request<Effect>("AdvancedMod/Assets/Shaders/Lightning", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
@@ -87,6 +98,8 @@ public sealed class VfxDrawQueue
             device.BlendState = blend; device.DepthStencilState = depth; device.RasterizerState = raster;
             device.SamplerStates[0] = sampler; device.Textures[0] = texture;
             device.SamplerStates[1] = sampler1; device.Textures[1] = texture1;
+            device.SamplerStates[2] = sampler2; device.Textures[2] = texture2;
+            device.SamplerStates[3] = sampler3; device.Textures[3] = texture3;
             device.Indices = indices; device.SetVertexBuffers(bindings);
         }
     }

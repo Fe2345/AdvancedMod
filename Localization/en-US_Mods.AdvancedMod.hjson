@@ -34,6 +34,8 @@ Projectiles: {
 	HallowCounterSword.DisplayName: Hallow Counter Sword
 	HallowGuard.DisplayName: Hallow Guard
 	HallowResonance.DisplayName: Hallow Resonance
+	DestroyerCrashProjectile.DisplayName: Destroyer Crash Projectile
+	DestroyerUltimatePreview.DisplayName: Destroyer Ultimate Preview
 }
 
 NPCs: {

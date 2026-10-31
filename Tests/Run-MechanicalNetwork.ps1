@@ -1,5 +1,5 @@
 # 真实服务端、召唤客户端、召唤完成后加入的客户端；所有存档均隔离。
-param([string]$TmlDirectory='D:/Program Files (x86)/Steam/steamapps/common/tModLoader',[int]$Port=17781)
+param([string]$TmlDirectory='D:/Program Files (x86)/Steam/steamapps/common/tModLoader',[int]$Port=17781,[switch]$PhaseOne,[switch]$PhaseTwo,[switch]$Attacks)
 $ErrorActionPreference='Stop'
 $root=Split-Path $PSScriptRoot -Parent
 $seed=Join-Path $root 'obj/mechanical-state-live'
@@ -16,6 +16,12 @@ foreach($role in $roles){
 }
 $processes=@()
 $old=$env:ADVANCEDMOD_MECHANICAL_NET_TEST
+$oldPhaseOne=$env:ADVANCEDMOD_PHASE1_NET
+$oldPhaseTwo=$env:ADVANCEDMOD_PHASE2_NET
+$oldAttacks=$env:ADVANCEDMOD_ATTACK_NET
+$env:ADVANCEDMOD_ATTACK_NET=if($Attacks){'1'}else{''}
+$env:ADVANCEDMOD_PHASE2_NET=if($PhaseTwo){'1'}else{''}
+$env:ADVANCEDMOD_PHASE1_NET=if($PhaseOne){'1'}else{''}
 try {
     foreach($role in $roles){
         if($role -eq 'client2'){
@@ -42,5 +48,6 @@ try {
     Write-Output "联机通过：$run"
 } finally {
     $env:ADVANCEDMOD_MECHANICAL_NET_TEST=$old
+    $env:ADVANCEDMOD_PHASE1_NET=$oldPhaseOne; $env:ADVANCEDMOD_PHASE2_NET=$oldPhaseTwo; $env:ADVANCEDMOD_ATTACK_NET=$oldAttacks
     foreach($process in $processes){if(-not $process.HasExited){Stop-Process -Id $process.Id}}
 }
