@@ -37,6 +37,13 @@ public sealed class HallowProbeShot : GlobalProjectile
         Element = probe.Element; SourceSlot = parent.whoAmI;
         sourceIdentity = parent.GetGlobalNPC<CombatGlobalNPC>().NetworkIdentity;
         Configure(projectile);
+        if (Element == ProbeElement.Water)
+        {
+            Vector2 direction = projectile.velocity.SafeNormalize(Vector2.UnitY);
+            // 使用包围圆留出旋转贴图空间；仅权威端偏移一次，客户端直接接收位置。
+            float clearance = parent.Size.Length() * 0.5f + DestroyerPhaseOneRules.WaterVisualRadius * projectile.scale + DestroyerPhaseOneRules.WaterSpawnGap;
+            projectile.Center = parent.Center + direction * clearance;
+        }
         projectile.netUpdate = true;
     }
 
@@ -71,9 +78,14 @@ public sealed class HallowProbeShot : GlobalProjectile
             { projectile.Kill(); return false; }
             NPC source = Main.npc[SourceSlot];
             if (projectile.Distance(source.Center) < DestroyerPhaseOneRules.ReturnCatchDistance) { projectile.Kill(); return false; }
-            Vector2 desired = (source.Center - projectile.Center).SafeNormalize(Vector2.UnitY) * DestroyerPhaseOneRules.ReturnSpeed;
-            projectile.velocity = projectile.velocity.MoveTowards(desired, DestroyerPhaseOneRules.ReturnAcceleration);
+            Vector2 delta = source.Center - projectile.Center;
+            if (projectile.velocity == Vector2.Zero)
+                projectile.velocity = delta.SafeNormalize(Vector2.UnitY) * DestroyerPhaseOneRules.ReturnSpeed;
+            float angle = MathHelper.WrapAngle(delta.ToRotation() - projectile.velocity.ToRotation());
+            projectile.velocity = projectile.velocity.RotatedBy(angle * DestroyerPhaseOneRules.WaterTurnFactor);
         }
+        if (Element == ProbeElement.Water && projectile.velocity != Vector2.Zero)
+            projectile.velocity = Vector2.Normalize(projectile.velocity) * (projectile.velocity.Length() + DestroyerPhaseOneRules.WaterAcceleration);
         projectile.rotation = projectile.velocity.ToRotation() + MathHelper.PiOver2;
         Lighting.AddLight(projectile.Center, DestroyerPhaseOneRules.Color(Element).ToVector3() * 0.3f);
         if (Element == ProbeElement.Fire) DestroyerFlameVisuals.Emit(projectile);

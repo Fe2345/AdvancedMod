@@ -1,0 +1,25 @@
+{
+  "role": "client2",
+  "results": [
+    {
+      "name": "\u9636\u6BB50\u50A8\u91CF\u4E0E\u72EC\u7ACBowner\u955C\u50CF",
+      "status": "PASS"
+    },
+    {
+      "name": "\u9636\u6BB51\u50A8\u91CF\u4E0E\u72EC\u7ACBowner\u955C\u50CF",
+      "status": "PASS"
+    },
+    {
+      "name": "\u9636\u6BB52\u50A8\u91CF\u4E0E\u72EC\u7ACBowner\u955C\u50CF",
+      "status": "PASS"
+    },
+    {
+      "name": "\u8017\u5C3D\u5BA2\u6237\u7AEF\u7981\u6B62\u4F24\u5BB3",
+      "status": "PASS"
+    },
+    {
+      "name": "\u9636\u6BB53\u50A8\u91CF\u4E0E\u72EC\u7ACBowner\u955C\u50CF",
+      "status": "PASS"
+    }
+  ]
+}

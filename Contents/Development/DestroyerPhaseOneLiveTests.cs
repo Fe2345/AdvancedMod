@@ -102,6 +102,15 @@ public sealed class DestroyerPhaseOneLiveTests : ModSystem
                     {
                         water = shot;
                         Check("水弹未命中三秒寿命且每刻一次更新", shot.timeLeft == 180 && shot.extraUpdates == 0);
+                        Check("水弹在探测怪发射方向前方且保留视觉间隙", Vector2.Dot(shot.Center - probe.Center, shot.velocity) > 0 &&
+                            shot.Distance(probe.Center) >= probe.Size.Length() * .5f + DestroyerPhaseOneRules.WaterVisualRadius * shot.scale);
+                        Main.instance.LoadProjectile(ProjectileID.SharknadoBolt);
+                        var waterTexture = Terraria.GameContent.TextureAssets.Projectile[ProjectileID.SharknadoBolt].Value;
+                        var frameSize = new Vector2(waterTexture.Width, waterTexture.Height / Math.Max(1, Main.projFrames[ProjectileID.SharknadoBolt]));
+                        Check("水弹出生间距覆盖原版贴图旋转半径", frameSize.Length() * .5f <= DestroyerPhaseOneRules.WaterVisualRadius);
+                        float speedBefore = shot.velocity.Length();
+                        shot.GetGlobalProjectile<HallowProbeShot>().PreAI(shot);
+                        Check("水弹逐刻小幅加速", Math.Abs(shot.velocity.Length() - speedBefore - DestroyerPhaseOneRules.WaterAcceleration) < .001f);
                     }
                     probe.localAI[0] = 119; probe.justHit = true; probe.VanillaAI();
                     Check("受击重置射击计时-" + i, probe.localAI[0] == 0); probe.justHit = false;
@@ -110,7 +119,19 @@ public sealed class DestroyerPhaseOneLiveTests : ModSystem
                 Check("普通探测怪未接管", ordinary.GetGlobalNPC<HallowProbeBehavior>().Element == ProbeElement.None);
             }
             if (tick == 205) { water.Center = Anchor; water.velocity = Vector2.Zero; }
-            if (tick == 210) Check("水弹实际命中后返航且保留伤害", water.active && water.GetGlobalProjectile<HallowProbeShot>().Returning && water.hostile && water.penetrate == -1);
+            if (tick == 210)
+            {
+                var state = water.GetGlobalProjectile<HallowProbeShot>();
+                Check("水弹实际命中后返航且保留伤害", water.active && state.Returning && water.hostile && water.penetrate == -1);
+                Vector2 previous = water.velocity;
+                Vector2 direction = (Main.npc[state.SourceSlot].Center - water.Center).SafeNormalize(Vector2.UnitY);
+                water.velocity = direction.RotatedBy(MathHelper.PiOver2) * DestroyerPhaseOneRules.ReturnSpeed;
+                state.PreAI(water);
+                float remainingAngle = Math.Abs(MathHelper.WrapAngle(water.velocity.ToRotation() - direction.ToRotation()));
+                Check("返程按角差收敛且不通过减速转向", Math.Abs(remainingAngle - MathHelper.PiOver2 * (1 - DestroyerPhaseOneRules.WaterTurnFactor)) < .001f &&
+                    Math.Abs(water.velocity.Length() - DestroyerPhaseOneRules.ReturnSpeed - DestroyerPhaseOneRules.WaterAcceleration) < .001f);
+                water.velocity = previous;
+            }
             if (tick == 215) { water.Center = Anchor; water.velocity = Vector2.Zero; }
             if (tick == 220) Check("返程实际再次命中玩家", WaterHits >= 2, WaterHits);
             if (tick == 225)

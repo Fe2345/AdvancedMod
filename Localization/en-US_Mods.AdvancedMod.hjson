@@ -25,6 +25,9 @@ Configs: {
 }
 
 Projectiles: {
+	MetalWormWhipProjectile.DisplayName: Metal Worm Whip
+	MetalWormProbe.DisplayName: Temporary Probe
+	MetalWormProbeShot.DisplayName: Elemental Probe Shot
 	RainCloud.DisplayName: Rain Cloud
 	RainCloudDrop.DisplayName: Rain Drop
 	HeavensJudgmentSwing.DisplayName: Heavens Judgment Swing
@@ -44,6 +47,17 @@ NPCs: {
 }
 
 Items: {
+	MetalWormWhip: {
+		DisplayName: Metal Worm Whip
+		Tooltip:
+			'''
+			12 summon tag damage for 4 seconds
+			First hit per swing summons a probe for one random elemental attack at 50% damage
+			Applies 1 Hallowed Electro; probe shots apply no element
+			Your Blade Staff minions spend half their water reserve against your marked targets
+			'''
+	}
+
 	RainCloudStaff: {
 		DisplayName: Rain Cloud Staff
 		Tooltip: Summons a cloud that follows enemies and rains down Hydro damage
@@ -69,6 +83,11 @@ Reactions: {
 }
 
 Buffs: {
+	MetalWormTag: {
+		DisplayName: Metal Worm Mark
+		Description: The marking player's minions deal extra damage and their blades spend half their water reserve
+	}
+
 	RainCloudBuff: {
 		DisplayName: Rain Cloud
 		Description: A rain cloud showers your enemies
@@ -82,3 +101,5 @@ BossBars: {
 		HallowDescription: A steel worm ruled by the Hallow
 	}
 }
+
+BladeStaffWaterTooltip: Each blade stores 1.25 water and applies 0.25 per hit; returns to refill when empty. Your worm mark halves reserve consumption.

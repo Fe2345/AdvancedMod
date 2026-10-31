@@ -1,0 +1,41 @@
+{
+  "role": "server",
+  "results": [
+    {
+      "name": "\u9636\u6BB50\u53CC\u5BA2\u6237\u7AEF\u786E\u8BA4",
+      "status": "PASS"
+    },
+    {
+      "name": "\u670D\u52A1\u5668\u540Cowner\u51CF\u8017\u4E14\u5F02owner\u4E0D\u51CF\u8017",
+      "status": "PASS"
+    },
+    {
+      "name": "\u9636\u6BB51\u53CC\u5BA2\u6237\u7AEF\u786E\u8BA4",
+      "status": "PASS"
+    },
+    {
+      "name": "\u670D\u52A1\u5668\u8017\u5C3D\u4E24\u628A\u72EC\u7ACB\u50A8\u91CF",
+      "status": "PASS"
+    },
+    {
+      "name": "\u9636\u6BB52\u53CC\u5BA2\u6237\u7AEF\u786E\u8BA4",
+      "status": "PASS"
+    },
+    {
+      "name": "\u670D\u52A1\u5668\u56DE\u5145\u6062\u590D",
+      "status": "PASS"
+    },
+    {
+      "name": "\u9636\u6BB53\u53CC\u5BA2\u6237\u7AEF\u786E\u8BA4",
+      "status": "PASS"
+    },
+    {
+      "name": "\u670D\u52A1\u5668\u91CD\u5EFA\u97AD\u5B50\u7ECFowner\u751F\u6210\u4E00\u6B2150%\u63A2\u6D4B\u602A",
+      "status": "PASS"
+    },
+    {
+      "name": "\u771F\u5B9E\u7F51\u7EDC\u6D3E\u751F\u5F39\u4E00\u6B21\u4E14\u5143\u7D20\u53C2\u6570\u6807\u7B7E\u5B8C\u6574",
+      "status": "PASS"
+    }
+  ]
+}

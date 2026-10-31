@@ -47,6 +47,7 @@ public sealed class HolyReactionLiveTests : ModSystem
             ("节点刷新及十节点上限", Nodes), ("同次导电核心最多充能一次", CoreCharge),
             ("天火一次冷却仅触发一次", SkyFire), ("真实伤害保留增伤且忽略防御抗性", TrueDamage),
             ("龙卷两目标往返与孤立目标终止", Tornado), ("龙卷首轮及结束计时", Timers),
+            ("龙卷渐加速与追击超时不强制命中", TornadoFlight),
             ("任意弦覆盖与交叉不重复伤害", Discharge), ("Level实时读取角色记录", Levels),
             ("龙卷保留100%暴击", Critical),
             ("实际汽化支付实时提高范围内水风伤害", LiveReduction),
@@ -316,6 +317,21 @@ public sealed class HolyReactionLiveTests : ModSystem
         HolyFieldSystem.RecordLife(f, 1); Near(f.TornadoDue!.Value - HolyFieldSystem.Tick, 900);
         f.TornadoDue = HolyFieldSystem.Tick; HolyFieldSystem.Update(f);
         Near(f.TornadoDue!.Value - HolyFieldSystem.Tick, 900); Near(f.Life.Total, 150);
+    }
+    private static void TornadoFlight()
+    {
+        var f = Field(); var a = N(800); var b = N(-800);
+        f.Storm = new(Origin, 3);
+        HolyFieldSystem.Update(f);
+        Check(f.Storm is not null, "首次飞行提前终止");
+        Near(f.Storm!.Velocity.Length(), HolyReactionRules.TornadoSpeed + HolyReactionRules.TornadoAcceleration * HolyReactionRules.TornadoUpdates);
+        Check(f.Storm.Position.X > Origin.X && f.Storm.Position.X < a.Center.X, "首刻未沿目标方向连续运动");
+        var storm = f.Storm; storm.Elapsed = HolyReactionRules.MaximumFlight - 1;
+        storm.Position = Origin; storm.Velocity = Vector2.UnitX * HolyReactionRules.TornadoSpeed;
+        int before = a.life;
+        HolyFieldSystem.Update(f);
+        Check(f.Storm is null && a.life == before && b.life == b.lifeMax, "超时强制抵达或造成伤害");
+        Near(f.TornadoDue!.Value - HolyFieldSystem.Tick, HolyReactionRules.TornadoCooldown);
     }
     private static void Discharge()
     {

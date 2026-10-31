@@ -14,6 +14,8 @@ public sealed class AdvancedMod : Mod
             Contents.Hallow.NPCs.HallowProbeShot.ReceiveReturn(reader, whoAmI);
         else if (kind == Contents.Hallow.NPCs.DestroyerReactionCounter.PacketKind)
             Contents.Hallow.NPCs.DestroyerReactionCounter.Receive(reader, whoAmI);
+        else if (kind == Contents.Hallow.Weapons.MetalWormWhipProjectile.ProbePacketKind)
+            Contents.Hallow.Weapons.MetalWormWhipProjectile.ReceiveProbe(reader);
         else if (kind == Basic.Element.Tml.HolyFieldVisuals.PacketKind)
             Basic.Element.Tml.HolyFieldVisuals.Receive(reader, whoAmI);
         else

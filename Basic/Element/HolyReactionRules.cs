@@ -12,7 +12,11 @@ public static class HolyReactionRules
     public const float BaseRadius = 1024, TeleportRadiusFactor = 4, BridgeRadius = 60;
     // 原版速度仪使用每英里42240像素、每小时216000游戏刻。
     public const float PixelsPerTickPerMph = 42240f / 216000f;
-    public const float FieldSpeed = 100 * PixelsPerTickPerMph, TornadoSpeed = 45 * PixelsPerTickPerMph;
+    public const float FieldSpeed = 100 * PixelsPerTickPerMph;
+    // 利刃台风的速度以子更新计；每游戏刻执行三次运动和碰撞。
+    public const int TornadoUpdates = 3;
+    public const float TornadoSpeed = 6f, TornadoAcceleration = 0.0025f, TornadoTurnFactor = 0.1f;
+    public const float TornadoHitWidth = 30f;
     public const float ResistancePerLife = 0.0002f, MaximumReduction = 0.15f, TornadoDamagePerLevel = 2.5f;
 
     public static int Payment(int proposed, int lifeBefore, int predictedDamage) =>
@@ -20,8 +24,6 @@ public static class HolyReactionRules
         (int)Math.Ceiling(proposed * Math.Min(1d, (double)lifeBefore / predictedDamage));
     public static int Bounces(int recordedLife) => Math.Min(MaximumBounces, Math.Max(0, recordedLife) / LifePerBounce);
     public static float Reduction(int recordedLife) => Math.Min(MaximumReduction, Math.Max(0, recordedLife) * ResistancePerLife);
-    public static float FlightSpeed(float distance, int elapsed) =>
-        Math.Max(TornadoSpeed, distance / Math.Max(1, MaximumFlight - elapsed));
 }
 
 /// <summary>逐笔过期的实际生命支付记录，不把拟支付量当作已扣生命。</summary>

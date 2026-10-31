@@ -43,7 +43,6 @@ static void HolyNumbers()
     Near(HolyReactionRules.Bounces(960), 64);
     Near(HolyReactionRules.Bounces(9999), 64);
     Check(Math.Abs(HolyReactionRules.Reduction(750) - .15) < 1e-6);
-    Check(HolyReactionRules.FlightSpeed(1000, 89) == 1000);
     var record = new HolyLifeRecord();
     record.Add(0, 6); record.Add(1199, 2); record.Expire(1200);
     Near(record.Total, 2); record.Expire(2399); Near(record.Total, 0);

@@ -47,6 +47,7 @@ public sealed class HolyFieldSystem : ModSystem
     internal sealed class Tornado(Vector2 position, int bounces)
     {
         internal Vector2 Position = position;
+        internal Vector2 Velocity;
         internal int Remaining = bounces, Elapsed, LastRoot = -1;
         internal NPC? Target;
         internal long Identity;
@@ -196,7 +197,7 @@ public sealed class HolyFieldSystem : ModSystem
     { field.Storm = null; field.TornadoDue = Tick + HolyReactionRules.TornadoCooldown; }
     private static void UpdateStorm(Field field, Tornado storm)
     {
-        if (storm.Remaining <= 0) { EndStorm(field); return; }
+        if (storm.Remaining <= 0 || storm.Elapsed >= HolyReactionRules.MaximumFlight) { EndStorm(field); return; }
         var enemies = Main.npc.Where(n => Enemy(n) && field.Contains(n.Center)).ToArray();
         if (enemies.Select(Root).Distinct().Take(2).Count() < 2) { EndStorm(field); return; }
         if (storm.Target is not { } target || !Enemy(target) || !field.Contains(target.Center) ||
@@ -206,14 +207,29 @@ public sealed class HolyFieldSystem : ModSystem
             if (target is null) { EndStorm(field); return; }
             storm.Target = target; storm.Identity = target.GetGlobalNPC<CombatGlobalNPC>().NetworkIdentity;
         }
-        Vector2 delta = target.Center - storm.Position;
-        float speed = HolyReactionRules.FlightSpeed(delta.Length(), storm.Elapsed);
         storm.Elapsed++;
-        if (delta.Length() > speed) { storm.Position += Vector2.Normalize(delta) * speed; return; }
-        storm.Position = target.Center;
-        Deal(field, target, TagEnum.Hydro, TagEnum.HydroAnemo, TornadoAttack, Level(field.Owner) * HolyReactionRules.TornadoDamagePerLevel);
-        storm.LastRoot = Root(target); storm.Remaining--; storm.Target = null; storm.Elapsed = 0;
-        if (storm.Remaining == 0) EndStorm(field);
+        for (int step = 0; step < HolyReactionRules.TornadoUpdates; step++)
+        {
+            Vector2 delta = target.Center - storm.Position;
+            if (storm.Velocity == Vector2.Zero)
+                storm.Velocity = delta.SafeNormalize(Vector2.UnitX) * HolyReactionRules.TornadoSpeed;
+            float angle = MathHelper.WrapAngle(delta.ToRotation() - storm.Velocity.ToRotation());
+            storm.Velocity = storm.Velocity.RotatedBy(angle * HolyReactionRules.TornadoTurnFactor);
+            storm.Velocity = storm.Velocity.SafeNormalize(Vector2.UnitX) * (storm.Velocity.Length() + HolyReactionRules.TornadoAcceleration);
+            Vector2 next = storm.Position + storm.Velocity;
+            float collision = 0;
+            bool hit = target.Hitbox.Contains(storm.Position.ToPoint()) || Collision.CheckAABBvLineCollision(
+                target.position, target.Size, storm.Position, next, HolyReactionRules.TornadoHitWidth, ref collision);
+            storm.Position = next;
+            if (!hit) continue;
+            // 保持本次速度与实际运动位置，下一跳逐步转向；不瞬移到敌怪中心。
+            storm.LastRoot = Root(target);
+            Deal(field, target, TagEnum.Hydro, TagEnum.HydroAnemo, TornadoAttack, Level(field.Owner) * HolyReactionRules.TornadoDamagePerLevel);
+            storm.Remaining--; storm.Target = null; storm.Elapsed = 0;
+            if (storm.Remaining == 0 || !Main.npc.Any(n => Enemy(n) && field.Contains(n.Center) && Root(n) != storm.LastRoot)) EndStorm(field);
+            return;
+        }
+        if (storm.Elapsed >= HolyReactionRules.MaximumFlight) EndStorm(field);
     }
 
     internal static void Deal(Field field, NPC npc, TagEnum element, TagEnum reaction, string attack, float seed)

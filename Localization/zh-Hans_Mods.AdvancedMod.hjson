@@ -25,6 +25,9 @@ Configs: {
 }
 
 Projectiles: {
+	MetalWormWhipProjectile.DisplayName: 金属蠕虫鞭
+	MetalWormProbe.DisplayName: 临时探测怪
+	MetalWormProbeShot.DisplayName: 探测怪元素攻击
 	RainCloud.DisplayName: 雨云
 	RainCloudDrop.DisplayName: 雨滴
 	HeavensJudgmentSwing.DisplayName: 天裁之刃
@@ -44,6 +47,17 @@ NPCs: {
 }
 
 Items: {
+	MetalWormWhip: {
+		DisplayName: 金属蠕虫鞭
+		Tooltip:
+			'''
+			12点召唤标记伤害，标记持续4秒
+			每次挥鞭首次命中召唤一只探测怪，发动一次随机元素攻击
+			鞭打附着1点神圣雷元素；探测怪造成50%伤害，无元素附着
+			你的刃杖攻击你标记的敌人时，自身水储量消耗减半
+			'''
+	}
+
 	RainCloudStaff: {
 		DisplayName: 雨云召唤杖
 		Tooltip: 召唤一朵随时跟随敌人移动的云朵来向敌人降下大雨，造成一定水元素伤害
@@ -79,6 +93,11 @@ Reactions: {
 }
 
 Buffs: {
+	MetalWormTag: {
+		DisplayName: 金属蠕虫标记
+		Description: 标记者的召唤物造成额外伤害，刃杖水储量消耗减半
+	}
+
 	RainCloudBuff: {
 		DisplayName: 雨云
 		Description: 雨云会向敌人降下大雨
@@ -92,3 +111,5 @@ BossBars: {
 		HallowDescription: 被神圣意志掌控的钢铁蠕虫
 	}
 }
+
+BladeStaffWaterTooltip: 每把飞刀储存1.25点水，每次命中附着0.25点水；耗尽后无伤返回玩家补满，同主人蠕虫标记使储量消耗减半
