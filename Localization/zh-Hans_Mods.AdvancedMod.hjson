@@ -113,3 +113,36 @@ BossBars: {
 }
 
 BladeStaffWaterTooltip: 每把飞刀储存1.25点水，每次命中附着0.25点水；耗尽后无伤返回玩家补满，同主人蠕虫标记使储量消耗减半
+
+LunarUI: {
+	Energy: 月曜度：{0} / {1}
+	Cost: 能量消耗：{0}点
+	Passive: 被动：{0}
+	Active: 主动：{0}
+}
+
+LunarSkill: {
+	Solar: {
+		DisplayName: 日耀
+		Passive: 测试被动效果1
+		Active: 测试主动效果1
+	}
+
+	Vortex: {
+		DisplayName: 星璇
+		Passive: 测试被动效果2
+		Active: 测试主动效果2
+	}
+
+	Nebula: {
+		DisplayName: 星云
+		Passive: 测试被动效果3
+		Active: 测试主动效果3
+	}
+
+	Stardust: {
+		DisplayName: 星尘
+		Passive: 测试被动效果4
+		Active: 测试主动效果4
+	}
+}

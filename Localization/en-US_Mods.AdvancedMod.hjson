@@ -103,3 +103,36 @@ BossBars: {
 }
 
 BladeStaffWaterTooltip: Each blade stores 1.25 water and applies 0.25 per hit; returns to refill when empty. Your worm mark halves reserve consumption.
+
+LunarUI: {
+	Energy: Lunar energy: {0} / {1}
+	Cost: Energy cost: {0}
+	Passive: Passive: {0}
+	Active: Active: {0}
+}
+
+LunarSkill: {
+	Solar: {
+		DisplayName: Solar
+		Passive: Test passive effect 1
+		Active: Test active effect 1
+	}
+
+	Vortex: {
+		DisplayName: Vortex
+		Passive: Test passive effect 2
+		Active: Test active effect 2
+	}
+
+	Nebula: {
+		DisplayName: Nebula
+		Passive: Test passive effect 3
+		Active: Test active effect 3
+	}
+
+	Stardust: {
+		DisplayName: Stardust
+		Passive: Test passive effect 4
+		Active: Test active effect 4
+	}
+}

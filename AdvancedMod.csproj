@@ -17,6 +17,7 @@
     <ProjectReference Include="Tools\AdvancedMod.Analyzers\AdvancedMod.Analyzers.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Basic\Graphics\UI\" />
     <Folder Include="Basic\Override\" />
     <Folder Include="Contents\Hallow\NPCs\" />
   </ItemGroup>

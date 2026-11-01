@@ -1,0 +1,242 @@
+{
+  "results": [
+    {
+      "name": "\u80FD\u91CF\u5199\u5165\u8FB9\u754C -1",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "\u96F6\u503C\u9690\u85CF\uFF0F\u6B63\u503C\u663E\u73B0 -1",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "\u80FD\u91CF\u5199\u5165\u8FB9\u754C 0",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "\u96F6\u503C\u9690\u85CF\uFF0F\u6B63\u503C\u663E\u73B0 0",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "\u80FD\u91CF\u5199\u5165\u8FB9\u754C 1",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "\u96F6\u503C\u9690\u85CF\uFF0F\u6B63\u503C\u663E\u73B0 1",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "\u80FD\u91CF\u5199\u5165\u8FB9\u754C 180",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "\u96F6\u503C\u9690\u85CF\uFF0F\u6B63\u503C\u663E\u73B0 180",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "\u80FD\u91CF\u5199\u5165\u8FB9\u754C 360",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "\u96F6\u503C\u9690\u85CF\uFF0F\u6B63\u503C\u663E\u73B0 360",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "\u80FD\u91CF\u5199\u5165\u8FB9\u754C 540",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "\u96F6\u503C\u9690\u85CF\uFF0F\u6B63\u503C\u663E\u73B0 540",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "\u80FD\u91CF\u5199\u5165\u8FB9\u754C 720",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "\u96F6\u503C\u9690\u85CF\uFF0F\u6B63\u503C\u663E\u73B0 720",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "\u80FD\u91CF\u5199\u5165\u8FB9\u754C 721",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "\u96F6\u503C\u9690\u85CF\uFF0F\u6B63\u503C\u663E\u73B0 721",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "\u80FD\u91CF\u5199\u5165\u8FB9\u754C 3.4028235E\u002B38",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "\u96F6\u503C\u9690\u85CF\uFF0F\u6B63\u503C\u663E\u73B0 3.4028235E\u002B38",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "\u80FD\u91CF\u5199\u5165\u8FB9\u754C NaN",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "\u96F6\u503C\u9690\u85CF\uFF0F\u6B63\u503C\u663E\u73B0 NaN",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "\u80FD\u91CF\u5199\u5165\u8FB9\u754C \u221E",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "\u96F6\u503C\u9690\u85CF\uFF0F\u6B63\u503C\u663E\u73B0 \u221E",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "\u80FD\u91CF\u5199\u5165\u8FB9\u754C -\u221E",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "\u96F6\u503C\u9690\u85CF\uFF0F\u6B63\u503C\u663E\u73B0 -\u221E",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "\u6708\u76F8\u9762\u79EF 1%",
+      "status": "PASS",
+      "detail": {
+        "fraction": 0.01,
+        "area": 0.009910132
+      }
+    },
+    {
+      "name": "\u4ECE\u5DE6\u4E0B\u8D77\u76C8 1%",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "\u6708\u76F8\u9762\u79EF 10%",
+      "status": "PASS",
+      "detail": {
+        "fraction": 0.1,
+        "area": 0.09983364
+      }
+    },
+    {
+      "name": "\u4ECE\u5DE6\u4E0B\u8D77\u76C8 10%",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "\u6708\u76F8\u9762\u79EF 25%",
+      "status": "PASS",
+      "detail": {
+        "fraction": 0.25,
+        "area": 0.24993433
+      }
+    },
+    {
+      "name": "\u4ECE\u5DE6\u4E0B\u8D77\u76C8 25%",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "\u6708\u76F8\u9762\u79EF 50%",
+      "status": "PASS",
+      "detail": {
+        "fraction": 0.5,
+        "area": 0.50112635
+      }
+    },
+    {
+      "name": "\u4ECE\u5DE6\u4E0B\u8D77\u76C8 50%",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "\u6708\u76F8\u9762\u79EF 75%",
+      "status": "PASS",
+      "detail": {
+        "fraction": 0.75,
+        "area": 0.7500657
+      }
+    },
+    {
+      "name": "\u4ECE\u5DE6\u4E0B\u8D77\u76C8 75%",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "\u6708\u76F8\u9762\u79EF 100%",
+      "status": "PASS",
+      "detail": {
+        "fraction": 1,
+        "area": 0.9999841
+      }
+    },
+    {
+      "name": "\u6B63\u5F0F\u56FE\u6807\u70B9\u51FB\u4E8B\u4EF6\u6253\u5F00",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "\u80CC\u5305\u6253\u5F00\u4E0D\u5173\u95ED\u9762\u677F",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "\u80CC\u5305\u5173\u95ED\uFF0F\u5730\u56FE\u5207\u6362\u4E0D\u5173\u95ED\u9762\u677F",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "\u5F52\u96F6\u6682\u9690\u85CF\u4E14\u4FDD\u7559\u5F00\u5173",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "\u6B63\u5F0F\u56FE\u6807\u70B9\u51FB\u4E8B\u4EF6\u5173\u95ED",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "\u5C0F\u5730\u56FE\u7F29\u653E0.5\u5DE6\u4FA7\u95F4\u8DDD",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "\u5C0F\u5730\u56FE\u7F29\u653E0.75\u5DE6\u4FA7\u95F4\u8DDD",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "\u5C0F\u5730\u56FE\u7F29\u653E1\u5DE6\u4FA7\u95F4\u8DDD",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "\u771F\u5B9E\u7ED8\u5236\u8BFB\u53D6180\uFF0F720",
+      "status": "PASS",
+      "detail": null
+    }
+  ]
+}
