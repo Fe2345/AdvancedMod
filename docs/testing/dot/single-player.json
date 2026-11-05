@@ -1,0 +1,58 @@
+{
+  "mode": "\u771F\u5B9ETML\u5355\u4EBA\u5BA2\u6237\u7AEF\u76F4\u63A5\u9A71\u52A8\u6062\u590D\u65B9\u6CD5\uFF1B\u4E0D\u4EE3\u8868\u8054\u673A\u9A8C\u8BC1",
+  "utc": "2026-11-02T11:42:56.9609438+00:00",
+  "results": [
+    {
+      "name": "NPC\u4E24\u5143\u7D20\u5206\u62C6\u4E0E\u539F\u7248\u4F59\u989D\u5B88\u6052\u4E14\u4E0D\u89E6\u53D1\u666E\u901A\u53D7\u51FB",
+      "status": "PASS"
+    },
+    {
+      "name": "\u540C\u6765\u6E90\u540C\u5E27\u8DE8\u591A\u6B21\u7ED3\u7B97\u5408\u5E76\u4E14\u66B4\u51FB\u4FDD\u7559",
+      "status": "PASS"
+    },
+    {
+      "name": "\u76F8\u540C\u5143\u7D20\u4E0D\u540C\u6765\u6E90\u4E0D\u5408\u5E76",
+      "status": "PASS"
+    },
+    {
+      "name": "\u72EC\u7ACB\u663E\u793A\u5173\u95ED\u4ECD\u4FDD\u7559\u539F\u7248\u6570\u5B57",
+      "status": "PASS"
+    },
+    {
+      "name": "\u5C0F\u6570\u4E0E\u539F\u751F\u4E24\u70B9\u5206\u7EC4\u4F59\u989D\u8DE8\u66F4\u65B0\u4FDD\u7559",
+      "status": "PASS"
+    },
+    {
+      "name": "\u4E0D\u540C\u76EE\u6807\u8D26\u672C\u9694\u79BB\u4E0E\u91CD\u7F6E\u6E05\u7406",
+      "status": "PASS"
+    },
+    {
+      "name": "\u591A\u8282\u76EE\u6807\u6CBF\u539F\u7248\u6263\u4E3B\u4F53\u751F\u547D",
+      "status": "PASS"
+    },
+    {
+      "name": "\u73A9\u5BB6\u5341\u70B9\u4E00\u6B21\u6263\u9664\u4E14\u4E0D\u89E6\u53D1OnHurt\u6216\u6539\u65E0\u654C\u65F6\u95F4",
+      "status": "PASS"
+    },
+    {
+      "name": "\u7A92\u606F\u4E94\u70B9\u5206\u7EC4\u7B49\u5F85\u540E\u6309FIFO\u5206\u914D",
+      "status": "PASS"
+    },
+    {
+      "name": "\u9965\u997F\u6C99\u6F20\u500D\u4F24\u4FDD\u7559\u4E14\u989D\u5916\u90E8\u5206\u4E3A\u539F\u7248\u6570\u5B57",
+      "status": "PASS"
+    },
+    {
+      "name": "NPC\u5BA2\u6237\u7AEF\u4E0E\u73A9\u5BB6\u670D\u52A1\u5668\u62D2\u7EDD\u91CD\u590D\u63D0\u4EA4",
+      "status": "PASS"
+    },
+    {
+      "name": "\u96F6\u4F24\u5BB3\u4E0D\u6CE8\u5165\u4E0D\u8DF3\u5B57\u4E0E\u6B7B\u4EA1\u8D26\u672C\u6E05\u7406",
+      "status": "PASS"
+    },
+    {
+      "name": "\u771F\u5B9E\u6E38\u620F\u8FDE\u7EED\u56DB\u5E27\u4EC5\u6263\u4E00\u6B21\u5341\u70B9",
+      "status": "PASS"
+    }
+  ]
+}

@@ -4,6 +4,8 @@
 
 ## 当前已实现边界
 
+- 2026-11-02：增加 DamageOverTimeToNpc／DamageOverTimeToPlayer 两条专用计算路径，复用标签与自定义乘区，不接受原生字段贡献。一次性 lifeRegen 写入与 FIFO 独立跳字规则见 [DoT 接口](../Basic/Calculate/DamageOverTime/README.md)。本文原有“四路径”限定普通命中，不再表示整个 Calculate 的路径总数。
+
 - 2026-10-23：ReactionSlotCount 已扩为 20（0..19），元素仍为 10 槽，擢升仍为 4 槽；新增空槽不自动启用。ElementTarget 已共用该容量保存目标 CD，见 [Element-Design.md](Element-Design.md)；单人游戏入口已接入并通过真实客户端测试，见 [Element-Usage.md](Element-Usage.md)。
 - 扩容后逐槽结果结构变化，Trace 规则集版本升为 calculate-2（SchemaVersion 仍为 1），旧 calculate-1 记录拒绝重放，不将版本差异误报为计算差异。Core 23/23 与主项目构建通过。
 
@@ -24,7 +26,7 @@
 | `Core` | 候选、启停决定、固定规则输入、纯组合与写入计划 | .NET、Basic/Tag；不引用 Terraria、FNA、log4net |
 | `Tml` | 实体上下文、贡献者调度、当前来源描述、TML 写入与生命周期；生成时来源捕获待实现 | Core、Diagnostics、Basic/Tag、TML |
 | `Diagnostics` | JSONL、筛选、重放比较、错误记录 | Core；游戏日志连接由 Tml 提供 |
-| `DamageOverTime` | 预留持续伤害适配，后续单独设计 | 暂不确定实现依赖，不套用正常命中的四个 Hook |
+| `DamageOverTime` | 一次性白值计算、lifeRegen 写入及 FIFO 独立跳字 | 纯账本依赖 Core／Tag；实体与显示适配依赖 Tml／Terraria，不套用正常命中 Hook |
 | `Basic/Effects` | 托管效果的激活、组合与来源明细 | 可以实现 Calculate 的贡献者接口；Calculate 不反向引用具体效果类型 |
 | `Basic/Global` | 三个逐实体 Global 与已接入的 CombatPlayer 受伤入口 | Tml |
 
@@ -44,7 +46,7 @@ flowchart LR
   T --> J[JSONL / 命令行重放]
 ```
 
-命令行重放直接进入 `DamageCombiner`，不创建 `Player`、`NPC` 或假装运行游戏 Hook。主 Mod 使用单一项目；Core 测试与重放工具直接编译纯计算源文件，TmlAdapter 测试使用本地真实 TML 类型。DamageOverTime 当前只预留职责，不创建空的计算接口。
+命令行重放直接进入 `DamageCombiner`，不创建 `Player`、`NPC` 或假装运行游戏 Hook。主 Mod 使用单一项目；Core 测试与重放工具直接编译纯计算源文件，TmlAdapter 测试使用本地真实 TML 类型。DamageOverTime 的纯计算／账本与引擎适配分离，使用方式见专用 README。当前 Trace 规则集为 calculate-3，包含两条 DoT 路径；仅追踪乘区计划，不重放实际持续扣血或显示。
 
 ## 2. 身份、标签与目标键
 
@@ -317,14 +319,14 @@ Replay 使用记录的候选与决定调用同一个 DamageCombiner，比较开�
 ### 已实现与离线验证
 
 - Core 六类自定义乘区、原生增量计划、收集器和启停裁决已实现；2026-10-22 Core 测试 22/22 通过，包含 JSONL 往返、篡改检测、规则数据视图、输入校验及 Boss 后置禁用样例。
-- 注册表、管线、四条 Hook、逐实体 Profile、加载卸载与 Mod.Logger 连接已实现；RegisterDefinitions 已登记 12 条正式基础标签规则，尚无数值贡献者。
+- 注册表、管线、四条普通命中 Hook、逐实体 Profile、加载卸载与 Mod.Logger 连接已实现；RegisterDefinitions 已登记 12 条正式基础标签规则、神圣结界减抗贡献者及神圣龙卷后置规则。
 - 两个 TML 适配重载已接入；2026-10-22 NPC／玩家真实类型离线测试通过，覆盖已有分量保留、倍率位置、穿甲与上限。
 - 2026-10-22 主项目构建（BuildMod=false）成功，0 警告、0 错误；不代表游戏内打包或运行通过。
 - 贡献者 ID 验证脚本和独立命令行重放样例此前已有验收记录，本次文档同步未重跑。
 
 ### 待实现与待补充验证
 
-- 待实现：正式复杂反应效果与联机入口、弹幕实时属性、通用 Tag 更改／继承、Effects 组合及 DoT。Element 的单人原生事务已接入，武器配置与 NewProjectile 封装提供显式标签和元素量。
+- 后续内容与上游模块进度以 TODO 对应章节为准。DoT 的 NPC／玩家接口、lifeRegen 写入及独立跳字已实现，其验证范围见专用 README；不再列作预留模块。
 - 已验证：离线检查正式槽位映射、异化资格及覆盖；Element 框架检查最终标签进入 Calculate 及乘区只应用一次。单人真实客户端检查四路径与临时反应系数，联机反应资格仍待验证。
 - 待补充离线验证：完整 CombatRegistry／CombatPipeline 调度、贡献者实体读取与异常路径。现有 Core 测试不加载 Terraria，适配测试也不运行完整管线。
 - 待端到端验证：Boss／饰品样例在正式贡献者、游戏上下文及 JSONL 中的完整表现；纯计算样例通过不等于已实现正式 Boss 或饰品。

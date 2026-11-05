@@ -271,7 +271,7 @@ public sealed class HolyFieldSystem : ModSystem
 [CombatContributor(100301)]
 internal sealed class HolyFieldContributor : ICombatContributor
 {
-    public HitKinds SupportedHits => HitKinds.ItemToNpc | HitKinds.ProjectileToNpc;
+    public HitKinds SupportedHits => HitKinds.ItemToNpc | HitKinds.ProjectileToNpc | HitKinds.DamageOverTimeToNpc;
     public bool IsActive(in CombatContext context) => context.AttackerPlayer is not null && context.TargetNpc is not null;
     public void Collect(in CombatContext context, ContributionWriter writer)
     {
@@ -286,7 +286,8 @@ internal sealed class HolyFieldContributor : ICombatContributor
                 writer.AddValue("神圣减抗", ModifierTarget.Resistance, -amount);
             }
         }
-        if (context.Profile.AttackId == HolyFieldSystem.TornadoAttack) writer.SetIgnoreDefense("龙卷真实伤害", true);
+        if (context.Kind != HitKind.DamageOverTimeToNpc && context.Profile.AttackId == HolyFieldSystem.TornadoAttack)
+            writer.SetIgnoreDefense("龙卷真实伤害", true);
     }
 }
 

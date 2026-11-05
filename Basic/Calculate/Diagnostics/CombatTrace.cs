@@ -35,8 +35,8 @@ public sealed record CombatTrace(int SchemaVersion, string RulesetVersion, Guid 
     TraceInput Input, TraceExpected Expected)
 {
     public const int CurrentSchema = 1;
-    // 反应槽扩为 20 后，旧记录的逐槽结果不再与当前规则集同构。
-    public const string CurrentRuleset = "calculate-2";
+    // 增加两条不含原生字段计划的 DoT 路径，旧读取器不能解释该计划形状。
+    public const string CurrentRuleset = "calculate-3";
     public static CombatTrace Create(Guid sessionId, CalculationInput input, CalculationResult result)
     {
         if (!result.IncludesDiagnostics) throw new ArgumentException("完整 Trace 需要逐条采纳诊断。", nameof(result));

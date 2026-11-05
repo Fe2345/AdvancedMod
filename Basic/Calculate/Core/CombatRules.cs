@@ -15,7 +15,11 @@ public enum HitKinds
     ProjectileToNpc = 2,
     NpcToPlayer = 4,
     ProjectileToPlayer = 8,
-    All = ItemToNpc | ProjectileToNpc | NpcToPlayer | ProjectileToPlayer
+    DamageOverTimeToNpc = 16,
+    DamageOverTimeToPlayer = 32,
+    Normal = ItemToNpc | ProjectileToNpc | NpcToPlayer | ProjectileToPlayer,
+    DamageOverTime = DamageOverTimeToNpc | DamageOverTimeToPlayer,
+    All = Normal | DamageOverTime
 }
 
 public static class HitKindExtensions
@@ -28,6 +32,8 @@ public static class HitKindExtensions
         HitKind.ProjectileToNpc => HitKinds.ProjectileToNpc,
         HitKind.NpcToPlayer => HitKinds.NpcToPlayer,
         HitKind.ProjectileToPlayer => HitKinds.ProjectileToPlayer,
+        HitKind.DamageOverTimeToNpc => HitKinds.DamageOverTimeToNpc,
+        HitKind.DamageOverTimeToPlayer => HitKinds.DamageOverTimeToPlayer,
         _ => throw new ArgumentOutOfRangeException(nameof(kind))
     };
 

@@ -8,7 +8,9 @@ public sealed class AdvancedMod : Mod
     public override void HandlePacket(System.IO.BinaryReader reader, int whoAmI)
     {
         byte kind = reader.ReadByte();
-        if (kind == Contents.Hallow.NPCs.HallowMechanicalSummonItem.PacketKind)
+        if (kind == Basic.Calculate.DamageOverTime.DotNetwork.PacketKind)
+            Basic.Calculate.DamageOverTime.DotNetwork.Receive(reader, whoAmI);
+        else if (kind == Contents.Hallow.NPCs.HallowMechanicalSummonItem.PacketKind)
             Contents.Hallow.NPCs.HallowMechanicalSummonItem.Receive(reader, whoAmI);
         else if (kind == Contents.Hallow.NPCs.HallowProbeShot.ReturnPacketKind)
             Contents.Hallow.NPCs.HallowProbeShot.ReceiveReturn(reader, whoAmI);

@@ -1,0 +1,11 @@
+{
+  "role": "client1",
+  "npcTotal": 28,
+  "pyro": 6,
+  "electro": 4,
+  "hydro": 20,
+  "cryo": 30,
+  "pyroCount": 1,
+  "electroCount": 1,
+  "managed": true
+}

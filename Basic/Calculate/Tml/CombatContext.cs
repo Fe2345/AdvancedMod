@@ -42,6 +42,7 @@ public sealed class CombatContext
     public DamageClass? NativeDamageClass { get; }
     public ExecutionSide ExecutionSide { get; }
     public bool IsEnvironmental { get; }
+    public SourceInfo? ExplicitSource { get; private init; }
 
     private CombatContext(long hitId, HitKind kind, AttackProfile profile, Player? attackerPlayer = null,
         NPC? attackerNpc = null, Item? item = null, Projectile? projectile = null, NPC? targetNpc = null,
@@ -114,6 +115,7 @@ public sealed class CombatContext
         SourceInfo? source = SourceItem is not null ? Describe(SourceItem, AttackerPlayer?.whoAmI)
             : SourceProjectile is not null ? Describe(SourceProjectile, AttackerPlayer?.whoAmI) : attacker;
         if (IsEnvironmental) source = new(SourceKind.Environment, "AdvancedMod:IdleReaction");
+        source = ExplicitSource ?? source;
         SourceInfo? target = TargetNpc is not null ? Describe(TargetNpc)
             : TargetPlayer is not null ? Describe(TargetPlayer) : null;
         return new(HitId, Kind, ExecutionSide, Profile.Tags, Profile.AttackId, Profile.IsManagedAttack,
@@ -121,7 +123,21 @@ public sealed class CombatContext
     }
 
     public CombatContext WithProfile(AttackProfile profile) => new(HitId, Kind, profile,
-        AttackerPlayer, AttackerNpc, SourceItem, SourceProjectile, TargetNpc, TargetPlayer, NativeDamageClass, IsEnvironmental);
+        AttackerPlayer, AttackerNpc, SourceItem, SourceProjectile, TargetNpc, TargetPlayer, NativeDamageClass, IsEnvironmental)
+        { ExplicitSource = ExplicitSource };
+
+    /// <summary>持续伤害的施加者只用于归属和贡献条件，不再次读取职业增伤。</summary>
+    public static CombatContext ForDamageOverTime(NPC target, AttackProfile profile,
+        Player? attacker = null, SourceInfo? source = null) =>
+        new(CalculateSystem.NextHitId(), HitKind.DamageOverTimeToNpc, profile,
+            attackerPlayer: attacker, targetNpc: target ?? throw new ArgumentNullException(nameof(target)))
+        { ExplicitSource = source };
+
+    public static CombatContext ForDamageOverTime(Player target, AttackProfile profile,
+        Player? attacker = null, SourceInfo? source = null) =>
+        new(CalculateSystem.NextHitId(), HitKind.DamageOverTimeToPlayer, profile,
+            attackerPlayer: attacker, targetPlayer: target ?? throw new ArgumentNullException(nameof(target)))
+        { ExplicitSource = source };
 
     internal CombatContext ForChain(NPC target, AttackProfile profile) => new(CalculateSystem.NextHitId(),
         HitKind.ProjectileToNpc, profile, AttackerPlayer, AttackerNpc, SourceItem, SourceProjectile,

@@ -7,7 +7,7 @@ using AdvancedMod.Basic.Tag;
 
 namespace AdvancedMod.Basic.Calculate.Core;
 
-public enum HitKind { ItemToNpc, ProjectileToNpc, NpcToPlayer, ProjectileToPlayer }
+public enum HitKind { ItemToNpc, ProjectileToNpc, NpcToPlayer, ProjectileToPlayer, DamageOverTimeToNpc, DamageOverTimeToPlayer }
 public enum ExecutionSide { SinglePlayer, Client, Server }
 public enum SourceKind { Player, Npc, Projectile, Item, Buff, World, Environment }
 public enum DecisionStage { TagRule, Contributor, PostRule }

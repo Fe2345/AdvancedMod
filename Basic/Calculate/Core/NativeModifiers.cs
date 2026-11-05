@@ -46,6 +46,8 @@ internal static class NativeCapabilities
 {
     public static bool Supports(HitKind hit, NativeField field)
     {
+        // 持续伤害仅复用自定义乘区；暴击与防御由专用接口处理。
+        if (hit is HitKind.DamageOverTimeToNpc or HitKind.DamageOverTimeToPlayer) return false;
         if (!Enum.IsDefined(field)) return false;
         bool npc = hit is HitKind.ItemToNpc or HitKind.ProjectileToNpc;
         return field switch
